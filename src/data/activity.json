@@ -1,0 +1,125 @@
+{
+  "fetchedAt": "2026-10-18T19:51:47.246Z",
+  "items": [
+    {
+      "name": "decision-intelligence-engine",
+      "url": "https://github.com/jacobhroutzong/decision-intelligence-engine",
+      "description": "",
+      "platform": "GitHub",
+      "kind": "Repository",
+      "language": "Python",
+      "updated": "2026-10-18T13:20:44Z",
+      "archived": false
+    },
+    {
+      "name": "decision-intelligence-engine",
+      "url": "https://huggingface.co/spaces/jacobroutzong/decision-intelligence-engine",
+      "description": "",
+      "platform": "Hugging Face",
+      "kind": "Space",
+      "language": "",
+      "updated": "2026-10-18T13:20:41.000Z",
+      "archived": false
+    },
+    {
+      "name": "Decision-Models",
+      "url": "https://github.com/jacobhroutzong/Decision-Models",
+      "description": "",
+      "platform": "GitHub",
+      "kind": "Repository",
+      "language": "Jupyter Notebook",
+      "updated": "2026-10-18T02:14:40Z",
+      "archived": false
+    },
+    {
+      "name": "so101_robotics_portfolio",
+      "url": "https://github.com/jacobhroutzong/so101_robotics_portfolio",
+      "description": "",
+      "platform": "GitHub",
+      "kind": "Repository",
+      "language": "Python",
+      "updated": "2026-10-11T17:28:27Z",
+      "archived": false
+    },
+    {
+      "name": "Reinforcement-Learning",
+      "url": "https://github.com/jacobhroutzong/Reinforcement-Learning",
+      "description": "",
+      "platform": "GitHub",
+      "kind": "Repository",
+      "language": "Jupyter Notebook",
+      "updated": "2026-10-11T14:49:06Z",
+      "archived": false
+    },
+    {
+      "name": "GitHubGraduation-2022",
+      "url": "https://github.com/jacobhroutzong/GitHubGraduation-2022",
+      "description": "I graduated from Auburn University!",
+      "platform": "GitHub",
+      "kind": "Fork",
+      "language": "",
+      "updated": "2026-10-11T14:44:33Z",
+      "archived": false
+    },
+    {
+      "name": "coding-challenges",
+      "url": "https://github.com/jacobhroutzong/coding-challenges",
+      "description": "Coding challenges from leetgpu, tensara, interviewquery, neetcode, deepml, datadojo, stratscratch and datavidyha",
+      "platform": "GitHub",
+      "kind": "Repository",
+      "language": "Jupyter Notebook",
+      "updated": "2026-10-11T14:40:19Z",
+      "archived": false
+    },
+    {
+      "name": "AppliedResearchOAfa2025",
+      "url": "https://github.com/jacobhroutzong/AppliedResearchOAfa2025",
+      "description": "AI Club @ GT Research Team Submission",
+      "platform": "GitHub",
+      "kind": "Fork",
+      "language": "Python",
+      "updated": "2026-10-10T13:07:01Z",
+      "archived": false
+    },
+    {
+      "name": "isaac-lab-unitree-h1",
+      "url": "https://github.com/jacobhroutzong/isaac-lab-unitree-h1",
+      "description": "",
+      "platform": "GitHub",
+      "kind": "Repository",
+      "language": "Python",
+      "updated": "2026-02-03T15:46:23Z",
+      "archived": false
+    },
+    {
+      "name": "data-engineering-projects-portfolio",
+      "url": "https://github.com/jacobhroutzong/data-engineering-projects-portfolio",
+      "description": "projects of data engineering",
+      "platform": "GitHub",
+      "kind": "Repository",
+      "language": "Python",
+      "updated": "2025-12-18T23:05:58Z",
+      "archived": false
+    },
+    {
+      "name": "insightflow-data",
+      "url": "https://github.com/jacobhroutzong/insightflow-data",
+      "description": "my portfolio",
+      "platform": "GitHub",
+      "kind": "Repository",
+      "language": "HTML",
+      "updated": "2025-03-19T14:58:33Z",
+      "archived": false
+    },
+    {
+      "name": "Auburn-University-Coursework",
+      "url": "https://github.com/jacobhroutzong/Auburn-University-Coursework",
+      "description": "",
+      "platform": "GitHub",
+      "kind": "Repository",
+      "language": "Java",
+      "updated": "2023-03-21T00:46:43Z",
+      "archived": false
+    }
+  ]
+}

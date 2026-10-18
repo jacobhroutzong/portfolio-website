@@ -1,0 +1,37 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+playwright-report/
+test-results/
+
+public/media/generated/
+
+# Local previews, verification output, caches, and separate project source.
+/artifacts/
+/rea-verification/
+/.uv-cache/
+/adaptforge-ai/
+/AdaptForge_AI_Sprint1.zip
+.wrangler/
+.vercel/
+.netlify/
+coverage/
+*.log
+*.tsbuildinfo
+
+# Credentials and private configuration (never place these in public/).
+.npmrc
+.aws/
+.ssh/
+credentials.json
+credentials.*.json
+service-account*.json
+*.pem
+*.key
+*.p12
+*.pfx
+.dev.vars
+.dev.vars.*

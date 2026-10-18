@@ -1,0 +1,7 @@
+---
+import imageManifest from '../data/images.json';
+interface Props { src:string; alt:string; sizes?:string; }
+const {src,alt,sizes='(max-width: 760px) calc(100vw - 36px), (max-width: 1240px) 45vw, 560px'} = Astro.props;
+const image = (imageManifest as Record<string,{src:string;srcSet:string;width:number;height:number}>)[src];
+---
+<img src={image?.src || src} srcset={image?.srcSet} sizes={image ? sizes : undefined} alt={alt} width={image?.width || 1200} height={image?.height || 750} loading="lazy" decoding="async" />

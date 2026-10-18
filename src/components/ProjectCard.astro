@@ -1,0 +1,11 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Icon from './Icon.astro';
+interface Props { project: CollectionEntry<'projects'>; }
+const { project } = Astro.props;
+const p = project.data;
+---
+<article class="project-card" data-project data-category={p.category} data-search={`${p.title} ${p.summary} ${p.technologies.join(' ')}`.toLowerCase()}>
+  <div class="project-art"><Icon name={p.category.includes('Robotics') ? 'orbit' : p.category.includes('GPU') ? 'chip' : 'network'} size={64} /><span class="art-label">{p.draft ? 'DRAFT / NOT PUBLISHED' : p.category}</span></div>
+  <div class="project-card-body"><div class="eyebrow">{p.category}</div><h3><a href={`/projects/${project.id}/`}>{p.title}<Icon name="arrow" /></a></h3><p>{p.summary}</p><div class="tags">{p.technologies.map(t => <span>{t}</span>)}</div><p class="status">{p.status}{p.draft && ' · Draft preview'}</p></div>
+</article>

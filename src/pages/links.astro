@@ -1,0 +1,6 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { profile, socialLinks } from '../config/profile';
+---
+<Base title="Links"><div class="container page-shell"><div class="eyebrow">LINKS / FIND ME ELSEWHERE</div><h1 class="page-title">Find me<br /><em>elsewhere.</em></h1><p class="page-intro">Find my work, follow along, or get in touch.</p><div class="connect-grid">{socialLinks.map(s => <a class="connect-card" href={s.url} target="_blank" rel="noopener noreferrer"><Icon name={s.key} size={25} />{s.label}<Icon name="external" size={17} /></a>)}{profile.email && <a class="connect-card" href={`mailto:${profile.email}`}><Icon name="mail" size={25} />Email<Icon name="arrow" size={17} /></a>}{profile.resume && <a class="connect-card" href={profile.resume} download><Icon name="layers" size={25} />Download résumé<Icon name="arrow" size={17} /></a>}</div>{!socialLinks.length && !profile.email && <div class="empty-state"><Icon name="mail" size={32} /><h2>Contact details coming soon.</h2><p>Social and contact links appear here once they are configured.</p></div>}</div></Base>

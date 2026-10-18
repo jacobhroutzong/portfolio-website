@@ -1,0 +1,70 @@
+---
+import '../styles/global.css';
+import Icon from '../components/Icon.astro';
+import { profile, socialLinks } from '../config/profile';
+import { previewDrafts } from '../lib/projects';
+interface Props { title?: string; description?: string; noindex?: boolean; }
+const { title = 'Engineering Portfolio', description = profile.introduction, noindex = false } = Astro.props;
+
+const path = Astro.url.pathname;
+const canonical = new URL(path, Astro.site);
+const unconfigured = !profile.configured || Astro.site?.hostname === 'portfolio.example.com';
+const active = (href: string) => path.startsWith(href) ? 'page' : undefined;
+---
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} — {profile.name}</title><meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" /><link rel="canonical" href={canonical} />
+    <meta name="color-scheme" content="dark light" />
+    {(noindex || previewDrafts || unconfigured) && <meta name="robots" content="noindex, nofollow" />}
+    <meta property="og:title" content={`${title} — ${profile.name}`} /><meta property="og:description" content={description} /><meta property="og:type" content="website" /><meta property="og:url" content={canonical} /><meta property="og:image" content={new URL('/og.svg', Astro.site)} /><meta name="twitter:card" content="summary" />
+    <script is:inline>try { const t = localStorage.getItem('theme'); document.documentElement.dataset.theme = t === 'light' || t === 'dark' ? t : 'light'; } catch { /* Storage may be unavailable. */ }</script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    {previewDrafts && <div class="preview-banner">LOCAL DRAFT PREVIEW — unpublished work is visible only in this development session.</div>}
+    <header class="site-header"><div class="nav-wrap">
+      <a class="brand" href="/" aria-label={`${profile.name} home`}><span class="brand-mark">{profile.initials}<span>.</span></span><span class="brand-name">{profile.name}<small>Engineering portfolio</small></span></a>
+      <button id="mobile-toggle" class="icon-button mobile-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navigation"><Icon name="menu" /></button>
+      <nav id="navigation" aria-label="Main navigation">
+        <a href="/projects/" aria-current={active('/projects/')}>Work</a>
+        <a href="/links/" aria-current={active('/links/')}>Links</a>
+        <a href="/" aria-current={path === '/' ? 'page' : undefined}>About me</a>
+      </nav>
+      <button id="theme-toggle" class="icon-button" aria-label="Switch color theme" title="Switch color theme"><Icon name="sun" size={19} /></button>
+    </div></header>
+    <main id="main"><slot /></main>
+    <footer class="site-footer container"><div><a class="footer-brand" href="/">{profile.initials}<span>.</span></a><p>Thoughtful experiments. Deliberate engineering.</p></div><div class="footer-right"><div class="social-row">{socialLinks.map(s => <a href={s.url} aria-label={s.label} target="_blank" rel="noopener noreferrer"><Icon name={s.key} size={18} /></a>)}</div><span>© {new Date().getFullYear()} {profile.name} · Built with Astro</span></div></footer>
+    <script>
+      const button = document.querySelector<HTMLButtonElement>('#mobile-toggle');
+      const navigation = document.querySelector<HTMLElement>('#navigation');
+      button?.addEventListener('click', () => {
+        const open = button.getAttribute('aria-expanded') !== 'true';
+        button.setAttribute('aria-expanded', String(open)); navigation?.classList.toggle('is-open', open);
+      });
+      const dropdowns = Array.from(document.querySelectorAll<HTMLDetailsElement>('.nav-dropdown'));
+      dropdowns.forEach(d => d.addEventListener('toggle', () => { if (d.open) dropdowns.filter(other => other !== d).forEach(other => other.open = false); }));
+      document.addEventListener('click', e => { dropdowns.forEach(d => { if (!d.contains(e.target as Node)) d.open = false; }); });
+      document.addEventListener('keydown', e => {
+        if (e.key !== 'Escape') return;
+        dropdowns.forEach(d => { if (d.open) { d.open = false; d.querySelector('summary')?.focus(); } });
+        if (button?.getAttribute('aria-expanded') === 'true') { button.setAttribute('aria-expanded', 'false'); navigation?.classList.remove('is-open'); button.focus(); }
+      });
+      const themeButton = document.querySelector<HTMLButtonElement>('#theme-toggle');
+      function labelTheme() { themeButton?.setAttribute('aria-label', `Switch to ${document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'} theme`); }
+      labelTheme();
+      themeButton?.addEventListener('click', () => {
+        const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        document.documentElement.dataset.theme = next;
+        try { localStorage.setItem('theme', next); } catch { /* Storage may be unavailable. */ }
+        labelTheme();
+      });
+      matchMedia('(prefers-color-scheme: light)').addEventListener('change', e => {
+        try { if (localStorage.getItem('theme')) return; } catch { /* Use system theme. */ }
+        document.documentElement.dataset.theme = e.matches ? 'light' : 'dark'; labelTheme();
+      });
+    </script>
+  </body>
+</html>

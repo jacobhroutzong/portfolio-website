@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import PortfolioImage from '../components/PortfolioImage.astro';
+import Icon from '../components/Icon.astro';
+import { visibleProjects } from '../lib/projects';
+const projects = await visibleProjects();
+const items = projects.flatMap(p => p.data.screenshots.map(image => ({ ...image, projectId: p.id, projectTitle: p.data.title, category: p.data.category, draft: p.data.draft })));
+const categories = [...new Set(items.map(i => i.category))];
+---
+<Base title="Gallery"><div class="container page-shell"><div class="eyebrow">GALLERY / A CLOSER LOOK</div><h1 class="page-title">Engineering,<br /><em>made visible.</em></h1><p class="page-intro">Interfaces, simulations, and architecture — a visual window into the work.</p><div class="filter-bar"><label for="gallery-category">Show</label><select id="gallery-category"><option value="">All categories</option>{categories.map(c => <option>{c}</option>)}</select><span id="gallery-count" class="small muted" aria-live="polite">{items.length} {items.length === 1 ? 'image' : 'images'}</span></div><div class="gallery-grid">{items.map(item => <article class="gallery-card" data-gallery-item data-category={item.category}><button class="gallery-open" data-src={item.src} data-alt={item.alt} data-caption={item.caption} data-project={`/projects/${item.projectId}/`} data-title={item.projectTitle} aria-label={`Enlarge ${item.alt}`}><PortfolioImage src={item.src} alt={item.alt} /></button><div class="gallery-caption">{item.example && <span class="badge">Illustrative example</span>}{item.draft && <span class="badge">Draft preview</span>}<h3><a class="text-link" href={`/projects/${item.projectId}/`}>{item.projectTitle}<Icon name="arrow" size={17} /></a></h3><p class="small">{item.caption}</p></div></article>)}</div><div class="empty-state" id="gallery-empty" hidden={items.length > 0}><Icon name="layers" size={36} /><h2>A window into the work.</h2><p>Published project screenshots, diagrams, and demonstrations will appear here. No stock screenshots or invented results.</p><a class="text-link" href="/projects/">Visit the project catalog <Icon name="arrow" size={17} /></a></div></div><dialog id="image-dialog" aria-labelledby="dialog-title"><div class="dialog-top"><h2 id="dialog-title">Project image</h2><button class="icon-button" id="dialog-close" aria-label="Close image viewer"><Icon name="close" /></button></div><img id="dialog-image" alt="" /><p id="dialog-caption"></p><a id="dialog-project" class="text-link">View project <Icon name="arrow" size={17} /></a></dialog><script>
+  const dialog = document.querySelector<HTMLDialogElement>('#image-dialog');
+  let opener: HTMLButtonElement | null = null;
+  document.querySelectorAll<HTMLButtonElement>('.gallery-open').forEach(button => button.addEventListener('click', () => {
+    const image = document.querySelector<HTMLImageElement>('#dialog-image'); const title = document.querySelector('#dialog-title'); const caption = document.querySelector('#dialog-caption'); const link = document.querySelector<HTMLAnchorElement>('#dialog-project');
+    if (!image || !title || !caption || !link) return;
+    image.src = button.dataset.src || ''; image.alt = button.dataset.alt || ''; title.textContent = button.dataset.title || 'Project image'; caption.textContent = button.dataset.caption || ''; link.href = button.dataset.project || '/projects/'; opener = button; dialog?.showModal();
+  }));
+  document.querySelector('#dialog-close')?.addEventListener('click', () => dialog?.close());
+  dialog?.addEventListener('click', e => { if (e.target === dialog) { const rect = dialog.getBoundingClientRect(); if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) dialog.close(); } });
+  dialog?.addEventListener('close', () => opener?.focus());
+  const select = document.querySelector<HTMLSelectElement>('#gallery-category');
+  select?.addEventListener('change', () => { let count = 0; document.querySelectorAll<HTMLElement>('[data-gallery-item]').forEach(card => { card.hidden = !!select.value && card.dataset.category !== select.value; if (!card.hidden) count++; }); const label = document.querySelector('#gallery-count'); if (label) label.textContent = `${count} image${count === 1 ? '' : 's'}`; const empty = document.querySelector<HTMLElement>('#gallery-empty'); if (empty) empty.hidden = count > 0; });
+</script></Base>
