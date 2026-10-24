@@ -15,7 +15,7 @@ Open `http://127.0.0.1:4321/ascent/`. Python's first use downloads Pyodide 0.29.
 
 - 11 lessons with 66 original exercises: four initial foundations lessons plus a coding/testing workshop; hashing, matrix shapes, chain rule, scalar autodiff, stable softmax and attention.
 - All eleven exercise categories have examples, including a bug selection plus executable fix and cumulative multi-part code. Wrong answers reappear, mistakes are categorized, and self-assessment reveals a rubric after a written attempt.
-- 15 original problems, each with 3 visible and 8 additional practice checks, reference implementations, three hints, editorials, and complexity notes. Monaco on desktop, a plain-editor alternative, and read-only saved code on phones.
+- 29 original problems, each with 3 visible and 8 additional practice checks, reference implementations, three hints, editorials, and complexity notes. Monaco on desktop, a plain-editor alternative, and read-only saved code on phones.
 - IndexedDB progress, SM-2 reviews, mastery with separate-day evidence and decay, XP, goal, weekly streak freeze, badges, backups, activity history, and transparent readiness heuristics.
 - Adaptive 20-question placement for diagnosis. It does not certify mastery or automatically skip prerequisite bosses.
 - Timed coding and attention rounds, phase tracking, a three-stage evolving counter, a story bank, and a written system-design exercise with a self-assessment rubric.
@@ -39,7 +39,7 @@ npx playwright install --with-deps chromium
 npm run test:e2e
 ```
 
-`npm run verify` includes the existing portfolio tests, Ascent engine tests, the shared Zod schemas, execution of all original reference solutions (220 checks), lesson code references, 150 deterministic randomized numerical comparisons against independent NumPy operations, the static build, and internal link validation. Set `ASCENT_PYTHON` to your Python executable if it is not `python3`.
+`npm run verify` includes the existing portfolio tests, Ascent engine tests, the shared Zod schemas, execution of all original reference solutions (319 checks), lesson code references, 150 deterministic randomized numerical comparisons against independent NumPy operations, the static build, and internal link validation. Set `ASCENT_PYTHON` to your Python executable if it is not `python3`.
 
 On Windows PowerShell:
 
@@ -83,8 +83,65 @@ The `.yaml` files currently use JSON-compatible YAML syntax and support ordinary
 
 ## Advanced knowledge and Hugging Face
 
-The home screen now prioritizes 24 technical references and 24 original interview questions across six AI domains, four study paths, and 20 coding problems. Foundation refreshers remain available. Content lives in `content/knowledge/library.json`; references include primary sources and verification dates. Self-rated retrieval schedules reviews and does not certify mastery.
+The home screen now prioritizes 30 technical references and 30 original interview questions across six AI domains, four study paths, and 29 coding problems. Foundation refreshers remain available. Content lives in `content/knowledge/library.json`; references include primary sources and verification dates. Self-rated retrieval schedules reviews and does not certify mastery.
 
 The public Space uses the free Static SDK: https://huggingface.co/spaces/jacobroutzong/ascent. After `npm run build`, run `npm run package:space` and upload the three files in the printed folder to the Space repository root. The dependency-free Node build restores the verified static assets and nested directories from the bundled snapshot. This does not require running a development server. `npm run dev` is only a local editing preview. The Space is a compiled snapshot; future GitHub changes need a fresh build/upload. Progress stays in each browser origin; export/import transfers it between hosts. PyTorch and server-side model inference are not included.
 
 The live Space currently uses the source-based configuration in `docs/SPACE_README.md`: its free static build clones the public portfolio branch, builds the app, and installs the Space entry redirect. To deploy a future GitHub revision, update/recommit the Space configuration to trigger a build. The compiled `package:space` snapshot remains an alternative for uploads.
+
+## Curriculum refinement: implementation and evidence
+
+The current content pass adds assistant-only label construction, paired outcomes,
+retrieval metrics, idempotency replay, safe trajectory scoring, low-rank adapter
+arithmetic, a uniform toy quantizer, context budgeting, and stable DPO loss.
+Each has visible checks plus additional lazy-loaded checks. Primitive exercises
+are labeled **prerequisite drills** when they do not directly test the attached
+advanced concept; passing one does not establish application evidence.
+
+Six new notes cover tokenizer/loss boundaries, QLoRA precision, context/durable
+state, MCP permissions, profiling/distributed-execution decisions, and reasoning
+verifiers. The quantizer is explicitly not NF4/GGUF. The verifier lesson does
+not implement GRPO or imply a measured training outcome. All 30 interview
+questions now have concept-specific rubrics.
+
+`content/knowledge/paths.json` defines the study paths and external project
+checkpoints for ModelForge, AdaptForge and Sentinyl/ModelGuard. Paths follow
+prerequisite order and remain freely navigable. Use **Study paths → Use this
+study path** to save a local preference; the home recommendation and Readiness
+next steps follow it. The default advanced path starts with attention, not an
+assumed Python deficit. Company-weighted scores remain editorial heuristics.
+
+Progress shows self-assessed mechanism recall, self-assessed interview explanation,
+latest independent application-check pass, and recall on separate calendar days
+as different signals. A failed recall makes the explanation eligible for review
+again; hinted or failed latest application submissions do not count as independent
+code evidence. Local browser checks are inspectable and do not certify external
+project, deployment or GPU outcomes. The historical independent code-coverage
+component is no longer capped by the 20-submission window; that recent window
+still applies to timed-round performance.
+
+The version-1 progress format accepts optional `studyPath` and
+`conceptRecallDates` fields. Older backups remain importable; unknown path IDs
+fall back to the transformer path. Dates are recorded only by successful concept
+recall, not by merely visiting a page. Old backups do not invent historical recall
+dates. Export before moving between the preview, portfolio and Space origins.
+
+Graph validation checks unknown links, duplicate IDs, cycles, and prerequisite
+order inside each path. Content checks execute 319 Python checks plus the
+existing 150 seeded NumPy comparisons. Future topics such as MoE/MLA, deeper
+DDP/FSDP labs, robotics and RF remain specialization extensions; prioritize the
+listed project checkpoints before expanding them. The original seed scripts
+are one-time scaffolding and must not overwrite these authored content files.
+
+### Validation of this content pass
+
+`npm run verify` passed: lint, Astro diagnostics (zero errors/warnings), five
+portfolio unit tests, 20 Ascent unit tests, 319 Python practice checks, 150 seeded
+numerical comparisons, production build and 134 internal link/asset references.
+The build retains a non-fatal large-chunk advisory.
+
+`npm run test:e2e` passed 14 desktop/mobile browser tests. Two existing mobile
+Python execution flows are intentionally skipped; their desktop equivalents
+passed. The four new desktop/mobile curriculum cases verify path persistence,
+advanced recommendations and application-versus-prerequisite exercise labels.
+GPU project checkpoints remain assignments, not executed training results.

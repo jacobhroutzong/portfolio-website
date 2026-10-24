@@ -1,0 +1,13 @@
+{
+  "reference": "def solve(items, budget):\n    if type(budget) is not int or budget<0: raise ValueError('budget')\n    if len({i['id'] for i in items})!=len(items) or any(type(i['tokens']) is not int or i['tokens']<0 or type(i['pinned']) is not bool for i in items): raise ValueError('item')\n    chosen={n for n,i in enumerate(items) if i['pinned']}\n    used=sum(items[n]['tokens'] for n in chosen)\n    if used>budget: raise ValueError('pinned overflow')\n    for n in sorted(range(len(items)),key=lambda n:(-items[n]['priority'],n)):\n        if n not in chosen and used+items[n]['tokens']<=budget:\n            chosen.add(n); used+=items[n]['tokens']\n    return [i['id'] for n,i in enumerate(items) if n in chosen]\n",
+  "hidden": [
+    "assert solve([dict(id='a',tokens=1,priority=1,pinned=False),dict(id='b',tokens=1,priority=1,pinned=False)],1)==['a']",
+    "assert solve([dict(id='a',tokens=1,priority=1,pinned=False),dict(id='b',tokens=1,priority=9,pinned=False)],2)==['a','b']",
+    "assert solve([dict(id='a',tokens=0,priority=0,pinned=False)],0)==['a']",
+    "assert solve([dict(id='a',tokens=1,priority=0,pinned=True),dict(id='b',tokens=1,priority=9,pinned=False)],1)==['a']",
+    "assert solve([dict(id='a',tokens=3,priority=0,pinned=False)],2)==[]",
+    "try:\n solve([dict(id='a',tokens=2,priority=1,pinned=True)],1)\nexcept ValueError: pass\nelse: raise AssertionError('overflow')",
+    "try:\n solve([dict(id='a',tokens=0,priority=1,pinned=False)]*2,0)\nexcept ValueError: pass\nelse: raise AssertionError('duplicate')",
+    "try:\n solve([], -1)\nexcept ValueError: pass\nelse: raise AssertionError('budget')"
+  ]
+}

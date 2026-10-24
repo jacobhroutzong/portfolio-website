@@ -35,6 +35,8 @@ export type Progress = {
   placement: boolean;
   restDay: number;
   drafts: Record<string, string>;
+  studyPath?: string;
+  conceptRecallDates?: Record<string, string[]>;
 };
 export const fresh = (): Progress => ({
   version: 1,
@@ -160,8 +162,9 @@ export function readiness(p: Progress, weights: number[], totalProblems = 20) {
   const attempts = p.submissions.slice(-20);
   const coverage = Math.min(
     1,
-    new Set(attempts.filter((s) => s.passed).map((s) => s.problem)).size /
-      totalProblems,
+    new Set(
+      p.submissions.filter((s) => s.passed && !s.hinted).map((s) => s.problem),
+    ).size / totalProblems,
   );
   const timed = attempts.filter(
     (s) => s.timed && s.elapsed <= 60 * 60000 && !s.hinted,
@@ -175,6 +178,25 @@ export function parseProgress(input: unknown): Progress {
   if (!input || typeof input !== "object")
     throw new Error("Not a progress file");
   const p = input as Progress;
+  if (p.studyPath !== undefined && typeof p.studyPath !== "string")
+    throw new Error("Invalid study path");
+  if (p.conceptRecallDates !== undefined) {
+    if (
+      !p.conceptRecallDates ||
+      typeof p.conceptRecallDates !== "object" ||
+      Array.isArray(p.conceptRecallDates)
+    )
+      throw new Error("Invalid recall dates");
+    for (const dates of Object.values(p.conceptRecallDates))
+      if (
+        !Array.isArray(dates) ||
+        !dates.every(
+          (d) => typeof d === "string" && /^\d{4}-\d{2}-\d{2}$/.test(d),
+        ) ||
+        new Set(dates).size !== dates.length
+      )
+        throw new Error("Invalid recall dates");
+  }
   if (
     p.version !== 1 ||
     !Number.isFinite(p.xp) ||

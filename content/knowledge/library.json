@@ -35,12 +35,14 @@
         "How would you handle a query with no valid key?"
       ],
       "rubric": [
-        "State the relevant mechanism and assumptions.",
-        "Work through a concrete example or estimate.",
-        "Discuss a failure mode and a test that detects it.",
-        "Explain a tradeoff and evidence that would change your decision."
+        "Identify Q/K/V and score/output dimensions.",
+        "Normalize over keys and apply masks before softmax.",
+        "Test future-token invariance and fully masked rows.",
+        "Compare with an independent implementation and a stated tolerance."
       ]
-    }
+    },
+    "prerequisites": [],
+    "exercise_role": "application"
   },
   {
     "id": "gqa",
@@ -78,12 +80,16 @@
         "What must be checked before grouping existing checkpoint heads?"
       ],
       "rubric": [
-        "State the relevant mechanism and assumptions.",
-        "Work through a concrete example or estimate.",
-        "Discuss a failure mode and a test that detects it.",
-        "Explain a tradeoff and evidence that would change your decision."
+        "Distinguish query heads from shared K/V heads.",
+        "Include batch, layers, length, head dimension and dtype in cache bytes.",
+        "Calculate the fourfold cache reduction in the example.",
+        "Explain checkpoint conversion and quality/kernel tradeoffs."
       ]
-    }
+    },
+    "prerequisites": [
+      "kv-cache"
+    ],
+    "exercise_role": "prerequisite"
   },
   {
     "id": "rope",
@@ -121,12 +127,16 @@
         "Why might token outputs differ even for close logits?"
       ],
       "rubric": [
-        "State the relevant mechanism and assumptions.",
-        "Work through a concrete example or estimate.",
-        "Discuss a failure mode and a test that detects it.",
-        "Explain a tradeoff and evidence that would change your decision."
+        "Use the absolute cache position for each new token.",
+        "Explain the relative-position effect of paired rotations.",
+        "Avoid rotating stored keys a second time.",
+        "Compare cached and full-prefix logits at matching positions and tolerance."
       ]
-    }
+    },
+    "prerequisites": [
+      "attention-contract"
+    ],
+    "exercise_role": "prerequisite"
   },
   {
     "id": "flash-attention",
@@ -164,12 +174,17 @@
         "How should a benchmark separate warmup and compilation?"
       ],
       "rubric": [
-        "State the relevant mechanism and assumptions.",
-        "Work through a concrete example or estimate.",
-        "Discuss a failure mode and a test that detects it.",
-        "Explain a tradeoff and evidence that would change your decision."
+        "Explain tiled online softmax and avoided materialized scores.",
+        "Distinguish quadratic arithmetic from reduced memory traffic.",
+        "State numerical tolerances rather than bitwise identity.",
+        "Benchmark representative shapes with warmup and GPU synchronization."
       ]
-    }
+    },
+    "prerequisites": [
+      "attention-contract",
+      "mixed-precision"
+    ],
+    "exercise_role": "prerequisite"
   },
   {
     "id": "kv-cache",
@@ -207,12 +222,16 @@
         "What changes for sliding-window attention?"
       ],
       "rubric": [
-        "State the relevant mechanism and assumptions.",
-        "Work through a concrete example or estimate.",
-        "Discuss a failure mode and a test that detects it.",
-        "Explain a tradeoff and evidence that would change your decision."
+        "Account for both keys and values across all layers.",
+        "State dtype, batch and K/V head assumptions.",
+        "Compare cached and full-prefix logits before sampling.",
+        "Test offsets, capacity and request isolation."
       ]
-    }
+    },
+    "prerequisites": [
+      "rope"
+    ],
+    "exercise_role": "application"
   },
   {
     "id": "continuous-batching",
@@ -249,12 +268,16 @@
         "How would you prevent long-request starvation?"
       ],
       "rubric": [
-        "State the relevant mechanism and assumptions.",
-        "Work through a concrete example or estimate.",
-        "Discuss a failure mode and a test that detects it.",
-        "Explain a tradeoff and evidence that would change your decision."
+        "Distinguish prefill from decode workloads.",
+        "Include queueing time in the latency budget.",
+        "Handle cancellation and release cache ownership.",
+        "Compare tail latency and throughput under identical request distributions."
       ]
-    }
+    },
+    "prerequisites": [
+      "kv-cache"
+    ],
+    "exercise_role": "prerequisite"
   },
   {
     "id": "paged-attention",
@@ -292,12 +315,16 @@
         "What happens when two requests diverge after a shared prefix?"
       ],
       "rubric": [
-        "State the relevant mechanism and assumptions.",
-        "Work through a concrete example or estimate.",
-        "Discuss a failure mode and a test that detects it.",
-        "Explain a tradeoff and evidence that would change your decision."
+        "Separate logical positions from physical cache blocks.",
+        "Calculate block utilization and tail waste.",
+        "Track shared-block ownership and reference counts.",
+        "Test release, reuse and partial-block reads."
       ]
-    }
+    },
+    "prerequisites": [
+      "kv-cache"
+    ],
+    "exercise_role": "prerequisite"
   },
   {
     "id": "speculative-decoding",
@@ -335,12 +362,16 @@
         "Why does batch size change the tradeoff?"
       ],
       "rubric": [
-        "State the relevant mechanism and assumptions.",
-        "Work through a concrete example or estimate.",
-        "Discuss a failure mode and a test that detects it.",
-        "Explain a tradeoff and evidence that would change your decision."
+        "State draft and target distributions and support assumptions.",
+        "Explain acceptance and the residual correction distribution.",
+        "Distinguish distribution preservation from a greedy shortcut.",
+        "Measure draft overhead and accepted tokens per target step."
       ]
-    }
+    },
+    "prerequisites": [
+      "continuous-batching"
+    ],
+    "exercise_role": "prerequisite"
   },
   {
     "id": "compute-budget",
@@ -378,12 +409,17 @@
         "What evidence would show data quality is the bottleneck?"
       ],
       "rubric": [
-        "State the relevant mechanism and assumptions.",
-        "Work through a concrete example or estimate.",
-        "Discuss a failure mode and a test that detects it.",
-        "Explain a tradeoff and evidence that would change your decision."
+        "State whether training or inference FLOPs are being estimated.",
+        "Include token count, parameters and useful utilization assumptions.",
+        "Separate peak hardware rate from measured throughput.",
+        "Control data quality and total budget when comparing scaling choices."
       ]
-    }
+    },
+    "prerequisites": [
+      "reproducibility",
+      "data-pipeline"
+    ],
+    "exercise_role": "prerequisite"
   },
   {
     "id": "adamw",
@@ -420,12 +456,14 @@
         "How do you checkpoint optimizer state correctly?"
       ],
       "rubric": [
-        "State the relevant mechanism and assumptions.",
-        "Work through a concrete example or estimate.",
-        "Discuss a failure mode and a test that detects it.",
-        "Explain a tradeoff and evidence that would change your decision."
+        "Distinguish decoupled decay from an L2 gradient term.",
+        "Update first/second moments and bias corrections correctly.",
+        "Apply decay once with the intended learning rate.",
+        "Check the update against a small independent numeric example."
       ]
-    }
+    },
+    "prerequisites": [],
+    "exercise_role": "application"
   },
   {
     "id": "gradient-accumulation",
@@ -462,12 +500,16 @@
         "How do variable-length sequences affect normalization?"
       ],
       "rubric": [
-        "State the relevant mechanism and assumptions.",
-        "Work through a concrete example or estimate.",
-        "Discuss a failure mode and a test that detects it.",
-        "Explain a tradeoff and evidence that would change your decision."
+        "Normalize by valid target tokens across the entire update.",
+        "Handle unequal microbatch token counts.",
+        "Clip and advance the optimizer/scheduler at update boundaries.",
+        "Compare accumulated gradients with a full-batch baseline."
       ]
-    }
+    },
+    "prerequisites": [
+      "adamw"
+    ],
+    "exercise_role": "application"
   },
   {
     "id": "mixed-precision",
@@ -505,12 +547,16 @@
         "What should a skipped optimizer step do to a scheduler?"
       ],
       "rubric": [
-        "State the relevant mechanism and assumptions.",
-        "Work through a concrete example or estimate.",
-        "Discuss a failure mode and a test that detects it.",
-        "Explain a tradeoff and evidence that would change your decision."
+        "Distinguish BF16 exponent range from FP16 precision/range.",
+        "Locate the first nonfinite intermediate.",
+        "Unscale FP16 gradients before clipping when scaling is used.",
+        "Compare a suspect operation against an FP32 reference."
       ]
-    }
+    },
+    "prerequisites": [
+      "gradient-accumulation"
+    ],
+    "exercise_role": "prerequisite"
   },
   {
     "id": "lora",
@@ -529,7 +575,7 @@
     "related": [
       "sft-data"
     ],
-    "problem": "adamw-update",
+    "problem": "lora-delta",
     "level": "Advanced",
     "last_verified": "2026-10-24",
     "sources": [
@@ -547,12 +593,16 @@
         "What evidence suggests the rank is too restrictive?"
       ],
       "rubric": [
-        "State the relevant mechanism and assumptions.",
-        "Work through a concrete example or estimate.",
-        "Discuss a failure mode and a test that detects it.",
-        "Explain a tradeoff and evidence that would change your decision."
+        "State dimensions and rank of the two adapter factors.",
+        "Apply alpha/r scaling once.",
+        "Separate trainable parameter savings from activation memory.",
+        "Validate adapter-enabled and merged behavior under a fixed base revision."
       ]
-    }
+    },
+    "prerequisites": [
+      "sft-data"
+    ],
+    "exercise_role": "application"
   },
   {
     "id": "sft-data",
@@ -572,7 +622,7 @@
       "preference-data",
       "dpo"
     ],
-    "problem": "cross-entropy",
+    "problem": "assistant-labels",
     "level": "Intermediate",
     "last_verified": "2026-10-24",
     "sources": [
@@ -590,12 +640,18 @@
         "What can a lower training loss fail to tell you?"
       ],
       "rubric": [
-        "State the relevant mechanism and assumptions.",
-        "Work through a concrete example or estimate.",
-        "Discuss a failure mode and a test that detects it.",
-        "Explain a tradeoff and evidence that would change your decision."
+        "Show exact tokenizer-aligned supervised target positions.",
+        "Preserve the model chat template and avoid double-shifting labels.",
+        "Reject examples with zero retained causal targets.",
+        "Keep source groups and near-duplicates out of held-out splits."
       ]
-    }
+    },
+    "prerequisites": [
+      "token-loss-contract",
+      "benchmark-validity",
+      "reproducibility"
+    ],
+    "exercise_role": "application"
   },
   {
     "id": "dpo",
@@ -614,7 +670,7 @@
     "related": [
       "preference-data"
     ],
-    "problem": "cross-entropy",
+    "problem": "dpo-loss",
     "level": "Intermediate",
     "last_verified": "2026-10-24",
     "sources": [
@@ -632,12 +688,17 @@
         "What role does the reference play?"
       ],
       "rubric": [
-        "State the relevant mechanism and assumptions.",
-        "Work through a concrete example or estimate.",
-        "Discuss a failure mode and a test that detects it.",
-        "Explain a tradeoff and evidence that would change your decision."
+        "Use both policy and frozen-reference sequence log-probabilities.",
+        "Compute the chosen/rejected reference-relative margin.",
+        "Evaluate log-sigmoid stably at extreme margins.",
+        "Discuss beta, response length and held-out preference validity."
       ]
-    }
+    },
+    "prerequisites": [
+      "sft-data",
+      "preference-data"
+    ],
+    "exercise_role": "application"
   },
   {
     "id": "preference-data",
@@ -675,12 +736,16 @@
         "What data ablation would be informative?"
       ],
       "rubric": [
-        "State the relevant mechanism and assumptions.",
-        "Work through a concrete example or estimate.",
-        "Discuss a failure mode and a test that detects it.",
-        "Explain a tradeoff and evidence that would change your decision."
+        "Specify what annotators compare and under which instructions.",
+        "Record disagreement and source-group provenance.",
+        "Test response length and style as possible confounds.",
+        "Use an evaluator independent of the training reward proxy."
       ]
-    }
+    },
+    "prerequisites": [
+      "paired-evaluation"
+    ],
+    "exercise_role": "prerequisite"
   },
   {
     "id": "paired-evaluation",
@@ -699,7 +764,7 @@
     "related": [
       "benchmark-validity"
     ],
-    "problem": "entropy",
+    "problem": "paired-outcomes",
     "level": "Intermediate",
     "last_verified": "2026-10-24",
     "sources": [
@@ -717,12 +782,16 @@
         "How would repeated experimentation affect confidence?"
       ],
       "rubric": [
-        "State the relevant mechanism and assumptions.",
-        "Work through a concrete example or estimate.",
-        "Discuss a failure mode and a test that detects it.",
-        "Explain a tradeoff and evidence that would change your decision."
+        "Align both models on the same task IDs.",
+        "Count wins, losses and ties with the correct denominator.",
+        "Resample paired tasks or source groups for uncertainty.",
+        "Report regressions and repeated-test/selection limitations."
       ]
-    }
+    },
+    "prerequisites": [
+      "benchmark-validity"
+    ],
+    "exercise_role": "application"
   },
   {
     "id": "benchmark-validity",
@@ -760,12 +829,14 @@
         "When is execution success an inadequate metric?"
       ],
       "rubric": [
-        "State the relevant mechanism and assumptions.",
-        "Work through a concrete example or estimate.",
-        "Discuss a failure mode and a test that detects it.",
-        "Explain a tradeoff and evidence that would change your decision."
+        "Define the actual task and deployment population.",
+        "Distinguish exposure, overlap and proven memorization.",
+        "Keep prompt, decoding and budget fixed across comparisons.",
+        "Protect an untouched holdout and report slice-specific failures."
       ]
-    }
+    },
+    "prerequisites": [],
+    "exercise_role": "prerequisite"
   },
   {
     "id": "rag-evaluation",
@@ -785,7 +856,7 @@
       "retrieval-contract",
       "reproducibility"
     ],
-    "problem": "counts",
+    "problem": "retrieval-metrics",
     "level": "Advanced",
     "last_verified": "2026-10-24",
     "sources": [
@@ -803,12 +874,16 @@
         "What happens when relevant documents conflict?"
       ],
       "rubric": [
-        "State the relevant mechanism and assumptions.",
-        "Work through a concrete example or estimate.",
-        "Discuss a failure mode and a test that detects it.",
-        "Explain a tradeoff and evidence that would change your decision."
+        "Measure retrieval coverage before judging generation.",
+        "Verify cited passages support each answer claim.",
+        "Include unanswerable queries and permission restrictions.",
+        "Separate wrong evidence from unsupported use of correct evidence."
       ]
-    }
+    },
+    "prerequisites": [
+      "retrieval-contract"
+    ],
+    "exercise_role": "application"
   },
   {
     "id": "reproducibility",
@@ -846,12 +921,14 @@
         "How would you investigate a failed reproduction?"
       ],
       "rubric": [
-        "State the relevant mechanism and assumptions.",
-        "Work through a concrete example or estimate.",
-        "Discuss a failure mode and a test that detects it.",
-        "Explain a tradeoff and evidence that would change your decision."
+        "Pin source, data, model revision and dependency versions.",
+        "Restore optimizer, RNG and sampler state when resuming.",
+        "Change one factor in a controlled ablation.",
+        "State hardware/numerical limits and report all planned seeds."
       ]
-    }
+    },
+    "prerequisites": [],
+    "exercise_role": "prerequisite"
   },
   {
     "id": "retrieval-contract",
@@ -871,7 +948,7 @@
       "rag-evaluation",
       "tool-reliability"
     ],
-    "problem": "unique",
+    "problem": "retrieval-metrics",
     "level": "Intermediate",
     "last_verified": "2026-10-24",
     "sources": [
@@ -889,12 +966,14 @@
         "When would hybrid retrieval help?"
       ],
       "rubric": [
-        "State the relevant mechanism and assumptions.",
-        "Work through a concrete example or estimate.",
-        "Discuss a failure mode and a test that detects it.",
-        "Explain a tradeoff and evidence that would change your decision."
+        "Version documents, chunks, embeddings and index configuration.",
+        "Enforce access before evidence reaches generation.",
+        "Define deletion, freshness and indexing behavior.",
+        "Evaluate ranked retrieval across representative query slices."
       ]
-    }
+    },
+    "prerequisites": [],
+    "exercise_role": "application"
   },
   {
     "id": "tool-reliability",
@@ -913,7 +992,7 @@
     "related": [
       "agent-evaluation"
     ],
-    "problem": "kv-append",
+    "problem": "idempotency-ledger",
     "level": "Advanced",
     "last_verified": "2026-10-24",
     "sources": [
@@ -931,12 +1010,14 @@
         "How would you recover after the client disconnects?"
       ],
       "rubric": [
-        "State the relevant mechanism and assumptions.",
-        "Work through a concrete example or estimate.",
-        "Discuss a failure mode and a test that detects it.",
-        "Explain a tradeoff and evidence that would change your decision."
+        "Validate arguments and authorize effects outside the model.",
+        "Use stable operation keys across retries.",
+        "Reject conflicting key reuse and make ledger/effect updates atomic.",
+        "Test timeout-after-effect, replay and untrusted retrieved instructions."
       ]
-    }
+    },
+    "prerequisites": [],
+    "exercise_role": "application"
   },
   {
     "id": "agent-evaluation",
@@ -956,7 +1037,7 @@
       "tool-reliability",
       "data-pipeline"
     ],
-    "problem": "counts",
+    "problem": "trajectory-score",
     "level": "Intermediate",
     "last_verified": "2026-10-24",
     "sources": [
@@ -974,12 +1055,17 @@
         "What is the unit of a successful task?"
       ],
       "rubric": [
-        "State the relevant mechanism and assumptions.",
-        "Work through a concrete example or estimate.",
-        "Discuss a failure mode and a test that detects it.",
-        "Explain a tradeoff and evidence that would change your decision."
+        "Score final environment state and intermediate actions.",
+        "Keep success, safety violations and budget consumption separate.",
+        "Freeze initial state and reset between trials.",
+        "Inject failures and report repeated-trial recovery behavior."
       ]
-    }
+    },
+    "prerequisites": [
+      "tool-reliability",
+      "reproducibility"
+    ],
+    "exercise_role": "application"
   },
   {
     "id": "data-pipeline",
@@ -1017,10 +1103,300 @@
         "How do worker prefetch queues affect exact replay?"
       ],
       "rubric": [
-        "State the relevant mechanism and assumptions.",
-        "Work through a concrete example or estimate.",
-        "Discuss a failure mode and a test that detects it.",
-        "Explain a tradeoff and evidence that would change your decision."
+        "Assign disjoint source samples to ranks/workers.",
+        "Specify shuffling and tail-batch behavior.",
+        "Checkpoint sampler cursor and random state with training state.",
+        "Verify no unintended gaps or duplicates after resume."
+      ]
+    },
+    "prerequisites": [
+      "reproducibility"
+    ],
+    "exercise_role": "prerequisite"
+  },
+  {
+    "id": "token-loss-contract",
+    "domain": "Training",
+    "track": 7,
+    "title": "Tokenization, chat templates and causal loss boundaries",
+    "summary": "Training labels must agree with the official tokenizer, rendered turns and the causal loss shift.",
+    "explanation": "Render conversations with the model’s official tokenizer and chat template. Construct or obtain token-aligned assistant masks, preserve labels at the same positions as input IDs, and let the causal language-model loss shift logits and targets. Inspect EOS, padding, packing boundaries and truncation. A nonempty rendered conversation may still contain zero usable supervised targets. Fail before training if the label contract cannot be verified.",
+    "equation": "L=-\\frac{1}{N}\\sum_{t:m_{t+1}=1}\\log p(x_{t+1}\\mid x_{\\leq t})",
+    "example": "For tokens [10,11,12,13] with assistant targets at positions 2 and 3, labels are [-100,-100,12,13]. A limit of 2 removes every target and must fail. Do not pre-shift and then let the trainer shift again.",
+    "pitfalls": [
+      "Guessing token boundaries with string delimiters.",
+      "Counting padding as a target.",
+      "Packing documents without checking boundary attention and loss."
+    ],
+    "related": [
+      "reproducibility"
+    ],
+    "prerequisites": [],
+    "problem": "assistant-labels",
+    "exercise_role": "application",
+    "level": "Advanced",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "TRL SFT data and loss contracts",
+        "url": "https://huggingface.co/docs/trl/sft_trainer"
+      }
+    ],
+    "question": {
+      "id": "q-token-loss-contract",
+      "prompt": "How would you prove an SFT job trains only on the intended assistant tokens?",
+      "answer": "Inspect decoded input/label pairs from the official template, assert token-prefix or generation-mask alignment, and count usable shifted targets after truncation. Check padding and packed boundaries explicitly. Overfit a tiny verified set before a full run, and compare validation under the same masking convention.",
+      "followups": [
+        "What counterexample would break your design?",
+        "What evidence would make you change this choice?"
+      ],
+      "rubric": [
+        "Use the official tokenizer/template.",
+        "Show exact supervised positions and the internal causal shift.",
+        "Reject zero-target truncations.",
+        "Test padding, EOS and packed sequence boundaries."
+      ]
+    }
+  },
+  {
+    "id": "qlora-precision",
+    "domain": "Post-training",
+    "track": 7,
+    "title": "QLoRA, quantization error and deployment parity",
+    "summary": "Quantized frozen weights, adapter parameters, compute dtype and KV cache are different memory terms.",
+    "explanation": "QLoRA trains adapters through a quantized frozen base. Distinguish storage format from compute dtype and distinguish both from the precision of activations, optimizer state and KV cache. A uniform toy quantizer illustrates rounding error but does not implement NF4 or a deployment format. Merging or exporting changes the loading path; compare actual outputs and task metrics before asserting parity.",
+    "equation": "\\hat{x}=s\\,\\operatorname{clip}(\\operatorname{round}(x/s),-q_{max},q_{max})",
+    "example": "A uniform block [-2,0,2] with qmax=2 uses scale 1 and reconstructs exactly. A value halfway between codes exposes rounding conventions. Real quality checks need model-level held-out evaluation as well as scalar error.",
+    "pitfalls": [
+      "Calling every 4-bit format interchangeable.",
+      "Assuming adapters eliminate activation memory.",
+      "Claiming an exported model is equivalent without testing it."
+    ],
+    "related": [
+      "lora",
+      "mixed-precision"
+    ],
+    "prerequisites": [
+      "lora",
+      "mixed-precision"
+    ],
+    "problem": "symmetric-quantize",
+    "exercise_role": "application",
+    "level": "Advanced",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "PEFT quantization guidance",
+        "url": "https://huggingface.co/docs/peft/developer_guides/quantization"
+      }
+    ],
+    "question": {
+      "id": "q-qlora-precision",
+      "prompt": "Why can a 4-bit fine-tune still run out of memory, and how would you validate an export?",
+      "answer": "Frozen weight compression does not remove activations, adapters, optimizer state or the KV cache. Measure the peak under the actual context and batch. Load the original and exported artifacts under controlled decoding, compare numerical differences where appropriate, and repeat held-out task and performance evaluation. Record format and converter versions.",
+      "followups": [
+        "What counterexample would break your design?",
+        "What evidence would make you change this choice?"
+      ],
+      "rubric": [
+        "Separate weight, activation, optimizer and cache memory.",
+        "State rounding/grouping and compute dtype assumptions.",
+        "Identify what merging/export changes.",
+        "Compare quality and resources under fixed decoding."
+      ]
+    }
+  },
+  {
+    "id": "context-state",
+    "domain": "Applied systems",
+    "track": 10,
+    "title": "Context budgets, durable state and agent recovery",
+    "summary": "Select relevant context while preserving explicit state and authority across interruptions.",
+    "explanation": "Context engineering chooses what evidence, instructions and tool results fit in the active token window. Durable workflow state lives outside that window and records completed effects, pending work and artifact versions. Compaction should preserve decisions and unresolved questions without promoting retrieved text into authority. Budget for tool responses and generation, and evaluate task success after interruption rather than only testing short prompts.",
+    "equation": "T_{instructions}+T_{evidence}+T_{history}+T_{tools}+T_{output}\\leq T_{budget}",
+    "example": "A workflow completed operation A before disconnecting. Its next runtime should read a durable operation record, refresh stale evidence, and continue with B. Repeating A because its tool response was compacted away is a recovery failure.",
+    "pitfalls": [
+      "Using the context window as the only database.",
+      "Summarizing untrusted content into trusted instructions.",
+      "Ignoring output and tool-response reserves."
+    ],
+    "related": [
+      "retrieval-contract",
+      "tool-reliability"
+    ],
+    "prerequisites": [
+      "retrieval-contract",
+      "tool-reliability"
+    ],
+    "problem": "context-budget",
+    "exercise_role": "application",
+    "level": "Advanced",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "Context engineering for AI agents",
+        "url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents"
+      }
+    ],
+    "question": {
+      "id": "q-context-state",
+      "prompt": "Design a context and checkpoint strategy for a workflow that may be interrupted.",
+      "answer": "Keep explicit durable state and stable operation identifiers outside the prompt. Retrieve evidence with provenance, preserve essential decisions during compaction, reserve output budget and revalidate stale facts. Reconstruct the next action from committed state and test repeated interruptions and retries against a deterministic environment.",
+      "followups": [
+        "What counterexample would break your design?",
+        "What evidence would make you change this choice?"
+      ],
+      "rubric": [
+        "Reserve mandatory instructions and output budget.",
+        "Separate durable state from prompt context.",
+        "Preserve provenance through compaction.",
+        "Recover without repeating committed side effects."
+      ]
+    }
+  },
+  {
+    "id": "agent-permissions",
+    "domain": "Applied systems",
+    "track": 10,
+    "title": "Agent permissions, MCP and untrusted evidence",
+    "summary": "Tool schemas describe capabilities; authorization must constrain which effects may actually occur.",
+    "explanation": "A model proposing syntactically valid tool arguments has not established authorization. Enforce permissions in the execution layer, keep resource ownership and credential scopes explicit, and treat retrieved documents and tool output as untrusted evidence. For MCP integrations, examine confused-deputy risks, scope minimization and token handling. Combine approvals where needed with idempotency and durable audit state; prompting alone is not a security boundary.",
+    "equation": "\\mathrm{execute}=\\mathrm{schemaValid}\\land\\mathrm{authorized}\\land\\mathrm{policyAllowed}",
+    "example": "A retrieved page tells an agent to upload a private file. The page can supply facts but cannot grant permission to disclose that file. A valid upload schema and a working token still do not authorize the requested effect.",
+    "pitfalls": [
+      "Treating tool descriptions as grants of authority.",
+      "Passing upstream tokens through unchecked.",
+      "Assuming a prompt can replace server-side authorization."
+    ],
+    "related": [
+      "tool-reliability"
+    ],
+    "prerequisites": [
+      "tool-reliability"
+    ],
+    "problem": "idempotency-ledger",
+    "exercise_role": "prerequisite",
+    "level": "Advanced",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "MCP security best practices",
+        "url": "https://modelcontextprotocol.io/specification/2025-11-25/basic/security_best_practices"
+      }
+    ],
+    "question": {
+      "id": "q-agent-permissions",
+      "prompt": "How do you prevent a retrieved instruction from expanding an agent’s authority?",
+      "answer": "Keep trusted user intent distinct from external content, validate resource-scoped authorization outside the model, minimize credentials, and restrict effects to an explicit policy. Test injected documents, confused-deputy scenarios, replay, and timeout-after-effect. Retain an audit trail that identifies which trusted intent authorized each operation.",
+      "followups": [
+        "What counterexample would break your design?",
+        "What evidence would make you change this choice?"
+      ],
+      "rubric": [
+        "Separate user authority from retrieved evidence.",
+        "Enforce scope in the execution layer.",
+        "Discuss confused deputy and credential boundaries.",
+        "Test unauthorized effects and safe retry recovery."
+      ]
+    }
+  },
+  {
+    "id": "performance-diagnosis",
+    "domain": "Training",
+    "track": 8,
+    "title": "Profiling before kernels or distributed training",
+    "summary": "Identify the bottleneck and preserve correctness before changing execution strategy.",
+    "explanation": "Measure representative steady-state steps with warmup and appropriate synchronization. Profile host data loading, transfers, operator shapes, allocation and device execution; a slow training step is not automatically a slow matrix multiplication. Inspect tensor layout, graph retention and compilation overhead. Only then consider checkpointing, compilation, a Triton kernel, or a distributed strategy. Multi-device scaling adds communication and state-partitioning costs that a single-device speedup cannot certify.",
+    "equation": "t_{step}\\approx t_{input}+t_{transfer}+t_{compute}+t_{communication}",
+    "example": "If a step waits on input for most of its duration, replacing an already-fast attention kernel may barely change throughput. Compare traces before and after one change with identical shapes, data and precision; keep correctness tolerances and peak memory in the report.",
+    "pitfalls": [
+      "Timing asynchronous launches without synchronization.",
+      "Reporting only a compiled warm path without startup cost.",
+      "Scaling to more devices before locating a bottleneck."
+    ],
+    "related": [
+      "compute-budget",
+      "mixed-precision"
+    ],
+    "prerequisites": [
+      "compute-budget",
+      "mixed-precision"
+    ],
+    "problem": "accumulate-grads",
+    "exercise_role": "prerequisite",
+    "level": "Advanced",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "PyTorch Profiler",
+        "url": "https://docs.pytorch.org/tutorials/recipes/recipes/profiler_recipe.html"
+      },
+      {
+        "title": "FSDP2 concepts and execution",
+        "url": "https://docs.pytorch.org/tutorials/intermediate/FSDP_tutorial.html"
+      }
+    ],
+    "question": {
+      "id": "q-performance-diagnosis",
+      "prompt": "How would you decide whether to optimize a kernel, the input pipeline or distributed execution?",
+      "answer": "Capture a representative trace, separate warmup/compilation from steady-state work, and identify where time and memory go. Change one factor, check numerical behavior, then measure the same workload. For distributed work, account for collectives, global loss normalization and checkpoint state rather than assuming linear scaling.",
+      "followups": [
+        "What counterexample would break your design?",
+        "What evidence would make you change this choice?"
+      ],
+      "rubric": [
+        "Profile representative inputs and actual device work.",
+        "Separate compile, input, compute and communication costs.",
+        "Preserve numerical and objective equivalence.",
+        "Report hardware, warmup, memory and repeat measurements."
+      ]
+    }
+  },
+  {
+    "id": "reasoning-verifiers",
+    "domain": "Post-training",
+    "track": 7,
+    "title": "Verifiable rewards and reasoning compute budgets",
+    "summary": "A reward must detect real task success before it can safely guide reasoning optimization.",
+    "explanation": "Reasoning systems can allocate additional inference work to candidates, checks or refinement. Compare quality under a fixed total budget, not merely per visible answer. Verifiable-reward training relies on a testable success criterion, but parsers, tests and reward implementations can be exploitable. Study GRPO objectives and failure modes after reliable SFT and evaluation; the browser exercise below is a prerequisite score calculation, not a GRPO implementation or a validated training run.",
+    "equation": "\\mathrm{utility}=\\mathbb{E}[\\mathrm{verifiedSuccess}]-\\lambda\\,\\mathbb{E}[\\mathrm{computeCost}]",
+    "example": "A program that prints a plausible answer can satisfy a weak string-based reward while failing the intended computation. Create hidden counterexamples, reject malformed outputs, and compare a verifier with independent ground truth before rewarding additional sampled attempts.",
+    "pitfalls": [
+      "Optimizing an exploitable reward proxy.",
+      "Ignoring the total cost of multiple candidates.",
+      "Claiming GRPO quality from a scalar reward calculation."
+    ],
+    "related": [
+      "sft-data",
+      "preference-data"
+    ],
+    "prerequisites": [
+      "sft-data",
+      "preference-data"
+    ],
+    "problem": "trajectory-score",
+    "exercise_role": "prerequisite",
+    "level": "Advanced",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "TRL GRPO objectives and diagnostics",
+        "url": "https://huggingface.co/docs/trl/grpo_trainer"
+      }
+    ],
+    "question": {
+      "id": "q-reasoning-verifiers",
+      "prompt": "What must be validated before using an automatic reward for reasoning optimization?",
+      "answer": "Define task success, validate the verifier against independent ground truth and adversarial examples, and measure false acceptance as well as rejection. Hold out tasks and fix the total candidate/token budget when comparing strategies. Only then study or run an objective such as GRPO, with explicit attention to reward normalization and training/inference mismatch.",
+      "followups": [
+        "What counterexample would break your design?",
+        "What evidence would make you change this choice?"
+      ],
+      "rubric": [
+        "Define success independently of fluent prose.",
+        "Test false accepts and reward exploits.",
+        "Hold out task families and fix total compute budget.",
+        "Separate verifier tests from actual optimization evidence."
       ]
     }
   }

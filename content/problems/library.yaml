@@ -828,5 +828,347 @@
       "Using a mathematically correct but numerically unstable expression",
       "Mutating caller-owned state"
     ]
+  },
+  {
+    "id": "paired-outcomes",
+    "title": "Compare paired model outcomes",
+    "track": 9,
+    "topic": "Evaluation",
+    "difficulty": 4,
+    "labs": [
+      "General"
+    ],
+    "minutes": 35,
+    "statement": "Given equal-length nonempty lists of booleans base and variant for the SAME ordered tasks, return {wins, losses, ties, delta}. A win is False→True; delta=(wins-losses)/n. Reject non-booleans or unequal/empty lists. Do not treat paired tasks as independent samples. This component does not calculate a confidence interval.",
+    "signature": "def solve(base, variant):",
+    "starter": "def solve(base, variant):\n    pass\n",
+    "constraints": "Use standard-library Python. Do not mutate inputs. Follow the stated validation, empty-input and tie rules. Local checks verify the stated component, not deployment readiness.",
+    "examples": [
+      "[False] → [True]: wins=1, delta=1",
+      "[True] → [False]: losses=1, delta=-1",
+      "Identical outcomes: delta=0"
+    ],
+    "visible": [
+      "assert solve([False],[True])==dict(wins=1,losses=0,ties=0,delta=1)",
+      "assert solve([True],[False])['delta']==-1",
+      "assert solve([True,False],[True,False])['ties']==2"
+    ],
+    "hints": [
+      "Align outcomes by task ID before this function.",
+      "Count discordant pairs in both directions.",
+      "Divide net wins by all tasks, including ties."
+    ],
+    "editorial": "Count discordant pairs and retain ties in the denominator. A later lab resamples task pairs or source groups to estimate uncertainty.",
+    "mistakes": [
+      "Skipping validation or empty inputs",
+      "Changing the stated objective",
+      "Claiming system-wide correctness from a component test"
+    ],
+    "complexity": "O(n) time, O(1) auxiliary space",
+    "prerequisites": []
+  },
+  {
+    "id": "assistant-labels",
+    "title": "Build assistant-only causal-LM labels",
+    "track": 7,
+    "topic": "Post-training",
+    "difficulty": 4,
+    "labs": [
+      "General"
+    ],
+    "minutes": 35,
+    "statement": "tokens is a list of token IDs. spans is a list of sorted, disjoint, nonempty [start,end) assistant spans in the ORIGINAL sequence. limit is a positive integer. Return labels matching tokens[:limit], with -100 outside assistant spans. Reject invalid/overlapping spans or truncation leaving no supervised label at positions 1 onward. Do not pre-shift labels: the causal-LM loss performs the shift.",
+    "signature": "def solve(tokens, spans, limit):",
+    "starter": "def solve(tokens, spans, limit):\n    pass\n",
+    "constraints": "Use standard-library Python. Do not mutate inputs. Follow the stated validation, empty-input and tie rules. Local checks verify the stated component, not deployment readiness.",
+    "examples": [
+      "tokens=[10,11,12], spans=[[2,3]], limit=3 → [-100,-100,12]",
+      "Two assistant spans supervise both spans",
+      "Truncation before every target raises ValueError"
+    ],
+    "visible": [
+      "assert solve([10,11,12],[[2,3]],3)==[-100,-100,12]",
+      "assert solve([1,2,3,4],[[1,2],[3,4]],4)==[-100,2,-100,4]",
+      "assert solve([1,2,3,4],[[1,4]],3)==[-100,2,3]"
+    ],
+    "hints": [
+      "Build an ignored label for each retained token.",
+      "Validate spans before truncating.",
+      "Position zero alone is not a next-token training target."
+    ],
+    "editorial": "Preserve tokenizer-aligned labels, mask context, and reject zero-target examples. Real chat spans must come from the official template, not a delimiter guess.",
+    "mistakes": [
+      "Skipping validation or empty inputs",
+      "Changing the stated objective",
+      "Claiming system-wide correctness from a component test"
+    ],
+    "complexity": "O(n+s) time, O(n) output space",
+    "prerequisites": []
+  },
+  {
+    "id": "idempotency-ledger",
+    "title": "Replay operations without duplicate effects",
+    "track": 10,
+    "topic": "Agents",
+    "difficulty": 4,
+    "labs": [
+      "General"
+    ],
+    "minutes": 35,
+    "statement": "Replay events containing key (string) and value (integer). A repeated key with identical value has one effect; a conflicting reuse raises ValueError. Return the sum of unique operation values. Empty input returns zero. This models a server-side idempotency ledger; it does not claim exactly-once network delivery.",
+    "signature": "def solve(events):",
+    "starter": "def solve(events):\n    pass\n",
+    "constraints": "Use standard-library Python. Do not mutate inputs. Follow the stated validation, empty-input and tie rules. Local checks verify the stated component, not deployment readiness.",
+    "examples": [
+      "[] → 0",
+      "a:3, a:3 → 3",
+      "a:3, b:-1 → 2"
+    ],
+    "visible": [
+      "assert solve([])==0",
+      "assert solve([dict(key='a',value=3)]*2)==3",
+      "assert solve([dict(key='a',value=3),dict(key='b',value=-1)])==2"
+    ],
+    "hints": [
+      "The operation key identifies an intended effect, not a request attempt.",
+      "Store the original payload with its key.",
+      "A conflicting payload is an error, not a new effect."
+    ],
+    "editorial": "Use a ledger of operation keys and payloads. In a real service the effect and ledger update need an atomic transaction and a retention policy.",
+    "mistakes": [
+      "Skipping validation or empty inputs",
+      "Changing the stated objective",
+      "Claiming system-wide correctness from a component test"
+    ],
+    "complexity": "O(n) expected time, O(u) space for unique keys",
+    "prerequisites": []
+  },
+  {
+    "id": "trajectory-score",
+    "title": "Score safe agent outcomes",
+    "track": 10,
+    "topic": "Agents",
+    "difficulty": 4,
+    "labs": [
+      "General"
+    ],
+    "minutes": 35,
+    "statement": "Each trial has boolean success, nonnegative integer steps, and nonnegative integer violations. Return success_rate, safe_success_rate, and mean_steps. Safe success requires success and zero violations. An empty set returns None for all three metrics. Reject invalid fields. A fluent final answer does not erase prohibited actions.",
+    "signature": "def solve(trials):",
+    "starter": "def solve(trials):\n    pass\n",
+    "constraints": "Use standard-library Python. Do not mutate inputs. Follow the stated validation, empty-input and tie rules. Local checks verify the stated component, not deployment readiness.",
+    "examples": [
+      "[] → all metrics None",
+      "Successful trial with a violation → safe_success_rate=0",
+      "One safe success and one failure → safe_success_rate=0.5"
+    ],
+    "visible": [
+      "assert solve([])['success_rate'] is None",
+      "assert solve([dict(success=True,steps=2,violations=1)])['safe_success_rate']==0",
+      "assert solve([dict(success=True,steps=2,violations=0),dict(success=False,steps=4,violations=0)])['mean_steps']==3"
+    ],
+    "hints": [
+      "Keep task success separate from policy compliance.",
+      "Use all trials in each rate denominator.",
+      "Missing evidence is None, not a perfect zero-trial score."
+    ],
+    "editorial": "Track task and safety outcomes independently. Later evaluate frozen environments, injected faults, cost and repeated trials per task.",
+    "mistakes": [
+      "Skipping validation or empty inputs",
+      "Changing the stated objective",
+      "Claiming system-wide correctness from a component test"
+    ],
+    "complexity": "O(n) time, O(1) auxiliary space",
+    "prerequisites": []
+  },
+  {
+    "id": "retrieval-metrics",
+    "title": "Measure retrieval before generation",
+    "track": 9,
+    "topic": "Evaluation",
+    "difficulty": 4,
+    "labs": [
+      "General"
+    ],
+    "minutes": 35,
+    "statement": "Given ranked retrieved document IDs and relevant document IDs, return recall and reciprocal_rank. Remove duplicate retrieved IDs while preserving order BEFORE calculating rank. Relevant IDs form a set. When no relevant document exists, recall is None and reciprocal_rank is zero. This measures retrieval only, not answer faithfulness.",
+    "signature": "def solve(retrieved, relevant):",
+    "starter": "def solve(retrieved, relevant):\n    pass\n",
+    "constraints": "Use standard-library Python. Do not mutate inputs. Follow the stated validation, empty-input and tie rules. Local checks verify the stated component, not deployment readiness.",
+    "examples": [
+      "['a'], ['a'] → recall=1, reciprocal_rank=1",
+      "['x','a'], ['a','b'] → recall=0.5, reciprocal_rank=0.5",
+      "No relevant documents → recall=None"
+    ],
+    "visible": [
+      "assert solve(['a'],['a'])==dict(recall=1,reciprocal_rank=1)",
+      "assert solve(['x','a'],['a','b'])==dict(recall=.5,reciprocal_rank=.5)",
+      "assert solve([],[])==dict(recall=None,reciprocal_rank=0)"
+    ],
+    "hints": [
+      "Ground truth and retrieved evidence have different roles.",
+      "Deduplicate before ranking under this contract.",
+      "An unanswerable query needs a separate evaluation slice."
+    ],
+    "editorial": "Compute coverage and first-hit rank separately. A RAG lab should additionally test permissions, citations, answer correctness and abstention.",
+    "mistakes": [
+      "Skipping validation or empty inputs",
+      "Changing the stated objective",
+      "Claiming system-wide correctness from a component test"
+    ],
+    "complexity": "O(n+m) expected time and space",
+    "prerequisites": []
+  },
+  {
+    "id": "lora-delta",
+    "title": "Compute a scaled low-rank adapter update",
+    "track": 7,
+    "topic": "Post-training",
+    "difficulty": 4,
+    "labs": [
+      "General"
+    ],
+    "minutes": 35,
+    "statement": "x is a nonempty input vector, A has shape [rank,input_dim], B has shape [output_dim,rank]. Return (alpha/rank) * B * A * x as a list. Reject zero rank, ragged or incompatible matrices. This is the adapter delta only; the frozen base output is not included.",
+    "signature": "def solve(x, a, b, alpha):",
+    "starter": "def solve(x, a, b, alpha):\n    pass\n",
+    "constraints": "Use standard-library Python. Do not mutate inputs. Follow the stated validation, empty-input and tie rules. Local checks verify the stated component, not deployment readiness.",
+    "examples": [
+      "x=[2], A=[[3]], B=[[4]], alpha=1 → [24]",
+      "alpha=0 → a zero delta",
+      "With rank=2, divide scaling by 2"
+    ],
+    "visible": [
+      "assert solve([2],[[3]],[[4]],1)==[24]",
+      "assert solve([2],[[3]],[[4]],0)==[0]",
+      "assert solve([1,2],[[1,0],[0,1]],[[1,1]],2)==[3]"
+    ],
+    "hints": [
+      "Compute A x first.",
+      "Multiply that rank-sized vector by B.",
+      "Apply alpha/rank once."
+    ],
+    "editorial": "Use the low-rank factorization without constructing a dense BA matrix. Tests cover orientation, scaling and shape errors.",
+    "mistakes": [
+      "Skipping validation or empty inputs",
+      "Changing the stated objective",
+      "Claiming system-wide correctness from a component test"
+    ],
+    "complexity": "O(r*input_dim + output_dim*r) time, O(r+output_dim) auxiliary/output space",
+    "prerequisites": []
+  },
+  {
+    "id": "symmetric-quantize",
+    "title": "Quantize and reconstruct a scalar block",
+    "track": 8,
+    "topic": "Numerics",
+    "difficulty": 4,
+    "labs": [
+      "General"
+    ],
+    "minutes": 35,
+    "statement": "For finite values and positive integer qmax, use scale=max(abs(values))/qmax, round with Python round (ties to even), and clamp codes to [-qmax,qmax]. Return {scale,codes,reconstructed}. Use scale=1 for empty/all-zero input. Reject nonfinite values or invalid qmax. This uniform symmetric toy quantizer is NOT NF4, GGUF, or a weight-loader implementation.",
+    "signature": "def solve(values, qmax):",
+    "starter": "def solve(values, qmax):\n    pass\n",
+    "constraints": "Use standard-library Python. Do not mutate inputs. Follow the stated validation, empty-input and tie rules. Local checks verify the stated component, not deployment readiness.",
+    "examples": [
+      "[-2,0,2], qmax=2 → scale=1, codes=[-2,0,2]",
+      "[0,0] → scale=1",
+      "[] → empty codes and reconstruction"
+    ],
+    "visible": [
+      "assert solve([-2,0,2],2)==dict(scale=1,codes=[-2,0,2],reconstructed=[-2,0,2])",
+      "assert solve([0,0],7)['scale']==1",
+      "assert solve([],7)['codes']==[]"
+    ],
+    "hints": [
+      "Find the absolute peak before choosing a scale.",
+      "Quantization and reconstruction use opposite scale operations.",
+      "Test zero blocks and halfway rounding."
+    ],
+    "editorial": "Measure reconstruction error after a precisely specified quantizer. Real formats also require grouping, metadata and kernel compatibility checks.",
+    "mistakes": [
+      "Skipping validation or empty inputs",
+      "Changing the stated objective",
+      "Claiming system-wide correctness from a component test"
+    ],
+    "complexity": "O(n) time and output space",
+    "prerequisites": []
+  },
+  {
+    "id": "context-budget",
+    "title": "Select context under a hard token budget",
+    "track": 10,
+    "topic": "Agents",
+    "difficulty": 4,
+    "labs": [
+      "General"
+    ],
+    "minutes": 35,
+    "statement": "Items have unique string id, nonnegative integer tokens, numeric priority, and boolean pinned. Include pinned items, then consider unpinned items by descending priority (ties keep original order), skipping any item that does not fit. Return selected IDs in ORIGINAL order. Reject duplicate IDs or a pinned total exceeding the nonnegative integer budget. This deterministic greedy policy is not an optimal knapsack solver or an authorization boundary.",
+    "signature": "def solve(items, budget):",
+    "starter": "def solve(items, budget):\n    pass\n",
+    "constraints": "Use standard-library Python. Do not mutate inputs. Follow the stated validation, empty-input and tie rules. Local checks verify the stated component, not deployment readiness.",
+    "examples": [
+      "[] with budget=0 → []",
+      "A pinned instruction survives lower priority",
+      "Skip an oversized item and consider the next"
+    ],
+    "visible": [
+      "assert solve([],0)==[]",
+      "assert solve([dict(id='a',tokens=2,priority=1,pinned=True)],2)==['a']",
+      "assert solve([dict(id='a',tokens=9,priority=9,pinned=False),dict(id='b',tokens=1,priority=1,pinned=False)],1)==['b']"
+    ],
+    "hints": [
+      "Reserve pinned context first.",
+      "Priority decides admission; original order decides output order.",
+      "An item that does not fit should not stop later candidates."
+    ],
+    "editorial": "Separate admission policy from ordering and preserve mandatory context. In a real agent, enforce permissions outside the prompt and include an output-token reserve.",
+    "mistakes": [
+      "Skipping validation or empty inputs",
+      "Changing the stated objective",
+      "Claiming system-wide correctness from a component test"
+    ],
+    "complexity": "O(n log n) time, O(n) space",
+    "prerequisites": []
+  },
+  {
+    "id": "dpo-loss",
+    "title": "Compute a stable reference-relative preference loss",
+    "track": 7,
+    "topic": "Post-training",
+    "difficulty": 4,
+    "labs": [
+      "General"
+    ],
+    "minutes": 35,
+    "statement": "Inputs pc, pr, rc, rr are finite sequence log-probabilities for policy chosen/rejected and reference chosen/rejected. beta is finite and positive. Return -log(sigmoid(beta*((pc-pr)-(rc-rr)))) without overflow. Reject invalid beta or nonfinite inputs. Values represent consistently masked sequence sums, not averaged token scores.",
+    "signature": "def solve(pc, pr, rc, rr, beta):",
+    "starter": "def solve(pc, pr, rc, rr, beta):\n    pass\n",
+    "constraints": "Use standard-library Python. Do not mutate inputs. Follow the stated validation, empty-input and tie rules. Local checks verify the stated component, not deployment readiness.",
+    "examples": [
+      "Identical policy/reference margin → log(2)",
+      "Improved policy margin → loss below log(2)",
+      "Large negative margin remains finite"
+    ],
+    "visible": [
+      "import math; assert abs(solve(-1,-2,-1,-2,1)-math.log(2))<1e-12",
+      "assert solve(0,-2,0,-1,1)<.7",
+      "assert abs(solve(-1000,0,0,0,1)-1000)<1e-12"
+    ],
+    "hints": [
+      "Subtract reference and policy preference margins.",
+      "Use a stable softplus of the negative scaled margin.",
+      "Large absolute margins should not overflow exp."
+    ],
+    "editorial": "Compute the reference-relative preference margin, then stable softplus. A scalar objective test does not establish the quality of a trained preference model.",
+    "mistakes": [
+      "Skipping validation or empty inputs",
+      "Changing the stated objective",
+      "Claiming system-wide correctness from a component test"
+    ],
+    "complexity": "O(1) time and space",
+    "prerequisites": []
   }
 ]

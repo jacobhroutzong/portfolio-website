@@ -1,7 +1,13 @@
 import { readFile, readdir } from "node:fs/promises";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { lessonSchema, problemSchema, knowledgeSchema } from "../src/lib/ascent/schema.ts";
+import {
+  lessonSchema,
+  problemSchema,
+  knowledgeSchema,
+  studyPathSchema,
+} from "../src/lib/ascent/schema.ts";
+import { validateGraph } from "../src/lib/ascent/curriculum-validation.ts";
 import { parse } from "yaml";
 const lessons = parse(
   await readFile(
@@ -16,10 +22,39 @@ const problems = parse(
   ),
 );
 const ids = new Set();
-const knowledge=knowledgeSchema.array().parse(JSON.parse(await readFile(new URL('../content/knowledge/library.json',import.meta.url),'utf8')));
-if(new Set(knowledge.map(k=>k.id)).size!==knowledge.length)throw new Error('Duplicate knowledge ID');
-for(const k of knowledge){for(const id of k.related)if(!knowledge.some(item=>item.id===id))throw new Error('Unknown concept '+id);if(!problems.some(p=>p.id===k.problem))throw new Error('Unknown implementation link '+k.problem);}
-console.log(`Validated ${knowledge.length} connected references, primary source dates and original interview questions.`);
+const knowledge = knowledgeSchema
+  .array()
+  .parse(
+    JSON.parse(
+      await readFile(
+        new URL("../content/knowledge/library.json", import.meta.url),
+        "utf8",
+      ),
+    ),
+  );
+const paths = studyPathSchema
+  .array()
+  .parse(
+    JSON.parse(
+      await readFile(
+        new URL("../content/knowledge/paths.json", import.meta.url),
+        "utf8",
+      ),
+    ),
+  );
+validateGraph(knowledge, paths, new Set(problems.map((p) => p.id)));
+if (new Set(knowledge.map((k) => k.id)).size !== knowledge.length)
+  throw new Error("Duplicate knowledge ID");
+for (const k of knowledge) {
+  for (const id of k.related)
+    if (!knowledge.some((item) => item.id === id))
+      throw new Error("Unknown concept " + id);
+  if (!problems.some((p) => p.id === k.problem))
+    throw new Error("Unknown implementation link " + k.problem);
+}
+console.log(
+  `Validated ${knowledge.length} connected references, primary source dates and original interview questions.`,
+);
 for (const lesson of lessons) {
   lessonSchema.parse(lesson);
   if (ids.has(lesson.id)) throw new Error("Duplicate lesson");
