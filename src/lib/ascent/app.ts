@@ -83,9 +83,11 @@ function toast(message: string) {
 async function save() {
   try {
     await store.save(p);
+    return true;
   } catch {
     storage = false;
     toast("Browser storage unavailable. Export your progress before closing.");
+    return false;
   }
 }
 function shell(active: string, html: string) {
@@ -1074,7 +1076,7 @@ function settings() {
           .join("<br>") || "Activity will appear after your first exercise."
       }</p></article>`,
   );
-  on("#save-goal", "click", () => {
+  on("#save-goal", "click", async () => {
     const n = Number($<HTMLInputElement>("#goal").value);
     if (!Number.isInteger(n) || n < 10 || n > 1000) {
       toast("Choose an integer goal between 10 and 1000.");
@@ -1082,8 +1084,11 @@ function settings() {
     }
     p.goal = n;
     p.restDay = Number($<HTMLSelectElement>("#rest").value);
-    void save();
-    toast("Intention saved.");
+    const button = $<HTMLButtonElement>("#save-goal");
+    button.disabled = true;
+    const persisted = await save();
+    button.disabled = false;
+    if (persisted) toast("Intention saved.");
   });
   on("#export", "click", () => {
     const url = URL.createObjectURL(

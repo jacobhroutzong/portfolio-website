@@ -6,3 +6,12 @@ test-results
 playwright-report
 .env
 .env.*
+artifacts
+coverage
+.wrangler
+.vercel
+.netlify
+.npmrc
+.aws
+.ssh
+*.log

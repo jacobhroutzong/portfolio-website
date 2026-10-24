@@ -18,7 +18,10 @@ test("workspace, filters, local persistence and responsive layout", async ({
       () => document.documentElement.scrollWidth <= window.innerWidth,
     ),
   ).toBe(true);
-  await page.screenshot({path:`artifacts/ascent-${test.info().project.name}.png`,fullPage:true});
+  await page.screenshot({
+    path: `artifacts/ascent-${test.info().project.name}.png`,
+    fullPage: true,
+  });
   await page.getByRole("link", { name: "Practice", exact: true }).click();
   await page.getByLabel("Topic", { exact: true }).selectOption("Attention");
   await expect(
@@ -27,6 +30,9 @@ test("workspace, filters, local persistence and responsive layout", async ({
   await page.getByRole("link", { name: "Your progress", exact: true }).click();
   await page.getByLabel("XP per day").fill("100");
   await page.getByRole("button", { name: "Save intention" }).click();
+  await expect(
+    page.getByText("Intention saved.", { exact: true }),
+  ).toBeVisible();
   await page.reload();
   await expect(page.getByLabel("XP per day")).toHaveValue("100");
 });

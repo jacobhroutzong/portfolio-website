@@ -65,6 +65,8 @@ docker run --rm -p 7860:7860 ascent
 
 Open `http://localhost:7860/ascent/`. The container serves the entire portfolio. A separate Space will have separate browser-local progress. The Docker daemon must be running to build and verify the container.
 
+The Docker build and HTTP smoke check also run in GitHub Actions and passed for the initial branch. Cloudflare Pages automatically publishes branch previews. A separate Workers integration may report an independent failure; diagnose that integration in Cloudflare rather than changing the working Pages deployment.
+
 ## Add content in five minutes
 
 1. Copy a lesson object in `content/tracks/lessons.yaml`. Choose a unique slug and track, write an objective, prerequisites, a concept under 150 words, primary-source URL, recap, and 6–12 exercises. Each exercise needs a unique ID, type, prompt, answer and explanation. Executable items include `code`, `tests`, and `reference`; multi-part items also include cumulative `stages`.
