@@ -1,0 +1,9 @@
+---
+import Base from '../../layouts/Base.astro';
+import '../../styles/ascent.css';
+---
+<Base title="Ascent · AI lab preparation" description="A local-first learning workspace. Build the foundations, write the code, and measure your progress.">
+  <div id="ascent-app" class="ascent"><p class="loading">Opening your learning workspace…</p></div>
+  <noscript><div class="container notice">Ascent needs JavaScript to save progress and run exercises. Your portfolio remains available without it.</div></noscript>
+  <script>import { mount } from '../../lib/ascent/app'; mount();</script>
+</Base>

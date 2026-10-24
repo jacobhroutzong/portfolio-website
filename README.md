@@ -1,6 +1,10 @@
 # portfolio-website
 # hosts my portfolio website
 
+## Ascent learning app
+
+The integrated app lives at `/ascent/`. See [Ascent setup, deployment, authoring, and limits](docs/ASCENT.md). It shares this portfolio's static Cloudflare Pages deployment; no separate service is required.
+
 ## Engineering portfolio
 
 A static Astro + TypeScript + Tailwind portfolio designed for Cloudflare Pages. Open this folder as a project in Codex to work on the site.
