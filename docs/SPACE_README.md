@@ -5,7 +5,8 @@ colorFrom: green
 colorTo: gray
 sdk: static
 app_file: dist/index.html
-app_build_command: git clone --depth 1 --branch codex/ascent-ai-lab-prep https://github.com/jacobhroutzong/portfolio-website.git source && cd source && npm ci && npm run build && node tools/space-entry.mjs && mv dist ../dist
+app_build_command: >-
+  python -c "import urllib.request,zipfile,io,pathlib; z=zipfile.ZipFile(io.BytesIO(urllib.request.urlopen('https://codeload.github.com/jacobhroutzong/portfolio-website/zip/refs/heads/codex/ascent-ai-lab-prep').read())); z.extractall('download'); next(pathlib.Path('download').iterdir()).rename('source')" && cd source && npm ci && npm run build && node tools/space-entry.mjs && mv dist ../dist
 fullWidth: true
 short_description: Advanced AI knowledge and research engineering practice
 ---
