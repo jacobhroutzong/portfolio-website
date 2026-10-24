@@ -11,7 +11,7 @@ await mkdir(output, { recursive: true });
 await cp(new URL("../dist/", import.meta.url), output, { recursive: true });
 await writeFile(
   new URL("index.html", output),
-  '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0;url=/ascent/"><title>Ascent · AI knowledge workspace</title></head><body><a href="/ascent/">Open Ascent</a></body></html>',
+  '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0;url=/ascent/index.html"><title>Ascent · AI knowledge workspace</title></head><body><a href="/ascent/index.html">Open Ascent</a></body></html>',
 );
 await writeFile(
   new URL("README.md", output),
