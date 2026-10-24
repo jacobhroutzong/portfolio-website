@@ -1,0 +1,13 @@
+{
+  "reference": "def solve(weights, gradients, m, v, step, lr=0.001, beta1=0.9, beta2=0.999, eps=1e-8, decay=0.01):\n    import math\n    if not(len(weights)==len(gradients)==len(m)==len(v)) or step<1:raise ValueError(\"invalid state\")\n    nm=[beta1*a+(1-beta1)*g for a,g in zip(m,gradients)]\n    nv=[beta2*a+(1-beta2)*g*g for a,g in zip(v,gradients)]\n    nw=[w*(1-lr*decay)-lr*(a/(1-beta1**step))/(math.sqrt(b/(1-beta2**step))+eps) for w,a,b in zip(weights,nm,nv)]\n    return nw,nm,nv",
+  "hidden": [
+    "w,m,v=solve([1],[-2],[0],[0],1,lr=.1,decay=0); assert abs(w[0]-1.1)<1e-8",
+    "w,m,v=solve([0],[1],[0],[0],1); assert abs(m[0]-.1)<1e-9",
+    "w,m,v=solve([0],[1],[0],[0],1); assert abs(v[0]-.001)<1e-9",
+    "w,m,v=solve([2],[0],[0],[0],1,lr=0); assert w==[2]",
+    "w,m,v=solve([3],[0],[0],[0],1,decay=0); assert w==[3]",
+    "weights=[1]; before=weights[:]; solve(weights,[1],[0],[0],1); assert weights==before",
+    "try:\n solve([1],[],[0],[0],1)\n assert False\nexcept ValueError:pass",
+    "try:\n solve([1],[1],[0],[0],0)\n assert False\nexcept ValueError:pass"
+  ]
+}

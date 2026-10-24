@@ -63,6 +63,8 @@ export class PyodideRunner implements Runner {
       );
       worker.onmessage = ({ data }) => {
         if (data.ready) {
+          worker.postMessage({ code, tests, cap: limits.output });
+        } else if (data.executing) {
           clearTimeout(bootTimer);
           executionTimer = setTimeout(
             () =>
@@ -74,7 +76,6 @@ export class PyodideRunner implements Runner {
               }),
             limits.milliseconds,
           );
-          worker.postMessage({ code, tests, cap: limits.output });
         } else finish(data);
       };
       worker.onerror = (e) =>

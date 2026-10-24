@@ -1,0 +1,1027 @@
+[
+  {
+    "id": "attention-contract",
+    "domain": "Architecture",
+    "track": 6,
+    "title": "Attention as a shape and information-flow contract",
+    "summary": "Q, K and V have different roles; the mask defines what information is allowed to flow.",
+    "explanation": "For Q∈R^(Tq×d), K∈R^(Tk×d), V∈R^(Tk×dv), the score matrix is Tq×Tk and the result is Tq×dv. Normalize over keys. A causal mask belongs before normalization, and a padded query may need its output discarded separately. Shape agreement alone cannot establish correct masking.",
+    "equation": "QK^T / \\sqrt{d_k} \\;\\to\\; \\operatorname{softmax}_{keys}(S+M)V",
+    "example": "With two zero-score queries and values [2,6], causal outputs are [2,4]. Replacing the second value by 100 must leave the first output at 2.",
+    "pitfalls": [
+      "Masking after softmax without renormalization changes row sums.",
+      "A fully masked row can produce NaNs.",
+      "A transposed softmax axis can silently pass shape tests."
+    ],
+    "related": [
+      "kv-cache",
+      "gqa"
+    ],
+    "problem": "multihead",
+    "level": "Advanced",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "Original research paper",
+        "url": "https://arxiv.org/abs/1706.03762"
+      }
+    ],
+    "question": {
+      "id": "q-attention-contract",
+      "prompt": "Design tests for causal attention that do more than check the output shape.",
+      "answer": "Check a hand-computed example, finite row sums, and invariance of earlier outputs to future-token changes. Test unequal query and key lengths explicitly; an offset-aware decode mask differs from a square training mask. Compare against an independent implementation on seeded random inputs.",
+      "followups": [
+        "Which test detects a mask with the wrong offset during cached decoding?",
+        "How would you handle a query with no valid key?"
+      ],
+      "rubric": [
+        "State the relevant mechanism and assumptions.",
+        "Work through a concrete example or estimate.",
+        "Discuss a failure mode and a test that detects it.",
+        "Explain a tradeoff and evidence that would change your decision."
+      ]
+    }
+  },
+  {
+    "id": "gqa",
+    "domain": "Architecture",
+    "track": 6,
+    "title": "Grouped-query attention and cache pressure",
+    "summary": "Query heads and key/value heads need not have the same count.",
+    "explanation": "Multi-head attention gives each query head its own K/V head. Multi-query attention shares one; grouped-query attention shares one K/V head across a group of query heads. This changes cache size, not the number of query heads. Compare quality, bandwidth, and checkpoint compatibility rather than assuming fewer heads always wins.",
+    "equation": "M_{KV}=2BLTH_{KV}d_hb",
+    "example": "For B=1, L=32, T=4096, Hkv=8, dh=128, and b=2 bytes, the cache is 536,870,912 bytes: 512 MiB. Using 32 K/V heads multiplies that by four.",
+    "pitfalls": [
+      "Confusing query-head count with K/V-head count.",
+      "Ignoring batch and layer factors.",
+      "Treating a checkpoint conversion as a reshape."
+    ],
+    "related": [
+      "kv-cache",
+      "rope"
+    ],
+    "problem": "multihead",
+    "level": "Intermediate",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "Original research paper",
+        "url": "https://arxiv.org/abs/2305.13245"
+      }
+    ],
+    "question": {
+      "id": "q-gqa",
+      "prompt": "Estimate the KV memory saved by reducing 32 K/V heads to 8. What could you lose?",
+      "answer": "The K/V cache falls by a factor of four at fixed dimensions, sequence length, batch and dtype. Discuss reduced representational freedom, conversion/uptraining, and the need to validate quality. End-to-end latency also depends on kernel support and the serving workload.",
+      "followups": [
+        "Why does this help decode more than prefill?",
+        "What must be checked before grouping existing checkpoint heads?"
+      ],
+      "rubric": [
+        "State the relevant mechanism and assumptions.",
+        "Work through a concrete example or estimate.",
+        "Discuss a failure mode and a test that detects it.",
+        "Explain a tradeoff and evidence that would change your decision."
+      ]
+    }
+  },
+  {
+    "id": "rope",
+    "domain": "Architecture",
+    "track": 6,
+    "title": "Rotary positions and cached decoding",
+    "summary": "Position transforms must stay consistent when generation uses a cache.",
+    "explanation": "RoPE applies position-dependent rotations to paired query and key coordinates. Their inner product encodes relative-position structure. During cached generation, new queries and keys use their absolute sequence positions; restarting positions at zero changes the computation. Longer-context modifications need explicit evaluation rather than an extrapolation guarantee.",
+    "equation": "(R_mq)^T(R_nk)=q^TR_{n-m}k",
+    "example": "If a prompt fills positions 0 through 127, the next token uses position 128 even though its query tensor has sequence length one. Compare cached and full-prefix logits at every step.",
+    "pitfalls": [
+      "Rotating cached keys twice.",
+      "Resetting positions for each decode step.",
+      "Assuming arbitrary context extension preserves quality."
+    ],
+    "related": [
+      "kv-cache",
+      "flash-attention"
+    ],
+    "problem": "attention-head",
+    "level": "Intermediate",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "Original research paper",
+        "url": "https://arxiv.org/abs/2104.09864"
+      }
+    ],
+    "question": {
+      "id": "q-rope",
+      "prompt": "How would you debug a model whose cached and uncached generation disagree?",
+      "answer": "Disable stochastic layers, fix token inputs, and compare logits step by step. Check position indices, cache offsets, key rotation, mask alignment, dtype and layout. Use short sequences first and tolerances appropriate to the computation.",
+      "followups": [
+        "What changes if cache entries are evicted?",
+        "Why might token outputs differ even for close logits?"
+      ],
+      "rubric": [
+        "State the relevant mechanism and assumptions.",
+        "Work through a concrete example or estimate.",
+        "Discuss a failure mode and a test that detects it.",
+        "Explain a tradeoff and evidence that would change your decision."
+      ]
+    }
+  },
+  {
+    "id": "flash-attention",
+    "domain": "Architecture",
+    "track": 8,
+    "title": "FlashAttention: arithmetic versus memory traffic",
+    "summary": "An exact attention implementation can be faster without making attention sparse.",
+    "explanation": "FlashAttention organizes attention around GPU memory traffic and tiled computation. It avoids materializing the full attention matrix in high-bandwidth memory. Online normalization combines blocks while preserving the mathematical softmax result, up to floating-point differences. Dense attention still has quadratic interactions; lower memory traffic is not the same as linear-time attention.",
+    "equation": "m=\\max(m_a,m_b),\\quad l=e^{m_a-m}l_a+e^{m_b-m}l_b",
+    "example": "A 4096×4096 score matrix contains 16,777,216 elements. At two bytes each that is 32 MiB per head before accounting for other intermediates. Avoiding that write/read can matter even when arithmetic is unchanged.",
+    "pitfalls": [
+      "Calling it approximate attention.",
+      "Equating memory savings with linear arithmetic.",
+      "Benchmarking only one sequence length."
+    ],
+    "related": [
+      "gqa",
+      "kv-cache"
+    ],
+    "problem": "softmax-stable",
+    "level": "Advanced",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "Original research paper",
+        "url": "https://arxiv.org/abs/2205.14135"
+      }
+    ],
+    "question": {
+      "id": "q-flash-attention",
+      "prompt": "Explain how exact attention can use less memory and run faster.",
+      "answer": "Distinguish arithmetic, memory footprint and memory traffic. Describe tiling and online softmax statistics. Discuss recomputation and hardware-dependent performance; validate output and gradient tolerances before reporting speedups.",
+      "followups": [
+        "When might a small attention kernel fail to benefit?",
+        "How should a benchmark separate warmup and compilation?"
+      ],
+      "rubric": [
+        "State the relevant mechanism and assumptions.",
+        "Work through a concrete example or estimate.",
+        "Discuss a failure mode and a test that detects it.",
+        "Explain a tradeoff and evidence that would change your decision."
+      ]
+    }
+  },
+  {
+    "id": "kv-cache",
+    "domain": "Inference",
+    "track": 8,
+    "title": "KV cache accounting and equivalence tests",
+    "summary": "A cache trades persistent memory for avoiding repeated key/value computation.",
+    "explanation": "A decoder stores each layer’s keys and values for earlier tokens. Prefill processes a prompt; decode adds tokens while reusing that state. Cache size grows with retained tokens and active sequences. Correctness requires position offsets, sequence ownership, causal masking and eviction policy to agree with the intended model.",
+    "equation": "bytes=2\\times B\\times L\\times T\\times H_{KV}\\times d_h\\times bytes_{element}",
+    "example": "A two-token prefix followed by a one-token append should produce the same last-token output as a full three-token forward pass when stochasticity is disabled. Test two sequences whose cache slots are interleaved to detect cross-request leakage.",
+    "pitfalls": [
+      "Forgetting the factor of two for keys and values.",
+      "Reusing one request’s slots for another.",
+      "Comparing sampled tokens instead of logits."
+    ],
+    "related": [
+      "rope",
+      "continuous-batching"
+    ],
+    "problem": "kv-append",
+    "level": "Intermediate",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "Original research paper",
+        "url": "https://arxiv.org/abs/2309.06180"
+      }
+    ],
+    "question": {
+      "id": "q-kv-cache",
+      "prompt": "Design a cache API and its most important correctness tests.",
+      "answer": "Specify append, read, reset, capacity and ownership. Test cached/full equivalence, nonzero offsets, independent sequences, and the boundary at capacity. Explain whether eviction changes context semantics. A reset must clear length and ownership even if storage is reused.",
+      "followups": [
+        "How does beam branching affect sharing?",
+        "What changes for sliding-window attention?"
+      ],
+      "rubric": [
+        "State the relevant mechanism and assumptions.",
+        "Work through a concrete example or estimate.",
+        "Discuss a failure mode and a test that detects it.",
+        "Explain a tradeoff and evidence that would change your decision."
+      ]
+    }
+  },
+  {
+    "id": "continuous-batching",
+    "domain": "Inference",
+    "track": 8,
+    "title": "Continuous batching and latency budgets",
+    "summary": "Serving is a scheduling problem with variable sequence lengths.",
+    "explanation": "Continuous batching admits and retires requests as generation proceeds. Throughput, time to first token, time per output token, fairness and memory occupancy are different objectives. Long prefills can delay decode work unless scheduling bounds interference. Backpressure must be defined before the queue becomes unbounded.",
+    "equation": "L_{request}=L_{queue}+L_{prefill}+N_{out}L_{decode}",
+    "example": "Two services can both emit 1000 tokens/s while one keeps a user waiting 8 seconds before the first token. Report latency percentiles and arrival patterns alongside aggregate throughput.",
+    "pitfalls": [
+      "Optimizing tokens/s while ignoring queue latency.",
+      "Comparing different output-length distributions.",
+      "No policy for canceled requests."
+    ],
+    "related": [
+      "paged-attention"
+    ],
+    "problem": "kv-append",
+    "level": "Intermediate",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "Original research paper",
+        "url": "https://arxiv.org/abs/2309.06180"
+      }
+    ],
+    "question": {
+      "id": "q-continuous-batching",
+      "prompt": "Design admission control for a bursty LLM endpoint.",
+      "answer": "Clarify latency SLOs and workload distribution. Bound queues, reserve memory for output growth, and define reject/degrade behavior. Measure prefill/decode interference, fairness, cancellation cleanup and tail latency under open-loop load.",
+      "followups": [
+        "Would you prioritize short requests?",
+        "How would you prevent long-request starvation?"
+      ],
+      "rubric": [
+        "State the relevant mechanism and assumptions.",
+        "Work through a concrete example or estimate.",
+        "Discuss a failure mode and a test that detects it.",
+        "Explain a tradeoff and evidence that would change your decision."
+      ]
+    }
+  },
+  {
+    "id": "paged-attention",
+    "domain": "Inference",
+    "track": 8,
+    "title": "Paged KV storage and fragmentation",
+    "summary": "Logical token positions need not occupy one contiguous physical allocation.",
+    "explanation": "PagedAttention uses block-based KV storage with a mapping from logical blocks to physical blocks. This can reduce fragmentation and support sharing of common prefixes. Indirection and block size introduce their own costs. A memory allocator and an attention kernel must agree on ownership, layout and valid lengths.",
+    "equation": "waste_{tail}<N_{sequences}\\times block_{tokens}",
+    "example": "With block size 16 and a 17-token sequence, two blocks hold 32 token slots; 15 slots are unused in the last block. Smaller blocks reduce tail waste but increase metadata and mapping work.",
+    "pitfalls": [
+      "Claiming paging removes all memory overhead.",
+      "Ignoring reference counts for shared blocks.",
+      "Reading unwritten slots in the tail block."
+    ],
+    "related": [
+      "continuous-batching",
+      "speculative-decoding"
+    ],
+    "problem": "kv-append",
+    "level": "Advanced",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "Original research paper",
+        "url": "https://arxiv.org/abs/2309.06180"
+      }
+    ],
+    "question": {
+      "id": "q-paged-attention",
+      "prompt": "What invariants would you test in a paged KV allocator?",
+      "answer": "No block may be simultaneously writable by unrelated sequences. Shared immutable prefixes need safe reference counting or copy-on-write. Free only after the final owner releases a block. Check valid token bounds and recovery after cancellation.",
+      "followups": [
+        "How would you test allocator churn?",
+        "What happens when two requests diverge after a shared prefix?"
+      ],
+      "rubric": [
+        "State the relevant mechanism and assumptions.",
+        "Work through a concrete example or estimate.",
+        "Discuss a failure mode and a test that detects it.",
+        "Explain a tradeoff and evidence that would change your decision."
+      ]
+    }
+  },
+  {
+    "id": "speculative-decoding",
+    "domain": "Inference",
+    "track": 8,
+    "title": "Speculative decoding and distribution preservation",
+    "summary": "A faster draft model proposes work; the target model validates it.",
+    "explanation": "Speculative decoding can verify several draft tokens in one target pass. Exact sampling schemes include acceptance and correction rules so the resulting distribution matches the target’s. Greedy agreement alone is not a proof for stochastic sampling. Benefit depends on acceptance rate, draft cost, verification cost and hardware utilization.",
+    "equation": "speedup\\approx\\frac{accepted\\ tokens\\ per\\ cycle}{relative\\ cycle\\ cost}",
+    "example": "If a cycle yields three accepted output tokens but costs the equivalent of two ordinary target steps, the toy speedup is 1.5×. Include rejected proposals and draft overhead when measuring actual service throughput.",
+    "pitfalls": [
+      "Assuming draft accuracy alone predicts speedup.",
+      "Dropping the correction distribution.",
+      "Comparing different sampling settings."
+    ],
+    "related": [
+      "continuous-batching",
+      "compute-budget"
+    ],
+    "problem": "softmax-stable",
+    "level": "Intermediate",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "Original research paper",
+        "url": "https://arxiv.org/abs/2211.17192"
+      }
+    ],
+    "question": {
+      "id": "q-speculative-decoding",
+      "prompt": "When can speculative decoding make inference slower?",
+      "answer": "A costly draft, low acceptance, or expensive verification can erase gains. Benchmark matched prompts and sampling parameters, include both models’ work, and measure end-to-end latency rather than accepted-token rate alone.",
+      "followups": [
+        "How would you validate the output distribution?",
+        "Why does batch size change the tradeoff?"
+      ],
+      "rubric": [
+        "State the relevant mechanism and assumptions.",
+        "Work through a concrete example or estimate.",
+        "Discuss a failure mode and a test that detects it.",
+        "Explain a tradeoff and evidence that would change your decision."
+      ]
+    }
+  },
+  {
+    "id": "compute-budget",
+    "domain": "Training",
+    "track": 5,
+    "title": "Compute budgets and scaling decisions",
+    "summary": "Model size, token count and training budget are coupled choices.",
+    "explanation": "Compute-optimal scaling studies allocate a fixed training budget between model parameters and data. Their fitted optima depend on model family, data and the measured regime. A training-optimal choice may differ from a deployment-optimal one when inference volume, latency or memory dominates lifetime cost.",
+    "equation": "C\\approx6ND\\quad\\text{(rough dense-training estimate)}",
+    "example": "At N=1 billion parameters and D=20 billion tokens, 6ND is 1.2×10²⁰ FLOPs. This estimate omits important architecture and utilization details; it is a sizing tool, not a wall-time measurement.",
+    "pitfalls": [
+      "Treating an empirical scaling fit as a universal law.",
+      "Using peak GPU FLOPs as achieved throughput.",
+      "Ignoring data quality and repeated data."
+    ],
+    "related": [
+      "data-pipeline",
+      "adamw"
+    ],
+    "problem": "accumulate-grads",
+    "level": "Intermediate",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "Original research paper",
+        "url": "https://arxiv.org/abs/2203.15556"
+      }
+    ],
+    "question": {
+      "id": "q-compute-budget",
+      "prompt": "How would you choose between a larger undertrained model and a smaller longer-trained one?",
+      "answer": "State the fixed budget and deployment constraints. Compare validation quality and downstream evaluation at matched compute, include data availability, then model expected inference cost. Explain which result would change the decision.",
+      "followups": [
+        "How does high inference volume change the objective?",
+        "What evidence would show data quality is the bottleneck?"
+      ],
+      "rubric": [
+        "State the relevant mechanism and assumptions.",
+        "Work through a concrete example or estimate.",
+        "Discuss a failure mode and a test that detects it.",
+        "Explain a tradeoff and evidence that would change your decision."
+      ]
+    }
+  },
+  {
+    "id": "adamw",
+    "domain": "Training",
+    "track": 5,
+    "title": "AdamW and decoupled regularization",
+    "summary": "Adaptive gradient scaling changes how L2 penalties behave.",
+    "explanation": "Adding an L2 penalty to the loss sends its gradient through the optimizer’s adaptive scaling. Decoupled weight decay applies a separate parameter shrinkage step. With adaptive optimizers these are generally different updates. Report which parameter groups receive decay; biases and normalization parameters may follow a deliberate separate policy.",
+    "equation": "\\theta\\leftarrow(1-\\eta\\lambda)\\theta-\\eta\\widehat m/(\\sqrt{\\widehat v}+\\epsilon)",
+    "example": "With zero gradient, learning rate 0.1, weight decay 0.2 and weight 5, the decoupled shrinkage alone gives 4.9. This isolates decay behavior from momentum and gradient normalization.",
+    "pitfalls": [
+      "Equating Adam plus L2 with AdamW.",
+      "Applying decay twice.",
+      "Comparing runs with different effective learning rates."
+    ],
+    "related": [
+      "gradient-accumulation"
+    ],
+    "problem": "adamw-update",
+    "level": "Advanced",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "Original research paper",
+        "url": "https://arxiv.org/abs/1711.05101"
+      }
+    ],
+    "question": {
+      "id": "q-adamw",
+      "prompt": "Why does decoupled weight decay differ from adding an L2 loss term under Adam?",
+      "answer": "The loss penalty contributes to the gradient moments and is rescaled coordinate-wise. Decoupled decay shrinks the parameters separately. Write both updates, explain the distinction, and use a zero-gradient test to isolate shrinkage.",
+      "followups": [
+        "Should every parameter receive decay?",
+        "How do you checkpoint optimizer state correctly?"
+      ],
+      "rubric": [
+        "State the relevant mechanism and assumptions.",
+        "Work through a concrete example or estimate.",
+        "Discuss a failure mode and a test that detects it.",
+        "Explain a tradeoff and evidence that would change your decision."
+      ]
+    }
+  },
+  {
+    "id": "gradient-accumulation",
+    "domain": "Training",
+    "track": 5,
+    "title": "Gradient accumulation without changing the objective",
+    "summary": "Microbatching only reproduces a large-batch update when weighting and update boundaries match.",
+    "explanation": "Accumulate gradients across microbatches, then update once. Equal-size microbatches can average losses uniformly; unequal token counts require token-weighted normalization for a token-average objective. Clipping, scheduling, zeroing and mixed-precision unscaling must happen at the intended optimizer-step boundary.",
+    "equation": "g=\\frac{\\sum_i n_i g_i}{\\sum_i n_i}",
+    "example": "Microbatches with 2 and 6 valid tokens have mean gradients 1 and 3. The correct token-average gradient is (2×1+6×3)/8=2.5, not the unweighted mean 2.",
+    "pitfalls": [
+      "Dividing by accumulation steps when microbatches have unequal weight.",
+      "Clipping each microbatch separately.",
+      "Advancing the scheduler on every microbatch."
+    ],
+    "related": [
+      "mixed-precision"
+    ],
+    "problem": "accumulate-grads",
+    "level": "Intermediate",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "Official PyTorch documentation",
+        "url": "https://docs.pytorch.org/docs/2.14/notes/amp_examples.html"
+      }
+    ],
+    "question": {
+      "id": "q-gradient-accumulation",
+      "prompt": "Why might accumulated training differ from a single large batch?",
+      "answer": "Check loss weighting, stochastic layers, batch-dependent normalization, floating-point order and optimizer-step frequency. Compare gradients before the update on a tiny deterministic example, then isolate one source of divergence at a time.",
+      "followups": [
+        "What if the final accumulation window is shorter?",
+        "How do variable-length sequences affect normalization?"
+      ],
+      "rubric": [
+        "State the relevant mechanism and assumptions.",
+        "Work through a concrete example or estimate.",
+        "Discuss a failure mode and a test that detects it.",
+        "Explain a tradeoff and evidence that would change your decision."
+      ]
+    }
+  },
+  {
+    "id": "mixed-precision",
+    "domain": "Training",
+    "track": 5,
+    "title": "Mixed precision and numerical diagnosis",
+    "summary": "Storage dtype, compute dtype and accumulation dtype are separate decisions.",
+    "explanation": "Reduced-precision computation can improve throughput and memory use, but different formats have different exponent ranges and precision. Loss scaling protects small gradients in some workflows; it does not repair an unstable forward expression. Inspect where the first nonfinite value appears and maintain sensitive reductions in an appropriate dtype.",
+    "equation": "\\operatorname{softmax}(x)_i=\\frac{e^{x_i-m}}{\\sum_j e^{x_j-m}}",
+    "example": "A NaN may originate in a fully masked attention row before backward begins. Increasing a gradient scale cannot repair it. Log the first failing layer and test the same tiny batch in higher precision.",
+    "pitfalls": [
+      "Treating all 16-bit formats as interchangeable.",
+      "Clipping scaled gradients before unscaling.",
+      "Assuming loss scaling fixes forward overflow."
+    ],
+    "related": [
+      "flash-attention",
+      "lora"
+    ],
+    "problem": "cross-entropy",
+    "level": "Intermediate",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "Official PyTorch documentation",
+        "url": "https://docs.pytorch.org/docs/2.14/notes/amp_examples.html"
+      }
+    ],
+    "question": {
+      "id": "q-mixed-precision",
+      "prompt": "A training run becomes NaN only in mixed precision. What do you inspect?",
+      "answer": "Reproduce on one batch; find the earliest nonfinite activation, loss or gradient. Check mask rows, exponentials, division denominators, scaling/unscaling order, and optimizer state. Compare selected operations in higher precision rather than changing everything at once.",
+      "followups": [
+        "How do you distinguish underflow from overflow?",
+        "What should a skipped optimizer step do to a scheduler?"
+      ],
+      "rubric": [
+        "State the relevant mechanism and assumptions.",
+        "Work through a concrete example or estimate.",
+        "Discuss a failure mode and a test that detects it.",
+        "Explain a tradeoff and evidence that would change your decision."
+      ]
+    }
+  },
+  {
+    "id": "lora",
+    "domain": "Post-training",
+    "track": 7,
+    "title": "LoRA: parameter efficiency is not universal memory efficiency",
+    "summary": "A low-rank update reduces trainable parameters but leaves other memory costs.",
+    "explanation": "LoRA represents a weight update through low-rank factors while freezing the base weight. Trainable parameter count drops from dout×din to r(dout+din) per adapted matrix. Activations, base weights and optimizer choices still affect memory. Adapter rank and target modules are modeling decisions that should be evaluated.",
+    "equation": "\\Delta W=BA,\\quad A\\in\\mathbb R^{r\\times d_{in}},B\\in\\mathbb R^{d_{out}\\times r}",
+    "example": "For a 4096×4096 matrix and rank 8, factors contain 65,536 parameters versus 16,777,216 in the full matrix. That is a parameter-count comparison, not a claim of 256× total GPU memory savings.",
+    "pitfalls": [
+      "Ignoring activation memory.",
+      "Failing to apply the intended adapter scaling.",
+      "Assuming the same rank suits every layer and task."
+    ],
+    "related": [
+      "sft-data"
+    ],
+    "problem": "adamw-update",
+    "level": "Advanced",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "Original research paper",
+        "url": "https://arxiv.org/abs/2106.09685"
+      }
+    ],
+    "question": {
+      "id": "q-lora",
+      "prompt": "How would you evaluate an adapter configuration under a fixed memory budget?",
+      "answer": "Measure peak memory and quality under matched data, tokens, precision and batch settings. Sweep rank and target modules, account for base-model storage, and compare trainable-state savings separately from activation costs.",
+      "followups": [
+        "When can merging adapters help serving?",
+        "What evidence suggests the rank is too restrictive?"
+      ],
+      "rubric": [
+        "State the relevant mechanism and assumptions.",
+        "Work through a concrete example or estimate.",
+        "Discuss a failure mode and a test that detects it.",
+        "Explain a tradeoff and evidence that would change your decision."
+      ]
+    }
+  },
+  {
+    "id": "sft-data",
+    "domain": "Post-training",
+    "track": 7,
+    "title": "Supervised fine-tuning as a data and loss contract",
+    "summary": "A valid text example is not automatically a valid supervised objective.",
+    "explanation": "Specify which tokens contribute to the loss and which tokens are context. Preserve conversation boundaries, role formatting and train/evaluation separation. Inspect actual tokenized examples and masks rather than trusting a preprocessing pipeline. Repeated templates, leakage and mislabeled targets can dominate the apparent gain.",
+    "equation": "L=-\\frac{1}{N_{target}}\\sum_{t\\in target}\\log p_\\theta(x_t\\mid x_{<t})",
+    "example": "If a 100-token conversation has 20 answer tokens, a response-only loss has 20 targets. Counting all 100 tokens changes the objective and loss normalization. Check a decoded example with target positions highlighted.",
+    "pitfalls": [
+      "Training on prompt tokens unintentionally.",
+      "Leaking held-out prompts through near duplicates.",
+      "Comparing losses with different masking conventions."
+    ],
+    "related": [
+      "preference-data",
+      "dpo"
+    ],
+    "problem": "cross-entropy",
+    "level": "Intermediate",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "Original research paper",
+        "url": "https://arxiv.org/abs/2203.02155"
+      }
+    ],
+    "question": {
+      "id": "q-sft-data",
+      "prompt": "What checks would you run before an expensive fine-tune?",
+      "answer": "Inspect tokenization, truncation, role boundaries, loss masks and target counts. Overfit a tiny clean batch, verify held-out deduplication, and establish a base-model evaluation. Log exact data and preprocessing versions.",
+      "followups": [
+        "How would you handle packed conversations?",
+        "What can a lower training loss fail to tell you?"
+      ],
+      "rubric": [
+        "State the relevant mechanism and assumptions.",
+        "Work through a concrete example or estimate.",
+        "Discuss a failure mode and a test that detects it.",
+        "Explain a tradeoff and evidence that would change your decision."
+      ]
+    }
+  },
+  {
+    "id": "dpo",
+    "domain": "Post-training",
+    "track": 7,
+    "title": "DPO: reference-relative preference learning",
+    "summary": "Preference optimization depends on the reference and the data distribution.",
+    "explanation": "DPO trains on preferred and dispreferred responses using policy/reference log-probability differences. It avoids an explicit reward-model optimization loop in its basic formulation, but it does not remove preference-label quality or distribution-shift concerns. The reference model and temperature-like scaling influence the update.",
+    "equation": "-\\log\\sigma\\left(\\beta\\left[\\log\\frac{\\pi_\\theta(y_w|x)}{\\pi_{ref}(y_w|x)}-\\log\\frac{\\pi_\\theta(y_l|x)}{\\pi_{ref}(y_l|x)}\\right]\\right)",
+    "example": "A preferred response can improve relative to a rejected one while both remain poor by an external rubric. Evaluate absolute task quality and safety separately from pairwise training accuracy.",
+    "pitfalls": [
+      "Omitting the reference terms.",
+      "Confusing preference accuracy with general alignment.",
+      "Not checking response-length confounds."
+    ],
+    "related": [
+      "preference-data"
+    ],
+    "problem": "cross-entropy",
+    "level": "Intermediate",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "Original research paper",
+        "url": "https://arxiv.org/abs/2305.18290"
+      }
+    ],
+    "question": {
+      "id": "q-dpo",
+      "prompt": "What would you investigate if DPO improves pairwise accuracy but hurts task success?",
+      "answer": "Audit preference construction, response lengths, domain shift and reference choice. Compare absolute task metrics and stratified failure cases. Run controlled data ablations before attributing the change to the objective itself.",
+      "followups": [
+        "How would you detect a labeling shortcut?",
+        "What role does the reference play?"
+      ],
+      "rubric": [
+        "State the relevant mechanism and assumptions.",
+        "Work through a concrete example or estimate.",
+        "Discuss a failure mode and a test that detects it.",
+        "Explain a tradeoff and evidence that would change your decision."
+      ]
+    }
+  },
+  {
+    "id": "preference-data",
+    "domain": "Post-training",
+    "track": 7,
+    "title": "Preference labels, reward proxies and held-out evidence",
+    "summary": "A preference label is a measurement with assumptions and noise.",
+    "explanation": "Write a rubric before collecting comparisons. A judge may favor verbosity, style, position or familiarity rather than correctness. Hold out prompts and evaluate with independent criteria. Optimizing a proxy can amplify its blind spots; a better proxy score alone is not enough evidence of a better system.",
+    "equation": "observed\\ preference\\neq objective\\ quality",
+    "example": "Create a pair where one response is longer but contains a subtle factual error. Reverse response order and compare judge decisions. This probes two biases without pretending to establish every judge failure mode.",
+    "pitfalls": [
+      "Reusing training judges as the only evaluator.",
+      "Ignoring disagreement between annotators.",
+      "Treating a proxy as the intended objective."
+    ],
+    "related": [
+      "dpo",
+      "paired-evaluation"
+    ],
+    "problem": "entropy",
+    "level": "Advanced",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "Original research paper",
+        "url": "https://arxiv.org/abs/2203.02155"
+      }
+    ],
+    "question": {
+      "id": "q-preference-data",
+      "prompt": "How do you test whether a preference dataset rewards verbosity instead of correctness?",
+      "answer": "Construct matched-length and length-controlled pairs, stratify by length difference, randomize position, and compare to an independent correctness rubric. Review disagreements manually and repeat after training.",
+      "followups": [
+        "How would you quantify label uncertainty?",
+        "What data ablation would be informative?"
+      ],
+      "rubric": [
+        "State the relevant mechanism and assumptions.",
+        "Work through a concrete example or estimate.",
+        "Discuss a failure mode and a test that detects it.",
+        "Explain a tradeoff and evidence that would change your decision."
+      ]
+    }
+  },
+  {
+    "id": "paired-evaluation",
+    "domain": "Evaluation",
+    "track": 9,
+    "title": "Paired evaluation and uncertainty",
+    "summary": "Evaluate the difference on the same examples rather than comparing two isolated percentages.",
+    "explanation": "Use a held-out task set and record per-example outcomes for both systems. Paired analysis preserves shared example difficulty. Resampling should respect the unit of independence: related questions, users or documents may need cluster-level sampling. Confidence intervals describe uncertainty under a sampling model, not immunity to bias or leakage.",
+    "equation": "\\Delta=\\frac1n\\sum_i(s_i^{new}-s_i^{base})",
+    "example": "A new model changes 12 of 100 examples: eight become correct and four become wrong. The net improvement is four points, but the pattern of changed outcomes is more informative than two aggregate accuracies.",
+    "pitfalls": [
+      "Treating correlated examples as independent.",
+      "Testing repeatedly on the same holdout.",
+      "Reporting only the best seed."
+    ],
+    "related": [
+      "benchmark-validity"
+    ],
+    "problem": "entropy",
+    "level": "Intermediate",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "Original research paper",
+        "url": "https://arxiv.org/abs/2107.03374"
+      }
+    ],
+    "question": {
+      "id": "q-paired-evaluation",
+      "prompt": "A benchmark rises from 72% to 74%. Is the change meaningful?",
+      "answer": "Ask for sample size, paired outcomes, sampling unit, seeds and the decision threshold. Compute an appropriate uncertainty interval and inspect regressions. Separate statistical uncertainty from contamination and benchmark relevance.",
+      "followups": [
+        "What if examples share one source document?",
+        "How would repeated experimentation affect confidence?"
+      ],
+      "rubric": [
+        "State the relevant mechanism and assumptions.",
+        "Work through a concrete example or estimate.",
+        "Discuss a failure mode and a test that detects it.",
+        "Explain a tradeoff and evidence that would change your decision."
+      ]
+    }
+  },
+  {
+    "id": "benchmark-validity",
+    "domain": "Evaluation",
+    "track": 9,
+    "title": "Benchmark scores, contamination and task validity",
+    "summary": "A score only supports claims about the measured distribution and evaluation protocol.",
+    "explanation": "Define the capability and failure costs before selecting a benchmark. Track dataset versions, prompts, model settings, scoring rules and exclusion criteria. Near duplicates and public test exposure can invalidate a clean generalization story. Use fresh task slices and error analysis to complement a headline score.",
+    "equation": "measurement=task+protocol+scoring+sampling",
+    "example": "A code generator may pass visible tests yet fail on input mutation, timeout, or an untested edge case. Add independent adversarial cases and state what the test suite does not measure.",
+    "pitfalls": [
+      "Equating test-set success with deployment reliability.",
+      "Changing prompts between model comparisons.",
+      "Calling public benchmark exposure proof of memorization."
+    ],
+    "related": [
+      "paired-evaluation",
+      "rag-evaluation"
+    ],
+    "problem": "first-repeat",
+    "level": "Intermediate",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "Original research paper",
+        "url": "https://arxiv.org/abs/2107.03374"
+      }
+    ],
+    "question": {
+      "id": "q-benchmark-validity",
+      "prompt": "Design an evaluation for an internal code assistant.",
+      "answer": "Sample actual tasks with permissions and privacy controls, reserve held-out repositories or time periods, define correctness and latency criteria, and add human-reviewed failure categories. Log versions and evaluate security-relevant failures separately.",
+      "followups": [
+        "How do you prevent leakage between repository splits?",
+        "When is execution success an inadequate metric?"
+      ],
+      "rubric": [
+        "State the relevant mechanism and assumptions.",
+        "Work through a concrete example or estimate.",
+        "Discuss a failure mode and a test that detects it.",
+        "Explain a tradeoff and evidence that would change your decision."
+      ]
+    }
+  },
+  {
+    "id": "rag-evaluation",
+    "domain": "Evaluation",
+    "track": 10,
+    "title": "Separate retrieval failures from generation failures",
+    "summary": "End-to-end answers hide which stage failed.",
+    "explanation": "Evaluate retrieval against relevant evidence, then evaluate generation conditional on the available evidence. Include an oracle-context condition and a no-context baseline. Citation presence does not establish support; verify that cited passages actually entail the answer. Retrieval quality and access control must both hold.",
+    "equation": "P(correct)=P(evidence)P(correct|evidence)+P(no\\ evidence)P(correct|no\\ evidence)",
+    "example": "If oracle context fixes a task but normal retrieval does not, investigate chunking, query construction and ranking. If the model still fails with the answer passage supplied, retrieval tuning alone is unlikely to fix it.",
+    "pitfalls": [
+      "Scoring citations without checking support.",
+      "Retrieving documents the user cannot access.",
+      "Testing only answerable questions."
+    ],
+    "related": [
+      "retrieval-contract",
+      "reproducibility"
+    ],
+    "problem": "counts",
+    "level": "Advanced",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "Original research paper",
+        "url": "https://arxiv.org/abs/2005.11401"
+      }
+    ],
+    "question": {
+      "id": "q-rag-evaluation",
+      "prompt": "How would you debug a RAG system with plausible but unsupported answers?",
+      "answer": "Inspect retrieved evidence and permissions, add oracle-context and unanswerable conditions, score support independently, and distinguish missing evidence from failure to use evidence. Define abstention behavior and freshness requirements.",
+      "followups": [
+        "How would you measure retrieval coverage?",
+        "What happens when relevant documents conflict?"
+      ],
+      "rubric": [
+        "State the relevant mechanism and assumptions.",
+        "Work through a concrete example or estimate.",
+        "Discuss a failure mode and a test that detects it.",
+        "Explain a tradeoff and evidence that would change your decision."
+      ]
+    }
+  },
+  {
+    "id": "reproducibility",
+    "domain": "Evaluation",
+    "track": 11,
+    "title": "Reproduction, ablation and falsifiable claims",
+    "summary": "A reproduction needs an experiment contract, not only a random seed.",
+    "explanation": "Record code, data splits, preprocessing, dependencies, hardware, precision, initialization and checkpoint state. Distinguish reproducing a published procedure from independently confirming its conclusion. An ablation changes a specific factor while keeping meaningful controls matched. Report negative results and uncertainty rather than selecting one favorable run.",
+    "equation": "claim\\to prediction\\to controlled\\ test\\to uncertainty",
+    "example": "To test a normalization change, keep data order, training budget and evaluation fixed. Compare several seeds and inspect whether the apparent gain is smaller than ordinary run-to-run variation.",
+    "pitfalls": [
+      "Assuming a seed guarantees cross-device identity.",
+      "Changing multiple factors in an ablation.",
+      "Omitting optimizer and sampler state on resume."
+    ],
+    "related": [
+      "data-pipeline",
+      "retrieval-contract"
+    ],
+    "problem": "finite-diff",
+    "level": "Intermediate",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "Official PyTorch documentation",
+        "url": "https://docs.pytorch.org/docs/2.14/notes/randomness.html"
+      }
+    ],
+    "question": {
+      "id": "q-reproducibility",
+      "prompt": "What belongs in a reproducibility package for a training result?",
+      "answer": "Include executable configuration, exact dataset/split provenance, environment lockfiles, seed policy, evaluation procedure, logs and checkpoint/resume state. State known nondeterminism and distinguish qualitative replication from numerical identity.",
+      "followups": [
+        "What would falsify the paper’s main claim?",
+        "How would you investigate a failed reproduction?"
+      ],
+      "rubric": [
+        "State the relevant mechanism and assumptions.",
+        "Work through a concrete example or estimate.",
+        "Discuss a failure mode and a test that detects it.",
+        "Explain a tradeoff and evidence that would change your decision."
+      ]
+    }
+  },
+  {
+    "id": "retrieval-contract",
+    "domain": "Applied systems",
+    "track": 10,
+    "title": "Retrieval as a versioned evidence pipeline",
+    "summary": "An embedding similarity score is not a guarantee of relevance, truth or permission.",
+    "explanation": "Define the corpus, document versions, chunk boundaries, retrieval filters and reranking contract. Metadata such as tenant, timestamp and authority belongs in the retrieval design. Test whether the answer is recoverable from the returned passages, and retain provenance so errors can be traced to a specific corpus version.",
+    "equation": "retrieval\\to filtering\\to reranking\\to grounded\\ response",
+    "example": "A highly similar paragraph from another tenant is an incorrect result even if it answers the question. Test permission filters before evaluating semantic relevance, including empty-result cases.",
+    "pitfalls": [
+      "Filtering permissions only after generation.",
+      "No deletion or freshness policy.",
+      "Choosing chunk size on one easy query."
+    ],
+    "related": [
+      "rag-evaluation",
+      "tool-reliability"
+    ],
+    "problem": "unique",
+    "level": "Intermediate",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "Original research paper",
+        "url": "https://arxiv.org/abs/2005.11401"
+      }
+    ],
+    "question": {
+      "id": "q-retrieval-contract",
+      "prompt": "Design a multi-tenant retrieval service.",
+      "answer": "Authenticate the caller, enforce tenant and document permissions at retrieval, version the index, and define deletion/freshness behavior. Evaluate relevance, support, latency and isolation on adversarial cases. Explain failure behavior when retrieval is empty.",
+      "followups": [
+        "How would you remove a document from cached answers?",
+        "When would hybrid retrieval help?"
+      ],
+      "rubric": [
+        "State the relevant mechanism and assumptions.",
+        "Work through a concrete example or estimate.",
+        "Discuss a failure mode and a test that detects it.",
+        "Explain a tradeoff and evidence that would change your decision."
+      ]
+    }
+  },
+  {
+    "id": "tool-reliability",
+    "domain": "Applied systems",
+    "track": 10,
+    "title": "Tool execution, idempotency and trust boundaries",
+    "summary": "A model-generated tool call is a proposed action, not an authorization decision.",
+    "explanation": "Validate schema and permissions outside the model. Separate planning, approval where needed, execution and result interpretation. Side effects require idempotency keys or another retry policy; a network timeout does not prove an action failed. Treat returned documents and tool text as data that cannot grant new permissions.",
+    "equation": "at\\ least\\ once\\ delivery+idempotency\\to controlled\\ effects",
+    "example": "If a payment-like operation times out after execution, retrying with a new identifier may duplicate the effect. Query status or retry with the same idempotency key according to the service contract.",
+    "pitfalls": [
+      "Trusting retrieved text as an instruction.",
+      "Retrying non-idempotent effects blindly.",
+      "Only validating JSON syntax."
+    ],
+    "related": [
+      "agent-evaluation"
+    ],
+    "problem": "kv-append",
+    "level": "Advanced",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "Original research paper",
+        "url": "https://arxiv.org/abs/2210.03629"
+      }
+    ],
+    "question": {
+      "id": "q-tool-reliability",
+      "prompt": "How do you make a tool-using agent safe to retry?",
+      "answer": "Define action identity, authorization, validation, bounded retries, timeouts and reconciliation. Distinguish read-only actions from effects. Log enough state to determine whether an action completed without storing unnecessary sensitive payloads.",
+      "followups": [
+        "What if a tool result asks for broader access?",
+        "How would you recover after the client disconnects?"
+      ],
+      "rubric": [
+        "State the relevant mechanism and assumptions.",
+        "Work through a concrete example or estimate.",
+        "Discuss a failure mode and a test that detects it.",
+        "Explain a tradeoff and evidence that would change your decision."
+      ]
+    }
+  },
+  {
+    "id": "agent-evaluation",
+    "domain": "Applied systems",
+    "track": 10,
+    "title": "Evaluate trajectories and recovery, not just final prose",
+    "summary": "A plausible answer can hide a broken action sequence.",
+    "explanation": "Instrument tool choices, arguments, state transitions, side effects and recovery. Score task completion separately from cost, latency and policy compliance. Use deterministic test environments where possible and introduce controlled failures. A final answer is only one observable artifact of an agent’s behavior.",
+    "equation": "success\\;\\times\\; constraints\\;\\times\\; recoverability",
+    "example": "Inject a timeout after a successful write, a stale document version and an empty search result. Check whether the agent reconciles state, refreshes evidence, or stops with an accurate explanation.",
+    "pitfalls": [
+      "Scoring only fluent final responses.",
+      "Unbounded retry loops.",
+      "Evaluating on a different environment each run."
+    ],
+    "related": [
+      "tool-reliability",
+      "data-pipeline"
+    ],
+    "problem": "counts",
+    "level": "Intermediate",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "Original research paper",
+        "url": "https://arxiv.org/abs/2210.03629"
+      }
+    ],
+    "question": {
+      "id": "q-agent-evaluation",
+      "prompt": "Create an evaluation plan for a multi-step research assistant.",
+      "answer": "Specify tasks, evidence standards, allowed tools and resource budgets. Record trajectories, include injected failures and misleading retrieved text, and independently verify citations and side effects. Measure recovery and uncertainty reporting.",
+      "followups": [
+        "How would you compare two agent policies fairly?",
+        "What is the unit of a successful task?"
+      ],
+      "rubric": [
+        "State the relevant mechanism and assumptions.",
+        "Work through a concrete example or estimate.",
+        "Discuss a failure mode and a test that detects it.",
+        "Explain a tradeoff and evidence that would change your decision."
+      ]
+    }
+  },
+  {
+    "id": "data-pipeline",
+    "domain": "Applied systems",
+    "track": 5,
+    "title": "Data loaders, sharding and resumable experiments",
+    "summary": "The sampler’s state is part of the training state.",
+    "explanation": "Define whether each example is seen exactly once per epoch, how shards are assigned, and what happens to incomplete batches. Distributed ranks must agree on progress without duplicating or silently omitting data. Resume needs data order and sampler position as well as model and optimizer weights.",
+    "equation": "global\\ batch=microbatch\\times accumulation\\times data\\ parallel\\ ranks",
+    "example": "For ten examples split across three ranks, decide explicitly whether to pad, drop or allow unequal shard sizes. Then test the union of rank assignments and their intersections under the stated contract.",
+    "pitfalls": [
+      "Every rank using the same shuffle without disjoint slicing.",
+      "Saving weights but not sampler position.",
+      "Silent duplicates introduced to equalize batch counts."
+    ],
+    "related": [
+      "reproducibility",
+      "attention-contract"
+    ],
+    "problem": "accumulate-grads",
+    "level": "Intermediate",
+    "last_verified": "2026-10-24",
+    "sources": [
+      {
+        "title": "Official PyTorch documentation",
+        "url": "https://docs.pytorch.org/docs/2.14/notes/randomness.html"
+      }
+    ],
+    "question": {
+      "id": "q-data-pipeline",
+      "prompt": "Design a sharded data loader and its resume tests.",
+      "answer": "Specify deterministic ordering, disjoint assignment, tail handling and checkpoint state. Test union coverage, rank intersections, epoch transitions and resume equivalence. State whether the contract permits padded duplicates.",
+      "followups": [
+        "What if world size changes after resume?",
+        "How do worker prefetch queues affect exact replay?"
+      ],
+      "rubric": [
+        "State the relevant mechanism and assumptions.",
+        "Work through a concrete example or estimate.",
+        "Discuss a failure mode and a test that detects it.",
+        "Explain a tradeoff and evidence that would change your decision."
+      ]
+    }
+  }
+]

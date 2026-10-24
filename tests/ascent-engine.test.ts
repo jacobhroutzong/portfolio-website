@@ -63,11 +63,11 @@ describe("learning evidence", () => {
         "",
       ),
     ).toBe(false));
-  it("has 60 original exercises and 15 problem statements without hidden payloads", () => {
+  it("has the original exercise slice and 20 problem statements without hidden payloads", () => {
     expect(
       lessons.reduce((n, l) => n + l.exercises.length, 0),
     ).toBeGreaterThanOrEqual(60);
-    expect(problems.length).toBe(15);
+    expect(problems.length).toBe(20);
     expect(JSON.stringify(problems)).not.toContain("reference");
   });
   it("has no streak before learning and increments from today", () => {

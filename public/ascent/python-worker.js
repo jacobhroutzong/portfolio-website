@@ -3,7 +3,7 @@ importScripts('https://cdn.jsdelivr.net/pyodide/v0.29.5/full/pyodide.js');
 let python;
 async function initialize(){try{python=await loadPyodide({indexURL:'https://cdn.jsdelivr.net/pyodide/v0.29.5/full/'});postMessage({ready:true});}catch(e){postMessage({passed:false,tests:[],output:'',error:String(e)});}}
 initialize();
-onmessage=async({data})=>{let output='';const append=s=>{if(output.length<data.cap)output+=(s+'\n').slice(0,data.cap-output.length);};python.setStdout({batched:append});python.setStderr({batched:append});try{await python.loadPackagesFromImports(data.code);python.globals.set('_learner_code',data.code);python.globals.set('_checks',JSON.stringify(data.tests));const result=await python.runPythonAsync(`
+onmessage=async({data})=>{let output='';const append=s=>{if(output.length<data.cap)output+=(s+'\n').slice(0,data.cap-output.length);};python.setStdout({batched:append});python.setStderr({batched:append});try{await python.loadPackagesFromImports(data.code);postMessage({executing:true});python.globals.set('_learner_code',data.code);python.globals.set('_checks',JSON.stringify(data.tests));const result=await python.runPythonAsync(`
 import json, traceback
 _scope = {}
 _results = []

@@ -25,7 +25,7 @@ test("workspace, filters, local persistence and responsive layout", async ({
   await page.getByRole("link", { name: "Practice", exact: true }).click();
   await page.getByLabel("Topic", { exact: true }).selectOption("Attention");
   await expect(
-    page.getByRole("status").filter({ hasText: "3 problems" }),
+    page.getByRole("status").filter({ hasText: "4 problems" }),
   ).toBeVisible();
   await page.getByRole("link", { name: "Your progress", exact: true }).click();
   await page.getByLabel("XP per day").fill("100");

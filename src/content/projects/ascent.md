@@ -1,6 +1,6 @@
 ---
 title: "Ascent — AI Lab Preparation"
-summary: "A local-first learning workspace with original exercises, browser-based Python practice, spaced review, and transparent progress tracking."
+summary: "An advanced AI knowledge and interview workspace with connected references, original Python problems, and spaced retrieval."
 category: "AI / Machine Learning"
 technologies: ["TypeScript", "Astro", "Pyodide", "Monaco", "IndexedDB"]
 draft: false
@@ -8,23 +8,23 @@ featured: false
 status: In progress
 order: 5
 sourceUrl: "https://github.com/jacobhroutzong/portfolio-website"
-demoUrl: "https://jacobroutzong.dev/ascent/"
+demoUrl: "https://huggingface.co/spaces/jacobroutzong/ascent"
 screenshots:
   - src: "/media/ascent-dashboard.png"
-    alt: "Ascent overview with a learning plan, daily XP goal, and 13-track mastery radar in the portfolio's cream and green theme."
-    caption: "The initial local workspace at 1440 pixels. Progress starts empty and is earned through practice."
+    alt: "Ascent advanced AI workspace with knowledge references, interview retrieval, and coding practice."
+    caption: "The advanced workspace at 1440 pixels. Progress is saved locally."
 videos: []
 ---
 
 ## Project overview
 
-Ascent is a personal learning workspace for developing programming, mathematical, and machine-learning foundations through retrieval and original coding exercises.
+Ascent is an AI knowledge database and interview workspace for intermediate Python and ML practitioners. Its six domains connect architecture, inference, training, post-training, evaluation, and applied systems through mechanisms, equations, worked examples, and original interview prompts.
 
-[Open Ascent](/ascent/).
+[Open Ascent](/ascent/) · [Hugging Face Space](https://huggingface.co/spaces/jacobroutzong/ascent).
 
 ## What runs
 
-The first curriculum slice contains 66 exercises and 15 original Python problems. Python executes in disposable browser workers, and a time limit terminates stuck runs. Monaco provides the desktop editor. Progress stays in IndexedDB, with JSON export and import.
+The current slice contains 24 sourced technical references, 24 original interview questions, four study paths, 20 original Python problems, and 66 optional foundation exercises. Explain a mechanism before revealing its rubric, keep technical notes, bookmark concepts, and schedule retrieval reviews. Python executes in disposable browser workers, and a time limit terminates stuck runs. Monaco provides the desktop editor. Progress stays in IndexedDB, with JSON export and import.
 
 ## Architecture
 

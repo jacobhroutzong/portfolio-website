@@ -7,3 +7,5 @@
 - Pyodide 0.29.5 is pinned after checking the official release notes on 2026-10-24. Initial Python use needs network and a runtime download. Offline lessons/progress work after the app has been cached; Python offline support is not promised.
 - Lab profiles are editable study emphases, not verified predictions of a company's interview loop. Unverified formats are labeled. Readiness is a transparent practice heuristic, never an offer prediction.
 - No optional model grader or API-key collection in this release. Free responses use self-assessment. Full remote PyTorch, recording, and long mock loops are explicitly future work.
+
+- 2026-10-24: Prioritize an intermediate/advanced AI knowledge database and research/ML engineering interview practice; retain foundations as optional refreshers. Publish a compiled snapshot to a free public Hugging Face Static Space, with GitHub as the source. No paid compute or persistent credentials are needed.

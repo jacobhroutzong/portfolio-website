@@ -152,14 +152,17 @@ export function grade(e: Exercise, value: string | string[]) {
     String(e.answer).trim().toLowerCase().replace(/\s/g, "")
   );
 }
-export function readiness(p: Progress, weights: number[]) {
+export function readiness(p: Progress, weights: number[], totalProblems = 20) {
   const levels = weights.map((_, i) => effectiveLevel(p.skills[String(i)]) / 5);
   const m =
     levels.reduce((s, n, i) => s + n * weights[i], 0) /
     weights.reduce((a, b) => a + b, 0);
   const attempts = p.submissions.slice(-20);
-  const coverage =
-    new Set(attempts.filter((s) => s.passed).map((s) => s.problem)).size / 15;
+  const coverage = Math.min(
+    1,
+    new Set(attempts.filter((s) => s.passed).map((s) => s.problem)).size /
+      totalProblems,
+  );
   const timed = attempts.filter(
     (s) => s.timed && s.elapsed <= 60 * 60000 && !s.hinted,
   );

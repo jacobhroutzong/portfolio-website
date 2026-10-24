@@ -520,6 +520,93 @@
 .ascent .loading {
   padding: 50px;
 }
+.ascent .knowledge-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
+}
+.ascent .knowledge-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  padding: 24px;
+  border-radius: 7px;
+  min-width: 0;
+}
+.ascent .knowledge-card:hover {
+  border-color: var(--accent);
+}
+.ascent .knowledge-card h2 {
+  font-size: 25px;
+  line-height: 1.22;
+  margin-bottom: 14px;
+  overflow-wrap: anywhere;
+}
+.ascent .knowledge-card p {
+  font-size: 13px;
+}
+.ascent .card-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font: 10px monospace;
+  color: var(--accent);
+  margin-top: auto;
+  padding-top: 15px;
+}
+.ascent .topic-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+.ascent .topic-links .btn {
+  font-size: 11px;
+  text-align: left;
+  white-space: normal;
+}
+.ascent .prose-note p {
+  font-size: 15px;
+  line-height: 1.9;
+}
+.ascent .prose-note h2 {
+  margin-top: 30px;
+}
+.ascent .prose-note h2:first-child {
+  margin-top: 0;
+}
+.ascent .equation {
+  overflow-x: auto;
+  font-size: 14px;
+  padding: 12px 0;
+}
+.ascent .knowledge-card .eyebrow {
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.ascent #self-rating {
+  display: block;
+  width: 100%;
+  margin: 12px 0;
+}
+.ascent .knowledge-card:focus-visible {
+  outline-offset: 3px;
+}
+@media (max-width: 760px) {
+  .ascent .knowledge-grid {
+    grid-template-columns: 1fr;
+  }
+  .ascent .knowledge-card {
+    padding: 21px;
+  }
+  .ascent .knowledge-card h2 {
+    font-size: 24px;
+  }
+  .ascent .prose-note p {
+    font-size: 14px;
+  }
+}
 .ascent .goal-ring {
   width: 68px;
   height: 68px;

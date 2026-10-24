@@ -39,7 +39,7 @@ npx playwright install --with-deps chromium
 npm run test:e2e
 ```
 
-`npm run verify` includes the existing portfolio tests, Ascent engine tests, the shared Zod schemas, execution of all original reference solutions (165 checks), lesson code references, 150 deterministic randomized numerical comparisons against independent NumPy operations, the static build, and internal link validation. Set `ASCENT_PYTHON` to your Python executable if it is not `python3`.
+`npm run verify` includes the existing portfolio tests, Ascent engine tests, the shared Zod schemas, execution of all original reference solutions (220 checks), lesson code references, 150 deterministic randomized numerical comparisons against independent NumPy operations, the static build, and internal link validation. Set `ASCENT_PYTHON` to your Python executable if it is not `python3`.
 
 On Windows PowerShell:
 
@@ -80,3 +80,9 @@ The `.yaml` files currently use JSON-compatible YAML syntax and support ordinary
 1. Expand the early math, coding, and ML units into a reviewed sequence with more independent spaced-retrieval evidence.
 2. Add a remote sandbox for real PyTorch and trusted hidden tests, then validate a tensor autograd teaching framework against PyTorch.
 3. Add longer role-specific mock loops and calibrate readiness against the learner's recorded timed performance, with dated recruiter-confirmed formats.
+
+## Advanced knowledge and Hugging Face
+
+The home screen now prioritizes 24 technical references and 24 original interview questions across six AI domains, four study paths, and 20 coding problems. Foundation refreshers remain available. Content lives in `content/knowledge/library.json`; references include primary sources and verification dates. Self-rated retrieval schedules reviews and does not certify mastery.
+
+The public Space uses the free Static SDK: https://huggingface.co/spaces/jacobroutzong/ascent. After `npm run build`, run `npm run package:space` and upload the three files in the printed folder to the Space repository root. The dependency-free Node build restores the verified static assets and nested directories from the bundled snapshot. This does not require running a development server. `npm run dev` is only a local editing preview. The Space is a compiled snapshot; future GitHub changes need a fresh build/upload. Progress stays in each browser origin; export/import transfers it between hosts. PyTorch and server-side model inference are not included.

@@ -613,5 +613,220 @@
     "prerequisites": [
       "3"
     ]
+  },
+  {
+    "id": "stable-logsumexp",
+    "title": "Stable log-sum-exp",
+    "topic": "Numerical stability",
+    "track": 6,
+    "difficulty": 4,
+    "labs": [
+      "General"
+    ],
+    "minutes": 35,
+    "signature": "def solve(xs):",
+    "starter": "def solve(xs):\n    pass\n",
+    "visible": [
+      "import math; assert solve([])==-math.inf",
+      "assert abs(solve([0,0])-math.log(2))<1e-9",
+      "assert abs(solve([1000,1000])-(1000+math.log(2)))<1e-9"
+    ],
+    "statement": "Return log(sum(exp(x))) for a list of finite scores without overflowing. For empty input return negative infinity. Implement using Python math; do not exponentiate the original large scores.",
+    "constraints": "Finite numeric inputs satisfying the stated shapes. Do not mutate inputs. Invalid shapes or weights must raise ValueError where specified. Match floating results within 1e-8.",
+    "examples": [
+      "[] → -infinity",
+      "[0,0] → log(2)",
+      "[1000,1000] → 1000+log(2)"
+    ],
+    "hints": [
+      "Shift scores without changing the result after compensation.",
+      "Let m=max(xs), then exponentiate x-m.",
+      "Return m+log(sum(exp(x-m)))."
+    ],
+    "editorial": "Subtracting the largest score makes every exponent nonpositive. Add that score back after taking the log. An empty sum is zero, whose log is negative infinity by this task’s contract.",
+    "shape": "scores: (n,) → scalar",
+    "stability": "Handle empty input before taking max. Inputs are finite; infinities are outside this contract.",
+    "production": "Log-partition functions and cross-entropy need stable reductions.",
+    "complexity": "O(n) time; O(1) extra space",
+    "prerequisites": [
+      "6"
+    ],
+    "mistakes": [
+      "Ignoring a shape or boundary condition",
+      "Using a mathematically correct but numerically unstable expression",
+      "Mutating caller-owned state"
+    ]
+  },
+  {
+    "id": "cross-entropy",
+    "title": "Cross-entropy directly from logits",
+    "topic": "Numerical stability",
+    "track": 6,
+    "difficulty": 4,
+    "labs": [
+      "General"
+    ],
+    "minutes": 35,
+    "signature": "def solve(logits, target):",
+    "starter": "def solve(logits, target):\n    pass\n",
+    "visible": [
+      "import math; assert abs(solve([0,0],0)-math.log(2))<1e-9",
+      "assert abs(solve([1000,1000],1)-math.log(2))<1e-9",
+      "assert solve([7],0)==0"
+    ],
+    "statement": "Compute the negative log probability of target from unnormalized finite logits. Return a scalar in natural-log units. Raise ValueError for empty logits or a target outside 0…C−1. Avoid materializing a probability that may underflow.",
+    "constraints": "Finite numeric inputs satisfying the stated shapes. Do not mutate inputs. Invalid shapes or weights must raise ValueError where specified. Match floating results within 1e-8.",
+    "examples": [
+      "[0,0], target=0 → log(2)",
+      "[1000,1000], target=1 → log(2)",
+      "[7], target=0 → 0"
+    ],
+    "hints": [
+      "Write -log softmax in terms of log-sum-exp.",
+      "Compute a shifted log-sum-exp and subtract the target logit.",
+      "Use (max-logit[target])+log(sum(exp(x-max)))."
+    ],
+    "editorial": "Working directly with logits avoids taking the log of an underflowed softmax probability. Subtract the target from the maximum before combining the shifted log normalizer.",
+    "shape": "logits: (C,), target: integer → scalar loss",
+    "stability": "The target need not be the largest logit. A very unlikely target can have a large but finite loss.",
+    "production": "Classification and language-model training commonly use fused losses over logits.",
+    "complexity": "O(C) time; O(1) extra space",
+    "prerequisites": [
+      "6"
+    ],
+    "mistakes": [
+      "Ignoring a shape or boundary condition",
+      "Using a mathematically correct but numerically unstable expression",
+      "Mutating caller-owned state"
+    ]
+  },
+  {
+    "id": "accumulate-grads",
+    "title": "Token-weighted gradient accumulation",
+    "topic": "Optimization",
+    "track": 5,
+    "difficulty": 4,
+    "labs": [
+      "General"
+    ],
+    "minutes": 35,
+    "signature": "def solve(grads, counts):",
+    "starter": "def solve(grads, counts):\n    pass\n",
+    "visible": [
+      "assert solve([[1],[3]],[2,6])==[2.5]",
+      "assert solve([[1,2],[3,4]],[1,1])==[2,3]",
+      "assert solve([],[])==[]"
+    ],
+    "statement": "Each row in grads is a per-microbatch mean gradient. counts gives its number of valid target tokens. Return the token-weighted mean gradient. Empty grads and counts return []. Raise ValueError for length mismatch, ragged gradients, negative counts, or a nonempty collection with zero total weight.",
+    "constraints": "Finite numeric inputs satisfying the stated shapes. Do not mutate inputs. Invalid shapes or weights must raise ValueError where specified. Match floating results within 1e-8.",
+    "examples": [
+      "[[1],[3]], [2,6] → [2.5]",
+      "[[1,2],[3,4]], [1,1] → [2,3]",
+      "[], [] → []"
+    ],
+    "hints": [
+      "Microbatch means do not all represent the same number of tokens.",
+      "Weight each mean by its valid-token count.",
+      "Sum weighted coordinates, then divide once by total tokens."
+    ],
+    "editorial": "This recreates the gradient of a token-average objective from separate microbatch means. A zero-weight row contributes no gradient. It does not simulate batch-dependent layers or stochastic effects.",
+    "shape": "grads: (M,P), counts: (M,) → gradient: (P,)",
+    "stability": "Accumulate in adequate precision; very large counts or gradients require an explicit numerical policy.",
+    "production": "Variable-length sequence training needs consistent objective weighting across microbatches and ranks.",
+    "complexity": "O(MP) time; O(P) output",
+    "prerequisites": [
+      "5"
+    ],
+    "mistakes": [
+      "Ignoring a shape or boundary condition",
+      "Using a mathematically correct but numerically unstable expression",
+      "Mutating caller-owned state"
+    ]
+  },
+  {
+    "id": "adamw-update",
+    "title": "An AdamW update with explicit state",
+    "topic": "Optimization",
+    "track": 5,
+    "difficulty": 4,
+    "labs": [
+      "General"
+    ],
+    "minutes": 35,
+    "signature": "def solve(weights, gradients, m, v, step, lr=0.001, beta1=0.9, beta2=0.999, eps=1e-8, decay=0.01):",
+    "starter": "def solve(weights, gradients, m, v, step, lr=0.001, beta1=0.9, beta2=0.999, eps=1e-8, decay=0.01):\n    pass\n",
+    "visible": [
+      "w,m,v=solve([5],[0],[0],[0],1,lr=.1,decay=.2); assert abs(w[0]-4.9)<1e-9",
+      "w,m,v=solve([1],[2],[0],[0],1,lr=.1,decay=0); assert abs(w[0]-.9)<1e-8",
+      "assert solve([],[],[],[],1)==([],[],[])"
+    ],
+    "statement": "Implement one AdamW step over list-valued weights, gradients and first/second moment state m,v. step is a positive 1-based optimizer step. Return (new_weights,new_m,new_v). Use bias-corrected moments, epsilon outside the square root, and decoupled weight decay. Equal lengths and finite valid hyperparameters are assumed except lengths and step, which must be validated.",
+    "constraints": "Finite numeric inputs satisfying the stated shapes. Do not mutate inputs. Invalid shapes or weights must raise ValueError where specified. Match floating results within 1e-8.",
+    "examples": [
+      "Zero gradient: w=5, lr=.1, decay=.2 → w=4.9",
+      "First gradient 2, w=1, lr=.1, decay=0 → approximately .9",
+      "Empty state → ([],[],[])"
+    ],
+    "hints": [
+      "Separate moment updates, bias correction and parameter shrinkage.",
+      "Use step for 1-beta**step, not the microbatch index.",
+      "Apply w*(1-lr*decay) separately from the normalized-gradient update."
+    ],
+    "editorial": "Update moments from gradients, correct startup bias, then apply a decoupled shrink and the adaptive step. Return fresh lists so a caller can compare states or retry safely.",
+    "shape": "Four vectors: (P,) → three vectors: (P,)",
+    "stability": "Second moments are nonnegative for valid input state. Epsilon placement is part of the contract.",
+    "production": "Optimizer-state correctness matters for stable training and checkpoint/resume equivalence.",
+    "complexity": "O(P) time; O(P) output",
+    "prerequisites": [
+      "5"
+    ],
+    "mistakes": [
+      "Ignoring a shape or boundary condition",
+      "Using a mathematically correct but numerically unstable expression",
+      "Mutating caller-owned state"
+    ]
+  },
+  {
+    "id": "kv-append",
+    "title": "Append to a bounded KV cache",
+    "topic": "Attention",
+    "track": 8,
+    "difficulty": 4,
+    "labs": [
+      "General"
+    ],
+    "minutes": 35,
+    "signature": "def solve(keys, values, new_keys, new_values, capacity):",
+    "starter": "def solve(keys, values, new_keys, new_values, capacity):\n    pass\n",
+    "visible": [
+      "assert solve([],[],[[1]],[[2]],2)==([[1]],[[2]],0)",
+      "assert solve([[1]],[[2]],[[3]],[[4]],1)==([[3]],[[4]],1)",
+      "assert solve([],[],[],[],0)==([],[],0)"
+    ],
+    "statement": "Append new key/value rows to an existing list-based cache. Keep only the newest capacity rows. Return (keys,values,evicted_count), using fresh outer and inner lists. Key row width may differ from value row width, but each must be consistent. Raise ValueError for negative capacity, mismatched key/value row counts, or ragged widths. This is a sliding-window storage exercise; dropping history changes full-context attention semantics.",
+    "constraints": "Finite numeric inputs satisfying the stated shapes. Do not mutate inputs. Invalid shapes or weights must raise ValueError where specified. Match floating results within 1e-8.",
+    "examples": [
+      "Empty + K=[[1]], V=[[2]], capacity=2 → ([[1]],[[2]],0)",
+      "One old row + one new, capacity=1 → newest row and eviction count 1",
+      "Empty with capacity=0 → ([],[],0)"
+    ],
+    "hints": [
+      "Keep key and value rows paired.",
+      "Validate all old/new row widths before truncating.",
+      "Concatenate, choose start=max(0,total-capacity), then copy retained rows."
+    ],
+    "editorial": "The API preserves aligned storage and makes eviction explicit. It does not implement positional encoding or claim equivalence to full-history attention after eviction. The caller must maintain the absolute position offset.",
+    "shape": "K: (T,dk), V: (T,dv), append: (N,dk/dv) → retained rows: min(T+N,capacity)",
+    "stability": "Storage preserves numeric values without an attention computation. Validate shape contracts before memory reuse.",
+    "production": "Serving systems must keep cache ownership and lengths aligned, including cancellation and eviction boundaries.",
+    "complexity": "O((T+N)(dk+dv)) validation/copy time; O(capacity×(dk+dv)) retained output",
+    "prerequisites": [
+      "8"
+    ],
+    "mistakes": [
+      "Ignoring a shape or boundary condition",
+      "Using a mathematically correct but numerically unstable expression",
+      "Mutating caller-owned state"
+    ]
   }
 ]

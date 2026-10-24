@@ -1,4 +1,5 @@
 import { lessons, problems, tracks, labs } from "./data";
+import { advancedUI } from "./knowledge";
 import {
   fresh,
   day,
@@ -35,6 +36,7 @@ const store = new IndexedStore();
 const runner = new PyodideRunner();
 let storage = true;
 let root: HTMLElement;
+let advanced: ReturnType<typeof advancedUI>;
 let cleanup = () => {};
 let routeToken = 0;
 let timer: ReturnType<typeof setInterval> | undefined;
@@ -99,13 +101,16 @@ function shell(active: string, html: string) {
   clearInterval(timer);
   root.innerHTML = `<aside class="sidebar"><a class="app-brand" href="#home">${mountain}Ascent<span style="color:var(--accent)">.</span></a><small>THE LEARNING WORKSPACE</small><nav class="app-nav" aria-label="Ascent navigation">${[
     ["home", "⌂", "Overview"],
-    ["learn", "⌘", "Learning path"],
+    ["knowledge", "⌘", "Knowledge library"],
+    ["questions", "?", "Interview questions"],
+    ["paths", "↗", "Study paths"],
     ["practice", "〈〉", "Practice"],
     ["review", "↻", "Daily review"],
     ["interview", "◷", "Interview studio"],
     ["readiness", "◇", "Readiness"],
     ["radar", "↗", "Field Radar"],
     ["settings", "⚙", "Your progress"],
+    ["learn", "↻", "Foundation refreshers"],
   ]
     .map(
       ([id, icon, title]) =>
@@ -137,7 +142,7 @@ function radar() {
     `${cx + Math.sin((i / n) * 2 * Math.PI) * d},${cy - Math.cos((i / n) * 2 * Math.PI) * d}`;
   return `<svg class="radar" viewBox="0 0 260 250" role="img" aria-label="Mastery across 13 tracks, level zero through five">${[0.25, 0.5, 0.75, 1].map((scale) => `<polygon points="${tracks.map((_, i) => point(i, r * scale)).join(" ")}" stroke="var(--border-strong)" fill="none" stroke-width=".7"/>`).join("")}${tracks.map((_, i) => `<line x1="${cx}" y1="${cy}" x2="${point(i, r).split(",")[0]}" y2="${point(i, r).split(",")[1]}" stroke="var(--border)"/><text x="${point(i, r + 18).split(",")[0]}" y="${point(i, r + 18).split(",")[1]}" text-anchor="middle" fill="var(--muted)" font-size="8">${String(i).padStart(2, "0")}</text>`).join("")}<polygon points="${tracks.map((t, i) => point(i, Math.max(2, (effectiveLevel(p.skills[String(t.id)]) / 5) * r))).join(" ")}" fill="currentColor" fill-opacity=".15" stroke="currentColor" stroke-width="1.5"/><text x="130" y="244" text-anchor="middle" fill="var(--muted)" font-size="9">TRACK MASTERY · 0—5</text></svg>`;
 }
-function home() {
+function foundationHome() {
   const today = p.days[day()] ?? 0;
   const next = lessons.find((l) => !p.completed.includes(l.id)) ?? lessons[0];
   const complete = p.submissions.filter((s) => s.passed);
@@ -867,8 +872,8 @@ function readinessPage() {
       `<div class="dashboard"><div>${labs
         .slice(1)
         .map((l) => {
-          const score = readiness(p, l.weights);
-          return `<article class="panel"><div class="panel-top"><h2>${l.name}</h2><span class="pill">${score}% · HEURISTIC</span></div><div class="progress-bar"><span style="width:${score}%"></span></div><p>${esc(l.note)}</p><details><summary>How this score is calculated</summary><p>60% weighted mastery (0–5), 20% distinct solved coverage out of 15 problems, 20% success rate on recent unhinted timed-round submissions completed in ≤60 minutes. With no timed evidence, that component is zero.</p><pre>Track weights 0–12: ${l.weights.join(", ")}</pre></details></article>`;
+          const score = readiness(p, l.weights, problems.length);
+          return `<article class="panel"><div class="panel-top"><h2>${l.name}</h2><span class="pill">${score}% · HEURISTIC</span></div><div class="progress-bar"><span style="width:${score}%"></span></div><p>${esc(l.note)}</p><details><summary>How this score is calculated</summary><p>60% weighted mastery (0–5), 20% distinct solved coverage out of ${problems.length} problems, 20% success rate on recent unhinted timed-round submissions completed in ≤60 minutes. With no timed evidence, that component is zero.</p><pre>Track weights 0–12: ${l.weights.join(", ")}</pre></details></article>`;
         })
         .join(
           "",
@@ -1140,7 +1145,8 @@ function locked(track: number) {
 }
 function route() {
   routeToken++;
-  const [page = "home", id] = location.hash.slice(1).split("/");
+  const [path, params = ""] = location.hash.slice(1).split("?");
+  const [page = "home", id] = path.split("/");
   if (page === "main") {
     document.getElementById("main")?.focus();
     return;
@@ -1148,7 +1154,28 @@ function route() {
   switch (page) {
     case "":
     case "home":
-      home();
+      advanced.home();
+      break;
+    case "foundations":
+      foundationHome();
+      break;
+    case "knowledge":
+      advanced.library(false, params);
+      break;
+    case "questions":
+      advanced.library(true, params);
+      break;
+    case "concept":
+      advanced.detail(id);
+      break;
+    case "question":
+      advanced.detail(id, true);
+      break;
+    case "paths":
+      advanced.paths();
+      break;
+    case "knowledge-review":
+      advanced.review();
       break;
     case "learn":
       learn();
@@ -1166,6 +1193,9 @@ function route() {
       placement();
       break;
     case "review":
+      advanced.review();
+      break;
+    case "foundation-review":
       review();
       break;
     case "practice":
@@ -1201,6 +1231,14 @@ export async function mount() {
   } catch {
     storage = false;
   }
+  advanced = advancedUI({
+    root,
+    progress: () => p,
+    save,
+    shell,
+    heading,
+    toast,
+  });
   route();
   window.addEventListener("hashchange", route);
   if ("serviceWorker" in navigator)

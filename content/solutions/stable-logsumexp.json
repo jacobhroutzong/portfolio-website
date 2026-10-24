@@ -1,0 +1,13 @@
+{
+  "reference": "def solve(xs):\n    import math\n    if not xs:return -math.inf\n    m=max(xs)\n    return m+math.log(sum(math.exp(x-m) for x in xs))",
+  "hidden": [
+    "assert solve([0])==0",
+    "assert solve([1000])==1000",
+    "assert solve([-1000])==-1000",
+    "assert abs(solve([-1000,-1000])-(-1000+math.log(2)))<1e-9",
+    "assert abs(solve([1,2])-solve([1001,1002])+1000)<1e-9",
+    "assert abs(solve([0]*10)-math.log(10))<1e-9",
+    "assert abs(solve([0,-1000]))<1e-9",
+    "assert abs(solve([1000]*10000)-(1000+math.log(10000)))<1e-8"
+  ]
+}
