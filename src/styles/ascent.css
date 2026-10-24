@@ -1,0 +1,727 @@
+.ascent {
+  --green: var(--accent);
+  max-width: 1400px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 218px minmax(0, 1fr);
+  min-height: 80vh;
+}
+.ascent button,
+.ascent a,
+.ascent input,
+.ascent select {
+  touch-action: manipulation;
+}
+.ascent button {
+  cursor: pointer;
+}
+.ascent .sidebar {
+  padding: 34px 22px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+.ascent .app-brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font:
+    28px Georgia,
+    serif;
+  letter-spacing: -1px;
+}
+.ascent .app-brand svg {
+  width: 30px;
+  color: var(--accent);
+}
+.ascent .sidebar small {
+  font: 9px monospace;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+.ascent .app-nav {
+  display: grid;
+  gap: 6px;
+  position: static;
+  width: auto;
+  max-height: none;
+  padding: 0;
+  background: transparent;
+  border: 0;
+}
+.ascent .app-nav a {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 11px 14px;
+  border-radius: 5px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.ascent .app-nav a.active {
+  background: var(--accent-deep);
+  color: var(--accent);
+  font-weight: 600;
+}
+.ascent .app-nav a span {
+  font: 16px monospace;
+  width: 18px;
+}
+.ascent .side-foot {
+  margin-top: auto;
+  padding-top: 30px;
+  border-top: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--muted);
+}
+.ascent .workspace {
+  padding: 30px 40px 55px;
+  min-width: 0;
+}
+.ascent .topline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font: 10px monospace;
+  color: var(--muted);
+  padding-bottom: 28px;
+  letter-spacing: 0.06em;
+}
+.ascent .local-dot::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-right: 7px;
+}
+.ascent .page-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 8px 0 30px;
+}
+.ascent h1 {
+  font:
+    normal clamp(32px, 3.7vw, 48px)/1.15 Georgia,
+    serif;
+  letter-spacing: -1.7px;
+  margin: 0 0 12px;
+}
+.ascent .page-heading p {
+  margin: 0;
+  font-size: 13px;
+}
+.ascent .eyebrow {
+  font-size: 9px;
+  margin: 0 0 14px;
+}
+.ascent .pill {
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  padding: 5px 10px;
+  font: 10px monospace;
+  white-space: nowrap;
+  color: var(--accent);
+}
+.ascent .stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 30px;
+}
+.ascent .metric {
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 18px 20px;
+  background: var(--bg-elevated);
+}
+.ascent .metric strong {
+  display: block;
+  font:
+    30px Georgia,
+    serif;
+  margin-bottom: 8px;
+}
+.ascent .metric span {
+  font-size: 11px;
+  color: var(--muted);
+}
+.ascent .dashboard {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(230px, 1fr);
+  gap: 22px;
+}
+.ascent .panel {
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 24px;
+  background: var(--bg-elevated);
+  margin-bottom: 20px;
+}
+.ascent .panel h2 {
+  font-size: 23px;
+  margin: 0 0 8px;
+}
+.ascent .panel h3 {
+  font-size: 16px;
+  margin: 0 0 9px;
+  letter-spacing: -0.3px;
+}
+.ascent .panel p {
+  font-size: 12px;
+}
+.ascent .panel-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  gap: 15px;
+}
+.ascent .panel-top h2 {
+  margin: 0;
+}
+.ascent .plan-item {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  padding: 21px 0;
+  border-top: 1px solid var(--border);
+}
+.ascent .plan-item .step {
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-content: center;
+  font: 11px monospace;
+  flex-shrink: 0;
+}
+.ascent .plan-item .copy {
+  flex: 1;
+}
+.ascent .plan-item h3 {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+.ascent .plan-item p {
+  margin: 0;
+  font-size: 11px;
+}
+.ascent .plan-item a {
+  font-size: 18px;
+  color: var(--accent);
+  padding: 8px;
+}
+.ascent .feature {
+  background: var(--bg-soft);
+  position: relative;
+  overflow: hidden;
+}
+.ascent .feature h2 {
+  font-size: 28px;
+  max-width: 270px;
+}
+.ascent .feature p {
+  max-width: 270px;
+}
+.ascent .mountain {
+  position: absolute;
+  right: 10px;
+  bottom: 0;
+  width: 160px;
+  opacity: 0.18;
+  pointer-events: none;
+}
+.ascent .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border: 1px solid var(--border-strong);
+  border-radius: 30px;
+  background: transparent;
+  font-size: 11px;
+  color: var(--text);
+}
+.ascent .btn.primary {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+.ascent .btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.ascent .btn:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+.ascent .actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.ascent .subtle {
+  font-size: 11px;
+  color: var(--muted);
+}
+.ascent .radar {
+  width: 100%;
+  max-height: 230px;
+  display: block;
+  color: var(--accent);
+  margin: 10px 0;
+}
+.ascent .progress-bar {
+  height: 5px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 12px 0;
+}
+.ascent .progress-bar span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+.ascent .track {
+  display: grid;
+  grid-template-columns: 42px 1fr auto;
+  gap: 18px;
+  padding: 25px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: start;
+}
+.ascent .track-num {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+  font: 12px monospace;
+  color: var(--accent);
+}
+.ascent .track h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+.ascent .track p {
+  font-size: 12px;
+  margin: 0 0 13px;
+}
+.ascent .lesson-list {
+  display: grid;
+  gap: 8px;
+  padding-left: 10px;
+  border-left: 1px solid var(--border-strong);
+  margin-top: 18px;
+}
+.ascent .lesson-link {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  font-size: 12px;
+}
+.ascent .filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.ascent .filters label {
+  font-size: 10px;
+  display: grid;
+  gap: 5px;
+  flex: 1;
+  min-width: 120px;
+}
+.ascent .problem-row {
+  display: grid;
+  grid-template-columns: 35px 1fr 110px 80px;
+  gap: 15px;
+  padding: 20px 12px;
+  border-top: 1px solid var(--border);
+  align-items: center;
+  font-size: 12px;
+}
+.ascent .problem-row:hover {
+  background: var(--bg-soft);
+}
+.ascent .problem-row strong {
+  display: block;
+  font-weight: 500;
+}
+.ascent .problem-row small {
+  font-size: 10px;
+  color: var(--muted);
+}
+.ascent .exercise-shell {
+  max-width: 760px;
+  margin: auto;
+}
+.ascent .concept {
+  background: var(--bg-soft);
+  border-left: 2px solid var(--accent);
+  padding: 25px;
+  margin: 25px 0;
+  font-size: 14px;
+}
+.ascent .option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 15px 18px;
+  margin: 10px 0;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  background: var(--bg-elevated);
+  font-size: 13px;
+}
+.ascent .option.selected {
+  border-color: var(--accent);
+  background: var(--accent-deep);
+}
+.ascent .feedback {
+  padding: 17px;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  margin: 20px 0;
+  font-size: 13px;
+}
+.ascent .feedback.bad {
+  border-color: #b87352;
+}
+.ascent .answer-input {
+  width: 100%;
+  font-size: 14px;
+  padding: 14px;
+}
+.ascent textarea {
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  border-radius: 5px;
+  padding: 16px;
+  width: 100%;
+  font: 13px/1.7 monospace;
+  resize: vertical;
+}
+.ascent pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: 12px/1.8 monospace;
+  background: var(--bg-soft);
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+}
+.ascent .split {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) minmax(300px, 1.2fr);
+  gap: 22px;
+}
+.ascent .editor-box {
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--bg-elevated);
+}
+.ascent .editor-head {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 17px;
+  font: 10px monospace;
+  border-bottom: 1px solid var(--border);
+}
+.ascent #code-editor {
+  height: 380px;
+}
+.ascent .editor-box textarea {
+  height: 380px;
+  border: 0;
+  border-radius: 0;
+  resize: none;
+}
+.ascent .editor-tools {
+  padding: 13px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-top: 1px solid var(--border);
+}
+.ascent .console {
+  font: 11px/1.8 monospace;
+  white-space: pre-wrap;
+  max-height: 300px;
+  overflow: auto;
+  padding: 15px;
+  background: var(--bg-soft);
+  min-height: 65px;
+  overflow-wrap: anywhere;
+}
+.ascent .test-row {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+}
+.ascent details {
+  margin: 15px 0;
+}
+.ascent summary {
+  font-size: 12px;
+  color: var(--accent);
+}
+.ascent .timer {
+  font: 22px monospace;
+  letter-spacing: 1px;
+}
+.ascent .notice {
+  font-size: 12px;
+}
+.ascent .toast {
+  position: fixed;
+  right: 25px;
+  bottom: 25px;
+  max-width: 380px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elevated);
+  padding: 15px 22px;
+  border-radius: 7px;
+  z-index: 100;
+  font-size: 12px;
+}
+.ascent .story {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.ascent .story label {
+  font-size: 12px;
+}
+.ascent .history {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.ascent .mobile-note {
+  display: none;
+}
+.ascent .loading {
+  padding: 50px;
+}
+.ascent .goal-ring {
+  width: 68px;
+  height: 68px;
+  transform: rotate(-90deg);
+}
+.ascent .goal {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 16px;
+}
+.ascent .week {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.ascent .day {
+  width: 25px;
+  height: 25px;
+  display: grid;
+  place-content: center;
+  border-radius: 50%;
+  font: 9px monospace;
+  border: 1px solid var(--border);
+}
+.ascent .day.done {
+  background: var(--accent-deep);
+  border-color: var(--accent);
+}
+.ascent .rubric {
+  font-size: 12px;
+  color: var(--muted);
+  padding-left: 20px;
+  list-style: disc;
+}
+.ascent .table-wrap {
+  overflow: auto;
+}
+.ascent table {
+  width: 100%;
+  font-size: 12px;
+  border-collapse: collapse;
+}
+.ascent td,
+.ascent th {
+  text-align: left;
+  padding: 13px;
+  border-bottom: 1px solid var(--border);
+}
+.ascent .source {
+  font-size: 10px;
+  text-decoration: underline;
+  color: var(--accent);
+}
+.ascent .outline {
+  display: grid;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--muted);
+  padding-left: 18px;
+  list-style: disc;
+}
+.ascent .stop {
+  color: #c56b4c;
+}
+.ascent .check {
+  color: var(--accent);
+}
+@media (min-width: 1500px) {
+  .ascent .workspace {
+    padding-inline: 55px;
+  }
+}
+@media (max-width: 1050px) {
+  .ascent {
+    grid-template-columns: 180px minmax(0, 1fr);
+  }
+  .ascent .workspace {
+    padding: 25px;
+  }
+  .ascent .dashboard,
+  .ascent .split {
+    grid-template-columns: 1fr;
+  }
+  .ascent .dashboard > aside {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .ascent .sidebar {
+    padding-inline: 15px;
+  }
+}
+@media (max-width: 700px) {
+  .ascent {
+    display: block;
+  }
+  .ascent .sidebar {
+    padding: 20px 5% 0;
+    border-right: 0;
+    gap: 15px;
+  }
+  .ascent .app-brand {
+    font-size: 25px;
+  }
+  .ascent .sidebar > small,
+  .ascent .side-foot {
+    display: none;
+  }
+  .ascent .app-nav {
+    display: flex;
+    overflow: auto;
+    border-bottom: 1px solid var(--border);
+    gap: 5px;
+    padding-bottom: 10px;
+  }
+  .ascent .app-nav a {
+    white-space: nowrap;
+    padding: 8px 11px;
+    font-size: 11px;
+  }
+  .ascent .app-nav a span {
+    display: none;
+  }
+  .ascent .workspace {
+    padding: 20px 5% 40px;
+  }
+  .ascent .topline {
+    padding-bottom: 20px;
+    font-size: 8px;
+  }
+  .ascent .page-heading {
+    align-items: start;
+    flex-direction: column;
+    margin-bottom: 23px;
+  }
+  .ascent .stats {
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+  }
+  .ascent .metric {
+    padding: 15px;
+  }
+  .ascent .metric strong {
+    font-size: 26px;
+  }
+  .ascent .dashboard > aside {
+    display: block;
+  }
+  .ascent .panel {
+    padding: 20px;
+  }
+  .ascent .track {
+    grid-template-columns: 30px 1fr;
+    gap: 12px;
+  }
+  .ascent .track > span {
+    grid-column: 2;
+  }
+  .ascent .track-num {
+    width: 30px;
+    height: 30px;
+    font-size: 10px;
+  }
+  .ascent .problem-row {
+    grid-template-columns: 20px 1fr 65px;
+    gap: 9px;
+    padding-inline: 0;
+  }
+  .ascent .problem-row > span:last-child {
+    display: none;
+  }
+  .ascent .problem-row > span:nth-child(3) {
+    font-size: 10px;
+  }
+  .ascent .history {
+    grid-template-columns: 1fr;
+  }
+  .ascent .mobile-note {
+    display: block;
+  }
+  .ascent #code-editor {
+    display: none;
+  }
+  .ascent .editor-box textarea {
+    display: block !important;
+    height: 260px;
+  }
+  .ascent .editor-tools {
+    display: none;
+  }
+  .ascent .feature h2,
+  .ascent .feature p {
+    max-width: 230px;
+  }
+  .ascent .toast {
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+  }
+  .ascent .topline > span:last-child {
+    max-width: 160px;
+    text-align: right;
+  }
+}

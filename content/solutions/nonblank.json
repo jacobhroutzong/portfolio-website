@@ -1,0 +1,14 @@
+{
+  "reference": "def solve(lines):\n    return sum(bool(s.strip()) for s in lines)",
+  "hidden": [
+    "assert solve([\"\"])==0",
+    "assert solve([\"\\t\"])==0",
+    "assert solve([\" a \"])==1",
+    "assert solve([\"0\"])==1",
+    "assert solve([\" \"]*100)==0",
+    "assert solve([\"x\"]*100)==100",
+    "assert solve([\"a\",\"\",\"b\"])==2",
+    "assert solve([\"x\"]*10000)==10000"
+  ],
+  "function": "solve"
+}

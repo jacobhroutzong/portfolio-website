@@ -1,0 +1,14 @@
+{
+  "reference": "def solve(coefficients, x, h=1e-5):\n    def f(t): return sum(c*t**i for i,c in enumerate(coefficients))\n    return (f(x+h)-f(x-h))/(2*h)",
+  "hidden": [
+    "assert abs(solve([],1))<1e-6",
+    "assert abs(solve([0,0,1],0))<1e-6",
+    "assert abs(solve([0,0,1],-2)+4)<1e-6",
+    "assert abs(solve([0,0,0,1],2)-12)<1e-5",
+    "assert abs(solve([1,2,3],1)-8)<1e-5",
+    "assert abs(solve([0,1],0)-1)<1e-6",
+    "assert abs(solve([9],0))<1e-6",
+    "assert abs(solve([1,1,1,1],1)-6)<1e-5"
+  ],
+  "function": "solve"
+}

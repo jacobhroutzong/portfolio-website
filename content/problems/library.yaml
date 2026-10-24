@@ -1,0 +1,617 @@
+[
+  {
+    "id": "nonblank",
+    "title": "Count meaningful lines",
+    "track": 0,
+    "topic": "Python",
+    "difficulty": 2,
+    "labs": [
+      "General"
+    ],
+    "minutes": 20,
+    "statement": "Count strings containing at least one non-whitespace character. Accept a list of strings. Empty input returns zero.",
+    "constraints": "Inputs satisfy the stated types. Do not mutate inputs. Handle the empty and repeated-value cases described below. Floating-point comparisons use tolerance.",
+    "examples": [
+      "[] → 0",
+      "[\"a\", \" \"] → 1",
+      "[\"a\", \"b\"] → 2"
+    ],
+    "starter": "def solve(lines):\n    pass\n",
+    "signature": "def solve(lines):",
+    "visible": [
+      "assert solve([])==0",
+      "assert solve([\"a\", \" \"])==1",
+      "assert solve([\"a\",\"b\"])==2"
+    ],
+    "hints": [
+      "Trace a tiny example by hand.",
+      "Maintain one piece of state per distinct value.",
+      "Use a dictionary or a single running accumulator."
+    ],
+    "editorial": "Test each stripped line and sum the boolean results. Omit file I/O from the pure function.",
+    "mistakes": [
+      "Ignoring empty inputs",
+      "Overwriting shared state or gradients",
+      "Skipping a boundary-case test"
+    ],
+    "complexity": "O(total characters) time; O(1) extra space",
+    "prerequisites": [
+      "0"
+    ]
+  },
+  {
+    "id": "first-repeat",
+    "title": "First repeated event",
+    "track": 1,
+    "topic": "Hashing",
+    "difficulty": 2,
+    "labs": [
+      "General"
+    ],
+    "minutes": 20,
+    "statement": "Return the value whose second occurrence appears first in a left-to-right scan of integer events. Return None if none repeats.",
+    "constraints": "Inputs satisfy the stated types. Do not mutate inputs. Handle the empty and repeated-value cases described below. Floating-point comparisons use tolerance.",
+    "examples": [
+      "[] → None",
+      "[4,2,4] → 4",
+      "[3,2,2,3] → 2"
+    ],
+    "starter": "def solve(xs):\n    pass\n",
+    "signature": "def solve(xs):",
+    "visible": [
+      "assert solve([]) is None",
+      "assert solve([4,2,4])==4",
+      "assert solve([1,2,3]) is None"
+    ],
+    "hints": [
+      "Trace a tiny example by hand.",
+      "Maintain one piece of state per distinct value.",
+      "Use a dictionary or a single running accumulator."
+    ],
+    "editorial": "Check membership before adding each value. Stop at the first hit.",
+    "mistakes": [
+      "Ignoring empty inputs",
+      "Overwriting shared state or gradients",
+      "Skipping a boundary-case test"
+    ],
+    "complexity": "Expected O(n) time; O(n) space",
+    "prerequisites": [
+      "1"
+    ]
+  },
+  {
+    "id": "counts",
+    "title": "Event frequency ledger",
+    "track": 1,
+    "topic": "Hashing",
+    "difficulty": 2,
+    "labs": [
+      "General"
+    ],
+    "minutes": 20,
+    "statement": "Return a mapping from each integer event to its frequency. Preserve no special ordering.",
+    "constraints": "Inputs satisfy the stated types. Do not mutate inputs. Handle the empty and repeated-value cases described below. Floating-point comparisons use tolerance.",
+    "examples": [
+      "[] → {}",
+      "[1,1,2] → {1:2,2:1}",
+      "[0] → {0:1}"
+    ],
+    "starter": "def solve(xs):\n    pass\n",
+    "signature": "def solve(xs):",
+    "visible": [
+      "assert solve([])=={}",
+      "assert solve([1,1,2])=={1:2,2:1}",
+      "assert solve([0])=={0:1}"
+    ],
+    "hints": [
+      "Trace a tiny example by hand.",
+      "Maintain one piece of state per distinct value.",
+      "Use a dictionary or a single running accumulator."
+    ],
+    "editorial": "For each value, increment its previous count or zero.",
+    "mistakes": [
+      "Ignoring empty inputs",
+      "Overwriting shared state or gradients",
+      "Skipping a boundary-case test"
+    ],
+    "complexity": "Expected O(n) time; O(k) space",
+    "prerequisites": [
+      "1"
+    ]
+  },
+  {
+    "id": "unique",
+    "title": "Stable unique stream",
+    "track": 1,
+    "topic": "Hashing",
+    "difficulty": 2,
+    "labs": [
+      "General"
+    ],
+    "minutes": 20,
+    "statement": "Remove duplicate integer events while preserving first-occurrence order.",
+    "constraints": "Inputs satisfy the stated types. Do not mutate inputs. Handle the empty and repeated-value cases described below. Floating-point comparisons use tolerance.",
+    "examples": [
+      "[] → []",
+      "[2,1,2] → [2,1]",
+      "[0,0] → [0]"
+    ],
+    "starter": "def solve(xs):\n    pass\n",
+    "signature": "def solve(xs):",
+    "visible": [
+      "assert solve([])==[]",
+      "assert solve([2,1,2])==[2,1]",
+      "assert solve([0,0])==[0]"
+    ],
+    "hints": [
+      "Trace a tiny example by hand.",
+      "Maintain one piece of state per distinct value.",
+      "Use a dictionary or a single running accumulator."
+    ],
+    "editorial": "Insertion-ordered dictionary keys preserve first occurrences. An explicit seen set plus output list is equivalent.",
+    "mistakes": [
+      "Ignoring empty inputs",
+      "Overwriting shared state or gradients",
+      "Skipping a boundary-case test"
+    ],
+    "complexity": "Expected O(n) time; O(k) space",
+    "prerequisites": [
+      "1"
+    ]
+  },
+  {
+    "id": "runs",
+    "title": "Compress adjacent runs",
+    "track": 0,
+    "topic": "Python",
+    "difficulty": 2,
+    "labs": [
+      "General"
+    ],
+    "minutes": 20,
+    "statement": "Return a list of (value, run_length) tuples for adjacent equal integer events. Separate runs of the same value remain separate.",
+    "constraints": "Inputs satisfy the stated types. Do not mutate inputs. Handle the empty and repeated-value cases described below. Floating-point comparisons use tolerance.",
+    "examples": [
+      "[] → []",
+      "[1,1,2] → [(1,2),(2,1)]",
+      "[1,2,1] → [(1,1),(2,1),(1,1)]"
+    ],
+    "starter": "def solve(xs):\n    pass\n",
+    "signature": "def solve(xs):",
+    "visible": [
+      "assert solve([])==[]",
+      "assert solve([1,1,2])==[(1,2),(2,1)]",
+      "assert solve([3])==[(3,1)]"
+    ],
+    "hints": [
+      "Trace a tiny example by hand.",
+      "Maintain one piece of state per distinct value.",
+      "Use a dictionary or a single running accumulator."
+    ],
+    "editorial": "Compare the next event to the last output run; extend or start a run.",
+    "mistakes": [
+      "Ignoring empty inputs",
+      "Overwriting shared state or gradients",
+      "Skipping a boundary-case test"
+    ],
+    "complexity": "O(n) time; O(n) space",
+    "prerequisites": [
+      "0"
+    ]
+  },
+  {
+    "id": "prefix",
+    "title": "Running balance",
+    "track": 0,
+    "topic": "Python",
+    "difficulty": 2,
+    "labs": [
+      "General"
+    ],
+    "minutes": 20,
+    "statement": "Return the inclusive prefix sum of integer ledger changes. Do not modify the input list.",
+    "constraints": "Inputs satisfy the stated types. Do not mutate inputs. Handle the empty and repeated-value cases described below. Floating-point comparisons use tolerance.",
+    "examples": [
+      "[] → []",
+      "[1,2,3] → [1,3,6]",
+      "[2,-2] → [2,0]"
+    ],
+    "starter": "def solve(xs):\n    pass\n",
+    "signature": "def solve(xs):",
+    "visible": [
+      "assert solve([])==[]",
+      "assert solve([1,2,3])==[1,3,6]",
+      "assert solve([2,-2])==[2,0]"
+    ],
+    "hints": [
+      "Trace a tiny example by hand.",
+      "Maintain one piece of state per distinct value.",
+      "Use a dictionary or a single running accumulator."
+    ],
+    "editorial": "Maintain one running total and append it after each update.",
+    "mistakes": [
+      "Ignoring empty inputs",
+      "Overwriting shared state or gradients",
+      "Skipping a boundary-case test"
+    ],
+    "complexity": "O(n) time; O(n) output",
+    "prerequisites": [
+      "0"
+    ]
+  },
+  {
+    "id": "dot",
+    "title": "Vector agreement",
+    "track": 3,
+    "topic": "Linear algebra",
+    "difficulty": 3,
+    "labs": [
+      "General"
+    ],
+    "minutes": 20,
+    "statement": "Return a dot product of two equal-length numeric lists. Raise ValueError if lengths differ. The dot product of two empty vectors is zero.",
+    "constraints": "Inputs satisfy the stated types. Do not mutate inputs. Handle the empty and repeated-value cases described below. Floating-point comparisons use tolerance.",
+    "examples": [
+      "([],[]) → 0",
+      "([1,2],[3,4]) → 11",
+      "([0],[8]) → 0"
+    ],
+    "starter": "def solve(a, b):\n    pass\n",
+    "signature": "def solve(a, b):",
+    "visible": [
+      "assert solve([],[])==0",
+      "assert solve([1,2],[3,4])==11",
+      "assert solve([0],[8])==0"
+    ],
+    "hints": [
+      "Multiply corresponding coordinates.",
+      "Check lengths before using zip.",
+      "Sum a[i]*b[i] over every coordinate."
+    ],
+    "editorial": "The dot product contracts the shared vector dimension. Validate shapes before computing.",
+    "mistakes": [
+      "Ignoring empty inputs",
+      "Overwriting shared state or gradients",
+      "Skipping a boundary-case test"
+    ],
+    "complexity": "O(n) time; O(1) extra space",
+    "prerequisites": [
+      "3"
+    ]
+  },
+  {
+    "id": "matmul",
+    "title": "Matrix composition",
+    "track": 3,
+    "topic": "Linear algebra",
+    "difficulty": 3,
+    "labs": [
+      "General"
+    ],
+    "minutes": 20,
+    "statement": "Multiply rectangular matrices given as nested lists. Empty input returns []. Raise ValueError for ragged matrices or incompatible inner dimensions.",
+    "constraints": "Inputs satisfy the stated types. Do not mutate inputs. Handle the empty and repeated-value cases described below. Floating-point comparisons use tolerance.",
+    "examples": [
+      "[[1,2]] @ [[3],[4]] → [[11]]",
+      "Identity @ B → B",
+      "[] @ [] → []"
+    ],
+    "starter": "def solve(a, b):\n    pass\n",
+    "signature": "def solve(a, b):",
+    "visible": [
+      "assert solve([[1,2]],[[3],[4]])==[[11]]",
+      "assert solve([[1,0],[0,1]],[[2,3],[4,5]])==[[2,3],[4,5]]",
+      "assert solve([],[])==[]"
+    ],
+    "hints": [
+      "Write the input and output dimensions.",
+      "One output cell is a row-column dot product.",
+      "Transpose B to iterate through its columns."
+    ],
+    "editorial": "Check inner dimensions and rectangularity, then calculate each row-column dot product.",
+    "mistakes": [
+      "Ignoring empty inputs",
+      "Overwriting shared state or gradients",
+      "Skipping a boundary-case test"
+    ],
+    "complexity": "O(mkn) time; O(mn) output",
+    "prerequisites": [
+      "3"
+    ]
+  },
+  {
+    "id": "finite-diff",
+    "title": "Numerical gradient check",
+    "track": 3,
+    "topic": "Autodiff",
+    "difficulty": 3,
+    "labs": [
+      "General"
+    ],
+    "minutes": 20,
+    "statement": "Coefficients [c0,c1,…] define sum ci*x**i. Estimate the derivative at x using central differences and a positive step h. All test values are finite and small.",
+    "constraints": "Inputs satisfy the stated types. Do not mutate inputs. Handle the empty and repeated-value cases described below. Floating-point comparisons use tolerance.",
+    "examples": [
+      "x² at 3 → approximately 6",
+      "constant 2 at 5 → 0",
+      "3x at 2 → approximately 3"
+    ],
+    "starter": "def solve(coefficients, x, h=1e-5):\n    pass\n",
+    "signature": "def solve(coefficients, x, h=1e-5):",
+    "visible": [
+      "assert abs(solve([0,0,1],3)-6)<1e-6",
+      "assert abs(solve([2],5))<1e-6",
+      "assert abs(solve([0,3],2)-3)<1e-6"
+    ],
+    "hints": [
+      "Evaluate just to the left and right.",
+      "Use a symmetric difference quotient.",
+      "Return (f(x+h)-f(x-h))/(2*h)."
+    ],
+    "editorial": "Central differences cancel the leading one-sided error. Very small h can amplify floating-point cancellation.",
+    "mistakes": [
+      "Ignoring empty inputs",
+      "Overwriting shared state or gradients",
+      "Skipping a boundary-case test"
+    ],
+    "complexity": "O(degree) evaluations; O(1) auxiliary space",
+    "prerequisites": [
+      "3"
+    ]
+  },
+  {
+    "id": "autograd-scalar",
+    "title": "A tiny differentiable scalar",
+    "track": 5,
+    "topic": "Autograd",
+    "difficulty": 4,
+    "labs": [
+      "General"
+    ],
+    "minutes": 35,
+    "statement": "Implement Value(data) with .data, .grad, addition, multiplication (including scalar operands on either side), and backward(). Clear all graph gradients before each backward call. Accumulate shared paths in reverse topological order.",
+    "constraints": "Inputs satisfy the stated types. Do not mutate inputs. Handle the empty and repeated-value cases described below. Floating-point comparisons use tolerance.",
+    "examples": [
+      "x=3; x*x → gradient 6",
+      "x=2; x*x+x → gradient 5",
+      "x=1; x+2 → gradient 1"
+    ],
+    "starter": "class Value:\n    pass\n",
+    "signature": "class Value:",
+    "visible": [
+      "x=Value(3); y=x*x; y.backward(); assert x.grad==6",
+      "x=Value(2); y=x*x+x; y.backward(); assert x.grad==5",
+      "x=Value(1); y=x+2; y.backward(); assert x.grad==1"
+    ],
+    "hints": [
+      "Each operation stores parents and a local backward closure.",
+      "Topologically sort by visiting parents first, then reverse.",
+      "Reset all gradients, seed the output with 1, and call closures with +=."
+    ],
+    "editorial": "A DAG traversal processes each node once. Addition passes the gradient unchanged; multiplication scales it by the other operand. Repeated backward calls clear the entire reachable graph.",
+    "mistakes": [
+      "Ignoring empty inputs",
+      "Overwriting shared state or gradients",
+      "Skipping a boundary-case test"
+    ],
+    "complexity": "O(nodes + edges) time and space",
+    "prerequisites": [
+      "5"
+    ],
+    "shape": "Scalar inputs → scalar output; one gradient per node.",
+    "stability": "Finite scalar inputs only. This educational engine has no GPU or tensor support.",
+    "production": "Autodiff systems compose local derivative rules across an execution graph."
+  },
+  {
+    "id": "sgd",
+    "title": "One gradient descent step",
+    "track": 5,
+    "topic": "Optimization",
+    "difficulty": 4,
+    "labs": [
+      "General"
+    ],
+    "minutes": 35,
+    "statement": "Return new weights after one SGD update w − lr*g. Raise ValueError for mismatched lengths. Inputs are finite; learning rate is nonnegative.",
+    "constraints": "Inputs satisfy the stated types. Do not mutate inputs. Handle the empty and repeated-value cases described below. Floating-point comparisons use tolerance.",
+    "examples": [
+      "([1],[2],0.1) → [0.8]",
+      "([],[],0.1) → []",
+      "([1],[0],1) → [1]"
+    ],
+    "starter": "def solve(weights, gradients, lr):\n    pass\n",
+    "signature": "def solve(weights, gradients, lr):",
+    "visible": [
+      "assert solve([1],[2],.1)==[.8]",
+      "assert solve([],[],.1)==[]",
+      "assert solve([1],[0],1)==[1]"
+    ],
+    "hints": [
+      "A gradient points uphill.",
+      "Scale the gradient by the learning rate.",
+      "Subtract lr*g from each weight."
+    ],
+    "editorial": "SGD follows the negative gradient. Return fresh weights so callers can compare the before and after states.",
+    "mistakes": [
+      "Ignoring empty inputs",
+      "Overwriting shared state or gradients",
+      "Skipping a boundary-case test"
+    ],
+    "complexity": "O(n) time; O(n) output",
+    "prerequisites": [
+      "5"
+    ],
+    "shape": "weights: (n,), gradients: (n,) → new weights: (n,)",
+    "stability": "Large learning rates can diverge; this function performs only the stated step.",
+    "production": "Optimizers update parameters after accumulated gradients have been computed."
+  },
+  {
+    "id": "softmax-stable",
+    "title": "Stable score normalization",
+    "track": 6,
+    "topic": "Attention",
+    "difficulty": 4,
+    "labs": [
+      "General"
+    ],
+    "minutes": 35,
+    "statement": "Return the softmax probabilities of a finite list of scores. Subtract the maximum before exponentiation. Empty input returns [].",
+    "constraints": "Inputs satisfy the stated types. Do not mutate inputs. Handle the empty and repeated-value cases described below. Floating-point comparisons use tolerance.",
+    "examples": [
+      "[] → []",
+      "[0,0] → [0.5,0.5]",
+      "[1000,1000] → [0.5,0.5]"
+    ],
+    "starter": "def solve(xs):\n    pass\n",
+    "signature": "def solve(xs):",
+    "visible": [
+      "assert solve([])==[]",
+      "assert solve([0,0])==[.5,.5]",
+      "assert solve([1000,1000])==[.5,.5]"
+    ],
+    "hints": [
+      "Softmax is unchanged by a shared shift.",
+      "Subtract max(xs) before exponentiating.",
+      "Normalize exp(x-max(xs)) by their sum."
+    ],
+    "editorial": "Shift first to avoid overflow. At least one exponential is one, so the denominator is positive.",
+    "mistakes": [
+      "Ignoring empty inputs",
+      "Overwriting shared state or gradients",
+      "Skipping a boundary-case test"
+    ],
+    "complexity": "O(n) time; O(n) space",
+    "prerequisites": [
+      "6"
+    ],
+    "shape": "scores: (n,) → probabilities: (n,)",
+    "stability": "Finite inputs only. Subtract maximum; do not exponentiate raw large logits.",
+    "production": "Attention weights and classification probabilities need stable normalization."
+  },
+  {
+    "id": "attention-head",
+    "title": "Causal attention head",
+    "track": 6,
+    "topic": "Attention",
+    "difficulty": 4,
+    "labs": [
+      "General"
+    ],
+    "minutes": 35,
+    "statement": "Implement scaled dot-product causal self-attention using NumPy. Inputs q,k have shape (T,D); v has shape (T,Dv). T,D,Dv are positive and small, values finite. Block keys j>i before stable softmax. Return nested lists.",
+    "constraints": "Inputs satisfy the stated types. Do not mutate inputs. Handle the empty and repeated-value cases described below. Floating-point comparisons use tolerance.",
+    "examples": [
+      "T=1, V=[[3]] → [[3]]",
+      "Zero scores, V=[[2],[4]] → [[2],[3]]",
+      "T=1, V=[[4,5]] → [[4,5]]"
+    ],
+    "starter": "def solve(q, k, v):\n    pass\n",
+    "signature": "def solve(q, k, v):",
+    "visible": [
+      "assert solve([[1]],[[1]],[[3]])==[[3.0]]",
+      "assert solve([[0],[0]],[[0],[0]],[[2],[4]])==[[2.0],[3.0]]",
+      "assert solve([[1,0]],[[1,0]],[[4,5]])==[[4.0,5.0]]"
+    ],
+    "hints": [
+      "Write scores as Q @ K.T.",
+      "Scale by sqrt(D), mask the upper triangle to -infinity.",
+      "Stable softmax across columns, then multiply by V."
+    ],
+    "editorial": "The causal mask keeps row i limited to keys 0…i. Normalize over keys and combine values.",
+    "mistakes": [
+      "Ignoring empty inputs",
+      "Overwriting shared state or gradients",
+      "Skipping a boundary-case test"
+    ],
+    "complexity": "O(T²(D+Dv)) time; O(T²) score memory",
+    "prerequisites": [
+      "6"
+    ],
+    "shape": "Q,K: (T,D); V: (T,Dv); scores: (T,T); output: (T,Dv)",
+    "stability": "Subtract each row maximum after masking. Every row has at least one allowed key.",
+    "production": "Causal attention supports autoregressive generation; efficient systems avoid materializing all scores."
+  },
+  {
+    "id": "multihead",
+    "title": "Multi-head attention, from scratch",
+    "track": 6,
+    "topic": "Attention",
+    "difficulty": 4,
+    "labs": [
+      "General"
+    ],
+    "minutes": 35,
+    "statement": "For a nonempty (T,D) input x, split the final dimension into heads equal chunks. Use each chunk as Q=K=V, apply causal scaled attention independently, and concatenate outputs. This teaching task omits learned projections. Raise ValueError for invalid head count. Use NumPy; return nested lists.",
+    "constraints": "Inputs satisfy the stated types. Do not mutate inputs. Handle the empty and repeated-value cases described below. Floating-point comparisons use tolerance.",
+    "examples": [
+      "[[1,2]], heads=2 → [[1,2]]",
+      "Zero input → zero output",
+      "[[2,4]], heads=1 → [[2,4]]"
+    ],
+    "starter": "def solve(x, heads):\n    pass\n",
+    "signature": "def solve(x, heads):",
+    "visible": [
+      "assert solve([[1,2]],2)==[[1.0,2.0]]",
+      "assert solve([[0,0],[0,0]],1)==[[0.0,0.0],[0.0,0.0]]",
+      "assert solve([[2,4]],1)==[[2.0,4.0]]"
+    ],
+    "hints": [
+      "A head owns D/heads consecutive columns.",
+      "Apply causal attention to each head separately.",
+      "Concatenate along the feature dimension, not the time dimension."
+    ],
+    "editorial": "Each head computes attention in its own subspace. This deliberately small version uses identity projections; a full transformer adds learned Q,K,V and output projections.",
+    "mistakes": [
+      "Ignoring empty inputs",
+      "Overwriting shared state or gradients",
+      "Skipping a boundary-case test"
+    ],
+    "complexity": "O(T²D) time; O(T² + TD) working memory",
+    "prerequisites": [
+      "6"
+    ],
+    "shape": "X: (T,D) → heads: (H,T,D/H) → output: (T,D)",
+    "stability": "Stable masked softmax per head. Head dimension must divide D.",
+    "production": "Parallel heads learn different interaction patterns when combined with learned projections."
+  },
+  {
+    "id": "entropy",
+    "title": "Entropy from event counts",
+    "track": 3,
+    "topic": "Information theory",
+    "difficulty": 3,
+    "labs": [
+      "General"
+    ],
+    "minutes": 20,
+    "statement": "Return Shannon entropy in bits from nonnegative integer event counts. Ignore zero counts. Define the entropy of a zero-total input as 0.",
+    "constraints": "Inputs satisfy the stated types. Do not mutate inputs. Handle the empty and repeated-value cases described below. Floating-point comparisons use tolerance.",
+    "examples": [
+      "[] → 0",
+      "[1,1] → 1 bit",
+      "[5] → 0"
+    ],
+    "starter": "def solve(counts):\n    pass\n",
+    "signature": "def solve(counts):",
+    "visible": [
+      "assert solve([])==0",
+      "assert solve([1,1])==1",
+      "assert solve([5])==0"
+    ],
+    "hints": [
+      "Convert counts into probabilities.",
+      "Skip zero probability before taking logs.",
+      "Sum -p*log2(p) over positive probabilities."
+    ],
+    "editorial": "Entropy measures average uncertainty. A single certain outcome carries zero entropy; equally likely outcomes maximize it for a fixed count.",
+    "mistakes": [
+      "Ignoring empty inputs",
+      "Overwriting shared state or gradients",
+      "Skipping a boundary-case test"
+    ],
+    "complexity": "O(n) time; O(1) extra space",
+    "prerequisites": [
+      "3"
+    ]
+  }
+]

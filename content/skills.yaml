@@ -1,0 +1,200 @@
+[
+  {
+    "id": 0,
+    "title": "Foundations",
+    "description": "Write small, tested programs and reason about their cost.",
+    "units": [
+      "Python values and control flow",
+      "Functions and collections",
+      "Complexity and debugging",
+      "Git and the command line"
+    ],
+    "capstone": "Build a tested text-summary CLI",
+    "prerequisites": []
+  },
+  {
+    "id": 1,
+    "title": "Interview coding",
+    "description": "Turn constraints into efficient algorithms.",
+    "units": [
+      "Arrays and hashing",
+      "Two pointers and windows",
+      "Trees, graphs and heaps",
+      "Dynamic programming and search"
+    ],
+    "capstone": "Solve 40 original problems under time limits",
+    "prerequisites": [
+      0
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Practical systems",
+    "description": "Build components whose requirements evolve.",
+    "units": [
+      "Caches and expiry",
+      "Rate limits and bursts",
+      "Transactions and rollback",
+      "Retries and concurrency"
+    ],
+    "capstone": "A 60-minute evolving key-value store",
+    "prerequisites": [
+      0,
+      1
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Math for ML",
+    "description": "Connect shapes, derivatives and probability to code.",
+    "units": [
+      "Vectors and matrices",
+      "Chain rule and autodiff",
+      "Probability and estimation",
+      "Entropy and optimization"
+    ],
+    "capstone": "Verify network gradients by hand and code",
+    "prerequisites": [
+      0
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Classical ML",
+    "description": "Evaluate a model without fooling yourself.",
+    "units": [
+      "Regression and regularization",
+      "Trees and ensembles",
+      "Validation and leakage",
+      "Metrics and calibration"
+    ],
+    "capstone": "A tuned model with an honest evaluation",
+    "prerequisites": [
+      3
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Deep learning",
+    "description": "Build the mechanics before using the framework.",
+    "units": [
+      "Scalar autograd",
+      "Networks and optimization",
+      "Normalization and initialization",
+      "Training and debugging"
+    ],
+    "capstone": "An autograd engine and trained small network",
+    "prerequisites": [
+      3
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Transformers",
+    "description": "Follow a token through an attention block.",
+    "units": [
+      "Stable softmax",
+      "Scaled dot-product attention",
+      "Multi-head attention",
+      "Tokenization and decoder blocks"
+    ],
+    "capstone": "Build attention from scratch",
+    "prerequisites": [
+      5
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Post-training",
+    "description": "Compare objectives, feedback quality and failure modes.",
+    "units": [
+      "Supervised fine-tuning",
+      "Preference optimization",
+      "Reward models",
+      "Verifiable rewards and evaluation"
+    ],
+    "capstone": "A small fine-tune with before/after evals",
+    "prerequisites": [
+      6
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Systems & performance",
+    "description": "Estimate resources and measure bottlenecks.",
+    "units": [
+      "Memory and FLOPs arithmetic",
+      "Parallel training",
+      "Inference and batching",
+      "Profiling and numerics"
+    ],
+    "capstone": "A cost estimator and measured optimization",
+    "prerequisites": [
+      5,
+      6
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Evals & safety",
+    "description": "Make claims supported by repeatable evidence.",
+    "units": [
+      "Benchmark design",
+      "Contamination and uncertainty",
+      "Red-team methodology",
+      "Probes and interventions"
+    ],
+    "capstone": "An evaluation harness with confidence intervals",
+    "prerequisites": [
+      4,
+      6
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Agents & applications",
+    "description": "Test a system that takes multiple steps.",
+    "units": [
+      "Tool contracts",
+      "Retrieval and context",
+      "Failure analysis",
+      "Agent evaluation"
+    ],
+    "capstone": "A tested tool-using agent",
+    "prerequisites": [
+      6,
+      9
+    ]
+  },
+  {
+    "id": 11,
+    "title": "Research skills",
+    "description": "Ask a precise question and reproduce a result.",
+    "units": [
+      "Reading papers",
+      "Reproduction",
+      "Ablations",
+      "Writing and experiment tracking"
+    ],
+    "capstone": "Reproduce and defend one published result",
+    "prerequisites": [
+      5,
+      9
+    ]
+  },
+  {
+    "id": 12,
+    "title": "Interview training",
+    "description": "Explain, implement, test and defend your choices.",
+    "units": [
+      "Timed coding",
+      "Evolving requirements",
+      "System design",
+      "Project and behavioral stories"
+    ],
+    "capstone": "A mock round with an evidence-based debrief",
+    "prerequisites": [
+      0
+    ]
+  }
+]

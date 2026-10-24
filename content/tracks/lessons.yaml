@@ -1,0 +1,921 @@
+[
+  {
+    "id": "python-values",
+    "track": 0,
+    "title": "Values, names & control flow",
+    "objective": "Trace a short Python program without guessing.",
+    "prerequisites": [],
+    "concept": "A name refers to a value. Assignment binds a name; it does not copy a list. A loop visits items in order. Test your understanding with tiny inputs before adding complexity. For example, range(3) yields 0, 1, 2. An empty sequence makes a loop run zero times.",
+    "equation": "\\sum_{i=0}^{2}i=3",
+    "source": "https://docs.python.org/3/tutorial/introduction.html",
+    "recap": "Spend two minutes recalling the rule without notes. Work through one tiny example, then explain a boundary case aloud. Write one failing test before fixing a defect.",
+    "exercises": [
+      {
+        "id": "python-values-0",
+        "type": "choice",
+        "prompt": "What is list(range(3))?",
+        "answer": "[0, 1, 2]",
+        "explanation": "The stop value is excluded.",
+        "options": [
+          "[1, 2, 3]",
+          "[0, 1, 2]",
+          "[0, 1, 2, 3]"
+        ]
+      },
+      {
+        "id": "python-values-1",
+        "type": "multi",
+        "prompt": "Which values are false in a condition?",
+        "answer": [
+          "0",
+          "[]"
+        ],
+        "explanation": "Zero and empty containers are false.",
+        "options": [
+          "0",
+          "[]",
+          "[0]",
+          "\"False\""
+        ]
+      },
+      {
+        "id": "python-values-2",
+        "type": "fill",
+        "prompt": "Complete a function that returns x squared.",
+        "answer": "return x * x",
+        "explanation": "Multiplication returns the squared value.",
+        "code": "def square(x):\n    # replace this line",
+        "tests": "assert square(3)==9\nassert square(-2)==4\nassert square(0)==0"
+      },
+      {
+        "id": "python-values-3",
+        "type": "choice",
+        "prompt": "a = [1]; b = a; b.append(2). What is a?",
+        "answer": "[1, 2]",
+        "explanation": "Both names refer to the same list.",
+        "options": [
+          "[1]",
+          "[1, 2]",
+          "[2]"
+        ]
+      },
+      {
+        "id": "python-values-4",
+        "type": "math",
+        "prompt": "What is the final total? total = 0; then add i for i in range(4).",
+        "answer": 6,
+        "explanation": "0 + 1 + 2 + 3 = 6."
+      },
+      {
+        "id": "python-values-5",
+        "type": "free",
+        "prompt": "Explain why copying a list matters before editing it.",
+        "answer": "self",
+        "explanation": "Compare your explanation to the rubric.",
+        "rubric": [
+          "Names can share one mutable object.",
+          "A shallow copy creates a new outer list.",
+          "Nested objects can still be shared."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "functions",
+    "track": 0,
+    "title": "Functions & collections",
+    "objective": "Use function boundaries and dictionaries to express a small transformation.",
+    "prerequisites": [],
+    "concept": "A function accepts inputs and returns a result. A dictionary associates keys with values. Counting items is a useful pattern: read the old count (default zero), add one, and store it. Keep a function independent of global state so tests can call it repeatedly.",
+    "equation": "c(x)\\leftarrow c(x)+1",
+    "source": "https://docs.python.org/3/tutorial/datastructures.html",
+    "recap": "Spend two minutes recalling the rule without notes. Work through one tiny example, then explain a boundary case aloud. Write one failing test before fixing a defect.",
+    "exercises": [
+      {
+        "id": "functions-0",
+        "type": "choice",
+        "prompt": "What does {}.get(\"a\", 0) return?",
+        "answer": "0",
+        "explanation": "The key is absent, so get returns its default.",
+        "options": [
+          "0",
+          "None",
+          "KeyError"
+        ]
+      },
+      {
+        "id": "functions-1",
+        "type": "fill",
+        "prompt": "Write a function that returns the first item, or None for empty input.",
+        "answer": "return xs[0] if xs else None",
+        "explanation": "Check emptiness before indexing.",
+        "code": "def first(xs):\n    # replace this line",
+        "tests": "assert first([]) is None\nassert first([4])==4\nassert first([0,1])==0"
+      },
+      {
+        "id": "functions-2",
+        "type": "ordering",
+        "prompt": "Order a frequency counting loop.",
+        "answer": [
+          "initialize counts",
+          "read item",
+          "increment count",
+          "return counts"
+        ],
+        "explanation": "Initialize once, update each item, return after the loop.",
+        "options": [
+          "return counts",
+          "increment count",
+          "initialize counts",
+          "read item"
+        ]
+      },
+      {
+        "id": "functions-3",
+        "type": "choice",
+        "prompt": "What is len(set([2, 2, 3]))?",
+        "answer": "2",
+        "explanation": "A set retains distinct values.",
+        "options": [
+          "1",
+          "2",
+          "3"
+        ]
+      },
+      {
+        "id": "functions-4",
+        "type": "bug",
+        "prompt": "Select the defective line: 1 def add(x, bag=[]):  2 bag.append(x)  3 return bag",
+        "answer": "1",
+        "explanation": "A mutable default is shared across calls; default to None.",
+        "options": [
+          "1",
+          "2",
+          "3"
+        ]
+      },
+      {
+        "id": "functions-5",
+        "type": "free",
+        "prompt": "How would you test a frequency counter?",
+        "answer": "self",
+        "explanation": "Use boundary and repeated-value tests.",
+        "rubric": [
+          "An empty collection returns an empty mapping.",
+          "Repeated items increase only their own count.",
+          "Two calls do not share state."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "debug-cost",
+    "track": 0,
+    "title": "Complexity & debugging",
+    "objective": "Distinguish growth rate from measured time and read a failure.",
+    "prerequisites": [],
+    "concept": "Complexity describes growth as input size changes. A single pass over n items is O(n); scanning all pairs is O(n²). A traceback identifies the call chain and failing line. Reproduce a bug with a small failing test, fix the cause, then keep the test.",
+    "equation": "T(n)=an+b\\;\\Rightarrow\\;O(n)",
+    "source": "https://docs.python.org/3/tutorial/errors.html",
+    "recap": "Spend two minutes recalling the rule without notes. Work through one tiny example, then explain a boundary case aloud. Write one failing test before fixing a defect.",
+    "exercises": [
+      {
+        "id": "debug-cost-0",
+        "type": "choice",
+        "prompt": "One loop over n items with constant work per item costs:",
+        "answer": "O(n)",
+        "explanation": "Work grows linearly.",
+        "options": [
+          "O(1)",
+          "O(n)",
+          "O(n²)"
+        ]
+      },
+      {
+        "id": "debug-cost-1",
+        "type": "estimation",
+        "prompt": "A quadratic algorithm takes 2 seconds at n=1000. Estimate seconds at n=2000.",
+        "answer": 8,
+        "explanation": "Doubling n multiplies quadratic work by four.",
+        "tolerance": 0.1
+      },
+      {
+        "id": "debug-cost-2",
+        "type": "ordering",
+        "prompt": "Order the debugging workflow.",
+        "answer": [
+          "reproduce",
+          "write failing test",
+          "fix cause",
+          "rerun tests"
+        ],
+        "explanation": "Make the failure reproducible before changing the implementation.",
+        "options": [
+          "fix cause",
+          "rerun tests",
+          "reproduce",
+          "write failing test"
+        ]
+      },
+      {
+        "id": "debug-cost-3",
+        "type": "bug",
+        "prompt": "1 xs = []  2 print(xs[0]). Which line raises IndexError?",
+        "answer": "2",
+        "explanation": "The empty list has no first element.",
+        "options": [
+          "1",
+          "2"
+        ]
+      },
+      {
+        "id": "debug-cost-4",
+        "type": "math",
+        "prompt": "Two nested loops each run n=5 times. How many inner-body executions?",
+        "answer": 25,
+        "explanation": "Each of five outer iterations runs five inner iterations."
+      },
+      {
+        "id": "debug-cost-5",
+        "type": "free",
+        "prompt": "Why can a faster benchmark still hide worse asymptotic complexity?",
+        "answer": "self",
+        "explanation": "Separate constants, input sizes, and scaling.",
+        "rubric": [
+          "Small inputs can hide growth.",
+          "Constant overhead affects timings.",
+          "Compare several sizes with repeated measurements."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "git-cli",
+    "track": 0,
+    "title": "Git, tests & the command line",
+    "objective": "Describe a safe local change and testing workflow.",
+    "prerequisites": [],
+    "concept": "The working tree holds edits. Staging selects the content of the next commit. A commit records a snapshot locally; push shares commits. Read a command before running it. Run a small test first, inspect the diff, and commit a coherent change.",
+    "equation": "working\\ tree\\to stage\\to commit",
+    "source": "https://git-scm.com/docs/gittutorial",
+    "recap": "Spend two minutes recalling the rule without notes. Work through one tiny example, then explain a boundary case aloud. Write one failing test before fixing a defect.",
+    "exercises": [
+      {
+        "id": "git-cli-0",
+        "type": "choice",
+        "prompt": "Which command shows unstaged changes?",
+        "answer": "git diff",
+        "explanation": "git diff compares working tree to index.",
+        "options": [
+          "git diff",
+          "git push",
+          "git init"
+        ]
+      },
+      {
+        "id": "git-cli-1",
+        "type": "ordering",
+        "prompt": "Order a tested local change.",
+        "answer": [
+          "edit",
+          "run tests",
+          "stage",
+          "commit"
+        ],
+        "explanation": "Test edits before recording the snapshot.",
+        "options": [
+          "commit",
+          "stage",
+          "edit",
+          "run tests"
+        ]
+      },
+      {
+        "id": "git-cli-2",
+        "type": "multi",
+        "prompt": "Which commands inspect local state without changing tracked file content?",
+        "answer": [
+          "git status",
+          "git diff"
+        ],
+        "explanation": "Both inspect state.",
+        "options": [
+          "git status",
+          "git diff",
+          "git reset --hard"
+        ]
+      },
+      {
+        "id": "git-cli-3",
+        "type": "choice",
+        "prompt": "A commit automatically uploads code to GitHub.",
+        "answer": "False",
+        "explanation": "Pushing is a separate operation.",
+        "options": [
+          "True",
+          "False"
+        ]
+      },
+      {
+        "id": "git-cli-4",
+        "type": "fill",
+        "prompt": "Complete a function that counts nonblank lines.",
+        "answer": "return sum(1 for line in lines if line.strip())",
+        "explanation": "strip identifies whitespace-only lines.",
+        "code": "def nonblank(lines):\n    # replace this line",
+        "tests": "assert nonblank([])==0\nassert nonblank([\" \",\"a\"])==1\nassert nonblank([\"a\",\"b\"])==2"
+      },
+      {
+        "id": "git-cli-5",
+        "type": "free",
+        "prompt": "Plan a tested CLI that summarizes a text file.",
+        "answer": "self",
+        "explanation": "A thin CLI should delegate to a pure function.",
+        "rubric": [
+          "Separate file I/O from counting.",
+          "Test empty and whitespace-only files.",
+          "Report missing files clearly and return a failure exit code."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hashing",
+    "track": 1,
+    "title": "Arrays & hashing",
+    "objective": "Choose a set or dictionary to avoid repeated scans.",
+    "prerequisites": [
+      "0"
+    ],
+    "concept": "Scanning a growing list for duplicates can take quadratic time. A set supports expected constant-time membership. Track what has been seen while scanning left to right. A dictionary adds values such as counts or earliest indices. Hash performance is expected, not an absolute worst-case guarantee.",
+    "equation": "n\\times O(1)=O(n)\\;\\text{ expected}",
+    "source": "https://docs.python.org/3/tutorial/datastructures.html#sets",
+    "recap": "Spend two minutes recalling the rule without notes. Work through one tiny example, then explain a boundary case aloud. Write one failing test before fixing a defect.",
+    "exercises": [
+      {
+        "id": "hashing-0",
+        "type": "choice",
+        "prompt": "Which structure answers “have I seen this hashable value?” directly?",
+        "answer": "set",
+        "explanation": "A set represents membership.",
+        "options": [
+          "set",
+          "nested list",
+          "sorted output only"
+        ]
+      },
+      {
+        "id": "hashing-1",
+        "type": "multi",
+        "prompt": "Useful frequency counter edge cases:",
+        "answer": [
+          "empty input",
+          "all equal values",
+          "negative values"
+        ],
+        "explanation": "All three expose common assumptions.",
+        "options": [
+          "empty input",
+          "all equal values",
+          "negative values"
+        ]
+      },
+      {
+        "id": "hashing-2",
+        "type": "ordering",
+        "prompt": "Order a first-repeat scan.",
+        "answer": [
+          "create empty set",
+          "check membership",
+          "add unseen value",
+          "continue"
+        ],
+        "explanation": "Check before adding, otherwise every item appears repeated.",
+        "options": [
+          "continue",
+          "add unseen value",
+          "create empty set",
+          "check membership"
+        ]
+      },
+      {
+        "id": "hashing-3",
+        "type": "bug",
+        "prompt": "1 seen.add(x)  2 if x in seen: return x. Which line must move after the check?",
+        "answer": "1",
+        "explanation": "Adding before checking makes every value count as seen.",
+        "options": [
+          "1",
+          "2"
+        ]
+      },
+      {
+        "id": "hashing-4",
+        "type": "estimation",
+        "prompt": "A pairwise scan examines n(n−1)/2 pairs at n=100. How many?",
+        "answer": 4950,
+        "explanation": "100 × 99 / 2 = 4950.",
+        "tolerance": 0
+      },
+      {
+        "id": "hashing-5",
+        "type": "free",
+        "prompt": "Explain the time/space tradeoff of a set-based repeat detector.",
+        "answer": "self",
+        "explanation": "Mention expected lookup complexity and storage.",
+        "rubric": [
+          "Expected O(n) time.",
+          "O(n) additional space in the distinct case.",
+          "Values must be hashable."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "matrices",
+    "track": 3,
+    "title": "Vectors, matrices & shapes",
+    "objective": "Track dimensions through matrix multiplication.",
+    "prerequisites": [
+      "0"
+    ],
+    "concept": "A vector is an ordered list of numbers. A matrix is a rectangular table. Multiplying an m×k matrix by a k×n matrix produces m×n: the inner dimensions must match. Each output is a dot product, a sum of pairwise products. Write shapes next to each tensor before writing loops.",
+    "equation": "(m\\times k)(k\\times n)\\to(m\\times n)",
+    "source": "https://numpy.org/doc/stable/reference/generated/numpy.matmul.html",
+    "recap": "Spend two minutes recalling the rule without notes. Work through one tiny example, then explain a boundary case aloud. Write one failing test before fixing a defect.",
+    "exercises": [
+      {
+        "id": "matrices-0",
+        "type": "shape",
+        "prompt": "A has shape (2, 3); B has shape (3, 4). Shape of A @ B?",
+        "answer": "(2,4)",
+        "explanation": "The inner dimensions contract; outer dimensions remain."
+      },
+      {
+        "id": "matrices-1",
+        "type": "math",
+        "prompt": "Dot product of [1, 2] and [3, 4]?",
+        "answer": 11,
+        "explanation": "1×3 + 2×4 = 11."
+      },
+      {
+        "id": "matrices-2",
+        "type": "choice",
+        "prompt": "Can (2,3) @ (2,4) be multiplied as matrices?",
+        "answer": "No",
+        "explanation": "The inner dimensions 3 and 2 differ.",
+        "options": [
+          "Yes",
+          "No"
+        ]
+      },
+      {
+        "id": "matrices-3",
+        "type": "shape",
+        "prompt": "Transpose of a matrix with shape (5, 2)?",
+        "answer": "(2,5)",
+        "explanation": "Transpose exchanges rows and columns."
+      },
+      {
+        "id": "matrices-4",
+        "type": "estimation",
+        "prompt": "A 100×200 matrix of float32 values uses how many bytes, ignoring overhead?",
+        "answer": 80000,
+        "explanation": "100 × 200 × 4 bytes.",
+        "tolerance": 0.01
+      },
+      {
+        "id": "matrices-5",
+        "type": "free",
+        "prompt": "Explain matrix multiplication using one output cell.",
+        "answer": "self",
+        "explanation": "Use a dot product and dimension check.",
+        "rubric": [
+          "Choose one row of A and one column of B.",
+          "Multiply aligned elements and sum.",
+          "The shared dimension must agree."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "chain-rule",
+    "track": 3,
+    "title": "Derivatives & the chain rule",
+    "objective": "Propagate a derivative through a composition.",
+    "prerequisites": [
+      "0"
+    ],
+    "concept": "A derivative measures local rate of change. For y=f(g(x)), multiply the outer derivative by the inner derivative. For y=(3x+1)², dy/dx = 2(3x+1)×3. In a computation graph, contributions add when a value feeds multiple paths.",
+    "equation": "\\frac{dy}{dx}=\\frac{dy}{du}\\frac{du}{dx}",
+    "source": "https://pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html",
+    "recap": "Spend two minutes recalling the rule without notes. Work through one tiny example, then explain a boundary case aloud. Write one failing test before fixing a defect.",
+    "exercises": [
+      {
+        "id": "chain-rule-0",
+        "type": "math",
+        "prompt": "For y=x², what is dy/dx at x=3?",
+        "answer": 6,
+        "explanation": "The derivative is 2x."
+      },
+      {
+        "id": "chain-rule-1",
+        "type": "math",
+        "prompt": "For y=(3x+1)², what is dy/dx at x=1?",
+        "answer": 24,
+        "explanation": "2 × 4 × 3 = 24."
+      },
+      {
+        "id": "chain-rule-2",
+        "type": "choice",
+        "prompt": "When x contributes through two paths, its gradient contributions:",
+        "answer": "add",
+        "explanation": "The total derivative sums path contributions.",
+        "options": [
+          "add",
+          "multiply",
+          "overwrite"
+        ]
+      },
+      {
+        "id": "chain-rule-3",
+        "type": "ordering",
+        "prompt": "Order reverse-mode differentiation.",
+        "answer": [
+          "forward values",
+          "seed output gradient",
+          "reverse graph order",
+          "accumulate input gradients"
+        ],
+        "explanation": "Backward starts from an output seed.",
+        "options": [
+          "accumulate input gradients",
+          "reverse graph order",
+          "forward values",
+          "seed output gradient"
+        ]
+      },
+      {
+        "id": "chain-rule-4",
+        "type": "estimation",
+        "prompt": "Central difference: f(x+h)=1.21, f(x−h)=0.81, h=0.1. Approximate derivative?",
+        "answer": 2,
+        "explanation": "(1.21 − 0.81)/(2×0.1) = 2.",
+        "tolerance": 0.001
+      },
+      {
+        "id": "chain-rule-5",
+        "type": "free",
+        "prompt": "Why test gradients with finite differences?",
+        "answer": "self",
+        "explanation": "Compare independent computations.",
+        "rubric": [
+          "Approximate slope numerically.",
+          "Compare with analytic/autograd result.",
+          "Use a tolerance and avoid extreme step sizes."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "autograd",
+    "track": 5,
+    "title": "Build a scalar autograd engine",
+    "objective": "Implement local derivative rules and accumulate shared gradients.",
+    "prerequisites": [
+      "0"
+    ],
+    "concept": "Store a scalar value, a gradient, and parent nodes. Each operation remembers how to propagate its output gradient to parents. Visit nodes in reverse topological order, not arbitrary recursion order. Use += for gradients: a parent may feed several operations. Reset all gradients before a new backward pass.",
+    "equation": "\\frac{\\partial(ab)}{\\partial a}=b",
+    "source": "https://pytorch.org/docs/stable/notes/autograd.html",
+    "recap": "Spend two minutes recalling the rule without notes. Work through one tiny example, then explain a boundary case aloud. Write one failing test before fixing a defect.",
+    "exercises": [
+      {
+        "id": "autograd-0",
+        "type": "math",
+        "prompt": "z=a*b with a=2, b=5. What is dz/da?",
+        "answer": 5,
+        "explanation": "The local derivative with respect to a is b."
+      },
+      {
+        "id": "autograd-1",
+        "type": "choice",
+        "prompt": "In backward, a.grad should usually use:",
+        "answer": "+=",
+        "explanation": "Contributions from multiple children accumulate.",
+        "options": [
+          "=",
+          "+=",
+          "*="
+        ]
+      },
+      {
+        "id": "autograd-2",
+        "type": "ordering",
+        "prompt": "Order a training step.",
+        "answer": [
+          "zero gradients",
+          "forward",
+          "backward",
+          "update parameters"
+        ],
+        "explanation": "Clear previous gradients before calculating new ones.",
+        "options": [
+          "update parameters",
+          "backward",
+          "forward",
+          "zero gradients"
+        ]
+      },
+      {
+        "id": "autograd-3",
+        "type": "bug",
+        "prompt": "1 x.grad = contribution  2 return x.grad. Which line loses a shared-path contribution?",
+        "answer": "1",
+        "explanation": "Assignment overwrites; accumulate instead.",
+        "options": [
+          "1",
+          "2"
+        ]
+      },
+      {
+        "id": "autograd-4",
+        "type": "math",
+        "prompt": "For z=x*x+x at x=2, what is dz/dx?",
+        "answer": 5,
+        "explanation": "2x+1 = 5."
+      },
+      {
+        "id": "autograd-5",
+        "type": "free",
+        "prompt": "What must backward do when called twice on the same graph?",
+        "answer": "self",
+        "explanation": "Define a clear gradient reset policy.",
+        "rubric": [
+          "Clear intermediate gradients before a new pass.",
+          "Seed the output gradient at one.",
+          "Accumulate paths once per traversal."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "softmax",
+    "track": 6,
+    "title": "Numerically stable softmax",
+    "objective": "Compute probabilities without overflowing exponentials.",
+    "prerequisites": [
+      "5"
+    ],
+    "concept": "Softmax turns scores into positive weights that sum to one. Subtract the largest score before exponentiation: the ratio stays unchanged, and every exponent is nonpositive. Normalize along the keys axis for attention. With scores [1000,1000], the stable result is [0.5,0.5].",
+    "equation": "p_i=\\frac{e^{x_i-\\max x}}{\\sum_j e^{x_j-\\max x}}",
+    "source": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.softmax.html",
+    "recap": "Spend two minutes recalling the rule without notes. Work through one tiny example, then explain a boundary case aloud. Write one failing test before fixing a defect.",
+    "exercises": [
+      {
+        "id": "softmax-0",
+        "type": "choice",
+        "prompt": "Which value should be subtracted before exponentiation?",
+        "answer": "maximum score",
+        "explanation": "Translation cancels in the normalized ratio.",
+        "options": [
+          "maximum score",
+          "sum of scores",
+          "minimum score"
+        ]
+      },
+      {
+        "id": "softmax-1",
+        "type": "math",
+        "prompt": "Equal two scores produce what probability for the first?",
+        "answer": 0.5,
+        "explanation": "Symmetry gives equal weights."
+      },
+      {
+        "id": "softmax-2",
+        "type": "shape",
+        "prompt": "Scores have shape (2,4,8,8). Softmax over the last axis gives what shape?",
+        "answer": "(2,4,8,8)",
+        "explanation": "Softmax preserves shape."
+      },
+      {
+        "id": "softmax-3",
+        "type": "bug",
+        "prompt": "1 exp(scores)  2 divide by sum. Which line can overflow first?",
+        "answer": "1",
+        "explanation": "Subtract max before exponentiating.",
+        "options": [
+          "1",
+          "2"
+        ]
+      },
+      {
+        "id": "softmax-4",
+        "type": "estimation",
+        "prompt": "After stable softmax, what is the sum of probabilities for a nonempty finite row?",
+        "answer": 1,
+        "explanation": "Normalization makes the row sum one.",
+        "tolerance": 0.000001
+      },
+      {
+        "id": "softmax-5",
+        "type": "free",
+        "prompt": "Why does subtracting a constant preserve softmax?",
+        "answer": "self",
+        "explanation": "Factor the exponential.",
+        "rubric": [
+          "exp(x−c)=exp(x)exp(−c).",
+          "The common factor cancels.",
+          "Subtracting max keeps exponentials at most one."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "attention",
+    "track": 6,
+    "title": "From dot products to multi-head attention",
+    "objective": "Track shapes and causal masking through attention.",
+    "prerequisites": [
+      "5"
+    ],
+    "concept": "Queries ask which keys matter. Dot products produce one score per query-key pair. Divide by the square root of key dimension, mask future positions for causal attention, normalize over keys, and multiply by values. Multiple heads repeat this in smaller subspaces, then concatenate. This slice uses NumPy and Python rather than full PyTorch.",
+    "equation": "\\mathrm{Attention}(Q,K,V)=\\mathrm{softmax}(QK^T/\\sqrt{d_k})V",
+    "source": "https://arxiv.org/abs/1706.03762",
+    "recap": "Spend two minutes recalling the rule without notes. Work through one tiny example, then explain a boundary case aloud. Write one failing test before fixing a defect.",
+    "exercises": [
+      {
+        "id": "attention-0",
+        "type": "shape",
+        "prompt": "Q: (2,4,8,16), K: (2,4,8,16). Shape of Q @ K.transpose(-2,-1)?",
+        "answer": "(2,4,8,8)",
+        "explanation": "Each query compares against each key within batch and head."
+      },
+      {
+        "id": "attention-1",
+        "type": "choice",
+        "prompt": "A causal mask prevents attending to:",
+        "answer": "future tokens",
+        "explanation": "Generation must not inspect later tokens.",
+        "options": [
+          "past tokens",
+          "future tokens",
+          "the current token"
+        ]
+      },
+      {
+        "id": "attention-2",
+        "type": "ordering",
+        "prompt": "Order attention computation.",
+        "answer": [
+          "dot products",
+          "scale and mask",
+          "softmax over keys",
+          "weight values"
+        ],
+        "explanation": "Mask before normalizing to exclude future keys.",
+        "options": [
+          "weight values",
+          "softmax over keys",
+          "dot products",
+          "scale and mask"
+        ]
+      },
+      {
+        "id": "attention-3",
+        "type": "shape",
+        "prompt": "Weights: (2,4,8,8), V: (2,4,8,16). Output shape?",
+        "answer": "(2,4,8,16)",
+        "explanation": "The keys dimension contracts."
+      },
+      {
+        "id": "attention-4",
+        "type": "math",
+        "prompt": "Embedding dimension 64, 4 heads. Dimension per head?",
+        "answer": 16,
+        "explanation": "64 / 4 = 16."
+      },
+      {
+        "id": "attention-5",
+        "type": "free",
+        "prompt": "Explain why a causal attention implementation needs a mask test.",
+        "answer": "self",
+        "explanation": "Test information flow, not just output shape.",
+        "rubric": [
+          "Change a future token.",
+          "Earlier outputs should remain unchanged.",
+          "Check output shapes and finite values too."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "testing-toolkit",
+    "track": 0,
+    "title": "Write it, break it, test it",
+    "objective": "Produce working code and extend it without breaking earlier behavior.",
+    "prerequisites": [],
+    "concept": "A useful test distinguishes correct behavior from a plausible bug. Start with a tiny example, then an empty input, then a boundary case. When requirements grow, keep earlier tests running. A passing test suite is evidence about those cases, not proof of correctness.",
+    "equation": "f(x)=|x|",
+    "source": "https://docs.python.org/3/library/unittest.html",
+    "recap": "Spend two minutes recalling the rule without notes. Work through one tiny example, then explain a boundary case aloud. Write one failing test before fixing a defect.",
+    "exercises": [
+      {
+        "id": "testing-toolkit-0",
+        "type": "coding",
+        "prompt": "Implement solve(x), returning the absolute value of an integer.",
+        "answer": "code",
+        "explanation": "A negative value changes sign; nonnegative values stay unchanged.",
+        "code": "def solve(x):\n    pass",
+        "tests": "assert solve(-3)==3\nassert solve(0)==0\nassert solve(4)==4",
+        "reference": "def solve(x):\n    return -x if x<0 else x"
+      },
+      {
+        "id": "testing-toolkit-1",
+        "type": "bug",
+        "prompt": "Choose the faulty line, then fix the code. 1 def solve(xs):  2 return xs[0]. Empty lists should return None.",
+        "answer": "2",
+        "explanation": "Indexing an empty list raises IndexError; guard emptiness first.",
+        "options": [
+          "1",
+          "2"
+        ],
+        "code": "def solve(xs):\n    return xs[0]",
+        "tests": "assert solve([]) is None\nassert solve([0])==0\nassert solve([4,5])==4",
+        "reference": "def solve(xs):\n    return xs[0] if xs else None"
+      },
+      {
+        "id": "testing-toolkit-2",
+        "type": "multipart",
+        "prompt": "Implement a positive-value sum, then support an optional upper cap.",
+        "answer": "code",
+        "explanation": "Keep the default behavior while extending the signature.",
+        "code": "def solve(xs, cap=None):\n    pass",
+        "tests": "assert solve([1,-2,3])==4\nassert solve([])==0",
+        "stages": [
+          {
+            "prompt": "Part 1: return the sum of positive values. Empty input returns zero.",
+            "tests": [
+              "assert solve([1,-2,3])==4",
+              "assert solve([])==0"
+            ]
+          },
+          {
+            "prompt": "Part 2: when cap is supplied, return min(cap, positive sum). cap is nonnegative. Keep part 1 working.",
+            "tests": [
+              "assert solve([3,4],5)==5",
+              "assert solve([-2,1],9)==1",
+              "assert solve([],0)==0"
+            ]
+          }
+        ],
+        "reference": "def solve(xs, cap=None):\n    total=sum(x for x in xs if x>0)\n    return total if cap is None else min(cap,total)"
+      },
+      {
+        "id": "testing-toolkit-3",
+        "type": "multi",
+        "prompt": "Which tests expose an off-by-one indexing bug?",
+        "answer": [
+          "empty input",
+          "single item"
+        ],
+        "explanation": "Boundaries are more revealing than another large random example.",
+        "options": [
+          "empty input",
+          "single item",
+          "only a typical ten-item input"
+        ]
+      },
+      {
+        "id": "testing-toolkit-4",
+        "type": "ordering",
+        "prompt": "Order a requirement change.",
+        "answer": [
+          "capture old behavior",
+          "add new failing test",
+          "implement change",
+          "run all tests"
+        ],
+        "explanation": "Protect earlier behavior while extending the contract.",
+        "options": [
+          "implement change",
+          "capture old behavior",
+          "run all tests",
+          "add new failing test"
+        ]
+      },
+      {
+        "id": "testing-toolkit-5",
+        "type": "free",
+        "prompt": "Explain what passing tests do and do not establish.",
+        "answer": "self",
+        "explanation": "A test suite samples a specification.",
+        "rubric": [
+          "Passing tests confirm the checked examples.",
+          "Untested edge cases and performance issues may remain.",
+          "Tests must encode the intended contract independently."
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,107 @@
+[
+  {
+    "name": "General",
+    "weights": [
+      1,
+      2,
+      2,
+      2,
+      1,
+      2,
+      2,
+      1,
+      2,
+      1,
+      1,
+      1,
+      2
+    ],
+    "source": "https://openai.com/interview-guide/",
+    "last_verified": "2026-10-24",
+    "note": "A balanced study profile; weights are editorial choices."
+  },
+  {
+    "name": "Anthropic",
+    "weights": [
+      1,
+      2,
+      3,
+      1,
+      1,
+      2,
+      2,
+      1,
+      2,
+      2,
+      2,
+      1,
+      3
+    ],
+    "source": "https://www.anthropic.com/careers",
+    "last_verified": "2026-10-24",
+    "note": "Study emphasis only. Exact round formats are unverified; ask your recruiter."
+  },
+  {
+    "name": "OpenAI",
+    "weights": [
+      1,
+      3,
+      2,
+      2,
+      1,
+      3,
+      3,
+      1,
+      2,
+      2,
+      2,
+      1,
+      2
+    ],
+    "source": "https://openai.com/interview-guide/",
+    "last_verified": "2026-10-24",
+    "note": "The official guide discusses code quality, performance and testing. These weights are not official."
+  },
+  {
+    "name": "DeepMind",
+    "weights": [
+      1,
+      2,
+      1,
+      3,
+      2,
+      3,
+      3,
+      1,
+      2,
+      2,
+      1,
+      3,
+      2
+    ],
+    "source": "https://deepmind.google/about/careers/",
+    "last_verified": null,
+    "note": "Editable preparation hypothesis. Interview format has not been verified."
+  },
+  {
+    "name": "Meta",
+    "weights": [
+      1,
+      3,
+      1,
+      2,
+      2,
+      2,
+      2,
+      1,
+      2,
+      2,
+      1,
+      3,
+      2
+    ],
+    "source": "https://www.metacareers.com/",
+    "last_verified": null,
+    "note": "Editable preparation hypothesis. Role-specific interview format has not been verified."
+  }
+]
