@@ -35,6 +35,8 @@ jobs:
       - uses: actions/checkout@v4
       - run: docker build -t ascent .
       - run: docker run -d --name ascent -p 7860:7860 ascent
-      - run: curl --retry 10 --retry-connrefused --retry-delay 2 --fail --silent --output /dev/null http://127.0.0.1:7860/ascent/
+      - run: curl --retry 10 --retry-all-errors --retry-delay 2 --fail --silent --show-error --output /dev/null http://127.0.0.1:7860/ascent/
+      - if: failure()
+        run: docker logs ascent
       - if: always()
         run: docker rm -f ascent
