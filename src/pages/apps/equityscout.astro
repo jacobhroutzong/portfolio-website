@@ -1,0 +1,33 @@
+---
+import Base from '../../layouts/Base.astro';
+const fields = [{name:'purchase',label:'Hypothetical purchase ($)',value:69000},{name:'rehab',label:'Rehab estimate ($)',value:28000},{name:'arv',label:'Estimated repaired value ($)',value:153000},{name:'rent',label:'Proposed monthly rent ($)',value:1625},{name:'tax',label:'Monthly property tax ($)',value:185},{name:'insurance',label:'Monthly insurance ($)',value:130}];
+---
+<Base title="EquityScout calculator" description="Explore a synthetic real estate underwriting scenario. All calculations run in your browser; no live property data is used.">
+<div class="container scout-demo"><a class="text-link" href="/projects/equityscout/">← About EquityScout</a><header class="scout-hero"><div class="eyebrow">EQUITYSCOUT / SYNTHETIC SCENARIO LAB</div><h1>Every assumption.<br />Out in the open.</h1><p>Explore how purchase price, repairs, and rent affect the money left in a deal.</p><span class="scout-badge">Synthetic example · Needs verification</span></header>
+<p class="scout-notice">This is a public calculator using invented assumptions. It does not find real deals, verify an appraisal, approve voucher rent, or provide financing. Inputs stay in this tab and are not saved or sent to a server.</p>
+<div class="scout-layout"><form id="scout-form"><h2>Model the purchase</h2>{fields.map(f=><label>{f.label}<input name={f.name} type="number" value={f.value} min="0" max="1000000000" step="0.01" required /></label>)}<button type="reset" class="button secondary">Reset example</button><p role="status" id="scout-error"></p></form>
+<section aria-label="Calculated scenario" aria-live="polite"><div class="scout-results">{[['allIn','All-in purchase & rehab'],['ratio','All-in / estimated ARV'],['maximumOffer','75% budget purchase ceiling'],['loan','Refinance loan scenario'],['cashflow','Monthly cashflow after reserves'],['cashLeft','Cash left after a future refi']].map(([key,label])=><article><span>{label}</span><strong data-result={key}>—</strong></article>)}</div>
+<div class="scout-notes"><h2>What changes in a downside case?</h2><p>Estimated ARV −20%: <strong data-result="downsideRatio">—</strong> all-in ratio.</p><p>Rent −20%, holding the modeled loan fixed: <strong data-result="downsideCashflow">—</strong> monthly cashflow.</p><p>Retail flip spread after modeled 9% selling costs: <strong data-result="flipNet">—</strong>, before income taxes.</p><h2>The assumptions behind the numbers</h2><p>3% purchase closing · 20% rehab contingency · 4 months at $550 carrying cost · 70% maximum LTV · 8.5% interest / 30 years · 1.20 minimum DSCR · $250 monthly cashflow target · 28% rental allowances for vacancy, management, repairs and CapEx · $60 other monthly expenses · 3% refinance closing.</p><p>The loan is reduced when needed to meet DSCR and the cashflow target, leaving more of the buyer’s cash invested. The modeled acquisition is all-cash. Refinance proceeds assume future lender approval and applicable seasoning; they are not available immediately.</p><p>No supplied ARV, rehab budget or rent is verified. Actual property evidence, lender terms, taxes, insurance and local PHA approvals must be reviewed in the private workstation.</p></div></section></div></div></Base>
+<script>
+import { calculate } from '../../lib/equityscout-demo.mjs';
+const form = document.querySelector<HTMLFormElement>('#scout-form');
+const error = document.querySelector<HTMLElement>('#scout-error');
+const money = new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});
+function update() {
+ if (!form || !error) return;
+ try {
+  const r = calculate(Object.fromEntries(new FormData(form)));
+  error.textContent = '';
+  document.querySelectorAll<HTMLElement>('[data-result]').forEach(el=>{
+   const key = el.dataset.result as keyof typeof r;
+   const v = r[key];
+   el.textContent = v === null ? '—' : key.toLowerCase().includes('ratio') ? `${(Number(v)*100).toFixed(1)}%` : money.format(Number(v)/100);
+  });
+ } catch { error.textContent='Enter a valid nonnegative amount in each field.'; document.querySelectorAll('[data-result]').forEach(el=>el.textContent='—'); }
+}
+form?.addEventListener('input',update); form?.addEventListener('reset',()=>setTimeout(update,0)); update();
+</script>
+<style>
+.scout-demo{padding-block:35px 70px}.scout-hero{background:#0c2931;color:#e9fff8;padding:40px;border-radius:15px;margin:24px 0}.scout-hero .eyebrow{color:#88e2c6}.scout-hero h1{font:500 clamp(32px,5vw,54px)/1.13 Georgia,serif;margin:22px 0;letter-spacing:-1px}.scout-hero p{color:#bee0d5;max-width:550px}.scout-badge{display:inline-block;border:1px solid #4a8a7a;padding:7px 12px;border-radius:30px;font-size:12px}.scout-notice{font-size:13px;max-width:900px}.scout-layout{display:grid;grid-template-columns:320px 1fr;gap:28px;margin-top:32px}.scout-layout form{align-self:start;display:grid;gap:16px;border:1px solid var(--border);padding:24px;border-radius:12px}.scout-layout h2{font-size:25px}.scout-layout label{display:grid;gap:8px;font-size:12px}.scout-layout input{width:100%;padding:12px;border:1px solid var(--border-strong);border-radius:6px;background:var(--bg-elevated);color:var(--text);font:inherit}.scout-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.scout-results article{padding:24px;border:1px solid var(--border);border-radius:12px;background:var(--bg-soft)}.scout-results span{font-size:12px;color:var(--muted)}.scout-results strong{display:block;font:500 29px Georgia,serif;margin-top:14px;font-variant-numeric:tabular-nums}.scout-notes{margin-top:28px;font-size:14px}.scout-notes h2{margin:27px 0 15px}.scout-layout input:focus-visible{outline:2px solid var(--accent);outline-offset:3px}@media(max-width:760px){.scout-layout{grid-template-columns:1fr}.scout-hero{padding:26px}.scout-results article{padding:18px}.scout-results strong{font-size:24px}}
+</style>
+

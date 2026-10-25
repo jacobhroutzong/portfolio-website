@@ -31,6 +31,7 @@ const active = (href: string) => path.startsWith(href) ? 'page' : undefined;
       <nav id="navigation" aria-label="Main navigation">
         <a href="/projects/" aria-current={active('/projects/')}>Work</a>
         <a href="/links/" aria-current={active('/links/')}>Links</a>
+        <a href="/connect/" aria-current={active('/connect/')}>Contact</a>
         <a href="/" aria-current={path === '/' ? 'page' : undefined}>About me</a>
       </nav>
       <button id="theme-toggle" class="icon-button" aria-label="Switch color theme" title="Switch color theme"><Icon name="sun" size={19} /></button>

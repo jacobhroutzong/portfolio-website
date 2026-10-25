@@ -7,7 +7,7 @@ export const profile = {
   introduction: 'Exploring the intersection of intelligent models, complex data, and the systems that bring them to life.',
   bio: 'Add your professional introduction here: what you study, what you build, and the engineering problems you want to solve.',
   location: '',
-  email: '',
+  email: 'jacobroutzong@gmail.com',
   resume: '', // e.g. /resume.pdf — put the real file in public/
   githubUsername: 'jacobhroutzong',
   challengeRepository: '', // https://github.com/YOUR_USERNAME/coding-challenges

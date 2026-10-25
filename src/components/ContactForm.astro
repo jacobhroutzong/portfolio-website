@@ -1,0 +1,47 @@
+---
+import { profile } from '../config/profile';
+---
+<section class="contact-box" aria-labelledby="contact-title">
+  <div class="contact-copy"><div class="eyebrow">CONTACT ME</div><h2 id="contact-title">What are you working on?</h2><p>Have a project, opportunity, or question? Send me a message here.</p><a class="text-link" href={`mailto:${profile.email}`}>{profile.email} ↗</a><p class="contact-privacy">Your name, email, and message are sent through <a href="https://formsubmit.co/" target="_blank" rel="noopener noreferrer">FormSubmit</a> to my inbox. Please leave out sensitive personal or property records.</p></div>
+  <form data-contact-form data-recipient={profile.email} action={`https://formsubmit.co/${profile.email}`} method="POST">
+    <input type="hidden" name="_subject" value="Portfolio contact — Jacob Routzong" />
+    <input type="hidden" name="_template" value="table" />
+    <div class="contact-row"><label>Your name<input name="name" autocomplete="name" required minlength="2" maxlength="100" placeholder="Your name" /></label><label>Your email<input name="email" type="email" autocomplete="email" required maxlength="254" placeholder="you@example.com" /></label></div>
+    <label>Message<textarea name="message" required minlength="10" maxlength="5000" rows="6" placeholder="Tell me a little about it…"></textarea></label>
+    <div class="contact-honey" aria-hidden="true"><label>Leave this empty<input name="_honey" tabindex="-1" autocomplete="off" /></label></div>
+    <label class="contact-consent"><input name="consent" type="checkbox" required /> <span>I agree to send these details through FormSubmit so Jacob can reply by email.</span></label>
+    <button class="button primary" type="submit">Send message →</button>
+    <p data-contact-status role="status" aria-live="polite"></p>
+    <noscript><p>The contact service will open to finish your submission.</p></noscript>
+  </form>
+</section>
+<script>
+  import { submitContact } from '../lib/contact.mjs';
+  document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach(form => {
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      if (form.dataset.sending === 'true' || !form.reportValidity()) return;
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      const status = form.querySelector<HTMLElement>('[data-contact-status]');
+      if (!button || !status) return;
+      const data = new FormData(form);
+      form.dataset.sending = 'true'; button.disabled = true; button.textContent = 'Sending…'; status.textContent = '';
+      try {
+        const result = await submitContact({name: data.get('name'), email: data.get('email'), message: data.get('message'), website: data.get('_honey'), consent: data.has('consent')}, form.dataset.recipient || '');
+        if (result.status === 'pending') {
+          status.textContent = 'This form is awaiting email activation. Please use the email link to contact me directly for now.';
+          status.dataset.state = 'error';
+        } else {
+          status.textContent = 'Your message was submitted. Thank you for getting in touch!'; status.dataset.state = 'success'; form.reset();
+        }
+      } catch {
+        status.textContent = 'Your message could not be submitted. Your text is still here; please retry or use the email link.'; status.dataset.state = 'error';
+      } finally {
+        form.dataset.sending = 'false'; button.disabled = false; button.textContent = 'Send message →';
+      }
+    });
+  });
+</script>
+<style>
+.contact-box{display:grid;grid-template-columns:1fr 1.3fr;gap:42px;padding:34px;border:1px solid var(--border);background:var(--bg-soft);border-radius:12px}.contact-copy h2{margin:15px 0 20px}.contact-copy>p{font-size:15px}.contact-copy .contact-privacy{font-size:12px;margin-top:24px;color:var(--muted)}.contact-privacy a{text-decoration:underline}.contact-box form{display:grid;gap:17px}.contact-box label{display:grid;gap:7px;font-size:13px}.contact-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}.contact-box input:not([type="checkbox"]),.contact-box textarea{width:100%;min-width:0;padding:12px 14px;border:1px solid var(--border-strong);border-radius:7px;background:var(--bg-elevated);color:var(--text);font:inherit}.contact-box textarea{resize:vertical}.contact-box input:focus-visible,.contact-box textarea:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.contact-box .contact-consent{display:flex;gap:10px;align-items:flex-start;font-size:12px;line-height:1.6}.contact-consent input{margin-top:4px;flex-shrink:0}.contact-box button{justify-self:start}.contact-box button:disabled{opacity:.6;cursor:wait}.contact-box [data-contact-status]{margin:0;font-size:13px;min-height:24px}.contact-box [data-state="error"]{color:var(--text);font-weight:600}.contact-honey{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}@media(max-width:760px){.contact-box{grid-template-columns:1fr;gap:24px;padding:22px}.contact-row{grid-template-columns:1fr}}
+</style>
