@@ -19,7 +19,8 @@ export async function submitContact(input, recipient, request = fetch) {
   });
   let result;
   try { result = await response.json(); } catch { throw new Error('The contact service returned an unexpected response. Please try again or email Jacob directly.'); }
-  if (!response.ok || ![true, 'true'].includes(result.success)) throw new Error('The contact service could not accept your message. Please try again or email Jacob directly.');
+  if (!response.ok) throw new Error('The contact service is unavailable. Please try again or email Jacob directly.');
   if (/activat|confirm your email|check your (?:inbox|email)/i.test(String(result.message || ''))) return { status: 'pending' };
+  if (![true, 'true'].includes(result.success)) throw new Error('The contact service could not accept your message. Please try again or email Jacob directly.');
   return { status: 'accepted' };
 }

@@ -24,3 +24,13 @@ Cloudflare Pages still uses the existing static Astro build/output. There is no
 new Pages project, DNS change, custom domain, runtime worker or new billing
 configuration. Public full-app deployment requires separate private production
 hosting/authentication work; this integration does not expose localhost.
+
+## Verification record
+
+Local gates: lint and Astro type check pass; 8 Node tests and 20 Ascent tests pass.
+Ascent validation uses ASCENT_PYTHON pointed at the bundled Python with NumPy: 319
+reference checks and 150 randomized comparisons pass. Build checks 175 internal
+links/assets. FormSubmit initially rejected missing website context; a request
+using the actual portfolio origin returned its explicit activation-required
+response and reported sending the activation email. Delivery remains unverified
+until the owner activates and confirms receipt of a subsequent test message.
