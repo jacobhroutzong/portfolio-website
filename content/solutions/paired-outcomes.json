@@ -1,0 +1,13 @@
+{
+  "reference": "def solve(base, variant):\n    if not base or len(base)!=len(variant) or any(type(x) is not bool for x in base+variant):\n        raise ValueError('paired booleans required')\n    wins=sum(not b and v for b,v in zip(base,variant))\n    losses=sum(b and not v for b,v in zip(base,variant))\n    return dict(wins=wins,losses=losses,ties=len(base)-wins-losses,delta=(wins-losses)/len(base))\n",
+  "hidden": [
+    "assert solve([False,True],[True,False])['delta']==0",
+    "assert solve([False]*3,[True]*3)['wins']==3",
+    "assert solve([True]*3,[False]*3)['losses']==3",
+    "assert solve([False],[False])['ties']==1",
+    "assert abs(solve([False,False,True],[True,False,True])['delta']-1/3)<1e-12",
+    "assert solve([True],[True])['delta']==0",
+    "assert solve([False,True,True],[True,False,False])['delta']==-1/3",
+    "assert solve([False,False],[False,True])['ties']==1"
+  ]
+}

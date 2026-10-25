@@ -1,0 +1,120 @@
+[
+  {
+    "id": "transformer-depth",
+    "title": "Transformer implementation depth",
+    "goal": "Verify information flow and cached decoding before optimizing attention.",
+    "ids": ["attention-contract", "rope", "kv-cache", "gqa", "flash-attention"],
+    "capstone": {
+      "title": "A verified decoder and cache",
+      "project": "ModelForge",
+      "environment": "Colab / PyTorch; CPU first, GPU profiling later",
+      "steps": [
+        "Implement next-token inputs, a small causal decoder and explicit position handling.",
+        "Compare full-prefix and cached logits at every step, including offset and capacity edge cases.",
+        "Profile a fixed workload only after correctness tests pass."
+      ],
+      "acceptance": [
+        "Future tokens cannot change earlier outputs.",
+        "Cached/full logits agree within a stated dtype-specific tolerance.",
+        "Record source, seed, shapes, environment and actual measurements; no invented GPU results."
+      ]
+    }
+  },
+  {
+    "id": "reliable-training",
+    "title": "Reliable training and post-training",
+    "goal": "Prove data, loss and recovery contracts before SFT, QLoRA or preference optimization.",
+    "ids": [
+      "benchmark-validity",
+      "reproducibility",
+      "data-pipeline",
+      "compute-budget",
+      "adamw",
+      "gradient-accumulation",
+      "mixed-precision",
+      "token-loss-contract",
+      "sft-data",
+      "lora",
+      "qlora-precision",
+      "paired-evaluation",
+      "preference-data",
+      "dpo",
+      "reasoning-verifiers"
+    ],
+    "capstone": {
+      "title": "A reproducible specialization experiment",
+      "project": "AdaptForge",
+      "environment": "Colab GPU with persistent checkpoints; browser exercises prepare the components",
+      "steps": [
+        "Validate independent source-group splits and inspect tokenizer-aligned assistant labels.",
+        "Overfit a tiny verified set, then compare interrupted/resumed training with a controlled baseline.",
+        "Evaluate base and adapter on an untouched suite under identical decoding before considering DPO or GRPO."
+      ],
+      "acceptance": [
+        "No retained example has zero supervised causal targets.",
+        "Record actual checkpoint, optimizer, RNG and sampler recovery evidence.",
+        "Publish measured quality/regressions and hardware/resource metadata; clearly label smoke data."
+      ]
+    }
+  },
+  {
+    "id": "inference-systems",
+    "title": "Inference systems interview",
+    "goal": "Connect cache ownership, scheduling, quantization and measured latency/throughput.",
+    "ids": [
+      "kv-cache",
+      "gqa",
+      "paged-attention",
+      "continuous-batching",
+      "speculative-decoding",
+      "qlora-precision",
+      "performance-diagnosis"
+    ],
+    "capstone": {
+      "title": "A measured inference comparison",
+      "project": "ModelForge / AdaptForge",
+      "environment": "Local inference or available Colab GPU; no permanent hosted GPU required",
+      "steps": [
+        "Freeze a representative request distribution, model revision and decoding settings.",
+        "Compare baseline and one serving/quantization change with cancellation and cache-isolation tests.",
+        "Separate queue delay, prefill, decode, startup and steady-state measurements."
+      ],
+      "acceptance": [
+        "Report p50/p95 latency, throughput and memory from executed runs.",
+        "Preserve request isolation and check exported-model quality.",
+        "Explain one rejected optimization and the evidence behind that choice."
+      ]
+    }
+  },
+  {
+    "id": "evidence-systems",
+    "title": "Evidence-driven AI systems",
+    "goal": "Build retrieval and tool execution contracts, then test complete workflows and recovery.",
+    "ids": [
+      "benchmark-validity",
+      "reproducibility",
+      "retrieval-contract",
+      "rag-evaluation",
+      "tool-reliability",
+      "agent-permissions",
+      "context-state",
+      "agent-evaluation",
+      "paired-evaluation"
+    ],
+    "capstone": {
+      "title": "A recoverable, evaluated tool workflow",
+      "project": "Sentinyl / ModelGuard",
+      "environment": "Local deterministic sandbox; optional model integration after component tests",
+      "steps": [
+        "Version evidence and enforce permissions before retrieval results reach generation.",
+        "Implement an idempotent tool workflow with durable state and bounded retries.",
+        "Inject prompt instructions, timeout-after-effect and runtime interruption; score environment state and violations."
+      ],
+      "acceptance": [
+        "Replaying a completed operation produces no duplicate effect.",
+        "Untrusted documents cannot expand execution authority.",
+        "Report success, safety violations, recovery and cost separately across repeatable trials."
+      ]
+    }
+  }
+]

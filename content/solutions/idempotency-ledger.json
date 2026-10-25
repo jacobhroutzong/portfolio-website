@@ -1,0 +1,13 @@
+{
+  "reference": "def solve(events):\n    ledger={}\n    for event in events:\n        key,value=event['key'],event['value']\n        if not isinstance(key,str) or not key or type(value) is not int: raise ValueError('event')\n        if key in ledger and ledger[key]!=value: raise ValueError('conflicting retry')\n        ledger[key]=value\n    return sum(ledger.values())\n",
+  "hidden": [
+    "assert solve([dict(key='a',value=0)]*5)==0",
+    "assert solve([dict(key=str(i),value=i) for i in range(10)])==45",
+    "assert solve([dict(key='a',value=-3)]*3)==-3",
+    "assert solve([dict(key='a',value=3),dict(key='b',value=3)])==6",
+    "assert solve([dict(key='a',value=2),dict(key='b',value=1),dict(key='a',value=2)])==3",
+    "try:\n solve([dict(key='a',value=1),dict(key='a',value=2)])\nexcept ValueError: pass\nelse: raise AssertionError('conflict')",
+    "try:\n solve([dict(key='',value=1)])\nexcept ValueError: pass\nelse: raise AssertionError('empty key')",
+    "try:\n solve([dict(key='a',value=True)])\nexcept ValueError: pass\nelse: raise AssertionError('boolean value')"
+  ]
+}

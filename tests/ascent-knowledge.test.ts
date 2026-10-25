@@ -3,7 +3,7 @@ import { knowledge, domains } from "../src/lib/ascent/knowledge";
 import { problems } from "../src/lib/ascent/data";
 describe("advanced curriculum contract", () => {
   it("covers six domains with substantive notes and questions", () => {
-    expect(knowledge).toHaveLength(24);
+    expect(knowledge).toHaveLength(30);
     expect(domains).toHaveLength(6);
     for (const k of knowledge) {
       expect(k.example.length).toBeGreaterThan(50);

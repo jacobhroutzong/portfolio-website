@@ -51,6 +51,22 @@ describe("learning evidence", () => {
   });
   it("starts readiness at zero and never promises an outcome", () =>
     expect(readiness(fresh(), Array(13).fill(1))).toBe(0));
+  it("keeps historical independent coverage when the library exceeds the recent-attempt window", () => {
+    const p = fresh();
+    p.submissions = Array.from({ length: 29 }, (_, i) => ({
+      problem: "problem-" + i,
+      code: "code",
+      at: "2026-10-24",
+      passed: true,
+      elapsed: 1,
+      hinted: false,
+    }));
+    expect(readiness(p, Array(13).fill(1), 29)).toBe(20);
+    p.submissions.forEach((s) => {
+      s.hinted = true;
+    });
+    expect(readiness(p, Array(13).fill(1), 29)).toBe(0);
+  });
   it("grades selection order independently but ordering exactly", () => {
     const base = { id: "x", prompt: "x", explanation: "x", answer: ["a", "b"] };
     expect(grade({ ...base, type: "multi" }, ["b", "a"])).toBe(true);
@@ -63,12 +79,18 @@ describe("learning evidence", () => {
         "",
       ),
     ).toBe(false));
-  it("has the original exercise slice and 20 problem statements without hidden payloads", () => {
+  it("has the original exercise slice and domain applications without hidden payloads", () => {
     expect(
       lessons.reduce((n, l) => n + l.exercises.length, 0),
     ).toBeGreaterThanOrEqual(60);
-    expect(problems.length).toBe(20);
-    expect(JSON.stringify(problems)).not.toContain("reference");
+    expect(problems.length).toBe(29);
+    expect(
+      problems.every(
+        (problem) =>
+          !Object.hasOwn(problem, "reference") &&
+          !Object.hasOwn(problem, "hidden"),
+      ),
+    ).toBe(true);
   });
   it("has no streak before learning and increments from today", () => {
     const p = fresh();

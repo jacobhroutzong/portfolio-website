@@ -1,0 +1,13 @@
+{
+  "reference": "def solve(values, qmax):\n    import math\n    if type(qmax) is not int or qmax<1 or any(not math.isfinite(v) for v in values): raise ValueError('quantizer')\n    peak=max(map(abs,values),default=0)\n    scale=peak/qmax if peak else 1\n    codes=[max(-qmax,min(qmax,round(v/scale))) for v in values]\n    return dict(scale=scale,codes=codes,reconstructed=[v*scale for v in codes])\n",
+  "hidden": [
+    "assert solve([1],7)['codes']==[7]",
+    "assert solve([-1],7)['codes']==[-7]",
+    "assert solve([.5,1],1)['codes']==[0,1]",
+    "assert solve([-4,4],2)['scale']==2",
+    "assert solve([0,2],2)['reconstructed']==[0,2]",
+    "assert solve([1,-1],1)['codes']==[1,-1]",
+    "try:\n solve([float('nan')],7)\nexcept ValueError: pass\nelse: raise AssertionError('NaN')",
+    "try:\n solve([1],0)\nexcept ValueError: pass\nelse: raise AssertionError('qmax')"
+  ]
+}

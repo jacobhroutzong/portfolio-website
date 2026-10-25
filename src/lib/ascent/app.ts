@@ -1,5 +1,6 @@
 import { lessons, problems, tracks, labs } from "./data";
 import { advancedUI } from "./knowledge";
+import { recommend, studyPaths } from "./curriculum";
 import {
   fresh,
   day,
@@ -855,13 +856,9 @@ function renderResult(result: RunResult) {
   return `<article class="panel" style="margin-top:15px"><h3>${result.passed ? "All tests passed" : "Keep iterating"}</h3><p>${result.tests.filter((t) => t.passed).length}/${result.tests.length} checks · ${(result.elapsed / 1000).toFixed(2)}s wall time (includes startup)</p>${result.tests.map((t) => `<div class="test-row">${t.passed ? "✓" : "×"} ${esc(t.name)}${t.error ? `<pre>${esc(t.error)}</pre>` : ""}</div>`).join("")}</article>`;
 }
 function readinessPage() {
-  const weak = [...tracks]
-    .sort(
-      (a, b) =>
-        effectiveLevel(p.skills[String(a.id)]) -
-        effectiveLevel(p.skills[String(b.id)]),
-    )
-    .slice(0, 3);
+  const next = recommend(p);
+  const selected =
+    studyPaths.find((path) => path.id === p.studyPath) ?? studyPaths[0];
   shell(
     "readiness",
     heading(
@@ -873,11 +870,11 @@ function readinessPage() {
         .slice(1)
         .map((l) => {
           const score = readiness(p, l.weights, problems.length);
-          return `<article class="panel"><div class="panel-top"><h2>${l.name}</h2><span class="pill">${score}% · HEURISTIC</span></div><div class="progress-bar"><span style="width:${score}%"></span></div><p>${esc(l.note)}</p><details><summary>How this score is calculated</summary><p>60% weighted mastery (0–5), 20% distinct solved coverage out of ${problems.length} problems, 20% success rate on recent unhinted timed-round submissions completed in ≤60 minutes. With no timed evidence, that component is zero.</p><pre>Track weights 0–12: ${l.weights.join(", ")}</pre></details></article>`;
+          return `<article class="panel"><div class="panel-top"><h2>${l.name}</h2><span class="pill">${score}% · HEURISTIC</span></div><div class="progress-bar"><span style="width:${score}%"></span></div><p>${esc(l.note)}</p><details><summary>How this score is calculated</summary><p>60% weighted mastery (0–5), 20% distinct independently solved coverage across all submissions out of ${problems.length} problems, 20% success rate on recent unhinted timed-round submissions completed in ≤60 minutes. With no timed evidence, that component is zero.</p><pre>Track weights 0–12: ${l.weights.join(", ")}</pre></details></article>`;
         })
         .join(
           "",
-        )}</div><aside><article class="panel"><h2>Your skill landscape</h2>${radar()}</article><article class="panel"><h2>Three next steps</h2>${weak.map((t) => `<p><strong>${t.title}</strong><br>Mastery ${effectiveLevel(p.skills[String(t.id)])}/5 · ${lessons.some((l) => l.track === t.id) ? link("learn", "Find a lesson →") : "Outline available; curriculum coming soon"}</p>`).join("")}</article><article class="panel"><h3>Mistake patterns</h3>${
+        )}</div><aside><article class="panel"><h2>Your skill landscape</h2>${radar()}</article><article class="panel"><h2>Three next steps</h2><p>Path: ${esc(selected.title)}. ${link("paths", "Change study path →")}</p>${next.map((item) => `<p><strong>${esc(item.concept.title)}</strong><br>${esc(item.reason)} ${link(item.to, "Continue →")}</p>`).join("") || `<p>Current explanation and application checkpoints are recorded. ${link("knowledge-review", "Review after a gap →")}</p>`}</article><article class="panel"><h3>Mistake patterns</h3>${
         Object.entries(p.mistakes)
           .map(([k, v]) => `<p>${esc(k)}: ${v}</p>`)
           .join("") || "<p>Attempt a lesson to build a useful pattern.</p>"

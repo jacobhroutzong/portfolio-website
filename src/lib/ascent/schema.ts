@@ -88,6 +88,10 @@ export const knowledgeSchema = z.object({
   pitfalls: z.array(z.string()).min(3),
   related: z.array(z.string()).min(1),
   problem: z.string(),
+  exercise_role: z
+    .enum(["application", "prerequisite"])
+    .default("prerequisite"),
+  prerequisites: z.array(z.string()).default([]),
   level: z.enum(["Intermediate", "Advanced"]),
   last_verified: z.iso.date(),
   sources: z.array(z.object({ title: z.string(), url: z.url() })).min(1),
@@ -100,6 +104,20 @@ export const knowledgeSchema = z.object({
   }),
 });
 export type Knowledge = z.infer<typeof knowledgeSchema>;
+export const studyPathSchema = z.object({
+  id: z.string().regex(/^[a-z0-9-]+$/),
+  title: z.string(),
+  goal: z.string(),
+  ids: z.array(z.string()).min(1),
+  capstone: z.object({
+    title: z.string(),
+    project: z.string(),
+    environment: z.string(),
+    steps: z.array(z.string()).min(3),
+    acceptance: z.array(z.string()).min(3),
+  }),
+});
+export type StudyPath = z.infer<typeof studyPathSchema>;
 export type Lesson = z.infer<typeof lessonSchema>;
 export type Problem = z.infer<typeof problemSchema>;
 export type Track = {

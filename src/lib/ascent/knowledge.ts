@@ -1,9 +1,8 @@
-import raw from "../../../content/knowledge/library.json";
-import { knowledgeSchema } from "./schema";
+import { evidence, knowledge, recommend, studyPaths } from "./curriculum";
 import type { Progress } from "./engine";
 import { day, mastery, reward, schedule } from "./engine";
 import katex from "katex";
-export const knowledge = knowledgeSchema.array().parse(raw);
+export { knowledge } from "./curriculum";
 export const domains = [...new Set(knowledge.map((k) => k.domain))];
 const esc = (value: unknown) =>
   String(value).replace(
@@ -51,9 +50,8 @@ export function advancedUI(c: Context) {
     const interviewCount = knowledge.filter((k) =>
       p().completed.includes("question:" + k.question.id),
     ).length;
-    const next =
-      knowledge.find((k) => !p().completed.includes("knowledge:" + k.id)) ??
-      knowledge[0];
+    const recommendation = recommend(p(), 1)[0];
+    const next = recommendation?.concept ?? knowledge[0];
     c.shell(
       "home",
       c.heading(
@@ -62,9 +60,9 @@ export function advancedUI(c: Context) {
         "Connect the mechanism, the implementation, and the evidence. Built for an intermediate Python and ML baseline.",
         a("knowledge", "Explore the knowledge base →", true),
       ) +
-        `<div class="stats"><div class="metric"><strong>${knowledge.length}</strong><span>Connected technical references</span></div><div class="metric"><strong>${knowledge.length}</strong><span>Original interview questions</span></div><div class="metric"><strong>${reviewed} / ${knowledge.length}</strong><span>Concepts retrieved from memory</span></div><div class="metric"><strong>${reviewList().length}</strong><span>Concepts & questions due for review</span></div></div><div class="dashboard"><div><article class="panel feature"><div class="eyebrow">START WITH DEPTH</div><h2>Know why it works.<br>Then defend the tradeoff.</h2><p>Study attention, training objectives, inference systems, evaluation and tool reliability. Every note connects to a worked example, interview question and implementation exercise.</p><div class="actions">${a("concept/" + next.id, "Continue: " + esc(next.title) + " →", true)}</div></article><article class="panel"><div class="panel-top"><h2>A focused study session</h2><span class="subtle">~35 MIN</span></div>${[
+        `<div class="stats"><div class="metric"><strong>${knowledge.length}</strong><span>Connected technical references</span></div><div class="metric"><strong>${knowledge.length}</strong><span>Original interview questions</span></div><div class="metric"><strong>${reviewed} / ${knowledge.length}</strong><span>Concepts retrieved from memory</span></div><div class="metric"><strong>${reviewList().length}</strong><span>Concepts & questions due for review</span></div></div><div class="dashboard"><div><article class="panel feature"><div class="eyebrow">START WITH DEPTH</div><h2>Know why it works.<br>Then defend the tradeoff.</h2><p>Study attention, training objectives, inference systems, evaluation and tool reliability. Every note connects to a worked example, interview question and implementation exercise.</p><div class="actions">${a(recommendation?.to ?? "knowledge-review", recommendation ? "Continue: " + esc(next.title) + " →" : "Review after a gap →", true)}</div></article><article class="panel"><div class="panel-top"><h2>A focused study session</h2><span class="subtle">~35 MIN</span></div>${[
           [
-            `concept/${next.id}`,
+            recommendation?.to ?? `concept/${next.id}`,
             "01",
             "Understand the mechanism",
             "A sourced reference and worked example",
@@ -164,6 +162,7 @@ export function advancedUI(c: Context) {
     const key = isQuestion ? "question:" + k.question.id : "knowledge:" + k.id;
     const draft = "advanced-note:" + key;
     const done = p().completed.includes(key);
+    const proof = evidence(p(), k);
     c.shell(
       isQuestion ? "questions" : "knowledge",
       c.heading(
@@ -174,13 +173,21 @@ export function advancedUI(c: Context) {
           : esc(k.summary),
         `<button class="btn" id="bookmark">${p().completed.includes("bookmark:" + k.id) ? "◇ Saved" : "Save reference ◇"}</button>`,
       ) +
-        `<div class="dashboard"><div>${!isQuestion ? `<article class="panel prose-note"><h2>The mechanism</h2><p>${esc(k.explanation)}</p><div class="equation">${katex.renderToString(k.equation, { throwOnError: false, displayMode: true })}</div><h2>A worked example</h2><p>${esc(k.example)}</p><h2>Failure modes to recognize</h2><ul class="rubric">${k.pitfalls.map((item) => `<li>${esc(item)}</li>`).join("")}</ul></article>` : ""}<article class="panel"><div class="eyebrow">${isQuestion ? "YOUR ANSWER" : "CLOSE THE LOOP / RETRIEVAL"}</div><h2>${isQuestion ? "Reason it through." : "Explain it without the note."}</h2><p>${isQuestion ? "Give a mechanism, concrete example, edge case, test and tradeoff." : "Describe the core mechanism, then name one failure mode and how you would test it."}</p><textarea id="knowledge-note" rows="7" aria-label="Your technical explanation" placeholder="Write your reasoning here…">${esc(p().stories[draft] ?? "")}</textarea><div class="actions"><button class="btn" id="save-note">Save draft</button><button class="btn primary" id="reveal-answer">Reveal ${isQuestion ? "answer and rubric" : "recall checklist"} →</button></div><div id="knowledge-answer" aria-live="polite"></div></article><div class="actions">${a(isQuestion ? "concept/" + k.id : "question/" + k.question.id, isQuestion ? "Read the connected concept →" : "Practice the interview question →")}${a("problem/" + k.problem, "Open coding exercise →")}</div></div><aside><article class="panel"><h2>Connections</h2><p>Follow a dependency or compare a neighboring mechanism.</p><div class="topic-links">${k.related
+        `<div class="dashboard"><div>${!isQuestion ? `<article class="panel prose-note"><h2>The mechanism</h2><p>${esc(k.explanation)}</p><div class="equation">${katex.renderToString(k.equation, { throwOnError: false, displayMode: true })}</div><h2>A worked example</h2><p>${esc(k.example)}</p><h2>Failure modes to recognize</h2><ul class="rubric">${k.pitfalls.map((item) => `<li>${esc(item)}</li>`).join("")}</ul></article>` : ""}<article class="panel"><div class="eyebrow">${isQuestion ? "YOUR ANSWER" : "CLOSE THE LOOP / RETRIEVAL"}</div><h2>${isQuestion ? "Reason it through." : "Explain it without the note."}</h2><p>${isQuestion ? "Give a mechanism, concrete example, edge case, test and tradeoff." : "Describe the core mechanism, then name one failure mode and how you would test it."}</p><textarea id="knowledge-note" rows="7" aria-label="Your technical explanation" placeholder="Write your reasoning here…">${esc(p().stories[draft] ?? "")}</textarea><div class="actions"><button class="btn" id="save-note">Save draft</button><button class="btn primary" id="reveal-answer">Reveal ${isQuestion ? "answer and rubric" : "recall checklist"} →</button></div><div id="knowledge-answer" aria-live="polite"></div></article><div class="actions">${a(isQuestion ? "concept/" + k.id : "question/" + k.question.id, isQuestion ? "Read the connected concept →" : "Practice the interview question →")}${a("problem/" + k.problem, k.exercise_role === "application" ? "Open application exercise →" : "Open prerequisite drill →")}</div></div><aside><article class="panel"><h2>Before this concept</h2><div class="topic-links">${
+          k.prerequisites
+            .map((id) => {
+              const item = knowledge.find((item) => item.id === id)!;
+              return a("concept/" + id, esc(item.title));
+            })
+            .join("") ||
+          "<p>No advanced prerequisites. Use foundation refreshers for a specific gap.</p>"
+        }</div><h2>Connections</h2><p>Compare a neighboring mechanism.</p><div class="topic-links">${k.related
           .map((id) => knowledge.find((item) => item.id === id))
           .filter((item) => !!item)
           .map((item) => a("concept/" + item.id, esc(item.title) + " ↗"))
           .join(
             "",
-          )}</div></article><article class="panel"><h2>Primary reading</h2>${k.sources.map((source) => `<p><a class="source" href="${source.url}" target="_blank" rel="noopener noreferrer">${esc(source.title)} ↗</a></p>`).join("")}<p class="subtle">Source checked ${k.last_verified}. Notes and interview questions are original educational synthesis. No claim of an official lab question.</p></article><article class="panel"><h2>Your evidence</h2><p>${done ? "✓ Previously retrieved or assessed" : "No retrieval assessment yet."}</p><p>Reading does not automatically mark a concept mastered. Your ratings are self-assessments, not externally graded results.</p>${p().cards[key] ? `<p>Next review: ${esc(p().cards[key].due)}</p>` : ""}</article></aside></div>`,
+          )}</div></article><article class="panel"><h2>Primary reading</h2>${k.sources.map((source) => `<p><a class="source" href="${source.url}" target="_blank" rel="noopener noreferrer">${esc(source.title)} ↗</a></p>`).join("")}<p class="subtle">Source checked ${k.last_verified}. Notes and interview questions are original educational synthesis. No claim of an official lab question.</p></article><article class="panel"><h2>Your evidence</h2><p>${done ? "✓ Previously retrieved or assessed" : "No retrieval assessment yet."}</p><ul class="rubric"><li>Mechanism recall: ${proof.recall ? "self-assessed" : "not recorded"}</li><li>Interview explanation: ${proof.explanation ? "self-assessed" : "not recorded"}</li><li>Application code: ${k.exercise_role === "prerequisite" ? "linked drill is a prerequisite" : proof.code ? "local checks passed without hints" : "no independent passing submission"}</li><li>Recall on separate days: ${proof.spaced ? "recorded" : "not recorded"}</li></ul><p class="subtle">Code checks cover this exercise’s contract, not the whole system or a GPU deployment.</p><p>Reading does not automatically mark a concept mastered. Your ratings are self-assessments, not externally graded results.</p>${p().cards[key] ? `<p>Next review: ${esc(p().cards[key].due)}</p>` : ""}</article></aside></div>`,
     );
     const saveDraft = () => {
       p().stories[draft] = $<HTMLTextAreaElement>("#knowledge-note").value;
@@ -216,6 +223,10 @@ export function advancedUI(c: Context) {
           return;
         }
         p().cards[key] = schedule(p().cards[key], rating);
+        if (!isQuestion && rating >= 4) {
+          const dates = (p().conceptRecallDates ??= {});
+          dates[k.id] = [...new Set([...(dates[k.id] ?? []), day()])];
+        }
         p().skills[String(k.track)] = mastery(
           p().skills[String(k.track)],
           rating >= 4,
@@ -231,52 +242,8 @@ export function advancedUI(c: Context) {
       });
     });
   }
-  function paths() {
-    const paths = [
-      {
-        title: "Transformer implementation depth",
-        ids: ["attention-contract", "gqa", "rope", "flash-attention"],
-        goal: "Explain shapes and masks, then implement attention and verify cache equivalence.",
-      },
-      {
-        title: "Reliable training and post-training",
-        ids: [
-          "compute-budget",
-          "gradient-accumulation",
-          "mixed-precision",
-          "adamw",
-          "sft-data",
-          "lora",
-          "dpo",
-          "preference-data",
-        ],
-        goal: "Connect data contracts, numerical behavior, optimization and preference evidence.",
-      },
-      {
-        title: "Inference systems interview",
-        ids: [
-          "kv-cache",
-          "paged-attention",
-          "continuous-batching",
-          "speculative-decoding",
-        ],
-        goal: "Estimate memory, design scheduling, and defend latency/throughput tradeoffs.",
-      },
-      {
-        title: "Evidence-driven AI systems",
-        ids: [
-          "paired-evaluation",
-          "benchmark-validity",
-          "rag-evaluation",
-          "retrieval-contract",
-          "tool-reliability",
-          "agent-evaluation",
-          "reproducibility",
-          "data-pipeline",
-        ],
-        goal: "Design evaluations and interfaces that reveal failure, leakage and unsafe retries.",
-      },
-    ];
+  function pathsPage() {
+    const paths = studyPaths;
     c.shell(
       "paths",
       c.heading(
@@ -287,15 +254,26 @@ export function advancedUI(c: Context) {
         paths
           .map(
             (path) =>
-              `<article class="panel"><h2>${path.title}</h2><p>${path.goal}</p><div class="lesson-list">${path.ids
+              `<article class="panel"><h2>${path.title}</h2><p>${path.goal}</p><button class="btn" data-study-path="${path.id}" ${p().studyPath === path.id ? "disabled" : ""}>${p().studyPath === path.id ? "Your active study path" : "Use this study path"}</button><div class="lesson-list">${path.ids
                 .map((id, i) => {
                   const k = knowledge.find((k) => k.id === id)!;
-                  return `<a class="lesson-link" href="#concept/${id}"><span>${String(i + 1).padStart(2, "0")} · ${k.title}</span><span>${p().completed.includes("knowledge:" + id) ? "✓ Retrieved" : "Study →"}</span></a>`;
+                  return `<a class="lesson-link" href="#concept/${id}"><span>${String(i + 1).padStart(2, "0")} · ${k.title}</span><span>${evidence(p(), k).recall ? "✓ Recall recorded" : "Study →"}</span></a>`;
                 })
-                .join("")}</div></article>`,
+                .join(
+                  "",
+                )}</div><h3>Project checkpoint · ${esc(path.capstone.project)}</h3><p><strong>${esc(path.capstone.title)}</strong></p><p>${esc(path.capstone.environment)}</p><ol class="rubric">${path.capstone.steps.map((step) => `<li>${esc(step)}</li>`).join("")}</ol><h3>Evidence to collect</h3><ul class="rubric">${path.capstone.acceptance.map((item) => `<li>${esc(item)}</li>`).join("")}</ul><p class="subtle">External project checkpoint. Browser practice does not record a GPU run or certify these outcomes.</p></article>`,
           )
           .join(""),
     );
+    on("[data-study-path]", "click", async (event) => {
+      const id = (event.currentTarget as HTMLElement).dataset.studyPath!;
+      if (!studyPaths.some((path) => path.id === id)) return;
+      p().studyPath = id;
+      if (await c.save()) {
+        pathsPage();
+        c.toast("Study path saved. Recommendations now follow this path.");
+      }
+    });
   }
   function review() {
     const due = reviewList();
@@ -312,5 +290,5 @@ export function advancedUI(c: Context) {
         `<p>${a("foundation-review", "Review coding and foundation cards →")}</p>`,
     );
   }
-  return { home, library, detail, paths, review };
+  return { home, library, detail, paths: pathsPage, review };
 }

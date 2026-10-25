@@ -1,0 +1,13 @@
+{
+  "reference": "def solve(trials):\n    for t in trials:\n        if type(t['success']) is not bool or any(type(t[k]) is not int or t[k]<0 for k in ('steps','violations')):\n            raise ValueError('trial')\n    n=len(trials)\n    return dict(success_rate=sum(t['success'] for t in trials)/n if n else None,\n        safe_success_rate=sum(t['success'] and t['violations']==0 for t in trials)/n if n else None,\n        mean_steps=sum(t['steps'] for t in trials)/n if n else None)\n",
+  "hidden": [
+    "assert solve([dict(success=True,steps=0,violations=0)])['safe_success_rate']==1",
+    "assert solve([dict(success=False,steps=3,violations=2)])['success_rate']==0",
+    "assert solve([])['mean_steps'] is None",
+    "assert solve([])['safe_success_rate'] is None",
+    "assert solve([dict(success=True,steps=5,violations=0)]*3)['mean_steps']==5",
+    "assert solve([dict(success=True,steps=1,violations=2)])['success_rate']==1",
+    "try:\n solve([dict(success=1,steps=2,violations=0)])\nexcept ValueError: pass\nelse: raise AssertionError('boolean required')",
+    "try:\n solve([dict(success=True,steps=-1,violations=0)])\nexcept ValueError: pass\nelse: raise AssertionError('negative steps')"
+  ]
+}
