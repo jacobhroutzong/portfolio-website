@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Private AI for Law Firms: On-Prem LLMs for Privileged Work</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="A private AI assistant for drafting, summarizing and research that keeps privileged client data on infrastructure your firm controls.">
+<link rel="canonical" href="https://jacobroutzong.dev/apps/leverline/solutions/private-ai-for-law-firms/">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Leverline">
+<meta property="og:title" content="Private AI for Law Firms: On-Prem LLMs for Privileged Work">
+<meta property="og:description" content="A private AI assistant for drafting, summarizing and research that keeps privileged client data on infrastructure your firm controls.">
+<meta property="og:url" content="https://jacobroutzong.dev/apps/leverline/solutions/private-ai-for-law-firms/">
+<meta property="og:image" content="https://jacobroutzong.dev/apps/leverline/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#15242C">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+<link rel="stylesheet" href="../../assets/site.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Service", "areaServed": "United States", "description": "We design, deploy and maintain private large language models that run on a server in your office, in your own cloud account, or fully air-gapped. Your team gets modern AI without sending client data to a third party.", "name": "Private AI for Law Firms", "offers": {"@type": "Offer", "priceCurrency": "USD", "priceSpecification": {"@type": "PriceSpecification", "maxPrice": 45000, "minPrice": 15000, "priceCurrency": "USD"}}, "provider": {"@id": "https://jacobroutzong.dev/apps/leverline/#org"}, "serviceType": "local LLM for business", "url": "https://jacobroutzong.dev/apps/leverline/solutions/private-ai-for-law-firms/"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "acceptedAnswer": {"@type": "Answer", "text": "Not strictly. Some firms use enterprise cloud tools with strong contractual protections. A private model removes third-party exposure entirely, which many firms and their clients prefer for privileged work."}, "name": "Do law firms need a private LLM to use AI?"}, {"@type": "Question", "acceptedAnswer": {"@type": "Answer", "text": "It searches and summarizes the documents you give it, but legal research still needs a citator. We connect it to your research tools where licensing allows and train users to verify every citation."}, "name": "Can the assistant cite case law?"}, {"@type": "Question", "acceptedAnswer": {"@type": "Answer", "text": "For most business work, such as drafting, summarizing, extracting and searching your own documents, current open-weight models are close enough that users rarely notice. For the hardest reasoning tasks we can route approved, redacted requests to a frontier API. We benchmark on your tasks before you buy any hardware."}, "name": "Are local models good enough compared with ChatGPT or Claude?"}, {"@type": "Question", "acceptedAnswer": {"@type": "Answer", "text": "It depends on concurrent users and model size. Small teams can start on a single workstation-class GPU or a high-memory Apple silicon machine; larger firms typically use one or more data-center GPUs. We size it from your usage, not a catalog."}, "name": "What hardware do we need?"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "item": "https://jacobroutzong.dev/apps/leverline/", "name": "Home", "position": 1}, {"@type": "ListItem", "item": "https://jacobroutzong.dev/apps/leverline/industries/", "name": "Industries", "position": 2}, {"@type": "ListItem", "item": "https://jacobroutzong.dev/apps/leverline/industries/law-firms/", "name": "Law Firms", "position": 3}, {"@type": "ListItem", "item": "https://jacobroutzong.dev/apps/leverline/solutions/private-ai-for-law-firms/", "name": "Private AI for Law Firms", "position": 4}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="Leverline home"><svg viewBox="0 0 30 22" aria-hidden="true" focusable="false"><path class="fulcrum-mark" d="M15 12.2 L20.2 21 H9.8 Z"/><line class="mark-beam" x1="2.5" y1="15.6" x2="27.5" y2="7.4" stroke-width="3.2" stroke-linecap="round"/></svg><span>Leverline</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>Menu</button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="../../use-cases/index.html">Use cases</a>
+      <a href="../../industries/index.html" aria-current="page">Industries</a>
+      <a href="../../pricing/index.html">Pricing</a>
+      <a href="../../roi-calculator/index.html">ROI calculator</a>
+      <a href="../../insights/index.html">Insights</a>
+      <a class="btn btn-s" href="../../assessment/index.html">Start free scan</a>
+    </nav>
+  </div>
+</header>
+
+
+<aside class="notice" aria-label="Publication status"><div class="wrap">Working-name demo: Leverline demonstrates the website, opportunity scan and ROI calculator for my applied-AI business. Inquiries go to jacobroutzong@gmail.com.</div></aside>
+
+
+<main id="main">
+
+<div class="wrap">
+  <header class="page-head">
+    <nav class="crumbs" aria-label="Breadcrumb"><ol>
+  <li><a href="../../index.html">Home</a></li>
+  <li><a href="../../industries/index.html">Industries</a></li>
+  <li><a href="../../industries/law-firms/index.html">Law Firms</a></li>
+  <li><span aria-current="page">Private AI for Law Firms</span></li>
+</ol></nav>
+    <h1 class="h-page">Private AI for Law Firms</h1>
+    <p class="lede">Attorneys want the drafting and summarizing speed of modern AI; clients and the ethics rules demand that privileged information stays protected. A private large language model gives the firm both: a ChatGPT-style assistant running on a server the firm controls, connected to matter files with the same permissions your document management system already enforces.</p>
+    <div class="actions">
+      <a class="btn" href="#roi-private-local-llm">Estimate your ROI</a>
+      <a class="btn btn-quiet" href="../../contact/index.html">Book a call</a>
+    </div>
+  </header>
+</div>
+
+<section class="section" style="padding-top:var(--gap-5)">
+  <div class="wrap split">
+    <div class="stack">
+      <aside class="callout" aria-label="Illustrative scenario">
+        <span class="label">What it looks like (illustrative)</span>
+        <p>A 25-attorney litigation firm deploys a private assistant on a single GPU server in its own environment. Associates summarize deposition transcripts, draft discovery responses from templates and ask questions across a matter&#39;s document set, with every answer citing the source page. Nothing leaves the network, usage is logged by user and matter, and the firm&#39;s AI policy documents how output is reviewed before it reaches a client or court.</p>
+      </aside>
+
+      <section class="block" aria-labelledby="wf-h">
+        <h2 id="wf-h">How we deliver it</h2>
+        <ol class="steps"><li><p style="color:var(--ink)">Map matter data, DMS permissions and ethical obligations</p></li><li><p style="color:var(--ink)">Benchmark open-weight models on the firm&#39;s real drafting and summary tasks</p></li><li><p style="color:var(--ink)">Deploy the model, chat workspace and matter-aware retrieval with SSO</p></li><li><p style="color:var(--ink)">Train attorneys on verification, citation checking and the firm policy</p></li></ol>
+      </section>
+
+      <section class="block" aria-labelledby="cons-h">
+        <h2 id="cons-h">What to plan for</h2>
+        <ul class="pains"><li>ABA Formal Opinion 512 expects lawyers to understand AI tools, protect confidentiality and verify output. Private deployment plus training addresses all three.</li><li>Retrieval must respect ethical walls and matter-level permissions, not just folder access.</li><li>Billing practices should reflect AI efficiency; Opinion 512 cautions against billing for time not actually spent.</li></ul>
+      </section>
+
+      <section class="block" aria-labelledby="kpi-h">
+        <h2 id="kpi-h">What we measure</h2>
+        <ul class="checklist"><li>Attorney hours saved per week</li><li>Time to first draft</li><li>Adoption by practice group</li></ul>
+      </section>
+
+      <section class="calc-embed" data-roi data-roi-slug="private-local-llm" aria-labelledby="roi-private-local-llm">
+  <div class="block">
+    <h2 id="roi-private-local-llm">What it could be worth to your firm</h2>
+    <p class="muted small">Defaults are illustrative. Change them to match your business; results update as you type.</p>
+  </div>
+  <div class="calc">
+    <form class="calc-inputs" data-roi-inputs onsubmit="return false">
+<div class="row">
+  <label for="private-local-llm-people">People doing this work</label>
+  <div class="unit-input">
+    <input class="input" id="private-local-llm-people" name="people" type="number" inputmode="decimal" min="1" max="5000" step="1" value="25">
+  </div>
+</div>
+<div class="row">
+  <label for="private-local-llm-hours_per_week">Hours per person per week on it</label>
+  <div class="unit-input">
+    <input class="input" id="private-local-llm-hours_per_week" name="hours_per_week" type="number" inputmode="decimal" min="0" max="60" step="0.5" value="6"><span class="u">hrs</span>
+  </div>
+</div>
+<div class="row">
+  <label for="private-local-llm-automation_rate">Share of that time AI saves</label>
+  <div class="unit-input">
+    <input class="input" id="private-local-llm-automation_rate" name="automation_rate" type="number" inputmode="decimal" min="0" max="100" step="5" value="35"><span class="u">%</span>
+  </div>
+</div>
+<div class="row">
+  <label for="private-local-llm-hourly_cost">Loaded hourly cost</label>
+  <div class="unit-input pre"><span class="u">$</span>
+    <input class="input" id="private-local-llm-hourly_cost" name="hourly_cost" type="number" inputmode="decimal" min="10" max="500" step="1" value="55">
+  </div>
+</div></form>
+    <div class="stack-s">
+      <svg class="balance" id="bal-private-local-llm" viewBox="0 0 520 240" role="img" aria-label="Year-one value $150,150 against year-one cost $58,800" data-balance>
+  <line class="ground" x1="30" y1="226" x2="490" y2="226"/>
+  <path class="fulcrum" d="M260 156 L296 226 H224 Z"/>
+  <g class="arm" data-arm style="transform: rotate(12.17deg)">
+    <rect class="weight w-cost" data-w="cost" x="66.21" y="89.43" width="57.57" height="57.57" rx="3"/>
+    <rect class="weight w-value" data-w="value" x="379.0" y="55.0" width="92.0" height="92.0" rx="3"/>
+    <line class="beam" x1="44" y1="150" x2="476" y2="150"/>
+  </g>
+  <circle class="pivot" cx="260" cy="150" r="7"/>
+</svg>
+      <dl class="readout">
+  <div><dt>Year-one cost</dt><dd data-out="cost">$58,800</dd></div>
+  <div class="is-value"><dt>Year-one value</dt><dd data-out="value">$150,150</dd></div>
+</dl>
+<div class="verdict">
+  <strong data-out="payback">Pays back in about 3 months</strong>
+  <span class="small data" data-out="multiple">3-year value is 3.9× the 3-year cost</span>
+</div>
+      <p class="calc-formula" data-roi-formula>Formula: people × hours/week × % saved × 52 × hourly cost.</p>
+    </div>
+  </div>
+</section>
+
+      <section class="block" aria-labelledby="faq-h">
+  <h2 id="faq-h">Questions we hear</h2>
+  <div class="faq">
+    <details open>
+      <summary>Do law firms need a private LLM to use AI?</summary>
+      <div class="answer"><p>Not strictly. Some firms use enterprise cloud tools with strong contractual protections. A private model removes third-party exposure entirely, which many firms and their clients prefer for privileged work.</p></div>
+    </details>
+    <details>
+      <summary>Can the assistant cite case law?</summary>
+      <div class="answer"><p>It searches and summarizes the documents you give it, but legal research still needs a citator. We connect it to your research tools where licensing allows and train users to verify every citation.</p></div>
+    </details>
+    <details>
+      <summary>Are local models good enough compared with ChatGPT or Claude?</summary>
+      <div class="answer"><p>For most business work, such as drafting, summarizing, extracting and searching your own documents, current open-weight models are close enough that users rarely notice. For the hardest reasoning tasks we can route approved, redacted requests to a frontier API. We benchmark on your tasks before you buy any hardware.</p></div>
+    </details>
+    <details>
+      <summary>What hardware do we need?</summary>
+      <div class="answer"><p>It depends on concurrent users and model size. Small teams can start on a single workstation-class GPU or a high-memory Apple silicon machine; larger firms typically use one or more data-center GPUs. We size it from your usage, not a catalog.</p></div>
+    </details>
+  </div>
+</section>
+
+      <section class="block" aria-labelledby="more-h">
+        <h2 id="more-h">Keep reading</h2>
+        <ul class="ind-grid">
+          <li><a href="../../use-cases/private-local-llm/index.html"><strong>Private &amp; Local LLMs</strong><span>The full use case: deliverables, stack and pricing</span></a></li>
+          <li><a href="../../industries/law-firms/index.html"><strong>AI for law firms</strong><span>Every use case we recommend for your industry</span></a></li>
+          <li><a href="../ai-contract-review-for-law-firms/index.html"><strong>AI Contract &amp; Document Review for Law Firms</strong><span>Law Firms</span></a></li>
+          <li><a href="../private-ai-for-healthcare/index.html"><strong>Private AI for Healthcare Practices</strong><span>Healthcare Practices &amp; Clinics</span></a></li>
+          <li><a href="../private-ai-for-defense-contractors/index.html"><strong>Private AI for Defense Contractors</strong><span>Defense &amp; Government Contractors</span></a></li>
+        </ul>
+      </section>
+    </div>
+    <div class="rail"><aside class="spec" aria-label="Private &amp; Local LLMs at a glance">
+  <div class="spec-title">Private LLMs <span>at a glance</span></div>
+  <dl>
+    <dt>Time to value</dt><dd>~4 weeks</dd>
+    <dt>Typical timeline</dt><dd>3–6 weeks</dd>
+    <dt>Typical investment</dt><dd class="data">$15k–$45k</dd>
+    <dt>Ongoing</dt><dd class="data">$800–$4k/mo</dd>
+  </dl>
+  <div class="spec-list">
+    <p>What we measure</p>
+    <ul><li>Weekly active users</li><li>Hours saved per user per week</li><li>Cost per 1</li><li>000 requests vs. cloud AI</li><li>Policy violations (target zero)</li></ul>
+  </div>
+  <div class="actions">
+    <a class="btn" href="../../assessment/index.html">Start the free scan</a>
+    <a class="btn btn-quiet" href="../../contact/index.html">Book a call</a>
+  </div>
+</aside></div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="lead-h">
+  <div class="wrap">
+    <div class="panel two-col">
+      <div class="block">
+        <h2 id="lead-h">Get a fixed-price estimate</h2>
+        <p class="muted">Share a few details and we'll send a scoped estimate with the ROI math, usually within one business day.</p>
+      </div>
+      <form class="form" id="lead-private-ai-for-law-firms" data-lead-form novalidate>
+  <input type="hidden" name="source" value="solution:private-ai-for-law-firms">
+  <input type="hidden" name="package" value="">
+  <input type="hidden" name="use_cases" value="private-local-llm">
+  <div class="hp" aria-hidden="true"><label for="lead-private-ai-for-law-firms-website2">Leave this empty</label><input id="lead-private-ai-for-law-firms-website2" name="company_website" tabindex="-1" autocomplete="off"></div>
+  <div class="form-grid">
+    <div class="field"><label for="lead-private-ai-for-law-firms-name">Name</label><input class="input" id="lead-private-ai-for-law-firms-name" name="name" autocomplete="name" required></div>
+    <div class="field"><label for="lead-private-ai-for-law-firms-email">Work email</label><input class="input" id="lead-private-ai-for-law-firms-email" name="email" type="email" autocomplete="email" required></div>
+    <div class="field"><label for="lead-private-ai-for-law-firms-company">Company</label><input class="input" id="lead-private-ai-for-law-firms-company" name="company" autocomplete="organization"></div>
+    <div class="field full"><label for="lead-private-ai-for-law-firms-message">Anything we should know? <span class="hint">Optional</span></label>
+      <textarea class="textarea" id="lead-private-ai-for-law-firms-message" name="message" rows="3" style="min-height:90px"></textarea></div>
+  </div>
+  <div class="actions">
+    <button class="btn" type="submit">Request my estimate</button>
+  </div>
+  <p class="form-status" role="status" aria-live="polite"></p>
+  <div class="fallback" hidden></div>
+</form>
+    </div>
+  </div>
+</section>
+<section class="band cta-band">
+  <div class="wrap">
+    <div>
+      <h2>Find out where AI pays off for you.</h2>
+      <p>Ten minutes, no email required. You&#39;ll get a readiness score, your top opportunities ranked by ROI and a recommended first step.</p>
+    </div>
+    <div class="actions">
+      <a class="btn" href="../../assessment/index.html">Start the free scan</a>
+      <a class="btn btn-quiet" href="../../contact/index.html">Book a call</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-about">
+        <a class="brand" href="../../index.html"><svg viewBox="0 0 30 22" aria-hidden="true" focusable="false"><path class="fulcrum-mark" d="M15 12.2 L20.2 21 H9.8 Z"/><line class="mark-beam" x1="2.5" y1="15.6" x2="27.5" y2="7.4" stroke-width="3.2" stroke-linecap="round"/></svg><span>Leverline</span></a>
+        <p>AI that pays for itself. Applied AI for small and mid-sized businesses across the United States.</p>
+        <p>Email <span class="copyable">jacobroutzong@gmail.com</span></p>
+      </div>
+      <div>
+        <h2>Use cases</h2>
+        <ul><li><a href="../../use-cases/private-local-llm/index.html">Private LLMs</a></li><li><a href="../../use-cases/ai-knowledge-assistant/index.html">Knowledge Assistant</a></li><li><a href="../../use-cases/ai-workflow-automation/index.html">Workflow Automation</a></li><li><a href="../../use-cases/ai-document-processing/index.html">Document Processing</a></li><li><a href="../../use-cases/ai-lead-generation/index.html">Lead Generation</a></li><li><a href="../../use-cases/ai-ad-targeting/index.html">Ad Targeting</a></li><li><a href="../../use-cases/ai-social-media-content/index.html">Content Engine</a></li>
+          <li><a href="../../use-cases/index.html">All 16 use cases</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Industries</h2>
+        <ul><li><a href="../../industries/law-firms/index.html">Law Firms</a></li><li><a href="../../industries/accounting-firms/index.html">Accounting &amp; Bookkeeping Firms</a></li><li><a href="../../industries/healthcare-clinics/index.html">Healthcare Practices &amp; Clinics</a></li><li><a href="../../industries/real-estate/index.html">Real Estate &amp; Property Management</a></li><li><a href="../../industries/home-services/index.html">Home Services &amp; Contractors</a></li><li><a href="../../industries/ecommerce-retail/index.html">E-commerce &amp; Retail</a></li><li><a href="../../industries/manufacturing-distribution/index.html">Manufacturing &amp; Distribution</a></li>
+          <li><a href="../../industries/index.html">All industries</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Company</h2>
+        <ul>
+          <li><a href="../../about/index.html">About</a></li>
+          <li><a href="../../pricing/index.html">Pricing</a></li>
+          <li><a href="../../assessment/index.html">Free AI scan</a></li>
+          <li><a href="../../roi-calculator/index.html">ROI calculator</a></li>
+          <li><a href="../../partners/index.html">Referrals and partners</a></li>
+          <li><a href="../../insights/index.html">Insights</a></li>
+          <li><a href="../../contact/index.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-legal">
+      <span>&copy; 2026 Leverline</span>
+      <a href="../../privacy/index.html">Privacy</a>
+      <a href="../../terms/index.html">Terms</a>
+      <span>Prices in US dollars. Examples on this site are illustrative unless labeled as client results.</span>
+    </div>
+  </div>
+</footer>
+
+<script>window.LL_CONFIG = {"apiBase": "", "bookingUrl": "", "brand": "Leverline", "contactEmail": "jacobroutzong@gmail.com", "indexSuffix": "index.html", "refDays": 90, "urlPrefix": "../../"};</script>
+<script src="../../assets/site.js" defer></script>
+<script src="../../assets/catalog.js" defer></script>
+<script src="../../assets/tools.js" defer></script>
+</body>
+</html>

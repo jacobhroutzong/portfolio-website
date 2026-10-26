@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Private &amp; Local LLM Deployment for Business | On-Prem AI</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Run ChatGPT-class AI on hardware or cloud you control. We deploy private, on-prem and VPC LLMs for teams that can&#39;t send sensitive data to public AI.">
+<link rel="canonical" href="https://jacobroutzong.dev/apps/leverline/use-cases/private-local-llm/">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Leverline">
+<meta property="og:title" content="Private &amp; Local LLM Deployment for Business | On-Prem AI">
+<meta property="og:description" content="Run ChatGPT-class AI on hardware or cloud you control. We deploy private, on-prem and VPC LLMs for teams that can&#39;t send sensitive data to public AI.">
+<meta property="og:url" content="https://jacobroutzong.dev/apps/leverline/use-cases/private-local-llm/">
+<meta property="og:image" content="https://jacobroutzong.dev/apps/leverline/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#15242C">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+<link rel="stylesheet" href="../../assets/site.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Service", "areaServed": "United States", "description": "We design, deploy and maintain private large language models that run on a server in your office, in your own cloud account, or fully air-gapped. Your team gets modern AI without sending client data to a third party.", "name": "Private \u0026 Local LLMs", "offers": {"@type": "Offer", "priceCurrency": "USD", "priceSpecification": {"@type": "PriceSpecification", "maxPrice": 45000, "minPrice": 15000, "priceCurrency": "USD"}}, "provider": {"@id": "https://jacobroutzong.dev/apps/leverline/#org"}, "serviceType": "local LLM for business", "url": "https://jacobroutzong.dev/apps/leverline/use-cases/private-local-llm/"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "acceptedAnswer": {"@type": "Answer", "text": "For most business work, such as drafting, summarizing, extracting and searching your own documents, current open-weight models are close enough that users rarely notice. For the hardest reasoning tasks we can route approved, redacted requests to a frontier API. We benchmark on your tasks before you buy any hardware."}, "name": "Are local models good enough compared with ChatGPT or Claude?"}, {"@type": "Question", "acceptedAnswer": {"@type": "Answer", "text": "It depends on concurrent users and model size. Small teams can start on a single workstation-class GPU or a high-memory Apple silicon machine; larger firms typically use one or more data-center GPUs. We size it from your usage, not a catalog."}, "name": "What hardware do we need?"}, {"@type": "Question", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Models, embeddings, retrieval and the chat interface can all run with no internet connection; updates are delivered through your approved change process."}, "name": "Can it be fully air-gapped?"}, {"@type": "Question", "acceptedAnswer": {"@type": "Answer", "text": "Often, once you pass a few dozen active users or run high-volume automations, because inference cost is mostly fixed hardware. We model both options during the assessment so you can see the break-even point."}, "name": "Is a private LLM cheaper than per-seat AI licenses?"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "item": "https://jacobroutzong.dev/apps/leverline/", "name": "Home", "position": 1}, {"@type": "ListItem", "item": "https://jacobroutzong.dev/apps/leverline/use-cases/", "name": "Use cases", "position": 2}, {"@type": "ListItem", "item": "https://jacobroutzong.dev/apps/leverline/use-cases/private-local-llm/", "name": "Private LLMs", "position": 3}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="Leverline home"><svg viewBox="0 0 30 22" aria-hidden="true" focusable="false"><path class="fulcrum-mark" d="M15 12.2 L20.2 21 H9.8 Z"/><line class="mark-beam" x1="2.5" y1="15.6" x2="27.5" y2="7.4" stroke-width="3.2" stroke-linecap="round"/></svg><span>Leverline</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>Menu</button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="../index.html" aria-current="page">Use cases</a>
+      <a href="../../industries/index.html">Industries</a>
+      <a href="../../pricing/index.html">Pricing</a>
+      <a href="../../roi-calculator/index.html">ROI calculator</a>
+      <a href="../../insights/index.html">Insights</a>
+      <a class="btn btn-s" href="../../assessment/index.html">Start free scan</a>
+    </nav>
+  </div>
+</header>
+
+
+<aside class="notice" aria-label="Publication status"><div class="wrap">Working-name demo: Leverline demonstrates the website, opportunity scan and ROI calculator for my applied-AI business. Inquiries go to jacobroutzong@gmail.com.</div></aside>
+
+
+<main id="main">
+
+<div class="wrap">
+  <header class="page-head">
+    <nav class="crumbs" aria-label="Breadcrumb"><ol>
+  <li><a href="../../index.html">Home</a></li>
+  <li><a href="../index.html">Use cases</a></li>
+  <li><span aria-current="page">Private LLMs</span></li>
+</ol></nav>
+    <h1 class="h-page">Your own ChatGPT, running on infrastructure you control.</h1>
+    <p class="lede">We design, deploy and maintain private large language models that run on a server in your office, in your own cloud account, or fully air-gapped. Your team gets modern AI without sending client data to a third party.</p>
+    <div class="actions">
+      <a class="btn" href="#roi-private-local-llm">Estimate your ROI</a>
+      <a class="btn btn-quiet" href="../../contact/index.html">Talk it through</a>
+    </div>
+  </header>
+</div>
+
+<section class="section" style="padding-top:var(--gap-5)">
+  <div class="wrap split">
+    <div class="stack">
+      <section class="block" aria-labelledby="problem-h">
+        <h2 id="problem-h">The problem</h2>
+        <div class="prose"><p>Your people are already pasting contracts, financials and customer records into public AI tools, or they&#39;re banned from using AI at all and falling behind. Neither is acceptable when you handle confidential or regulated data, and per-seat AI licenses get expensive as usage grows.</p></div>
+      </section>
+
+      <section class="block" aria-labelledby="solution-h">
+        <h2 id="solution-h">How we solve it</h2>
+        <div class="prose"><p>We stand up an open-weight model (Llama, Qwen, Mistral, Gemma or gpt-oss class) behind a familiar chat interface, connect it to your documents with permission-aware retrieval, and wrap it with logging, access control and usage policies. Sensitive work stays on your hardware; when a task truly needs a frontier model, a routing layer can send only approved, redacted requests to a cloud API.</p></div>
+      </section>
+
+      <section class="block" aria-labelledby="get-h">
+        <h2 id="get-h">What you get</h2>
+        <ul class="checklist"><li>Model and hardware sizing for your users, workloads and budget</li><li>Deployment on-prem, in your VPC, or air-gapped (Ollama, vLLM or llama.cpp)</li><li>Private chat workspace with SSO, roles and audit logs</li><li>Document retrieval (RAG) that respects existing folder permissions</li><li>Acceptable-use policy, staff training and an admin runbook</li><li>Monitoring, model updates and support under a managed plan</li></ul>
+      </section>
+
+      <section class="block" aria-labelledby="steps-h">
+        <h2 id="steps-h">How it works</h2>
+        <ol class="steps"><li><h3>Classify the data</h3><p>Map which data the AI will touch and which obligations apply: client confidentiality, HIPAA, CMMC / NIST SP 800-171, ITAR or contracts.</p></li><li><h3>Size the stack</h3><p>Benchmark candidate models on your real tasks and pick the smallest model and hardware that meets your quality bar.</p></li><li><h3>Deploy and connect</h3><p>Install the runtime, chat interface and retrieval layer; wire up SSO and the document sources your team actually uses.</p></li><li><h3>Train and govern</h3><p>Short role-based training, a usage policy, and dashboards that show adoption, cost and quality.</p></li></ol>
+      </section>
+
+      <aside class="callout" aria-label="Illustrative example">
+        <span class="label">Example (illustrative)</span>
+        <p>A 40-person accounting firm bans public AI over client-confidentiality concerns. A single GPU server running a mid-size open model gives every staff member a private assistant for drafting client letters, summarizing engagement files and searching firm procedures. If each person saves two hours a week at a $55 loaded cost, that&#39;s roughly $229,000 a year of capacity, against a one-time build in the low tens of thousands.</p>
+      </aside>
+
+      <section class="calc-embed" data-roi data-roi-slug="private-local-llm" aria-labelledby="roi-private-local-llm">
+  <div class="block">
+    <h2 id="roi-private-local-llm">Run the numbers for your business</h2>
+    <p class="muted small">Defaults are illustrative. Change them to match your business; results update as you type.</p>
+  </div>
+  <div class="calc">
+    <form class="calc-inputs" data-roi-inputs onsubmit="return false">
+<div class="row">
+  <label for="private-local-llm-people">People doing this work</label>
+  <div class="unit-input">
+    <input class="input" id="private-local-llm-people" name="people" type="number" inputmode="decimal" min="1" max="5000" step="1" value="25">
+  </div>
+</div>
+<div class="row">
+  <label for="private-local-llm-hours_per_week">Hours per person per week on it</label>
+  <div class="unit-input">
+    <input class="input" id="private-local-llm-hours_per_week" name="hours_per_week" type="number" inputmode="decimal" min="0" max="60" step="0.5" value="6"><span class="u">hrs</span>
+  </div>
+</div>
+<div class="row">
+  <label for="private-local-llm-automation_rate">Share of that time AI saves</label>
+  <div class="unit-input">
+    <input class="input" id="private-local-llm-automation_rate" name="automation_rate" type="number" inputmode="decimal" min="0" max="100" step="5" value="35"><span class="u">%</span>
+  </div>
+</div>
+<div class="row">
+  <label for="private-local-llm-hourly_cost">Loaded hourly cost</label>
+  <div class="unit-input pre"><span class="u">$</span>
+    <input class="input" id="private-local-llm-hourly_cost" name="hourly_cost" type="number" inputmode="decimal" min="10" max="500" step="1" value="55">
+  </div>
+</div></form>
+    <div class="stack-s">
+      <svg class="balance" id="bal-private-local-llm" viewBox="0 0 520 240" role="img" aria-label="Year-one value $150,150 against year-one cost $58,800" data-balance>
+  <line class="ground" x1="30" y1="226" x2="490" y2="226"/>
+  <path class="fulcrum" d="M260 156 L296 226 H224 Z"/>
+  <g class="arm" data-arm style="transform: rotate(12.17deg)">
+    <rect class="weight w-cost" data-w="cost" x="66.21" y="89.43" width="57.57" height="57.57" rx="3"/>
+    <rect class="weight w-value" data-w="value" x="379.0" y="55.0" width="92.0" height="92.0" rx="3"/>
+    <line class="beam" x1="44" y1="150" x2="476" y2="150"/>
+  </g>
+  <circle class="pivot" cx="260" cy="150" r="7"/>
+</svg>
+      <dl class="readout">
+  <div><dt>Year-one cost</dt><dd data-out="cost">$58,800</dd></div>
+  <div class="is-value"><dt>Year-one value</dt><dd data-out="value">$150,150</dd></div>
+</dl>
+<div class="verdict">
+  <strong data-out="payback">Pays back in about 3 months</strong>
+  <span class="small data" data-out="multiple">3-year value is 3.9× the 3-year cost</span>
+</div>
+      <p class="calc-formula" data-roi-formula>Formula: people × hours/week × % saved × 52 × hourly cost.</p>
+    </div>
+  </div>
+</section>
+
+      <section class="block" aria-labelledby="stack-h">
+        <h2 id="stack-h">Works with</h2>
+        <ul class="tags"><li>Ollama</li><li>vLLM</li><li>llama.cpp</li><li>Open WebUI</li><li>LiteLLM</li><li>PostgreSQL + pgvector</li><li>NVIDIA workstation &amp; data-center GPUs</li><li>Apple silicon for small teams</li></ul>
+      </section>
+      <section class="block" aria-labelledby="sol-h">
+        <h2 id="sol-h">By industry</h2>
+        <ul class="pains"><li><a class="link" href="../../solutions/private-ai-for-law-firms/index.html">Private AI for Law Firms</a></li><li><a class="link" href="../../solutions/private-ai-for-healthcare/index.html">Private AI for Healthcare Practices</a></li><li><a class="link" href="../../solutions/private-ai-for-defense-contractors/index.html">Private AI for Defense Contractors</a></li></ul>
+      </section>
+
+      <section class="block" aria-labelledby="faq-h">
+  <h2 id="faq-h">Questions we hear</h2>
+  <div class="faq">
+    <details open>
+      <summary>Are local models good enough compared with ChatGPT or Claude?</summary>
+      <div class="answer"><p>For most business work, such as drafting, summarizing, extracting and searching your own documents, current open-weight models are close enough that users rarely notice. For the hardest reasoning tasks we can route approved, redacted requests to a frontier API. We benchmark on your tasks before you buy any hardware.</p></div>
+    </details>
+    <details>
+      <summary>What hardware do we need?</summary>
+      <div class="answer"><p>It depends on concurrent users and model size. Small teams can start on a single workstation-class GPU or a high-memory Apple silicon machine; larger firms typically use one or more data-center GPUs. We size it from your usage, not a catalog.</p></div>
+    </details>
+    <details>
+      <summary>Can it be fully air-gapped?</summary>
+      <div class="answer"><p>Yes. Models, embeddings, retrieval and the chat interface can all run with no internet connection; updates are delivered through your approved change process.</p></div>
+    </details>
+    <details>
+      <summary>Is a private LLM cheaper than per-seat AI licenses?</summary>
+      <div class="answer"><p>Often, once you pass a few dozen active users or run high-volume automations, because inference cost is mostly fixed hardware. We model both options during the assessment so you can see the break-even point.</p></div>
+    </details>
+  </div>
+</section>
+
+      <section class="block" aria-labelledby="rel-h">
+        <h2 id="rel-h">Related use cases</h2>
+        <ul class="ind-grid">
+          <li><a href="../ai-knowledge-assistant/index.html"><strong>AI Knowledge Assistant</strong><span>Every answer your team needs, cited from your own documents.</span></a></li>
+          <li><a href="../ai-document-processing/index.html"><strong>AI Document Processing</strong><span>Documents in, clean data out. No re-keying.</span></a></li>
+          <li><a href="../ai-strategy-governance/index.html"><strong>AI Strategy, Readiness &amp; Governance</strong><span>A clear, costed plan for AI, with the guardrails to use it safely.</span></a></li>
+        </ul>
+      </section>
+    </div>
+    <div class="rail"><aside class="spec" aria-label="Private &amp; Local LLMs at a glance">
+  <div class="spec-title">Private LLMs <span>at a glance</span></div>
+  <dl>
+    <dt>Time to value</dt><dd>~4 weeks</dd>
+    <dt>Typical timeline</dt><dd>3–6 weeks</dd>
+    <dt>Typical investment</dt><dd class="data">$15k–$45k</dd>
+    <dt>Ongoing</dt><dd class="data">$800–$4k/mo</dd>
+  </dl>
+  <div class="spec-list">
+    <p>What we measure</p>
+    <ul><li>Weekly active users</li><li>Hours saved per user per week</li><li>Cost per 1</li><li>000 requests vs. cloud AI</li><li>Policy violations (target zero)</li></ul>
+  </div>
+  <div class="spec-list">
+    <p>Often a first project for</p>
+    <ul><li><a href="../../industries/law-firms/index.html">Law Firms</a></li><li><a href="../../industries/healthcare-clinics/index.html">Healthcare Practices &amp; Clinics</a></li><li><a href="../../industries/government-contractors/index.html">Defense &amp; Government Contractors</a></li></ul>
+  </div>
+  <div class="actions">
+    <a class="btn" href="../../assessment/index.html">Start the free scan</a>
+    <a class="btn btn-quiet" href="../../contact/index.html">Book a call</a>
+  </div>
+</aside></div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="lead-h">
+  <div class="wrap">
+    <div class="panel two-col">
+      <div class="block">
+        <h2 id="lead-h">Get a fixed-price estimate</h2>
+        <p class="muted">Tell us a little about your business. We'll reply within one business day with a scoped estimate for private llms and the numbers behind it.</p>
+      </div>
+      <form class="form" id="lead-private-local-llm" data-lead-form novalidate>
+  <input type="hidden" name="source" value="use-case:private-local-llm">
+  <input type="hidden" name="package" value="">
+  <input type="hidden" name="use_cases" value="private-local-llm">
+  <div class="hp" aria-hidden="true"><label for="lead-private-local-llm-website2">Leave this empty</label><input id="lead-private-local-llm-website2" name="company_website" tabindex="-1" autocomplete="off"></div>
+  <div class="form-grid">
+    <div class="field"><label for="lead-private-local-llm-name">Name</label><input class="input" id="lead-private-local-llm-name" name="name" autocomplete="name" required></div>
+    <div class="field"><label for="lead-private-local-llm-email">Work email</label><input class="input" id="lead-private-local-llm-email" name="email" type="email" autocomplete="email" required></div>
+    <div class="field"><label for="lead-private-local-llm-company">Company</label><input class="input" id="lead-private-local-llm-company" name="company" autocomplete="organization"></div>
+    <div class="field full"><label for="lead-private-local-llm-message">Anything we should know? <span class="hint">Optional</span></label>
+      <textarea class="textarea" id="lead-private-local-llm-message" name="message" rows="3" style="min-height:90px"></textarea></div>
+  </div>
+  <div class="actions">
+    <button class="btn" type="submit">Request my estimate</button>
+  </div>
+  <p class="form-status" role="status" aria-live="polite"></p>
+  <div class="fallback" hidden></div>
+</form>
+    </div>
+  </div>
+</section>
+<section class="band cta-band">
+  <div class="wrap">
+    <div>
+      <h2>Find out where AI pays off for you.</h2>
+      <p>Ten minutes, no email required. You&#39;ll get a readiness score, your top opportunities ranked by ROI and a recommended first step.</p>
+    </div>
+    <div class="actions">
+      <a class="btn" href="../../assessment/index.html">Start the free scan</a>
+      <a class="btn btn-quiet" href="../../contact/index.html">Book a call</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-about">
+        <a class="brand" href="../../index.html"><svg viewBox="0 0 30 22" aria-hidden="true" focusable="false"><path class="fulcrum-mark" d="M15 12.2 L20.2 21 H9.8 Z"/><line class="mark-beam" x1="2.5" y1="15.6" x2="27.5" y2="7.4" stroke-width="3.2" stroke-linecap="round"/></svg><span>Leverline</span></a>
+        <p>AI that pays for itself. Applied AI for small and mid-sized businesses across the United States.</p>
+        <p>Email <span class="copyable">jacobroutzong@gmail.com</span></p>
+      </div>
+      <div>
+        <h2>Use cases</h2>
+        <ul><li><a href="index.html">Private LLMs</a></li><li><a href="../ai-knowledge-assistant/index.html">Knowledge Assistant</a></li><li><a href="../ai-workflow-automation/index.html">Workflow Automation</a></li><li><a href="../ai-document-processing/index.html">Document Processing</a></li><li><a href="../ai-lead-generation/index.html">Lead Generation</a></li><li><a href="../ai-ad-targeting/index.html">Ad Targeting</a></li><li><a href="../ai-social-media-content/index.html">Content Engine</a></li>
+          <li><a href="../index.html">All 16 use cases</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Industries</h2>
+        <ul><li><a href="../../industries/law-firms/index.html">Law Firms</a></li><li><a href="../../industries/accounting-firms/index.html">Accounting &amp; Bookkeeping Firms</a></li><li><a href="../../industries/healthcare-clinics/index.html">Healthcare Practices &amp; Clinics</a></li><li><a href="../../industries/real-estate/index.html">Real Estate &amp; Property Management</a></li><li><a href="../../industries/home-services/index.html">Home Services &amp; Contractors</a></li><li><a href="../../industries/ecommerce-retail/index.html">E-commerce &amp; Retail</a></li><li><a href="../../industries/manufacturing-distribution/index.html">Manufacturing &amp; Distribution</a></li>
+          <li><a href="../../industries/index.html">All industries</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Company</h2>
+        <ul>
+          <li><a href="../../about/index.html">About</a></li>
+          <li><a href="../../pricing/index.html">Pricing</a></li>
+          <li><a href="../../assessment/index.html">Free AI scan</a></li>
+          <li><a href="../../roi-calculator/index.html">ROI calculator</a></li>
+          <li><a href="../../partners/index.html">Referrals and partners</a></li>
+          <li><a href="../../insights/index.html">Insights</a></li>
+          <li><a href="../../contact/index.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-legal">
+      <span>&copy; 2026 Leverline</span>
+      <a href="../../privacy/index.html">Privacy</a>
+      <a href="../../terms/index.html">Terms</a>
+      <span>Prices in US dollars. Examples on this site are illustrative unless labeled as client results.</span>
+    </div>
+  </div>
+</footer>
+
+<script>window.LL_CONFIG = {"apiBase": "", "bookingUrl": "", "brand": "Leverline", "contactEmail": "jacobroutzong@gmail.com", "indexSuffix": "index.html", "refDays": 90, "urlPrefix": "../../"};</script>
+<script src="../../assets/site.js" defer></script>
+<script src="../../assets/catalog.js" defer></script>
+<script src="../../assets/tools.js" defer></script>
+</body>
+</html>
