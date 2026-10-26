@@ -11,7 +11,7 @@
     "lint": "eslint .",
     "test": "node --test tests/*.test.mjs",
     "build": "npm run sync:challenges && npm run images && astro build && node scripts/check-links.mjs",
-    "verify": "npm run lint && npm run check && npm test && npm run test:ascent && npm run validate:ascent && npm run build",
+    "verify": "npm run lint && npm run check && npm test && npm run test:ascent && npm run validate:ascent && npm run build && npm run check:scout",
     "test:ascent": "vitest run",
     "test:e2e": "playwright test",
     "validate:ascent": "node tools/validate-ascent.mjs",
@@ -19,11 +19,14 @@
     "images": "node scripts/optimize-images.mjs",
     "predev": "npm run images",
     "sync:activity": "node scripts/sync-activity.mjs",
-    "package:space": "node tools/package-space.mjs"
+    "package:space": "node tools/package-space.mjs",
+    "check:scout": "node --check public/equityscout/app.js && wrangler pages functions build functions --outfile .wrangler/equityscout-functions.js"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.0",
     "astro": "7.3.8",
+    "decimal.js": "10.6.0",
+    "jose": "6.2.13",
     "katex": "^0.19.1",
     "monaco-editor": "^0.56.0",
     "tailwindcss": "^4.1.0",
@@ -43,12 +46,14 @@
     "sharp": "^0.35.5",
     "typescript": "^5.9.0",
     "typescript-eslint": "^8.46.0",
-    "vitest": "^5.0.5"
+    "vitest": "^5.0.5",
+    "wrangler": "4.152.0"
   },
   "engines": {
     "node": ">=22.12.0"
   },
   "overrides": {
-    "dompurify": "^3.4.17"
+    "dompurify": "^3.4.17",
+    "undici": "7.30.1"
   }
 }
