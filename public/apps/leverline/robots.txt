@@ -1,0 +1,7 @@
+# Search and AI-answer crawlers are welcome: being cited in AI answers is a lead source.
+User-agent: *
+Allow: /
+Disallow: /privacy/
+Disallow: /terms/
+
+Sitemap: https://jacobroutzong.dev/apps/leverline/sitemap.xml

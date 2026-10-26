@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chat With Your Data: AI Analytics &amp; Text-to-SQL · Leverline</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Let managers ask questions in plain English and get trusted answers from your warehouse: semantic layers and text-to-SQL on Snowflake or Databricks.">
+<link rel="canonical" href="https://jacobroutzong.dev/apps/leverline/use-cases/ai-analytics/">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Leverline">
+<meta property="og:title" content="Chat With Your Data: AI Analytics &amp; Text-to-SQL">
+<meta property="og:description" content="Let managers ask questions in plain English and get trusted answers from your warehouse: semantic layers and text-to-SQL on Snowflake or Databricks.">
+<meta property="og:url" content="https://jacobroutzong.dev/apps/leverline/use-cases/ai-analytics/">
+<meta property="og:image" content="https://jacobroutzong.dev/apps/leverline/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#15242C">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+<link rel="stylesheet" href="../../assets/site.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Service", "areaServed": "United States", "description": "We set up natural-language analytics so managers can ask \"what drove the margin dip in the Southeast last quarter?\" and get accurate, governed answers without waiting in the data team\u0027s queue.", "name": "Natural-Language Analytics", "offers": {"@type": "Offer", "priceCurrency": "USD", "priceSpecification": {"@type": "PriceSpecification", "maxPrice": 60000, "minPrice": 15000, "priceCurrency": "USD"}}, "provider": {"@id": "https://jacobroutzong.dev/apps/leverline/#org"}, "serviceType": "chat with your data", "url": "https://jacobroutzong.dev/apps/leverline/use-cases/ai-analytics/"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "acceptedAnswer": {"@type": "Answer", "text": "Vendors publish strong benchmark numbers, but real-world accuracy depends mostly on how well your metrics are defined. That\u0027s why we build the semantic layer first and measure accuracy on your own questions."}, "name": "How accurate is text-to-SQL?"}, {"@type": "Question", "acceptedAnswer": {"@type": "Answer", "text": "Answers show the query and data used, uncertain questions are flagged, and we review failed questions weekly to fix definitions."}, "name": "What if the answer is wrong?"}, {"@type": "Question", "acceptedAnswer": {"@type": "Answer", "text": "No. They make it easier, but we also connect to Postgres, BigQuery, SQL Server and others."}, "name": "Do we need Snowflake or Databricks?"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "item": "https://jacobroutzong.dev/apps/leverline/", "name": "Home", "position": 1}, {"@type": "ListItem", "item": "https://jacobroutzong.dev/apps/leverline/use-cases/", "name": "Use cases", "position": 2}, {"@type": "ListItem", "item": "https://jacobroutzong.dev/apps/leverline/use-cases/ai-analytics/", "name": "Chat With Your Data", "position": 3}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="Leverline home"><svg viewBox="0 0 30 22" aria-hidden="true" focusable="false"><path class="fulcrum-mark" d="M15 12.2 L20.2 21 H9.8 Z"/><line class="mark-beam" x1="2.5" y1="15.6" x2="27.5" y2="7.4" stroke-width="3.2" stroke-linecap="round"/></svg><span>Leverline</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>Menu</button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="../index.html" aria-current="page">Use cases</a>
+      <a href="../../industries/index.html">Industries</a>
+      <a href="../../pricing/index.html">Pricing</a>
+      <a href="../../roi-calculator/index.html">ROI calculator</a>
+      <a href="../../insights/index.html">Insights</a>
+      <a class="btn btn-s" href="../../assessment/index.html">Start free scan</a>
+    </nav>
+  </div>
+</header>
+
+
+<aside class="notice" aria-label="Publication status"><div class="wrap">Working-name demo: Leverline demonstrates the website, opportunity scan and ROI calculator for my applied-AI business. Inquiries go to jacobroutzong@gmail.com.</div></aside>
+
+
+<main id="main">
+
+<div class="wrap">
+  <header class="page-head">
+    <nav class="crumbs" aria-label="Breadcrumb"><ol>
+  <li><a href="../../index.html">Home</a></li>
+  <li><a href="../index.html">Use cases</a></li>
+  <li><span aria-current="page">Chat With Your Data</span></li>
+</ol></nav>
+    <h1 class="h-page">Ask your data a question. Get an answer you can trust.</h1>
+    <p class="lede">We set up natural-language analytics so managers can ask &#34;what drove the margin dip in the Southeast last quarter?&#34; and get accurate, governed answers without waiting in the data team&#39;s queue.</p>
+    <div class="actions">
+      <a class="btn" href="#roi-ai-analytics">Estimate your ROI</a>
+      <a class="btn btn-quiet" href="../../contact/index.html">Talk it through</a>
+    </div>
+  </header>
+</div>
+
+<section class="section" style="padding-top:var(--gap-5)">
+  <div class="wrap split">
+    <div class="stack">
+      <section class="block" aria-labelledby="problem-h">
+        <h2 id="problem-h">The problem</h2>
+        <div class="prose"><p>Every new question becomes a ticket for an already-busy analyst. Dashboards answer last quarter&#39;s questions, and self-serve BI still requires knowing where the data lives and how each metric is defined.</p></div>
+      </section>
+
+      <section class="block" aria-labelledby="solution-h">
+        <h2 id="solution-h">How we solve it</h2>
+        <div class="prose"><p>Accuracy comes from definitions, not just the model. We build a semantic layer with your metrics and business terms, connect a text-to-SQL assistant (Snowflake Cortex Analyst, Databricks Genie or an open-source stack) and test it on real questions before people rely on it.</p></div>
+      </section>
+
+      <section class="block" aria-labelledby="get-h">
+        <h2 id="get-h">What you get</h2>
+        <ul class="checklist"><li>Semantic model and metric definitions for core business areas</li><li>Natural-language assistant in Slack, Teams or your BI tool</li><li>Question-and-answer evaluation set with accuracy reporting</li><li>Row-level security matched to your existing roles</li><li>Usage and accuracy monitoring</li></ul>
+      </section>
+
+      <section class="block" aria-labelledby="steps-h">
+        <h2 id="steps-h">How it works</h2>
+        <ol class="steps"><li><h3>Collect real questions</h3><p>Gather the questions managers actually ask, with the correct answers.</p></li><li><h3>Define the metrics</h3><p>Build semantic views so &#34;revenue&#34; and &#34;active customer&#34; mean one thing.</p></li><li><h3>Connect and test</h3><p>Wire up the assistant and test until accuracy meets an agreed bar.</p></li><li><h3>Expand by domain</h3><p>Launch to one team, then add sales, finance or operations.</p></li></ol>
+      </section>
+
+      <aside class="callout" aria-label="Illustrative example">
+        <span class="label">Example (illustrative)</span>
+        <p>A four-person data team spends about 44 hours a week on ad-hoc requests. Letting managers self-serve half of them returns roughly 22 analyst hours a week (about $80,000 a year at $70 an hour) for deeper work.</p>
+      </aside>
+
+      <section class="calc-embed" data-roi data-roi-slug="ai-analytics" aria-labelledby="roi-ai-analytics">
+  <div class="block">
+    <h2 id="roi-ai-analytics">Run the numbers for your business</h2>
+    <p class="muted small">Defaults are illustrative. Change them to match your business; results update as you type.</p>
+  </div>
+  <div class="calc">
+    <form class="calc-inputs" data-roi-inputs onsubmit="return false">
+<div class="row">
+  <label for="ai-analytics-people">People doing this work</label>
+  <div class="unit-input">
+    <input class="input" id="ai-analytics-people" name="people" type="number" inputmode="decimal" min="1" max="5000" step="1" value="4">
+  </div>
+</div>
+<div class="row">
+  <label for="ai-analytics-hours_per_week">Hours per person per week on it</label>
+  <div class="unit-input">
+    <input class="input" id="ai-analytics-hours_per_week" name="hours_per_week" type="number" inputmode="decimal" min="0" max="60" step="0.5" value="11"><span class="u">hrs</span>
+  </div>
+</div>
+<div class="row">
+  <label for="ai-analytics-automation_rate">Share of that time AI saves</label>
+  <div class="unit-input">
+    <input class="input" id="ai-analytics-automation_rate" name="automation_rate" type="number" inputmode="decimal" min="0" max="100" step="5" value="50"><span class="u">%</span>
+  </div>
+</div>
+<div class="row">
+  <label for="ai-analytics-hourly_cost">Loaded hourly cost</label>
+  <div class="unit-input pre"><span class="u">$</span>
+    <input class="input" id="ai-analytics-hourly_cost" name="hourly_cost" type="number" inputmode="decimal" min="10" max="500" step="1" value="70">
+  </div>
+</div></form>
+    <div class="stack-s">
+      <svg class="balance" id="bal-ai-analytics" viewBox="0 0 520 240" role="img" aria-label="Year-one value $80,080 against year-one cost $67,500" data-balance>
+  <line class="ground" x1="30" y1="226" x2="490" y2="226"/>
+  <path class="fulcrum" d="M260 156 L296 226 H224 Z"/>
+  <g class="arm" data-arm style="transform: rotate(2.22deg)">
+    <rect class="weight w-cost" data-w="cost" x="52.77" y="62.53" width="84.47" height="84.47" rx="3"/>
+    <rect class="weight w-value" data-w="value" x="379.0" y="55.0" width="92.0" height="92.0" rx="3"/>
+    <line class="beam" x1="44" y1="150" x2="476" y2="150"/>
+  </g>
+  <circle class="pivot" cx="260" cy="150" r="7"/>
+</svg>
+      <dl class="readout">
+  <div><dt>Year-one cost</dt><dd data-out="cost">$67,500</dd></div>
+  <div class="is-value"><dt>Year-one value</dt><dd data-out="value">$80,080</dd></div>
+</dl>
+<div class="verdict">
+  <strong data-out="payback">Pays back in about 9 months</strong>
+  <span class="small data" data-out="multiple">3-year value is 1.9× the 3-year cost</span>
+</div>
+      <p class="calc-formula" data-roi-formula>Formula: people × hours/week × % saved × 52 × hourly cost.</p>
+    </div>
+  </div>
+</section>
+
+      <section class="block" aria-labelledby="stack-h">
+        <h2 id="stack-h">Works with</h2>
+        <ul class="tags"><li>Snowflake Cortex Analyst &amp; Snowflake Intelligence</li><li>Databricks AI/BI Genie</li><li>dbt semantic layer</li><li>Power BI</li><li>Tableau</li><li>Open-source text-to-SQL</li></ul>
+      </section>
+
+      <section class="block" aria-labelledby="faq-h">
+  <h2 id="faq-h">Questions we hear</h2>
+  <div class="faq">
+    <details open>
+      <summary>How accurate is text-to-SQL?</summary>
+      <div class="answer"><p>Vendors publish strong benchmark numbers, but real-world accuracy depends mostly on how well your metrics are defined. That&#39;s why we build the semantic layer first and measure accuracy on your own questions.</p></div>
+    </details>
+    <details>
+      <summary>What if the answer is wrong?</summary>
+      <div class="answer"><p>Answers show the query and data used, uncertain questions are flagged, and we review failed questions weekly to fix definitions.</p></div>
+    </details>
+    <details>
+      <summary>Do we need Snowflake or Databricks?</summary>
+      <div class="answer"><p>No. They make it easier, but we also connect to Postgres, BigQuery, SQL Server and others.</p></div>
+    </details>
+  </div>
+</section>
+
+      <section class="block" aria-labelledby="rel-h">
+        <h2 id="rel-h">Related use cases</h2>
+        <ul class="ind-grid">
+          <li><a href="../databricks-snowflake-ml/index.html"><strong>Databricks &amp; Snowflake Machine Learning</strong><span>Get production AI out of the data platform you already pay for.</span></a></li>
+          <li><a href="../ai-knowledge-assistant/index.html"><strong>AI Knowledge Assistant</strong><span>Every answer your team needs, cited from your own documents.</span></a></li>
+          <li><a href="../ai-demand-forecasting/index.html"><strong>AI Demand Forecasting &amp; Inventory Optimization</strong><span>Order the right amount before the shelf or the warehouse tells you.</span></a></li>
+        </ul>
+      </section>
+    </div>
+    <div class="rail"><aside class="spec" aria-label="Natural-Language Analytics at a glance">
+  <div class="spec-title">Chat With Your Data <span>at a glance</span></div>
+  <dl>
+    <dt>Time to value</dt><dd>~5 weeks</dd>
+    <dt>Typical timeline</dt><dd>4–8 weeks</dd>
+    <dt>Typical investment</dt><dd class="data">$15k–$60k</dd>
+    <dt>Ongoing</dt><dd class="data">$1k–$4k/mo</dd>
+  </dl>
+  <div class="spec-list">
+    <p>What we measure</p>
+    <ul><li>Answer accuracy on the test set</li><li>Analyst tickets avoided</li><li>Time to insight</li><li>Weekly active askers</li></ul>
+  </div>
+  <div class="actions">
+    <a class="btn" href="../../assessment/index.html">Start the free scan</a>
+    <a class="btn btn-quiet" href="../../contact/index.html">Book a call</a>
+  </div>
+</aside></div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="lead-h">
+  <div class="wrap">
+    <div class="panel two-col">
+      <div class="block">
+        <h2 id="lead-h">Get a fixed-price estimate</h2>
+        <p class="muted">Tell us a little about your business. We'll reply within one business day with a scoped estimate for chat with your data and the numbers behind it.</p>
+      </div>
+      <form class="form" id="lead-ai-analytics" data-lead-form novalidate>
+  <input type="hidden" name="source" value="use-case:ai-analytics">
+  <input type="hidden" name="package" value="">
+  <input type="hidden" name="use_cases" value="ai-analytics">
+  <div class="hp" aria-hidden="true"><label for="lead-ai-analytics-website2">Leave this empty</label><input id="lead-ai-analytics-website2" name="company_website" tabindex="-1" autocomplete="off"></div>
+  <div class="form-grid">
+    <div class="field"><label for="lead-ai-analytics-name">Name</label><input class="input" id="lead-ai-analytics-name" name="name" autocomplete="name" required></div>
+    <div class="field"><label for="lead-ai-analytics-email">Work email</label><input class="input" id="lead-ai-analytics-email" name="email" type="email" autocomplete="email" required></div>
+    <div class="field"><label for="lead-ai-analytics-company">Company</label><input class="input" id="lead-ai-analytics-company" name="company" autocomplete="organization"></div>
+    <div class="field full"><label for="lead-ai-analytics-message">Anything we should know? <span class="hint">Optional</span></label>
+      <textarea class="textarea" id="lead-ai-analytics-message" name="message" rows="3" style="min-height:90px"></textarea></div>
+  </div>
+  <div class="actions">
+    <button class="btn" type="submit">Request my estimate</button>
+  </div>
+  <p class="form-status" role="status" aria-live="polite"></p>
+  <div class="fallback" hidden></div>
+</form>
+    </div>
+  </div>
+</section>
+<section class="band cta-band">
+  <div class="wrap">
+    <div>
+      <h2>Find out where AI pays off for you.</h2>
+      <p>Ten minutes, no email required. You&#39;ll get a readiness score, your top opportunities ranked by ROI and a recommended first step.</p>
+    </div>
+    <div class="actions">
+      <a class="btn" href="../../assessment/index.html">Start the free scan</a>
+      <a class="btn btn-quiet" href="../../contact/index.html">Book a call</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-about">
+        <a class="brand" href="../../index.html"><svg viewBox="0 0 30 22" aria-hidden="true" focusable="false"><path class="fulcrum-mark" d="M15 12.2 L20.2 21 H9.8 Z"/><line class="mark-beam" x1="2.5" y1="15.6" x2="27.5" y2="7.4" stroke-width="3.2" stroke-linecap="round"/></svg><span>Leverline</span></a>
+        <p>AI that pays for itself. Applied AI for small and mid-sized businesses across the United States.</p>
+        <p>Email <span class="copyable">jacobroutzong@gmail.com</span></p>
+      </div>
+      <div>
+        <h2>Use cases</h2>
+        <ul><li><a href="../private-local-llm/index.html">Private LLMs</a></li><li><a href="../ai-knowledge-assistant/index.html">Knowledge Assistant</a></li><li><a href="../ai-workflow-automation/index.html">Workflow Automation</a></li><li><a href="../ai-document-processing/index.html">Document Processing</a></li><li><a href="../ai-lead-generation/index.html">Lead Generation</a></li><li><a href="../ai-ad-targeting/index.html">Ad Targeting</a></li><li><a href="../ai-social-media-content/index.html">Content Engine</a></li>
+          <li><a href="../index.html">All 16 use cases</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Industries</h2>
+        <ul><li><a href="../../industries/law-firms/index.html">Law Firms</a></li><li><a href="../../industries/accounting-firms/index.html">Accounting &amp; Bookkeeping Firms</a></li><li><a href="../../industries/healthcare-clinics/index.html">Healthcare Practices &amp; Clinics</a></li><li><a href="../../industries/real-estate/index.html">Real Estate &amp; Property Management</a></li><li><a href="../../industries/home-services/index.html">Home Services &amp; Contractors</a></li><li><a href="../../industries/ecommerce-retail/index.html">E-commerce &amp; Retail</a></li><li><a href="../../industries/manufacturing-distribution/index.html">Manufacturing &amp; Distribution</a></li>
+          <li><a href="../../industries/index.html">All industries</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Company</h2>
+        <ul>
+          <li><a href="../../about/index.html">About</a></li>
+          <li><a href="../../pricing/index.html">Pricing</a></li>
+          <li><a href="../../assessment/index.html">Free AI scan</a></li>
+          <li><a href="../../roi-calculator/index.html">ROI calculator</a></li>
+          <li><a href="../../partners/index.html">Referrals and partners</a></li>
+          <li><a href="../../insights/index.html">Insights</a></li>
+          <li><a href="../../contact/index.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-legal">
+      <span>&copy; 2026 Leverline</span>
+      <a href="../../privacy/index.html">Privacy</a>
+      <a href="../../terms/index.html">Terms</a>
+      <span>Prices in US dollars. Examples on this site are illustrative unless labeled as client results.</span>
+    </div>
+  </div>
+</footer>
+
+<script>window.LL_CONFIG = {"apiBase": "", "bookingUrl": "", "brand": "Leverline", "contactEmail": "jacobroutzong@gmail.com", "indexSuffix": "index.html", "refDays": 90, "urlPrefix": "../../"};</script>
+<script src="../../assets/site.js" defer></script>
+<script src="../../assets/catalog.js" defer></script>
+<script src="../../assets/tools.js" defer></script>
+</body>
+</html>

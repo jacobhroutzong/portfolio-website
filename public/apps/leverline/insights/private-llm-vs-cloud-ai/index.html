@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Private LLM vs Cloud AI: How to Decide (2026 Guide)</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="When does it make sense to run your own language model instead of using a cloud AI service? Five questions, a cost formula and three architectures for firms that handle confidential or regulated data.">
+<link rel="canonical" href="https://jacobroutzong.dev/apps/leverline/insights/private-llm-vs-cloud-ai/">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Leverline">
+<meta property="og:title" content="Private LLM vs Cloud AI: How to Decide (2026 Guide)">
+<meta property="og:description" content="When does it make sense to run your own language model instead of using a cloud AI service? Five questions, a cost formula and three architectures for firms that handle confidential or regulated data.">
+<meta property="og:url" content="https://jacobroutzong.dev/apps/leverline/insights/private-llm-vs-cloud-ai/">
+<meta property="og:image" content="https://jacobroutzong.dev/apps/leverline/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#15242C">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+<link rel="stylesheet" href="../../assets/site.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "author": {"@type": "Organization", "name": "Leverline Research"}, "dateModified": "2026-10-21", "datePublished": "2026-10-21", "description": "When does it make sense to run your own language model instead of using a cloud AI service? Five questions, a cost formula and three architectures for firms that handle confidential or regulated data.", "headline": "Private LLM vs. Cloud AI: A Decision Guide for Regulated Businesses", "mainEntityOfPage": "https://jacobroutzong.dev/apps/leverline/insights/private-llm-vs-cloud-ai/", "publisher": {"@id": "https://jacobroutzong.dev/apps/leverline/#org"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "item": "https://jacobroutzong.dev/apps/leverline/", "name": "Home", "position": 1}, {"@type": "ListItem", "item": "https://jacobroutzong.dev/apps/leverline/insights/", "name": "Insights", "position": 2}, {"@type": "ListItem", "item": "https://jacobroutzong.dev/apps/leverline/insights/private-llm-vs-cloud-ai/", "name": "Private LLM vs. Cloud AI: A Decision Guide for Regulated Businesses", "position": 3}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="Leverline home"><svg viewBox="0 0 30 22" aria-hidden="true" focusable="false"><path class="fulcrum-mark" d="M15 12.2 L20.2 21 H9.8 Z"/><line class="mark-beam" x1="2.5" y1="15.6" x2="27.5" y2="7.4" stroke-width="3.2" stroke-linecap="round"/></svg><span>Leverline</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>Menu</button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="../../use-cases/index.html">Use cases</a>
+      <a href="../../industries/index.html">Industries</a>
+      <a href="../../pricing/index.html">Pricing</a>
+      <a href="../../roi-calculator/index.html">ROI calculator</a>
+      <a href="../index.html" aria-current="page">Insights</a>
+      <a class="btn btn-s" href="../../assessment/index.html">Start free scan</a>
+    </nav>
+  </div>
+</header>
+
+
+<aside class="notice" aria-label="Publication status"><div class="wrap">Working-name demo: Leverline demonstrates the website, opportunity scan and ROI calculator for my applied-AI business. Inquiries go to jacobroutzong@gmail.com.</div></aside>
+
+
+<main id="main">
+
+<div class="wrap">
+  <article class="article">
+    <header class="page-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><ol>
+  <li><a href="../../index.html">Home</a></li>
+  <li><a href="../index.html">Insights</a></li>
+  <li><span aria-current="page">Private LLM vs. Cloud AI: A Decision Guide for Regulated Businesses</span></li>
+</ol></nav>
+      <h1 class="h-page">Private LLM vs. Cloud AI: A Decision Guide for Regulated Businesses</h1>
+      <p class="lede">When does it make sense to run your own language model instead of using a cloud AI service? Five questions, a cost formula and three architectures for firms that handle confidential or regulated data.</p>
+      <div class="article-meta"><span>By Leverline Research</span><span>Published <time datetime="2026-10-21">October 21, 2026</time></span><span>6 min read</span></div>
+    </header>
+    <div class="article-body"><p><strong>Short version:</strong> for most businesses handling confidential data, the answer
+is a hybrid. Sensitive, high-volume work runs on a private model you control;
+the occasional task that truly needs a frontier model goes to a cloud API,
+redacted and approved. Cost alone rarely justifies private AI for light chat
+use. Control, compliance and predictable cost at high volume usually do.</p>
+<h2>Five questions that decide it</h2>
+<p><strong>1. What data will the AI touch?</strong> Public marketing copy carries little risk.
+Client files, health information, controlled unclassified information (CUI)
+or privileged legal material change the calculus. If a data-processing
+agreement or business associate agreement can't cover a cloud provider, or
+your clients won't accept one, private is the only option.</p>
+<p><strong>2. How much volume?</strong> A few dozen people chatting occasionally is cheap on
+any cloud API. Automations that read every invoice, call transcript or
+support ticket generate a lot of tokens. Hardware is a fixed cost, so private
+deployment gets cheaper per request as volume grows.</p>
+<p><strong>3. How hard are the tasks?</strong> Summarizing, extracting fields, classifying and
+answering questions from your own documents are well within reach of current
+open-weight models. The hardest multi-step reasoning still favors frontier
+cloud models.</p>
+<p><strong>4. Who will run it?</strong> A private model is a system: patching, monitoring,
+model updates, backups and access control. Budget for a managed service or
+in-house time.</p>
+<p><strong>5. What do clients and contracts require?</strong> Outside-counsel guidelines,
+defense contracts and healthcare partners increasingly specify where data may
+be processed. Those requirements often decide the question before cost does.</p>
+<h2>A simple cost comparison</h2>
+<p>Use your own numbers. Model prices change often.</p>
+<ul>
+<li><strong>Cloud monthly cost</strong> ≈ requests per month × average tokens per request ×
+  price per token</li>
+<li><strong>Private monthly cost</strong> ≈ (hardware cost ÷ 36 months) + power and hosting +
+  support</li>
+</ul>
+<p><em>Illustrative example:</em> 60 staff making 40 requests a day at about 3,000
+tokens each is roughly 160 million tokens a month. At a blended cloud price of
+$5 per million tokens, that's about $800 a month. A $25,000 GPU server
+amortized over three years is about $700 a month before power and support,
+so on cost alone, cloud wins at this volume. Add a document-processing
+automation that reads 50,000 pages a month, or compare against per-seat
+enterprise licenses, and the picture can flip.</p>
+<p>The point isn't the exact numbers. It's to run the comparison with your real
+usage before buying hardware.</p>
+<h2>Three architectures</h2>
+<ol>
+<li><strong>Fully private (on-prem or air-gapped).</strong> Model, retrieval and interface run
+   on your hardware with no internet connection. Best for CUI, privileged
+   material and strict data-residency rules.</li>
+<li><strong>Private cloud (your VPC).</strong> Open-weight models on GPU instances inside your
+   own cloud account. Most of the control of on-prem with elastic capacity.</li>
+<li><strong>Hybrid with a router.</strong> A private model handles sensitive and
+   high-volume work; a routing layer sends approved, redacted requests to a
+   frontier API. This is where most regulated mid-sized firms land.</li>
+</ol>
+<h2>A practical checklist</h2>
+<ul>
+<li>Classify the data each use case touches before choosing a deployment</li>
+<li>Benchmark two or three models on your real tasks, not public leaderboards</li>
+<li>Tie access to existing identity and log every request</li>
+<li>Document the system in your security program (risk analysis, SSP or WISP)</li>
+<li>Plan model updates through change control</li>
+<li>Re-run the cost comparison every six months as prices and models change</li>
+</ul>
+<p>If you want a second opinion on the right setup, our
+<a href="../../use-cases/private-local-llm/index.html">private and local LLM service</a> starts with
+exactly this analysis. Or take the <a href="../../assessment/index.html">free AI Opportunity Scan</a>
+to see whether private AI belongs on your shortlist.</p></div>
+  </article>
+</div>
+<div class="section"></div>
+<section class="band cta-band">
+  <div class="wrap">
+    <div>
+      <h2>Find out where AI pays off for you.</h2>
+      <p>Ten minutes, no email required. You&#39;ll get a readiness score, your top opportunities ranked by ROI and a recommended first step.</p>
+    </div>
+    <div class="actions">
+      <a class="btn" href="../../assessment/index.html">Start the free scan</a>
+      <a class="btn btn-quiet" href="../../contact/index.html">Book a call</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-about">
+        <a class="brand" href="../../index.html"><svg viewBox="0 0 30 22" aria-hidden="true" focusable="false"><path class="fulcrum-mark" d="M15 12.2 L20.2 21 H9.8 Z"/><line class="mark-beam" x1="2.5" y1="15.6" x2="27.5" y2="7.4" stroke-width="3.2" stroke-linecap="round"/></svg><span>Leverline</span></a>
+        <p>AI that pays for itself. Applied AI for small and mid-sized businesses across the United States.</p>
+        <p>Email <span class="copyable">jacobroutzong@gmail.com</span></p>
+      </div>
+      <div>
+        <h2>Use cases</h2>
+        <ul><li><a href="../../use-cases/private-local-llm/index.html">Private LLMs</a></li><li><a href="../../use-cases/ai-knowledge-assistant/index.html">Knowledge Assistant</a></li><li><a href="../../use-cases/ai-workflow-automation/index.html">Workflow Automation</a></li><li><a href="../../use-cases/ai-document-processing/index.html">Document Processing</a></li><li><a href="../../use-cases/ai-lead-generation/index.html">Lead Generation</a></li><li><a href="../../use-cases/ai-ad-targeting/index.html">Ad Targeting</a></li><li><a href="../../use-cases/ai-social-media-content/index.html">Content Engine</a></li>
+          <li><a href="../../use-cases/index.html">All 16 use cases</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Industries</h2>
+        <ul><li><a href="../../industries/law-firms/index.html">Law Firms</a></li><li><a href="../../industries/accounting-firms/index.html">Accounting &amp; Bookkeeping Firms</a></li><li><a href="../../industries/healthcare-clinics/index.html">Healthcare Practices &amp; Clinics</a></li><li><a href="../../industries/real-estate/index.html">Real Estate &amp; Property Management</a></li><li><a href="../../industries/home-services/index.html">Home Services &amp; Contractors</a></li><li><a href="../../industries/ecommerce-retail/index.html">E-commerce &amp; Retail</a></li><li><a href="../../industries/manufacturing-distribution/index.html">Manufacturing &amp; Distribution</a></li>
+          <li><a href="../../industries/index.html">All industries</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Company</h2>
+        <ul>
+          <li><a href="../../about/index.html">About</a></li>
+          <li><a href="../../pricing/index.html">Pricing</a></li>
+          <li><a href="../../assessment/index.html">Free AI scan</a></li>
+          <li><a href="../../roi-calculator/index.html">ROI calculator</a></li>
+          <li><a href="../../partners/index.html">Referrals and partners</a></li>
+          <li><a href="../index.html">Insights</a></li>
+          <li><a href="../../contact/index.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-legal">
+      <span>&copy; 2026 Leverline</span>
+      <a href="../../privacy/index.html">Privacy</a>
+      <a href="../../terms/index.html">Terms</a>
+      <span>Prices in US dollars. Examples on this site are illustrative unless labeled as client results.</span>
+    </div>
+  </div>
+</footer>
+
+<script>window.LL_CONFIG = {"apiBase": "", "bookingUrl": "", "brand": "Leverline", "contactEmail": "jacobroutzong@gmail.com", "indexSuffix": "index.html", "refDays": 90, "urlPrefix": "../../"};</script>
+<script src="../../assets/site.js" defer></script>
+</body>
+</html>

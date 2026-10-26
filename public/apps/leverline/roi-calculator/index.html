@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI ROI Calculator: Estimate the Return on AI Projects</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Estimate the annual value, payback period and three-year ROI of 16 common AI use cases, from AI receptionists to churn prediction, with your own numbers.">
+<link rel="canonical" href="https://jacobroutzong.dev/apps/leverline/roi-calculator/">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Leverline">
+<meta property="og:title" content="AI ROI Calculator: Estimate the Return on AI Projects">
+<meta property="og:description" content="Estimate the annual value, payback period and three-year ROI of 16 common AI use cases, from AI receptionists to churn prediction, with your own numbers.">
+<meta property="og:url" content="https://jacobroutzong.dev/apps/leverline/roi-calculator/">
+<meta property="og:image" content="https://jacobroutzong.dev/apps/leverline/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#15242C">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+<link rel="stylesheet" href="../assets/site.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "item": "https://jacobroutzong.dev/apps/leverline/", "name": "Home", "position": 1}, {"@type": "ListItem", "item": "https://jacobroutzong.dev/apps/leverline/roi-calculator/", "name": "ROI calculator", "position": 2}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="Leverline home"><svg viewBox="0 0 30 22" aria-hidden="true" focusable="false"><path class="fulcrum-mark" d="M15 12.2 L20.2 21 H9.8 Z"/><line class="mark-beam" x1="2.5" y1="15.6" x2="27.5" y2="7.4" stroke-width="3.2" stroke-linecap="round"/></svg><span>Leverline</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>Menu</button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="../use-cases/index.html">Use cases</a>
+      <a href="../industries/index.html">Industries</a>
+      <a href="../pricing/index.html">Pricing</a>
+      <a href="index.html" aria-current="page">ROI calculator</a>
+      <a href="../insights/index.html">Insights</a>
+      <a class="btn btn-s" href="../assessment/index.html">Start free scan</a>
+    </nav>
+  </div>
+</header>
+
+
+<aside class="notice" aria-label="Publication status"><div class="wrap">Working-name demo: Leverline demonstrates the website, opportunity scan and ROI calculator for my applied-AI business. Inquiries go to jacobroutzong@gmail.com.</div></aside>
+
+
+<main id="main">
+
+<div class="wrap">
+  <header class="page-head">
+    <nav class="crumbs" aria-label="Breadcrumb"><ol>
+  <li><a href="../index.html">Home</a></li>
+  <li><span aria-current="page">ROI calculator</span></li>
+</ol></nav>
+    <h1 class="h-page">What would AI be worth to your business?</h1>
+    <p class="lede">Pick a use case, plug in your numbers and see the annual value, payback period and three-year return. Defaults are illustrative. Replace them with yours.</p>
+  </header>
+</div>
+
+<section class="section" style="padding-top:var(--gap-4)">
+  <div class="wrap">
+    <div class="panel" data-roi data-roi-slug="ai-voice-agents" data-roi-page>
+      <div class="calc calc-wide">
+        <div class="stack-s">
+          <div class="field">
+            <label for="roi-uc">Use case</label>
+            <select class="select" id="roi-uc" data-roi-select>
+              <optgroup label="Private AI"><option value="private-local-llm">Private &amp; Local LLMs</option><option value="ai-knowledge-assistant">AI Knowledge Assistant</option>
+              </optgroup>
+              <optgroup label="Automation &amp; Production Flows"><option value="ai-workflow-automation">AI Workflow Automation</option><option value="ai-document-processing">AI Document Processing</option>
+              </optgroup>
+              <optgroup label="Growth, Ads &amp; Leads"><option value="ai-lead-generation">AI Lead Generation &amp; Scoring</option><option value="ai-ad-targeting">AI Ad Targeting &amp; Optimization</option><option value="ai-social-media-content">AI Social Media &amp; Content Engine</option><option value="ai-personalization">AI Personalization &amp; Recommendations</option>
+              </optgroup>
+              <optgroup label="Customer Experience"><option value="ai-customer-support">AI Customer Support Agents</option><option value="ai-voice-agents" selected>AI Voice Agents &amp; Receptionists</option>
+              </optgroup>
+              <optgroup label="Data &amp; Machine Learning"><option value="databricks-snowflake-ml">Databricks &amp; Snowflake Machine Learning</option><option value="ai-demand-forecasting">AI Demand Forecasting &amp; Inventory Optimization</option><option value="ai-churn-prediction">Churn Prediction &amp; Customer Retention</option><option value="ai-analytics">Natural-Language Analytics</option>
+              </optgroup>
+              <optgroup label="AI Products &amp; Apps"><option value="ai-app-development">AI App &amp; Product Development</option>
+              </optgroup>
+              <optgroup label="Strategy &amp; Governance"><option value="ai-strategy-governance">AI Strategy, Readiness &amp; Governance</option>
+              </optgroup>
+            </select>
+          </div>
+          <form class="calc-inputs" data-roi-inputs onsubmit="return false">
+<div class="row">
+  <label for="ai-voice-agents-missed_calls">Missed calls per month</label>
+  <div class="unit-input">
+    <input class="input" id="ai-voice-agents-missed_calls" name="missed_calls" type="number" inputmode="decimal" min="0" max="10000" step="1" value="40">
+  </div>
+</div>
+<div class="row">
+  <label for="ai-voice-agents-capture_pct">Share the AI answers</label>
+  <div class="unit-input">
+    <input class="input" id="ai-voice-agents-capture_pct" name="capture_pct" type="number" inputmode="decimal" min="0" max="100" step="5" value="100"><span class="u">%</span>
+  </div>
+</div>
+<div class="row">
+  <label for="ai-voice-agents-close_rate">Share that become jobs</label>
+  <div class="unit-input">
+    <input class="input" id="ai-voice-agents-close_rate" name="close_rate" type="number" inputmode="decimal" min="0" max="100" step="1" value="25"><span class="u">%</span>
+  </div>
+</div>
+<div class="row">
+  <label for="ai-voice-agents-avg_job_value">Average job value</label>
+  <div class="unit-input pre"><span class="u">$</span>
+    <input class="input" id="ai-voice-agents-avg_job_value" name="avg_job_value" type="number" inputmode="decimal" min="0" max="100000" step="10" value="650">
+  </div>
+</div>
+<div class="row">
+  <label for="ai-voice-agents-gross_margin_pct">Gross margin on that revenue</label>
+  <div class="unit-input">
+    <input class="input" id="ai-voice-agents-gross_margin_pct" name="gross_margin_pct" type="number" inputmode="decimal" min="1" max="100" step="1" value="50"><span class="u">%</span>
+  </div>
+</div></form>
+          <p class="calc-formula" data-roi-formula>Formula: missed calls/month × % answered × % booked × avg job value × 12, then × gross margin.</p>
+        </div>
+        <div class="stack-s">
+          <svg class="balance" id="bal-page" viewBox="0 0 520 240" role="img" aria-label="Year-one value $39,000 against year-one cost $22,250" data-balance>
+  <line class="ground" x1="30" y1="226" x2="490" y2="226"/>
+  <path class="fulcrum" d="M260 156 L296 226 H224 Z"/>
+  <g class="arm" data-arm style="transform: rotate(7.29deg)">
+    <rect class="weight w-cost" data-w="cost" x="60.26" y="77.51" width="69.49" height="69.49" rx="3"/>
+    <rect class="weight w-value" data-w="value" x="379.0" y="55.0" width="92.0" height="92.0" rx="3"/>
+    <line class="beam" x1="44" y1="150" x2="476" y2="150"/>
+  </g>
+  <circle class="pivot" cx="260" cy="150" r="7"/>
+</svg>
+          <dl class="readout">
+  <div><dt>Year-one cost</dt><dd data-out="cost">$22,250</dd></div>
+  <div class="is-value"><dt>Year-one value</dt><dd data-out="value">$39,000</dd></div>
+</dl>
+<div class="verdict">
+  <strong data-out="payback">Pays back in about 4 months</strong>
+  <span class="small data" data-out="multiple">3-year value is 2.2× the 3-year cost</span>
+</div>
+          <dl class="readout">
+            <div><dt>Conservative case (70%)</dt><dd data-out="conservative">$27,300</dd></div>
+            <div><dt>Typical investment</dt><dd data-out="investment">$2.5k–$12k</dd></div>
+          </dl>
+          <p class="fineprint">Year-one cost uses the midpoint of the typical one-time investment plus twelve months of typical running costs. Revenue gains are converted to gross profit before calculating payback.</p>
+          <p><a class="link" data-out="uc-link" href="../use-cases/ai-voice-agents/index.html">How this use case works</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="lead-h">
+  <div class="wrap">
+    <div class="panel two-col">
+      <div class="block">
+        <h2 id="lead-h">Check these numbers against your real data</h2>
+        <p class="muted">Send us your estimate. We'll pressure-test the assumptions and reply with a fixed-price scope, usually within one business day.</p>
+      </div>
+      <form class="form" id="lead-roi" data-lead-form novalidate>
+  <input type="hidden" name="source" value="roi-calculator">
+  <input type="hidden" name="package" value="">
+  <input type="hidden" name="use_cases" value="">
+  <div class="hp" aria-hidden="true"><label for="lead-roi-website2">Leave this empty</label><input id="lead-roi-website2" name="company_website" tabindex="-1" autocomplete="off"></div>
+  <div class="form-grid">
+    <div class="field"><label for="lead-roi-name">Name</label><input class="input" id="lead-roi-name" name="name" autocomplete="name" required></div>
+    <div class="field"><label for="lead-roi-email">Work email</label><input class="input" id="lead-roi-email" name="email" type="email" autocomplete="email" required></div>
+    <div class="field"><label for="lead-roi-company">Company</label><input class="input" id="lead-roi-company" name="company" autocomplete="organization"></div>
+    <div class="field full"><label for="lead-roi-message">Anything we should know? <span class="hint">Optional</span></label>
+      <textarea class="textarea" id="lead-roi-message" name="message" rows="3" style="min-height:90px"></textarea></div>
+  </div>
+  <div class="actions">
+    <button class="btn" type="submit">Send my estimate</button>
+  </div>
+  <p class="form-status" role="status" aria-live="polite"></p>
+  <div class="fallback" hidden></div>
+</form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-about">
+        <a class="brand" href="../index.html"><svg viewBox="0 0 30 22" aria-hidden="true" focusable="false"><path class="fulcrum-mark" d="M15 12.2 L20.2 21 H9.8 Z"/><line class="mark-beam" x1="2.5" y1="15.6" x2="27.5" y2="7.4" stroke-width="3.2" stroke-linecap="round"/></svg><span>Leverline</span></a>
+        <p>AI that pays for itself. Applied AI for small and mid-sized businesses across the United States.</p>
+        <p>Email <span class="copyable">jacobroutzong@gmail.com</span></p>
+      </div>
+      <div>
+        <h2>Use cases</h2>
+        <ul><li><a href="../use-cases/private-local-llm/index.html">Private LLMs</a></li><li><a href="../use-cases/ai-knowledge-assistant/index.html">Knowledge Assistant</a></li><li><a href="../use-cases/ai-workflow-automation/index.html">Workflow Automation</a></li><li><a href="../use-cases/ai-document-processing/index.html">Document Processing</a></li><li><a href="../use-cases/ai-lead-generation/index.html">Lead Generation</a></li><li><a href="../use-cases/ai-ad-targeting/index.html">Ad Targeting</a></li><li><a href="../use-cases/ai-social-media-content/index.html">Content Engine</a></li>
+          <li><a href="../use-cases/index.html">All 16 use cases</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Industries</h2>
+        <ul><li><a href="../industries/law-firms/index.html">Law Firms</a></li><li><a href="../industries/accounting-firms/index.html">Accounting &amp; Bookkeeping Firms</a></li><li><a href="../industries/healthcare-clinics/index.html">Healthcare Practices &amp; Clinics</a></li><li><a href="../industries/real-estate/index.html">Real Estate &amp; Property Management</a></li><li><a href="../industries/home-services/index.html">Home Services &amp; Contractors</a></li><li><a href="../industries/ecommerce-retail/index.html">E-commerce &amp; Retail</a></li><li><a href="../industries/manufacturing-distribution/index.html">Manufacturing &amp; Distribution</a></li>
+          <li><a href="../industries/index.html">All industries</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Company</h2>
+        <ul>
+          <li><a href="../about/index.html">About</a></li>
+          <li><a href="../pricing/index.html">Pricing</a></li>
+          <li><a href="../assessment/index.html">Free AI scan</a></li>
+          <li><a href="index.html">ROI calculator</a></li>
+          <li><a href="../partners/index.html">Referrals and partners</a></li>
+          <li><a href="../insights/index.html">Insights</a></li>
+          <li><a href="../contact/index.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-legal">
+      <span>&copy; 2026 Leverline</span>
+      <a href="../privacy/index.html">Privacy</a>
+      <a href="../terms/index.html">Terms</a>
+      <span>Prices in US dollars. Examples on this site are illustrative unless labeled as client results.</span>
+    </div>
+  </div>
+</footer>
+
+<script>window.LL_CONFIG = {"apiBase": "", "bookingUrl": "", "brand": "Leverline", "contactEmail": "jacobroutzong@gmail.com", "indexSuffix": "index.html", "refDays": 90, "urlPrefix": "../"};</script>
+<script src="../assets/site.js" defer></script>
+<script src="../assets/catalog.js" defer></script>
+<script src="../assets/tools.js" defer></script>
+</body>
+</html>
