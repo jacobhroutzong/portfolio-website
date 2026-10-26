@@ -382,6 +382,8 @@ export class Repository {
     const id = crypto.randomUUID(),
       payload = {
         name: String(value.name || "Saved search").slice(0, 100),
+        region: value.region === 'southeast' ? 'southeast' : 'nationwide',
+        shortlist_only: value.region === 'southeast' && value.shortlist_only !== false,
         term: String(value.term || "").slice(0, 200),
         state: String(value.state || "ALL").slice(0, 3),
         sort: ["score", "cash", "price", "recent"].includes(value.sort)

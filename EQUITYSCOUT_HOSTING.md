@@ -1,5 +1,11 @@
 # Private portfolio hosting
 
+**October 26 update:** the owner's publishing instructions now prefer a Python
+Hugging Face Space embedded/linked from the portfolio. This Cloudflare adapter
+remains a tested draft alternative. Do not activate D1/Access as the selected
+hosting path without reconciling that preference. See `docs/SOUTHEAST_STRATEGY.md`
+in the EquityScout source for the regional UI and recommended refresh policy.
+
 This is the Cloudflare Pages Functions/D1 implementation for the existing
 `jacobhroutzong/portfolio-website` Astro repository. It runs at `/equityscout/`
 with private APIs at `/api/equityscout/*`. The public synthetic calculator stays
