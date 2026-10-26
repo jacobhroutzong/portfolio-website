@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI Ad Targeting: Predictive Audiences &amp; Value-Based Bidding</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Feed ad platforms the signals that predict revenue: first-party data pipelines, predictive audiences, conversion APIs and AI creative testing.">
+<link rel="canonical" href="https://jacobroutzong.dev/apps/leverline/use-cases/ai-ad-targeting/">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Leverline">
+<meta property="og:title" content="AI Ad Targeting: Predictive Audiences &amp; Value-Based Bidding">
+<meta property="og:description" content="Feed ad platforms the signals that predict revenue: first-party data pipelines, predictive audiences, conversion APIs and AI creative testing.">
+<meta property="og:url" content="https://jacobroutzong.dev/apps/leverline/use-cases/ai-ad-targeting/">
+<meta property="og:image" content="https://jacobroutzong.dev/apps/leverline/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#15242C">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+<link rel="stylesheet" href="../../assets/site.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Service", "areaServed": "United States", "description": "Ad platforms optimize toward whatever signal you send them. We connect your first-party sales data so Google, Meta and LinkedIn bid for customers who buy and stay, rather than people who only fill out forms.", "name": "AI Ad Targeting \u0026 Optimization", "offers": {"@type": "Offer", "priceCurrency": "USD", "priceSpecification": {"@type": "PriceSpecification", "maxPrice": 35000, "minPrice": 10000, "priceCurrency": "USD"}}, "provider": {"@id": "https://jacobroutzong.dev/apps/leverline/#org"}, "serviceType": "AI ad targeting", "url": "https://jacobroutzong.dev/apps/leverline/use-cases/ai-ad-targeting/"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "acceptedAnswer": {"@type": "Answer", "text": "Conversion APIs send hashed identifiers under your consent settings, and we document what\u0027s shared with each platform. Some categories (housing, employment and credit) have special ad rules that limit targeting, and we design within them."}, "name": "Is this compliant with privacy rules?"}, {"@type": "Question", "acceptedAnswer": {"@type": "Answer", "text": "Generally a few thousand dollars a month per platform. Below that, fixing tracking and creative usually pays off faster than modeling."}, "name": "How much ad spend do we need for this to matter?"}, {"@type": "Question", "acceptedAnswer": {"@type": "Answer", "text": "We focus on the data and AI layer and work alongside your in-house team or agency. If you need campaign management, we\u0027ll bring in a partner."}, "name": "Do you run our campaigns too?"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "item": "https://jacobroutzong.dev/apps/leverline/", "name": "Home", "position": 1}, {"@type": "ListItem", "item": "https://jacobroutzong.dev/apps/leverline/use-cases/", "name": "Use cases", "position": 2}, {"@type": "ListItem", "item": "https://jacobroutzong.dev/apps/leverline/use-cases/ai-ad-targeting/", "name": "Ad Targeting", "position": 3}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="Leverline home"><svg viewBox="0 0 30 22" aria-hidden="true" focusable="false"><path class="fulcrum-mark" d="M15 12.2 L20.2 21 H9.8 Z"/><line class="mark-beam" x1="2.5" y1="15.6" x2="27.5" y2="7.4" stroke-width="3.2" stroke-linecap="round"/></svg><span>Leverline</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>Menu</button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="../index.html" aria-current="page">Use cases</a>
+      <a href="../../industries/index.html">Industries</a>
+      <a href="../../pricing/index.html">Pricing</a>
+      <a href="../../roi-calculator/index.html">ROI calculator</a>
+      <a href="../../insights/index.html">Insights</a>
+      <a class="btn btn-s" href="../../assessment/index.html">Start free scan</a>
+    </nav>
+  </div>
+</header>
+
+
+<aside class="notice" aria-label="Publication status"><div class="wrap">Working-name demo: Leverline demonstrates the website, opportunity scan and ROI calculator for my applied-AI business. Inquiries go to jacobroutzong@gmail.com.</div></aside>
+
+
+<main id="main">
+
+<div class="wrap">
+  <header class="page-head">
+    <nav class="crumbs" aria-label="Breadcrumb"><ol>
+  <li><a href="../../index.html">Home</a></li>
+  <li><a href="../index.html">Use cases</a></li>
+  <li><span aria-current="page">Ad Targeting</span></li>
+</ol></nav>
+    <h1 class="h-page">Stop paying for clicks that never buy.</h1>
+    <p class="lede">Ad platforms optimize toward whatever signal you send them. We connect your first-party sales data so Google, Meta and LinkedIn bid for customers who buy and stay, rather than people who only fill out forms.</p>
+    <div class="actions">
+      <a class="btn" href="#roi-ai-ad-targeting">Estimate your ROI</a>
+      <a class="btn btn-quiet" href="../../contact/index.html">Talk it through</a>
+    </div>
+  </header>
+</div>
+
+<section class="section" style="padding-top:var(--gap-5)">
+  <div class="wrap split">
+    <div class="stack">
+      <section class="block" aria-labelledby="problem-h">
+        <h2 id="problem-h">The problem</h2>
+        <div class="prose"><p>Platforms optimize for cheap leads, privacy changes have cut tracking, and creative testing is slow. The result is rising acquisition costs and reports that don&#39;t match your revenue.</p></div>
+      </section>
+
+      <section class="block" aria-labelledby="solution-h">
+        <h2 id="solution-h">How we solve it</h2>
+        <div class="prose"><p>We build server-side conversion tracking, send qualified-lead and revenue events back to each platform, score customers by predicted value to seed look-alike audiences and value-based bidding, and use AI to generate and test creative variations at a pace a small team can&#39;t.</p></div>
+      </section>
+
+      <section class="block" aria-labelledby="get-h">
+        <h2 id="get-h">What you get</h2>
+        <ul class="checklist"><li>Server-side tracking and conversion APIs (Meta CAPI, Google enhanced &amp; offline conversions, LinkedIn CAPI)</li><li>Predicted-value customer scores for audiences and bidding</li><li>AI creative variation pipeline with brand guardrails</li><li>Budget pacing and anomaly alerts</li><li>Revenue-based reporting across channels</li></ul>
+      </section>
+
+      <section class="block" aria-labelledby="steps-h">
+        <h2 id="steps-h">How it works</h2>
+        <ol class="steps"><li><h3>Audit the signal</h3><p>Check what each platform currently learns from and where conversions are lost.</p></li><li><h3>Fix the data loop</h3><p>Send qualified and revenue events back server-side, matched to campaigns.</p></li><li><h3>Model customer value</h3><p>Score customers by predicted value and seed audiences and bidding with it.</p></li><li><h3>Test creative faster</h3><p>Generate on-brand variations and let performance data pick the winners.</p></li></ol>
+      </section>
+
+      <aside class="callout" aria-label="Illustrative example">
+        <span class="label">Example (illustrative)</span>
+        <p>An e-commerce brand spending $40,000 a month on ads switches to optimizing for revenue-weighted conversions instead of all purchases. A 12% efficiency gain on that spend is worth roughly $58,000 a year, before any lift from better creative.</p>
+      </aside>
+
+      <section class="calc-embed" data-roi data-roi-slug="ai-ad-targeting" aria-labelledby="roi-ai-ad-targeting">
+  <div class="block">
+    <h2 id="roi-ai-ad-targeting">Run the numbers for your business</h2>
+    <p class="muted small">Defaults are illustrative. Change them to match your business; results update as you type.</p>
+  </div>
+  <div class="calc">
+    <form class="calc-inputs" data-roi-inputs onsubmit="return false">
+<div class="row">
+  <label for="ai-ad-targeting-monthly_cost">Current monthly cost</label>
+  <div class="unit-input pre"><span class="u">$</span>
+    <input class="input" id="ai-ad-targeting-monthly_cost" name="monthly_cost" type="number" inputmode="decimal" min="0" max="100000000" step="100" value="40000">
+  </div>
+</div>
+<div class="row">
+  <label for="ai-ad-targeting-reduction_pct">Expected reduction</label>
+  <div class="unit-input">
+    <input class="input" id="ai-ad-targeting-reduction_pct" name="reduction_pct" type="number" inputmode="decimal" min="0" max="100" step="1" value="12"><span class="u">%</span>
+  </div>
+</div></form>
+    <div class="stack-s">
+      <svg class="balance" id="bal-ai-ad-targeting" viewBox="0 0 520 240" role="img" aria-label="Year-one value $57,600 against year-one cost $67,500" data-balance>
+  <line class="ground" x1="30" y1="226" x2="490" y2="226"/>
+  <path class="fulcrum" d="M260 156 L296 226 H224 Z"/>
+  <g class="arm" data-arm style="transform: rotate(-2.06deg)">
+    <rect class="weight w-cost" data-w="cost" x="49.0" y="55.0" width="92.0" height="92.0" rx="3"/>
+    <rect class="weight w-value" data-w="value" x="382.51" y="62.01" width="84.99" height="84.99" rx="3"/>
+    <line class="beam" x1="44" y1="150" x2="476" y2="150"/>
+  </g>
+  <circle class="pivot" cx="260" cy="150" r="7"/>
+</svg>
+      <dl class="readout">
+  <div><dt>Year-one cost</dt><dd data-out="cost">$67,500</dd></div>
+  <div class="is-value"><dt>Year-one value</dt><dd data-out="value">$57,600</dd></div>
+</dl>
+<div class="verdict">
+  <strong data-out="payback">Pays back in about 21 months</strong>
+  <span class="small data" data-out="multiple">3-year value is 1.1× the 3-year cost</span>
+</div>
+      <p class="calc-formula" data-roi-formula>Formula: monthly cost × reduction % × 12.</p>
+    </div>
+  </div>
+</section>
+
+      <section class="block" aria-labelledby="stack-h">
+        <h2 id="stack-h">Works with</h2>
+        <ul class="tags"><li>Meta Conversions API</li><li>Google Ads enhanced &amp; offline conversions</li><li>LinkedIn CAPI</li><li>GA4 &amp; BigQuery</li><li>Snowflake or Databricks</li><li>Python</li><li>Generative image and copy models</li></ul>
+      </section>
+
+      <section class="block" aria-labelledby="faq-h">
+  <h2 id="faq-h">Questions we hear</h2>
+  <div class="faq">
+    <details open>
+      <summary>Is this compliant with privacy rules?</summary>
+      <div class="answer"><p>Conversion APIs send hashed identifiers under your consent settings, and we document what&#39;s shared with each platform. Some categories (housing, employment and credit) have special ad rules that limit targeting, and we design within them.</p></div>
+    </details>
+    <details>
+      <summary>How much ad spend do we need for this to matter?</summary>
+      <div class="answer"><p>Generally a few thousand dollars a month per platform. Below that, fixing tracking and creative usually pays off faster than modeling.</p></div>
+    </details>
+    <details>
+      <summary>Do you run our campaigns too?</summary>
+      <div class="answer"><p>We focus on the data and AI layer and work alongside your in-house team or agency. If you need campaign management, we&#39;ll bring in a partner.</p></div>
+    </details>
+  </div>
+</section>
+
+      <section class="block" aria-labelledby="rel-h">
+        <h2 id="rel-h">Related use cases</h2>
+        <ul class="ind-grid">
+          <li><a href="../ai-lead-generation/index.html"><strong>AI Lead Generation &amp; Scoring</strong><span>Answer every lead in minutes, and work the best ones first.</span></a></li>
+          <li><a href="../ai-personalization/index.html"><strong>AI Personalization &amp; Recommendations</strong><span>The right product for each customer, on every page and in every email.</span></a></li>
+          <li><a href="../ai-social-media-content/index.html"><strong>AI Social Media &amp; Content Engine</strong><span>One idea in. A month of on-brand content out.</span></a></li>
+        </ul>
+      </section>
+    </div>
+    <div class="rail"><aside class="spec" aria-label="AI Ad Targeting &amp; Optimization at a glance">
+  <div class="spec-title">Ad Targeting <span>at a glance</span></div>
+  <dl>
+    <dt>Time to value</dt><dd>~4 weeks</dd>
+    <dt>Typical timeline</dt><dd>3–6 weeks</dd>
+    <dt>Typical investment</dt><dd class="data">$10k–$35k</dd>
+    <dt>Ongoing</dt><dd class="data">$1.5k–$6k/mo</dd>
+  </dl>
+  <div class="spec-list">
+    <p>What we measure</p>
+    <ul><li>Cost per qualified lead</li><li>Return on ad spend</li><li>Customer acquisition cost</li><li>Creative test velocity</li></ul>
+  </div>
+  <div class="spec-list">
+    <p>Often a first project for</p>
+    <ul><li><a href="../../industries/marketing-agencies/index.html">Marketing &amp; Creative Agencies</a></li></ul>
+  </div>
+  <div class="actions">
+    <a class="btn" href="../../assessment/index.html">Start the free scan</a>
+    <a class="btn btn-quiet" href="../../contact/index.html">Book a call</a>
+  </div>
+</aside></div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="lead-h">
+  <div class="wrap">
+    <div class="panel two-col">
+      <div class="block">
+        <h2 id="lead-h">Get a fixed-price estimate</h2>
+        <p class="muted">Tell us a little about your business. We'll reply within one business day with a scoped estimate for ad targeting and the numbers behind it.</p>
+      </div>
+      <form class="form" id="lead-ai-ad-targeting" data-lead-form novalidate>
+  <input type="hidden" name="source" value="use-case:ai-ad-targeting">
+  <input type="hidden" name="package" value="">
+  <input type="hidden" name="use_cases" value="ai-ad-targeting">
+  <div class="hp" aria-hidden="true"><label for="lead-ai-ad-targeting-website2">Leave this empty</label><input id="lead-ai-ad-targeting-website2" name="company_website" tabindex="-1" autocomplete="off"></div>
+  <div class="form-grid">
+    <div class="field"><label for="lead-ai-ad-targeting-name">Name</label><input class="input" id="lead-ai-ad-targeting-name" name="name" autocomplete="name" required></div>
+    <div class="field"><label for="lead-ai-ad-targeting-email">Work email</label><input class="input" id="lead-ai-ad-targeting-email" name="email" type="email" autocomplete="email" required></div>
+    <div class="field"><label for="lead-ai-ad-targeting-company">Company</label><input class="input" id="lead-ai-ad-targeting-company" name="company" autocomplete="organization"></div>
+    <div class="field full"><label for="lead-ai-ad-targeting-message">Anything we should know? <span class="hint">Optional</span></label>
+      <textarea class="textarea" id="lead-ai-ad-targeting-message" name="message" rows="3" style="min-height:90px"></textarea></div>
+  </div>
+  <div class="actions">
+    <button class="btn" type="submit">Request my estimate</button>
+  </div>
+  <p class="form-status" role="status" aria-live="polite"></p>
+  <div class="fallback" hidden></div>
+</form>
+    </div>
+  </div>
+</section>
+<section class="band cta-band">
+  <div class="wrap">
+    <div>
+      <h2>Find out where AI pays off for you.</h2>
+      <p>Ten minutes, no email required. You&#39;ll get a readiness score, your top opportunities ranked by ROI and a recommended first step.</p>
+    </div>
+    <div class="actions">
+      <a class="btn" href="../../assessment/index.html">Start the free scan</a>
+      <a class="btn btn-quiet" href="../../contact/index.html">Book a call</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-about">
+        <a class="brand" href="../../index.html"><svg viewBox="0 0 30 22" aria-hidden="true" focusable="false"><path class="fulcrum-mark" d="M15 12.2 L20.2 21 H9.8 Z"/><line class="mark-beam" x1="2.5" y1="15.6" x2="27.5" y2="7.4" stroke-width="3.2" stroke-linecap="round"/></svg><span>Leverline</span></a>
+        <p>AI that pays for itself. Applied AI for small and mid-sized businesses across the United States.</p>
+        <p>Email <span class="copyable">jacobroutzong@gmail.com</span></p>
+      </div>
+      <div>
+        <h2>Use cases</h2>
+        <ul><li><a href="../private-local-llm/index.html">Private LLMs</a></li><li><a href="../ai-knowledge-assistant/index.html">Knowledge Assistant</a></li><li><a href="../ai-workflow-automation/index.html">Workflow Automation</a></li><li><a href="../ai-document-processing/index.html">Document Processing</a></li><li><a href="../ai-lead-generation/index.html">Lead Generation</a></li><li><a href="index.html">Ad Targeting</a></li><li><a href="../ai-social-media-content/index.html">Content Engine</a></li>
+          <li><a href="../index.html">All 16 use cases</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Industries</h2>
+        <ul><li><a href="../../industries/law-firms/index.html">Law Firms</a></li><li><a href="../../industries/accounting-firms/index.html">Accounting &amp; Bookkeeping Firms</a></li><li><a href="../../industries/healthcare-clinics/index.html">Healthcare Practices &amp; Clinics</a></li><li><a href="../../industries/real-estate/index.html">Real Estate &amp; Property Management</a></li><li><a href="../../industries/home-services/index.html">Home Services &amp; Contractors</a></li><li><a href="../../industries/ecommerce-retail/index.html">E-commerce &amp; Retail</a></li><li><a href="../../industries/manufacturing-distribution/index.html">Manufacturing &amp; Distribution</a></li>
+          <li><a href="../../industries/index.html">All industries</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Company</h2>
+        <ul>
+          <li><a href="../../about/index.html">About</a></li>
+          <li><a href="../../pricing/index.html">Pricing</a></li>
+          <li><a href="../../assessment/index.html">Free AI scan</a></li>
+          <li><a href="../../roi-calculator/index.html">ROI calculator</a></li>
+          <li><a href="../../partners/index.html">Referrals and partners</a></li>
+          <li><a href="../../insights/index.html">Insights</a></li>
+          <li><a href="../../contact/index.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-legal">
+      <span>&copy; 2026 Leverline</span>
+      <a href="../../privacy/index.html">Privacy</a>
+      <a href="../../terms/index.html">Terms</a>
+      <span>Prices in US dollars. Examples on this site are illustrative unless labeled as client results.</span>
+    </div>
+  </div>
+</footer>
+
+<script>window.LL_CONFIG = {"apiBase": "", "bookingUrl": "", "brand": "Leverline", "contactEmail": "jacobroutzong@gmail.com", "indexSuffix": "index.html", "refDays": 90, "urlPrefix": "../../"};</script>
+<script src="../../assets/site.js" defer></script>
+<script src="../../assets/catalog.js" defer></script>
+<script src="../../assets/tools.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI Knowledge Assistant: Chat With Your Company Documents</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Give every employee instant, cited answers from your SOPs, contracts, tickets and wikis. Permission-aware RAG assistants built and run for you.">
+<link rel="canonical" href="https://jacobroutzong.dev/apps/leverline/use-cases/ai-knowledge-assistant/">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Leverline">
+<meta property="og:title" content="AI Knowledge Assistant: Chat With Your Company Documents">
+<meta property="og:description" content="Give every employee instant, cited answers from your SOPs, contracts, tickets and wikis. Permission-aware RAG assistants built and run for you.">
+<meta property="og:url" content="https://jacobroutzong.dev/apps/leverline/use-cases/ai-knowledge-assistant/">
+<meta property="og:image" content="https://jacobroutzong.dev/apps/leverline/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#15242C">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+<link rel="stylesheet" href="../../assets/site.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Service", "areaServed": "United States", "description": "A secure assistant that searches your SOPs, policies, contracts, tickets and shared drives and answers in plain language, with citations back to the source so people can trust it.", "name": "AI Knowledge Assistant", "offers": {"@type": "Offer", "priceCurrency": "USD", "priceSpecification": {"@type": "PriceSpecification", "maxPrice": 40000, "minPrice": 12000, "priceCurrency": "USD"}}, "provider": {"@id": "https://jacobroutzong.dev/apps/leverline/#org"}, "serviceType": "AI knowledge base assistant", "url": "https://jacobroutzong.dev/apps/leverline/use-cases/ai-knowledge-assistant/"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "acceptedAnswer": {"@type": "Answer", "text": "Answers are generated only from retrieved passages, every claim links to its source, and the assistant is instructed to decline when the sources don\u0027t cover the question. We measure accuracy on your own question set before launch."}, "name": "How do you stop it from making things up?"}, {"@type": "Question", "acceptedAnswer": {"@type": "Answer", "text": "No. Retrieval is filtered by the same permissions as the source system, so a user can only get answers from documents they could already open."}, "name": "Will people see documents they shouldn\u0027t?"}, {"@type": "Question", "acceptedAnswer": {"@type": "Answer", "text": "Those tools work well inside their own suites. We focus on the sources they don\u0027t cover well, measurable accuracy on your questions, and the option to run everything privately."}, "name": "How is this different from Microsoft Copilot or Gemini?"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "item": "https://jacobroutzong.dev/apps/leverline/", "name": "Home", "position": 1}, {"@type": "ListItem", "item": "https://jacobroutzong.dev/apps/leverline/use-cases/", "name": "Use cases", "position": 2}, {"@type": "ListItem", "item": "https://jacobroutzong.dev/apps/leverline/use-cases/ai-knowledge-assistant/", "name": "Knowledge Assistant", "position": 3}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap">
+    <a class="brand" href="../../index.html" aria-label="Leverline home"><svg viewBox="0 0 30 22" aria-hidden="true" focusable="false"><path class="fulcrum-mark" d="M15 12.2 L20.2 21 H9.8 Z"/><line class="mark-beam" x1="2.5" y1="15.6" x2="27.5" y2="7.4" stroke-width="3.2" stroke-linecap="round"/></svg><span>Leverline</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>Menu</button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="../index.html" aria-current="page">Use cases</a>
+      <a href="../../industries/index.html">Industries</a>
+      <a href="../../pricing/index.html">Pricing</a>
+      <a href="../../roi-calculator/index.html">ROI calculator</a>
+      <a href="../../insights/index.html">Insights</a>
+      <a class="btn btn-s" href="../../assessment/index.html">Start free scan</a>
+    </nav>
+  </div>
+</header>
+
+
+<aside class="notice" aria-label="Publication status"><div class="wrap">Working-name demo: Leverline demonstrates the website, opportunity scan and ROI calculator for my applied-AI business. Inquiries go to jacobroutzong@gmail.com.</div></aside>
+
+
+<main id="main">
+
+<div class="wrap">
+  <header class="page-head">
+    <nav class="crumbs" aria-label="Breadcrumb"><ol>
+  <li><a href="../../index.html">Home</a></li>
+  <li><a href="../index.html">Use cases</a></li>
+  <li><span aria-current="page">Knowledge Assistant</span></li>
+</ol></nav>
+    <h1 class="h-page">Every answer your team needs, cited from your own documents.</h1>
+    <p class="lede">A secure assistant that searches your SOPs, policies, contracts, tickets and shared drives and answers in plain language, with citations back to the source so people can trust it.</p>
+    <div class="actions">
+      <a class="btn" href="#roi-ai-knowledge-assistant">Estimate your ROI</a>
+      <a class="btn btn-quiet" href="../../contact/index.html">Talk it through</a>
+    </div>
+  </header>
+</div>
+
+<section class="section" style="padding-top:var(--gap-5)">
+  <div class="wrap split">
+    <div class="stack">
+      <section class="block" aria-labelledby="problem-h">
+        <h2 id="problem-h">The problem</h2>
+        <div class="prose"><p>Knowledge lives in a dozen tools and a few senior people&#39;s heads. New hires take months to ramp, experts get interrupted all day, and the same question gets answered differently depending on who you ask.</p></div>
+      </section>
+
+      <section class="block" aria-labelledby="solution-h">
+        <h2 id="solution-h">How we solve it</h2>
+        <div class="prose"><p>We build a retrieval-augmented generation (RAG) assistant over your approved sources. It respects existing permissions, cites every answer, says &#34;I don&#39;t know&#34; when the source isn&#39;t there, and improves as we review the questions it can&#39;t answer.</p></div>
+      </section>
+
+      <section class="block" aria-labelledby="get-h">
+        <h2 id="get-h">What you get</h2>
+        <ul class="checklist"><li>Connectors to SharePoint, Google Drive, Confluence, Notion, help desks or file shares</li><li>Permission-aware search with citations and source previews</li><li>Answer-quality evaluation set built from your real questions</li><li>Slack, Teams or web interface</li><li>Content-gap report showing what&#39;s missing from your documentation</li></ul>
+      </section>
+
+      <section class="block" aria-labelledby="steps-h">
+        <h2 id="steps-h">How it works</h2>
+        <ol class="steps"><li><h3>Pick the sources</h3><p>Inventory where knowledge lives and agree what the assistant can and can&#39;t read.</p></li><li><h3>Index and secure</h3><p>Documents are chunked, embedded and indexed with the original access controls attached.</p></li><li><h3>Evaluate</h3><p>Test against 50–200 real questions and tune retrieval until answers are accurate and cited.</p></li><li><h3>Roll out and improve</h3><p>Launch to one team, review unanswered questions weekly, then expand.</p></li></ol>
+      </section>
+
+      <aside class="callout" aria-label="Illustrative example">
+        <span class="label">Example (illustrative)</span>
+        <p>A 120-person distributor&#39;s customer service reps each spend about five hours a week hunting through pricing rules, return policies and product specs. Cutting that in half for 30 reps at $38 an hour is worth about $148,000 a year, and every customer gets the same, correct answer.</p>
+      </aside>
+
+      <section class="calc-embed" data-roi data-roi-slug="ai-knowledge-assistant" aria-labelledby="roi-ai-knowledge-assistant">
+  <div class="block">
+    <h2 id="roi-ai-knowledge-assistant">Run the numbers for your business</h2>
+    <p class="muted small">Defaults are illustrative. Change them to match your business; results update as you type.</p>
+  </div>
+  <div class="calc">
+    <form class="calc-inputs" data-roi-inputs onsubmit="return false">
+<div class="row">
+  <label for="ai-knowledge-assistant-people">People doing this work</label>
+  <div class="unit-input">
+    <input class="input" id="ai-knowledge-assistant-people" name="people" type="number" inputmode="decimal" min="1" max="5000" step="1" value="30">
+  </div>
+</div>
+<div class="row">
+  <label for="ai-knowledge-assistant-hours_per_week">Hours per person per week on it</label>
+  <div class="unit-input">
+    <input class="input" id="ai-knowledge-assistant-hours_per_week" name="hours_per_week" type="number" inputmode="decimal" min="0" max="60" step="0.5" value="5"><span class="u">hrs</span>
+  </div>
+</div>
+<div class="row">
+  <label for="ai-knowledge-assistant-automation_rate">Share of that time AI saves</label>
+  <div class="unit-input">
+    <input class="input" id="ai-knowledge-assistant-automation_rate" name="automation_rate" type="number" inputmode="decimal" min="0" max="100" step="5" value="50"><span class="u">%</span>
+  </div>
+</div>
+<div class="row">
+  <label for="ai-knowledge-assistant-hourly_cost">Loaded hourly cost</label>
+  <div class="unit-input pre"><span class="u">$</span>
+    <input class="input" id="ai-knowledge-assistant-hourly_cost" name="hourly_cost" type="number" inputmode="decimal" min="10" max="500" step="1" value="38">
+  </div>
+</div></form>
+    <div class="stack-s">
+      <svg class="balance" id="bal-ai-knowledge-assistant" viewBox="0 0 520 240" role="img" aria-label="Year-one value $148,200 against year-one cost $47,600" data-balance>
+  <line class="ground" x1="30" y1="226" x2="490" y2="226"/>
+  <path class="fulcrum" d="M260 156 L296 226 H224 Z"/>
+  <g class="arm" data-arm style="transform: rotate(14.0deg)">
+    <rect class="weight w-cost" data-w="cost" x="68.93" y="94.86" width="52.14" height="52.14" rx="3"/>
+    <rect class="weight w-value" data-w="value" x="379.0" y="55.0" width="92.0" height="92.0" rx="3"/>
+    <line class="beam" x1="44" y1="150" x2="476" y2="150"/>
+  </g>
+  <circle class="pivot" cx="260" cy="150" r="7"/>
+</svg>
+      <dl class="readout">
+  <div><dt>Year-one cost</dt><dd data-out="cost">$47,600</dd></div>
+  <div class="is-value"><dt>Year-one value</dt><dd data-out="value">$148,200</dd></div>
+</dl>
+<div class="verdict">
+  <strong data-out="payback">Pays back in about 2 months</strong>
+  <span class="small data" data-out="multiple">3-year value is 4.9× the 3-year cost</span>
+</div>
+      <p class="calc-formula" data-roi-formula>Formula: people × hours/week × % saved × 52 × hourly cost.</p>
+    </div>
+  </div>
+</section>
+
+      <section class="block" aria-labelledby="stack-h">
+        <h2 id="stack-h">Works with</h2>
+        <ul class="tags"><li>Embeddings + vector search (pgvector</li><li>Qdrant</li><li>Azure AI Search)</li><li>Rerankers</li><li>Private or cloud LLMs</li><li>Slack &amp; Teams bots</li><li>Evaluation harness</li></ul>
+      </section>
+
+      <section class="block" aria-labelledby="faq-h">
+  <h2 id="faq-h">Questions we hear</h2>
+  <div class="faq">
+    <details open>
+      <summary>How do you stop it from making things up?</summary>
+      <div class="answer"><p>Answers are generated only from retrieved passages, every claim links to its source, and the assistant is instructed to decline when the sources don&#39;t cover the question. We measure accuracy on your own question set before launch.</p></div>
+    </details>
+    <details>
+      <summary>Will people see documents they shouldn&#39;t?</summary>
+      <div class="answer"><p>No. Retrieval is filtered by the same permissions as the source system, so a user can only get answers from documents they could already open.</p></div>
+    </details>
+    <details>
+      <summary>How is this different from Microsoft Copilot or Gemini?</summary>
+      <div class="answer"><p>Those tools work well inside their own suites. We focus on the sources they don&#39;t cover well, measurable accuracy on your questions, and the option to run everything privately.</p></div>
+    </details>
+  </div>
+</section>
+
+      <section class="block" aria-labelledby="rel-h">
+        <h2 id="rel-h">Related use cases</h2>
+        <ul class="ind-grid">
+          <li><a href="../private-local-llm/index.html"><strong>Private &amp; Local LLMs</strong><span>Your own ChatGPT, running on infrastructure you control.</span></a></li>
+          <li><a href="../ai-customer-support/index.html"><strong>AI Customer Support Agents</strong><span>Instant answers for customers. Fewer repetitive tickets for your team.</span></a></li>
+          <li><a href="../ai-workflow-automation/index.html"><strong>AI Workflow Automation</strong><span>Take the copy-paste out of your operations.</span></a></li>
+        </ul>
+      </section>
+    </div>
+    <div class="rail"><aside class="spec" aria-label="AI Knowledge Assistant at a glance">
+  <div class="spec-title">Knowledge Assistant <span>at a glance</span></div>
+  <dl>
+    <dt>Time to value</dt><dd>~4 weeks</dd>
+    <dt>Typical timeline</dt><dd>3–5 weeks</dd>
+    <dt>Typical investment</dt><dd class="data">$12k–$40k</dd>
+    <dt>Ongoing</dt><dd class="data">$600–$3k/mo</dd>
+  </dl>
+  <div class="spec-list">
+    <p>What we measure</p>
+    <ul><li>Answer accuracy on the evaluation set</li><li>Time to answer</li><li>Ramp time for new hires</li><li>Questions deflected from experts</li></ul>
+  </div>
+  <div class="spec-list">
+    <p>Often a first project for</p>
+    <ul><li><a href="../../industries/government-contractors/index.html">Defense &amp; Government Contractors</a></li></ul>
+  </div>
+  <div class="actions">
+    <a class="btn" href="../../assessment/index.html">Start the free scan</a>
+    <a class="btn btn-quiet" href="../../contact/index.html">Book a call</a>
+  </div>
+</aside></div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="lead-h">
+  <div class="wrap">
+    <div class="panel two-col">
+      <div class="block">
+        <h2 id="lead-h">Get a fixed-price estimate</h2>
+        <p class="muted">Tell us a little about your business. We'll reply within one business day with a scoped estimate for knowledge assistant and the numbers behind it.</p>
+      </div>
+      <form class="form" id="lead-ai-knowledge-assistant" data-lead-form novalidate>
+  <input type="hidden" name="source" value="use-case:ai-knowledge-assistant">
+  <input type="hidden" name="package" value="">
+  <input type="hidden" name="use_cases" value="ai-knowledge-assistant">
+  <div class="hp" aria-hidden="true"><label for="lead-ai-knowledge-assistant-website2">Leave this empty</label><input id="lead-ai-knowledge-assistant-website2" name="company_website" tabindex="-1" autocomplete="off"></div>
+  <div class="form-grid">
+    <div class="field"><label for="lead-ai-knowledge-assistant-name">Name</label><input class="input" id="lead-ai-knowledge-assistant-name" name="name" autocomplete="name" required></div>
+    <div class="field"><label for="lead-ai-knowledge-assistant-email">Work email</label><input class="input" id="lead-ai-knowledge-assistant-email" name="email" type="email" autocomplete="email" required></div>
+    <div class="field"><label for="lead-ai-knowledge-assistant-company">Company</label><input class="input" id="lead-ai-knowledge-assistant-company" name="company" autocomplete="organization"></div>
+    <div class="field full"><label for="lead-ai-knowledge-assistant-message">Anything we should know? <span class="hint">Optional</span></label>
+      <textarea class="textarea" id="lead-ai-knowledge-assistant-message" name="message" rows="3" style="min-height:90px"></textarea></div>
+  </div>
+  <div class="actions">
+    <button class="btn" type="submit">Request my estimate</button>
+  </div>
+  <p class="form-status" role="status" aria-live="polite"></p>
+  <div class="fallback" hidden></div>
+</form>
+    </div>
+  </div>
+</section>
+<section class="band cta-band">
+  <div class="wrap">
+    <div>
+      <h2>Find out where AI pays off for you.</h2>
+      <p>Ten minutes, no email required. You&#39;ll get a readiness score, your top opportunities ranked by ROI and a recommended first step.</p>
+    </div>
+    <div class="actions">
+      <a class="btn" href="../../assessment/index.html">Start the free scan</a>
+      <a class="btn btn-quiet" href="../../contact/index.html">Book a call</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-about">
+        <a class="brand" href="../../index.html"><svg viewBox="0 0 30 22" aria-hidden="true" focusable="false"><path class="fulcrum-mark" d="M15 12.2 L20.2 21 H9.8 Z"/><line class="mark-beam" x1="2.5" y1="15.6" x2="27.5" y2="7.4" stroke-width="3.2" stroke-linecap="round"/></svg><span>Leverline</span></a>
+        <p>AI that pays for itself. Applied AI for small and mid-sized businesses across the United States.</p>
+        <p>Email <span class="copyable">jacobroutzong@gmail.com</span></p>
+      </div>
+      <div>
+        <h2>Use cases</h2>
+        <ul><li><a href="../private-local-llm/index.html">Private LLMs</a></li><li><a href="index.html">Knowledge Assistant</a></li><li><a href="../ai-workflow-automation/index.html">Workflow Automation</a></li><li><a href="../ai-document-processing/index.html">Document Processing</a></li><li><a href="../ai-lead-generation/index.html">Lead Generation</a></li><li><a href="../ai-ad-targeting/index.html">Ad Targeting</a></li><li><a href="../ai-social-media-content/index.html">Content Engine</a></li>
+          <li><a href="../index.html">All 16 use cases</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Industries</h2>
+        <ul><li><a href="../../industries/law-firms/index.html">Law Firms</a></li><li><a href="../../industries/accounting-firms/index.html">Accounting &amp; Bookkeeping Firms</a></li><li><a href="../../industries/healthcare-clinics/index.html">Healthcare Practices &amp; Clinics</a></li><li><a href="../../industries/real-estate/index.html">Real Estate &amp; Property Management</a></li><li><a href="../../industries/home-services/index.html">Home Services &amp; Contractors</a></li><li><a href="../../industries/ecommerce-retail/index.html">E-commerce &amp; Retail</a></li><li><a href="../../industries/manufacturing-distribution/index.html">Manufacturing &amp; Distribution</a></li>
+          <li><a href="../../industries/index.html">All industries</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Company</h2>
+        <ul>
+          <li><a href="../../about/index.html">About</a></li>
+          <li><a href="../../pricing/index.html">Pricing</a></li>
+          <li><a href="../../assessment/index.html">Free AI scan</a></li>
+          <li><a href="../../roi-calculator/index.html">ROI calculator</a></li>
+          <li><a href="../../partners/index.html">Referrals and partners</a></li>
+          <li><a href="../../insights/index.html">Insights</a></li>
+          <li><a href="../../contact/index.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-legal">
+      <span>&copy; 2026 Leverline</span>
+      <a href="../../privacy/index.html">Privacy</a>
+      <a href="../../terms/index.html">Terms</a>
+      <span>Prices in US dollars. Examples on this site are illustrative unless labeled as client results.</span>
+    </div>
+  </div>
+</footer>
+
+<script>window.LL_CONFIG = {"apiBase": "", "bookingUrl": "", "brand": "Leverline", "contactEmail": "jacobroutzong@gmail.com", "indexSuffix": "index.html", "refDays": 90, "urlPrefix": "../../"};</script>
+<script src="../../assets/site.js" defer></script>
+<script src="../../assets/catalog.js" defer></script>
+<script src="../../assets/tools.js" defer></script>
+</body>
+</html>

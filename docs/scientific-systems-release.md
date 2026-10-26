@@ -1,10 +1,10 @@
 # Scientific Systems Lab release audit — 2026-10-26
 
-The first website release was initially audited on production main `768c7d3`. Before pushing, the ancestry guard detected concurrent production merges through `dd679c8` (EquityScout and the revised four-project order). The release was reconciled with that published main, preserving its approved content, dependencies and infrastructure. The release delta against current main remains only the 18 reviewed lab/navigation/audit files; it does not introduce or undo the unrelated backend changes.
+The first website release was initially audited on production main `768c7d3`. Before pushing, the ancestry guard detected concurrent production merges through `dd679c8` (EquityScout and the revised four-project order), followed by `1035c9f` (the independently published Leverline project). The release was reconciled with that published main, preserving its approved content, dependencies and infrastructure. The release delta against current main remains only the 18 reviewed lab/navigation/audit files; it does not introduce or undo the unrelated backend or Leverline changes.
 
 ## Scope and evidence
 
-Three new routes: `/labs/scientific-systems/`, `/labs/scientific-systems/numerical/`, and `/labs/scientific-systems/symbolic/`. The homepage My work section and Projects listing link to the hub; the existing four-project order is preserved before the new lab entry. Seven typed registry entries distinguish two engines in progress from five planning entries. Interactive controls reveal recorded native C++ output; they do not execute a live C++ or Python engine.
+Three new routes: `/labs/scientific-systems/`, `/labs/scientific-systems/numerical/`, and `/labs/scientific-systems/symbolic/`. The homepage My work section and Projects listing link to the hub; all existing project entries and their order are preserved before the new lab entry. Seven typed registry entries distinguish two engines in progress from five planning entries. Interactive controls reveal recorded native C++ output; they do not execute a live C++ or Python engine.
 
 The numerical implementation combines REA-backed DGETRF2 control flow with independently implemented scalar operations and a new multi-RHS solve. The symbolic core is independently designed mathematics; the narrow GMP backend observation is not a complete CAS reconstruction. No proprietary Wolfram algorithms or original-DLL behavioral equivalence are claimed. REA identifiers, target digests and limitations are displayed separately from mathematical validation.
 
@@ -22,13 +22,13 @@ The published accuracy figures match the retained local reference reports. The b
 | Independent Ascent numerical validation | 150 seeded NumPy comparisons passed |
 | Full Playwright suite | 18 passed, 2 existing mobile Python tests skipped |
 | Final lab-specific responsive checks | 4 passed |
-| Final production build | 18 pages; 243 links/assets checked across 20 HTML pages |
+| Final production build | 19 pages; 2,883 links/assets checked across 74 HTML pages |
 | axe-core 4.11.0 | 0 automated WCAG-tagged violations over 20 route/viewport/theme combinations |
 | Production-preview assets and layout | No missing local responses or horizontal page overflow observed |
 | Numerical engine | 21/21 CTest entries passed; 98 solve reference cases |
 | Symbolic engine | 10/10 CTest entries passed; 366 exact-reference cases |
 
-The earlier “89 / 20 passed” meant 89 Node tests plus 20 Vitest tests, not a fraction. Before the concurrent EquityScout merge, the initial production-based candidate had 11 Node tests. Current main now includes the approved backend and additional regional tests; the final suite counts in the table come from the rerun on that reconciled base. The five additional regional tests bring the original 89 Node tests to 94. No lab test was removed.
+The earlier “89 / 20 passed” meant 89 Node tests plus 20 Vitest tests, not a fraction. Before the concurrent EquityScout merge, the initial production-based candidate had 11 Node tests. Current main now includes the approved backend and additional regional tests; the final suite counts in the table come from the rerun on that reconciled base. The five additional regional tests bring the original 89 Node tests to 94. After the later static Leverline publication, the production build/link checks, Node suite, Astro check and five-route responsive accessibility/navigation audit were rerun; the unchanged Ascent/Vitest/Python tests retain the successful full-suite run from the reconciled base. No lab test was removed.
 
 Keyboard navigation and recorded controls were checked. Audit fixes underline the existing homepage inline activity link, make horizontally scrollable evidence/benchmark tables focusable, and give the investigation group an explicit role. Automated checks are not a comprehensive accessibility certification; diagram/formula text also received manual review. The site retains its existing visual identity.
 
