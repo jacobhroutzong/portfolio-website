@@ -1,0 +1,5 @@
+{
+  // LOCAL emulator only. Never use this placeholder database ID with --remote.
+  "name": "equityscout-local", "pages_build_output_dir": "./dist", "compatibility_date": "2026-10-25",
+  "d1_databases": [{"binding":"SCOUT_DB","database_name":"equityscout-local","database_id":"00000000-0000-0000-0000-000000000001"}]
+}
