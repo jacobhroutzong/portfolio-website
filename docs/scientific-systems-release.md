@@ -15,7 +15,7 @@ The published accuracy figures match the retained local reference reports. The b
 | Check | Result |
 |---|---|
 | Production-based `npm run verify` | Passed with existing `ASCENT_PYTHON` environment override |
-| Astro diagnostics | 0 errors, 0 warnings, 1 existing unrelated unused-variable hint |
+| Astro diagnostics | 0 errors, 0 warnings, 3 existing unrelated hints (one unused variable, two async-style suggestions) |
 | Node tests | 94 passed, 0 failed |
 | Vitest | 20 tests passed across 3 files |
 | Ascent Python validation | 319 checks passed |
@@ -40,4 +40,4 @@ KaTeX 0.19.1 is an existing site dependency. Its MIT notice and the KaTeX fonts 
 
 The symbolic source-only local commit is `aacd48946319c10c6c2e4a00d2c54eeb4d4a55a4` on `codex/symbolic-core`. Its raw research records and decompiled excerpts remain preserved locally outside the index. No engine remote was created. Original-work license, repository name and intended visibility still need owner approval before standalone GitHub publication. The numerical workspace and original LU file hashes were preserved.
 
-Deployment configuration, production infrastructure, dependency manifests, site profile settings and unrelated histories are unchanged. The existing site-wide noindex behavior, one unrelated unused-variable hint and large-chunk build advisory remain outside this release's scope. Publishing uses a normal fast-forward push to the existing main branch, followed by live HTTPS/content verification; no force-push is permitted.
+Deployment configuration, production infrastructure, dependency manifests, site profile settings and unrelated histories are unchanged. The existing site-wide noindex behavior, three unrelated hints and large-chunk build advisory remain outside this release's scope. Publishing uses a normal fast-forward push to the existing main branch, followed by live HTTPS/content verification; no force-push is permitted.
