@@ -1,0 +1,37 @@
+---
+import fixture from '../../data/scientific-lu-fixture.json';
+const value = (x: number) => Number.isInteger(x) ? String(x) : x.toPrecision(6);
+const matrix = (items: number[]) => [[items[0], items[2]], [items[1], items[3]]];
+const stages = [
+  { name: 'Input A', note: 'Column-major input, displayed as rows.', data: fixture.a },
+  { name: 'Packed LU', note: 'U occupies the upper triangle; the strict lower triangle stores L. The diagonal of L is implicitly one.', data: fixture.packed },
+  { name: 'Solution X', note: 'Both right-hand sides solved from the same LU factors. A·X = B.', data: fixture.x },
+];
+---
+<section class="lab-example" aria-labelledby="lu-example-title">
+  <div><p class="lab-kicker">RECORDED C++ VALIDATION EXAMPLE</p><h2 id="lu-example-title">One factorization. Two solutions.</h2><p>Explore an actual output fixture from the native C++ engine. These controls reveal recorded results; they do not execute C++ in your browser.</p></div>
+  <div class="lab-example-controls" hidden><label for="lu-stage">Inspect a stage</label><select id="lu-stage"><option value="0">Input A</option><option value="1">Packed LU</option><option value="2">Solution X</option></select><button class="button" id="lu-show-all" type="button">Show all stages</button></div>
+  <div class="lab-matrices">
+    {stages.map((stage, i) => <figure data-lu-stage={i}><figcaption>{stage.name}</figcaption><table class="lab-matrix" aria-label={stage.name}><tbody>{matrix(stage.data).map(row => <tr>{row.map(cell => <td>{value(cell)}</td>)}</tr>)}</tbody></table><p>{stage.note}</p></figure>)}
+  </div>
+  <p class="lab-mono">B = [[5, 5], [11, 9]] · sequential zero-based swaps: [1, 1] · INFO = 0</p>
+  <p class="lab-example-announcement" aria-live="polite"></p>
+  <a class="text-link" href="/media/scientific-systems/lu-fixture.json">Download the recorded fixture ↗</a>
+</section>
+<script>
+  const select = document.querySelector<HTMLSelectElement>('#lu-stage');
+  const controls = document.querySelector<HTMLElement>('.lab-example-controls');
+  const stages = Array.from(document.querySelectorAll<HTMLElement>('[data-lu-stage]'));
+  const announcement = document.querySelector<HTMLElement>('.lab-example-announcement');
+  if (select && controls && announcement) {
+    controls.hidden = false;
+    select.addEventListener('change', () => {
+      stages.forEach((stage, i) => stage.hidden = i !== Number(select.value));
+      announcement.textContent = `Showing ${select.selectedOptions[0].textContent}. Recorded output, not live engine execution.`;
+    });
+    document.querySelector('#lu-show-all')?.addEventListener('click', () => {
+      stages.forEach(stage => stage.hidden = false);
+      announcement.textContent = 'All recorded stages are visible.';
+    });
+  }
+</script>

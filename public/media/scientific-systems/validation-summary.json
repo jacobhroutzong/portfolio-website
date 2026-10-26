@@ -1,0 +1,151 @@
+{
+  "numerical": {
+    "date": "2026-10-26",
+    "ctestEntries": 21,
+    "solveReference": {
+      "seed": 20261026,
+      "cases": 98,
+      "numpy_version": "2.3.5",
+      "max_absolute_solution_difference": 2.7755575615628914e-17,
+      "max_scaled_backward_error": 3.5603296732149557e-16,
+      "probe_sha256": "ffa7827b93f843585ccf8bf32f37f64035db7455699ef78dc862bf6a007d26d8",
+      "scope": "Independent NumPy reference, not original DLL"
+    }
+  },
+  "symbolic": {
+    "date": "2026-10-26",
+    "ctestEntries": 10,
+    "reference": {
+      "seed": 20261026,
+      "integer_cases": 200,
+      "rational_cases": 100,
+      "symbolic_cases": 66,
+      "total_cases": 366,
+      "sympy_version": "1.14.0",
+      "cli_sha256": "b10763fbe8bce5bdadb04675b040d203cb75c92ddde47ae59949623bfeb6b414",
+      "limitations": [
+        "Exact selected identities, not general algebraic equivalence",
+        "SymPy cancellation checks identities on shared domains; domain checks are separate",
+        "Not original-native-binary differential validation"
+      ]
+    }
+  },
+  "benchmark": {
+    "recorded_at_utc": "2026-10-25T19:14:59.590647+00:00",
+    "seed": 20261025,
+    "numpy_version": "2.3.5",
+    "cases_checked": 113,
+    "max_absolute_logdet_error": 3.410605131648481e-13,
+    "max_relative_infinity_residual": 3.2331142178517114e-16,
+    "benchmarks": [
+      {
+        "n": 32,
+        "repetitions": 7,
+        "cpp_median_ns": 15000,
+        "numpy_median_ns": 13600,
+        "cpp_samples_ns": [
+          16200,
+          15100,
+          15100,
+          15000,
+          14900,
+          14800,
+          14800
+        ],
+        "numpy_samples_ns": [
+          16500,
+          16300,
+          14400,
+          13600,
+          13500,
+          13500,
+          13200
+        ]
+      },
+      {
+        "n": 64,
+        "repetitions": 7,
+        "cpp_median_ns": 72500,
+        "numpy_median_ns": 35400,
+        "cpp_samples_ns": [
+          75000,
+          73100,
+          72400,
+          78300,
+          72500,
+          72500,
+          72500
+        ],
+        "numpy_samples_ns": [
+          39800,
+          36400,
+          35600,
+          35300,
+          35400,
+          35300,
+          35000
+        ]
+      },
+      {
+        "n": 128,
+        "repetitions": 7,
+        "cpp_median_ns": 457300,
+        "numpy_median_ns": 159600,
+        "cpp_samples_ns": [
+          461700,
+          458900,
+          457300,
+          462200,
+          455700,
+          457000,
+          454600
+        ],
+        "numpy_samples_ns": [
+          164300,
+          160500,
+          159600,
+          155900,
+          155400,
+          158500,
+          298000
+        ]
+      },
+      {
+        "n": 256,
+        "repetitions": 7,
+        "cpp_median_ns": 3865500,
+        "numpy_median_ns": 1039100,
+        "cpp_samples_ns": [
+          4331900,
+          3865500,
+          3466800,
+          3377600,
+          3360000,
+          3945800,
+          4685800
+        ],
+        "numpy_samples_ns": [
+          1548900,
+          1039100,
+          985400,
+          998500,
+          1100200,
+          1013900,
+          1051900
+        ]
+      }
+    ],
+    "limitations": [
+      "Not original-Octave differential tests or packed-factor equality",
+      "API-level timings have different language/validation overheads",
+      "No claims of bitwise equivalence, speed parity or universal stability"
+    ]
+  },
+  "reproduce": {
+    "lu": "cmake --build build --config Release; ctest --test-dir build -C Release --output-on-failure",
+    "benchmark": "python -B tests/numpy_reference.py --probe build/Release/lu_probe.exe --benchmark --output benchmark.json",
+    "symbolic": "python -B tests/reference.py --cli build/Release/symbolic_cli.exe --reference-path .reference-python"
+  },
+  "availability": "Engine source currently local; public repository release pending. Commands require the documented local projects.",
+  "not_original_dll_differential": true
+}

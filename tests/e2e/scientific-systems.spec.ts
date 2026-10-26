@@ -1,0 +1,36 @@
+import { test, expect } from '@playwright/test';
+test('Scientific lab routes, honest statuses and recorded controls', async ({ page }) => {
+  await page.goto('/labs/scientific-systems/');
+  await expect(page.getByRole('heading', { name: 'Scientific Systems Lab.' })).toBeVisible();
+  await expect(page.locator('.lab-card')).toHaveCount(7);
+  await expect(page.locator('.lab-card .lab-active')).toHaveCount(2);
+  await expect(page.locator('.lab-card').filter({ hasText: 'Planning' })).toHaveCount(5);
+  expect(await page.locator('.lab-card').first().evaluate(element => element.getBoundingClientRect().width)).toBeGreaterThan(250);
+  await page.getByLabel('Inspect a stage').selectOption('2');
+  await expect(page.locator('[data-lu-stage="2"]')).toBeVisible();
+  await expect(page.locator('[data-lu-stage="0"]')).toBeHidden();
+  await page.getByRole('button', { name: 'Show all stages' }).click();
+  await expect(page.locator('[data-lu-stage="0"]')).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  await page.evaluate(() => { document.documentElement.style.scrollBehavior = 'auto'; window.scrollTo(0, 0); });
+  await page.screenshot({ path: `test-results/scientific-lab-${test.info().project.name}.png`, fullPage: true, animations: 'disabled' });
+  await page.getByRole('button', { name: 'Switch to dark theme' }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await page.screenshot({ path: `test-results/scientific-lab-dark-${test.info().project.name}.png`, animations: 'disabled' });
+  await page.locator('[data-project="numerical"] a').click();
+  await expect(page.getByRole('heading', { name: 'Numerical Computing Engine.' })).toBeVisible();
+  await expect(page.getByRole('table').filter({ hasText: 'Matrix order' })).toBeVisible();
+  await page.goto('/labs/scientific-systems/symbolic/');
+  await expect(page.getByRole('heading', { name: 'Symbolic Mathematics Engine.' })).toBeVisible();
+  await page.locator('summary').filter({ hasText: 'x^0' }).click();
+  await expect(page.locator('details').filter({ hasText: 'x^0' })).toContainText('x ≠ 0');
+  await expect(page.locator('.katex-mathml').first()).toBeAttached();
+});
+test('Scientific lab remains legible without JavaScript', async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto('http://127.0.0.1:4321/labs/scientific-systems/');
+  await expect(page.locator('.lab-card')).toHaveCount(7);
+  await expect(page.locator('[data-lu-stage="2"]')).toBeVisible();
+  await context.close();
+});

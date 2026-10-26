@@ -1,0 +1,27 @@
+[
+  {
+    "input": "(x+1)^3+2*x",
+    "canonical": "(((x+1)^3)+(2*x))",
+    "derivative": "((3*((x+1)^2))+2)",
+    "nonzeroConditions": [],
+    "latex": "({(\\mathrm{x}+1)}^{3}+(2\\cdot \\mathrm{x}))"
+  },
+  {
+    "input": "1/x",
+    "canonical": "(1/x)",
+    "derivative": "((-1)/(x^2))",
+    "nonzeroConditions": [
+      "x"
+    ],
+    "latex": "\\frac{1}{\\mathrm{x}}"
+  },
+  {
+    "input": "x^0",
+    "canonical": "(x^0)",
+    "derivative": "0",
+    "nonzeroConditions": [
+      "x"
+    ],
+    "latex": "{\\mathrm{x}}^{0}"
+  }
+]

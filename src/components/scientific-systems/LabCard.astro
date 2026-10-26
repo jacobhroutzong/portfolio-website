@@ -1,0 +1,12 @@
+---
+import { detailPath, type LabProject } from '../../data/scientific-systems';
+interface Props { project: LabProject; }
+const { project } = Astro.props;
+---
+<article class="lab-card" data-project={project.id}>
+  <div class="lab-card-top"><span class="lab-number">{project.number}</span><span class:list={['lab-status', { 'lab-active': project.status === 'In progress' }]}>{project.status}</span></div>
+  <p class="lab-kicker">{project.discipline}</p>
+  <h3>{project.title}</h3><p>{project.summary}</p>
+  <div class="lab-card-scope"><span>{project.implemented.length ? 'IMPLEMENTED SCOPE' : 'FIRST MILESTONE'}</span><p>{project.implemented.length ? project.implemented.join(' · ') : project.next}</p></div>
+  {project.detail ? <a class="text-link" href={detailPath(project)}>Read the investigation <span aria-hidden="true">↗</span></a> : <span class="lab-planned-note">Research plan · implementation pending</span>}
+</article>

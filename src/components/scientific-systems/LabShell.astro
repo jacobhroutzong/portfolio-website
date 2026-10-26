@@ -1,0 +1,9 @@
+---
+import Base from '../../layouts/Base.astro';
+import '../../styles/scientific-systems.css';
+interface Props { title: string; description: string; }
+const { title, description } = Astro.props;
+---
+<Base title={title} description={description}>
+  <div class="container scientific-lab"><slot /><p class="lab-source-note">Formula rendering uses KaTeX. <a href="/media/scientific-systems/THIRD_PARTY_NOTICES.txt">Third-party licenses and notices</a>.</p></div>
+</Base>
