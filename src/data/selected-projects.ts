@@ -41,5 +41,12 @@ export const selectedProjects = [
     "description": "Numerical and symbolic engines with traceable investigations, exact mathematics, and independent validation. Explore working subsystems and the seven-project roadmap.",
     "href": "/labs/scientific-systems/",
     "linkLabel": "Explore the lab →"
+  },
+  {
+    "title": "ModelForge",
+    "eyebrow": "PYTHON / MODEL EVALUATION / POST-TRAINING RESEARCH",
+    "description": "Inspect tool-use failures, compare saved evaluations, and plan model memory budgets in a small-model research workspace. Training and GPU benchmarks are the next stage.",
+    "href": "/projects/modelforge/",
+    "linkLabel": "Explore ModelForge & app →"
   }
 ];
