@@ -1,6 +1,17 @@
 {
-  "fetchedAt": "2026-10-18T19:51:47.246Z",
+  "fetchedAt": "2026-10-28T22:39:53.380Z",
+  "githubFetchedAt": "2026-10-28T22:39:53.380Z",
   "items": [
+    {
+      "name": "modelforge",
+      "url": "https://huggingface.co/spaces/jacobroutzong/modelforge",
+      "description": "",
+      "platform": "Hugging Face",
+      "kind": "Space",
+      "language": "",
+      "updated": "2026-10-28T22:39:50.000Z",
+      "archived": false
+    },
     {
       "name": "portfolio-website",
       "url": "https://github.com/jacobhroutzong/portfolio-website",
@@ -8,7 +19,17 @@
       "platform": "GitHub",
       "kind": "Repository",
       "language": "HTML",
-      "updated": "2026-10-28T22:12:34Z",
+      "updated": "2026-10-28T22:38:28Z",
+      "archived": false
+    },
+    {
+      "name": "harness2-lab",
+      "url": "https://huggingface.co/spaces/jacobroutzong/harness2-lab",
+      "description": "",
+      "platform": "Hugging Face",
+      "kind": "Space",
+      "language": "",
+      "updated": "2026-10-26T16:19:09.000Z",
       "archived": false
     },
     {
@@ -32,6 +53,16 @@
       "archived": false
     },
     {
+      "name": "ascent",
+      "url": "https://huggingface.co/spaces/jacobroutzong/ascent",
+      "description": "",
+      "platform": "Hugging Face",
+      "kind": "Space",
+      "language": "",
+      "updated": "2026-10-24T18:51:19.000Z",
+      "archived": false
+    },
+    {
       "name": "decision-intelligence-engine",
       "url": "https://github.com/jacobhroutzong/decision-intelligence-engine",
       "description": "",
@@ -48,7 +79,7 @@
       "platform": "Hugging Face",
       "kind": "Space",
       "language": "",
-      "updated": "2026-10-18T13:20:41.000Z",
+      "updated": "2026-10-19T00:32:27.000Z",
       "archived": false
     },
     {
@@ -131,6 +162,5 @@
       "updated": "2023-03-21T00:46:43Z",
       "archived": false
     }
-  ],
-  "githubFetchedAt": "2026-10-28T22:18:58.779Z"
+  ]
 }
