@@ -9,3 +9,7 @@ Run `npm run sync:activity` to fetch the public GitHub repository list and Huggi
 The Activity page labels forks, shows push/update dates, and displays when the snapshot was checked. Dates describe repository updates, not verified personal contributions. Hub listings with no update date are explicitly labeled. No public models or datasets is a valid empty result.
 
 This first version uses a committed snapshot and does not poll automatically. Once hosting is selected, we can configure scheduled refreshes and deployments under your explicit publishing authorization. Until then, updating local data never pushes or publishes anything. App links launch external hosts in a new tab; embedding or moving an app into the portfolio requires checking that app's hosting requirements.
+
+The homepage pins `jacobhroutzong/coding-challenges` as Featured repository. All remaining public GitHub repositories follow in descending push-date order, with forks labeled. GitHub metadata has a separate `githubFetchedAt` timestamp so refreshing it does not imply the Hugging Face snapshot was refreshed. `npm run sync:activity` refreshes both platform lists.
+
+`src/data/selected-projects.ts` is the shared oldest-first project registry. Append newly added projects at the end. Both the homepage and Work page reverse this list; the homepage initially shows three and offers an expand/collapse control for the rest. The Work page keeps all projects visible and retains their additional source and walkthrough links.

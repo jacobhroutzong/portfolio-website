@@ -17,5 +17,5 @@ const items = [
   ...repos.map(r => ({ name:r.name, url:r.html_url, description:r.description || '', platform:'GitHub', kind:r.fork ? 'Fork' : 'Repository', language:r.language || '', updated:r.pushed_at, archived:r.archived })),
   ...[['Model',models],['Dataset',datasets],['Space',spaces]].flatMap(([kind,list]) => list.map(r => ({ name:r.id.split('/').slice(1).join('/'), url:`https://huggingface.co/${kind === 'Dataset' ? 'datasets/' : kind === 'Space' ? 'spaces/' : ''}${r.id}`, description:r.pipeline_tag || '', platform:'Hugging Face', kind, language:'', updated:r.lastModified || r.createdAt || null, archived:false }))),
 ].sort((a,b) => (b.updated || '').localeCompare(a.updated || ''));
-await writeFile(new URL('../src/data/activity.json',import.meta.url),JSON.stringify({ fetchedAt:new Date().toISOString(),items },null,2)+'\n');
+await writeFile(new URL('../src/data/activity.json',import.meta.url),JSON.stringify({ fetchedAt:new Date().toISOString(),githubFetchedAt:new Date().toISOString(),items },null,2)+'\n');
 console.log(`Saved ${repos.length} GitHub repositories, ${models.length} models, ${datasets.length} datasets, and ${spaces.length} Spaces.`);
