@@ -50,10 +50,10 @@ export const selectedProjects = [
     "linkLabel": "Explore ModelForge & app →"
   },
   {
-    "title": "TuneLedger",
-    "eyebrow": "PYTHON / QLORA / REPRODUCIBLE ML SYSTEMS",
-    "description": "Plan pinned fine-tuning experiments, validate conversation data, and inspect the infrastructure for tracked runs, recoverable checkpoints, and paired evaluation.",
-    "href": "/projects/tuneledger/",
-    "linkLabel": "Explore TuneLedger & app →"
+    "title": "Tunera",
+    "eyebrow": "PYTHON / MODEL FINE-TUNING",
+    "description": "Set up a Qwen3 fine-tuning run, check your dataset, and see how saved checkpoints help recover interrupted training.",
+    "href": "/projects/tunera/",
+    "linkLabel": "Explore Tunera →"
   }
 ];

@@ -6,6 +6,7 @@ const projects = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
   schema: z.object({
     title: z.string().min(1),
+    brandLogo: z.string().regex(/^\/media\/[a-zA-Z0-9/_.-]+\.svg$/).optional(),
     summary: z.string().min(1),
     category: z.enum(['AI / Machine Learning', 'Data Engineering', 'Robotics & Simulation', 'Quantitative Research', 'GPU / High-Performance Computing', 'Signal Processing / Electronic Warfare']),
     technologies: z.array(z.string()).min(1),
