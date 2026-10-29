@@ -55,5 +55,12 @@ export const selectedProjects = [
     "description": "Plan pinned fine-tuning experiments, validate conversation data, and inspect the infrastructure for tracked runs, recoverable checkpoints, and paired evaluation.",
     "href": "/projects/tuneledger/",
     "linkLabel": "Explore TuneLedger & app →"
+  },
+  {
+    "title": "Recursa — Recursive Application Synthesis",
+    "eyebrow": "PYTHON / RECURSIVE INFERENCE / RESEARCH IN PROGRESS",
+    "description": "Inspect the progress of an application-synthesis research workbench: external requirements, dependency-aware plans, saved artifacts, and clearly labeled execution evidence.",
+    "href": "/projects/recursa/",
+    "linkLabel": "Explore Recursa & progress →"
   }
 ];
