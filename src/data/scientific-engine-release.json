@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-29",
+  "engines": [
+    {
+      "engine": "numerical",
+      "repository": "jacobhroutzong/scientific-numerical-engine",
+      "commit": "a6b8ad1670328f955f7175a16d13c0c8351c0697",
+      "manifestSha256": "8bf0ec3dafec2c1bad247694c41aca0ecdb319b07b9f2c573b70928bfa852420"
+    },
+    {
+      "engine": "symbolic",
+      "repository": "jacobhroutzong/symbolic-math-engine",
+      "commit": "03ea8e5537d3101900b4294a7e1a43eb6472f813",
+      "manifestSha256": "9b55262e9f8933b508e0da5bd1beb20f9a54205ec382df029493e2891bde64ad"
+    }
+  ]
+}

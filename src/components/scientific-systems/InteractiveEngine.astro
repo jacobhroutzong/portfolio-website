@@ -1,0 +1,44 @@
+---
+interface Props { kind: 'numerical' | 'symbolic'; }
+const { kind } = Astro.props;
+---
+<section class="lab-example cpp-demo" data-engine={kind}>
+  <p class="lab-kicker">LIVE C++20 / WEBASSEMBLY</p>
+  <h2>{kind === 'numerical' ? 'Solve your matrix.' : 'Differentiate an expression.'}</h2>
+  <p>Runs the actual C++ engine in a dedicated browser worker. Inputs stay in your browser. Engine downloads occur on first run; recorded examples below remain available.</p>
+  <form>
+    {kind === 'numerical' ? <>
+      <label>Matrix order (1–16)<input name="order" type="number" min="1" max="16" value="2" required /></label>
+      <label>Right-hand sides (1–4)<input name="rhs" type="number" min="1" max="4" value="2" required /></label>
+      <label>Matrix A (one row per line)<textarea name="a" rows="4" maxlength="20000" required>{'1 2\n3 4'}</textarea></label>
+      <label>Matrix B (one row per line)<textarea name="b" rows="4" maxlength="6000" required>{'5 5\n11 9'}</textarea></label>
+      <p class="lab-note">Separate entries with spaces or commas. Finite values only, magnitude ≤ 10¹⁰⁰. Binary64 arithmetic; small backward error does not guarantee forward accuracy for an ill-conditioned matrix.</p>
+    </> : <>
+      <label>Expression<input name="expression" value="x^3 + 2*x" maxlength="256" required autocomplete="off" spellcheck="false" /></label>
+      <label>Differentiate with respect to<input name="variable" value="x" maxlength="32" pattern="[A-Za-z_][A-Za-z_0-9]*" required autocomplete="off" /></label>
+      <p class="lab-note">Explicit operators + − * / ^ and integer literals. Browser limits: 256 ASCII characters, 64 nodes, depth 32, integer powers −16 to 16 and bounded arithmetic growth. No function calls or variable powers. Original-domain conditions are shown with the result.</p>
+    </>}
+    <div class="demo-actions"><button type="submit">{kind === 'numerical' ? 'Solve with C++' : 'Differentiate with C++'}</button><button type="button" data-cancel disabled>Cancel / reset engine</button></div>
+  </form>
+  <p role="status" aria-live="polite" data-status>Ready. The C++ engine has not been loaded.</p>
+  <pre data-result role="region" tabindex="0" aria-label="Engine result"></pre>
+  <noscript><p>The interactive C++ engine requires JavaScript and WebAssembly. Recorded native examples remain available below.</p></noscript>
+  <p class="lab-source-note">128 MiB WebAssembly memory ceiling; 5-second computation deadline. These demo limits are narrower than the native API. Source-verified release bundles.</p>
+  <p class="lab-source-note"><a href="/media/scientific-systems/release.json">Source commits and bundle hashes</a> · <a href="/engines/notices/index.txt">Engine and runtime licenses</a></p>
+</section>
+<script>
+  import { mountEngineDemos } from '../../scripts/scientific-systems/demo';
+  mountEngineDemos();
+</script>
+<style>
+  .cpp-demo form { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+  .cpp-demo label { display:flex; flex-direction:column; gap:.4rem; font-size:.95rem; }
+  .cpp-demo input,.cpp-demo textarea { width:100%; box-sizing:border-box; padding:.7rem; color:inherit; background:var(--bg,#101318); border:1px solid #697580; border-radius:4px; font:inherit; }
+  .cpp-demo textarea,.cpp-demo pre { font-family:monospace; }
+  .cpp-demo .lab-note,.demo-actions { grid-column:1/-1; }
+  .demo-actions { display:flex; gap:.8rem; flex-wrap:wrap; }
+  .cpp-demo button { padding:.7rem 1rem; border:1px solid #8d9bab; border-radius:4px; background:transparent; color:inherit; cursor:pointer; }
+  .cpp-demo button:disabled { opacity:.55; cursor:default; }
+  .cpp-demo pre { white-space:pre-wrap; overflow-wrap:anywhere; max-height:28rem; overflow:auto; }
+  @media(max-width:600px) { .cpp-demo form { grid-template-columns:minmax(0,1fr); } }
+</style>

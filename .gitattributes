@@ -1,0 +1,4 @@
+# Generated release bytes are SHA-256 pinned; never convert their line endings.
+public/engines/** -text -whitespace
+# Preserve upstream license notices verbatim, including their whitespace.
+public/engines/notices/*.txt -whitespace

@@ -23,6 +23,7 @@ jobs:
       - run: npm run verify
         env:
           SITE_URL: ${{ vars.SITE_URL || 'https://jacobroutzong.dev' }}
+      - run: node scripts/check-scientific-engines.mjs --remote
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
       - uses: actions/upload-artifact@v4

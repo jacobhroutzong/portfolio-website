@@ -1,0 +1,45 @@
+{
+  "compiler": "emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 6.0.13 (e13ee988ce3d87a738dd8f3661d02223308c412a)",
+  "engine": "numerical",
+  "sources": {
+    "src/lu.cpp": "d9fb0b77d02e3086be0c73b422787dbc72b90c6d67682aed2e7dfe8123648fba",
+    "src/solve.cpp": "331064d4dff2158e51294fde55df1877a812b9d8305d4c842de88acf8d0dd54b",
+    "browser/adapter.cpp": "ae6b04eb328d85f1677daa43bc9e1fc76942d07c8c9f33dfa05362f4e264464d"
+  },
+  "headers": {
+    "include/sce/lu.hpp": "33a2e19b7d1e6f43fc3b2136e72ec655deb5fa6563e762d2a18867fdeee1aba8",
+    "include/sce/qr.hpp": "8952237c1523d1a82fbca0e551a834c4b54e9111692a91e69b5b41b69b965568",
+    "include/sce/solve.hpp": "4b2565d265e4cddbbc48007adf1b65d185366af0defa78d2c506420c63b010b8"
+  },
+  "buildScriptSha256": "85f35253cc585f6a934971afa471fcdb5ef2a639be28806876f06da8c0f6d863",
+  "outputs": {
+    "numerical.mjs": {
+      "sha256": "0cc1d9219f78a7a790528ce6a8c0318158e354ea3d340592b26fa3d7000dc1ee",
+      "bytes": 35453
+    },
+    "numerical.wasm": {
+      "sha256": "3eb411b39c491efd16ad5d643ac6cc474437e0e5219a910cf4b3430c04d35904",
+      "bytes": 190225
+    }
+  },
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-ffp-contract=off",
+    "-fexceptions",
+    "--bind",
+    "--no-entry",
+    "-sMODULARIZE=1",
+    "-sEXPORT_ES6=1",
+    "-sENVIRONMENT=worker,node",
+    "-sALLOW_MEMORY_GROWTH=1",
+    "-sINITIAL_MEMORY=16777216",
+    "-sMAXIMUM_MEMORY=134217728",
+    "-sSTACK_SIZE=1048576",
+    "-sFILESYSTEM=0"
+  ],
+  "scope": "Source-only project license and third-party notices apply; retain runtime notices when distributing generated artifacts",
+  "sourceHashing": "SHA-256 of UTF-8 source bytes with CRLF normalized to LF",
+  "sourceCommit": "a6b8ad1670328f955f7175a16d13c0c8351c0697",
+  "sourceTreeClean": true
+}
