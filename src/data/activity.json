@@ -1,6 +1,6 @@
 {
-  "fetchedAt": "2026-10-29T06:00:40.060Z",
-  "githubFetchedAt": "2026-10-29T06:00:40.060Z",
+  "fetchedAt": "2026-10-29T13:20:43.717Z",
+  "githubFetchedAt": "2026-10-29T13:20:43.717Z",
   "items": [
     {
       "name": "portfolio-website",
@@ -9,7 +9,7 @@
       "platform": "GitHub",
       "kind": "Repository",
       "language": "HTML",
-      "updated": "2026-10-28T23:00:59Z",
+      "updated": "2026-10-29T11:24:48Z",
       "archived": false
     },
     {
@@ -19,7 +19,47 @@
       "platform": "Hugging Face",
       "kind": "Space",
       "language": "",
-      "updated": "2026-10-28T22:58:35.000Z",
+      "updated": "2026-10-29T11:24:21.000Z",
+      "archived": false
+    },
+    {
+      "name": "recursa",
+      "url": "https://huggingface.co/spaces/jacobroutzong/recursa",
+      "description": "",
+      "platform": "Hugging Face",
+      "kind": "Space",
+      "language": "",
+      "updated": "2026-10-29T11:18:19.000Z",
+      "archived": false
+    },
+    {
+      "name": "recursa",
+      "url": "https://github.com/jacobhroutzong/recursa",
+      "description": "CPU-first recursive application synthesis research workbench — development preview",
+      "platform": "GitHub",
+      "kind": "Repository",
+      "language": "Python",
+      "updated": "2026-10-29T11:18:12Z",
+      "archived": false
+    },
+    {
+      "name": "symbolic-math-engine",
+      "url": "https://github.com/jacobhroutzong/symbolic-math-engine",
+      "description": "Independent C++20 exact symbolic mathematics, domain-preserving differentiation and checked transformation traces",
+      "platform": "GitHub",
+      "kind": "Repository",
+      "language": "C++",
+      "updated": "2026-10-29T11:14:55Z",
+      "archived": false
+    },
+    {
+      "name": "scientific-numerical-engine",
+      "url": "https://github.com/jacobhroutzong/scientific-numerical-engine",
+      "description": "C++20 LU, checked linear solves and independent Householder QR with GoogleTest and WebAssembly",
+      "platform": "GitHub",
+      "kind": "Repository",
+      "language": "C++",
+      "updated": "2026-10-29T11:14:48Z",
       "archived": false
     },
     {
