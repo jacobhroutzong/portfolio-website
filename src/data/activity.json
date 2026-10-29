@@ -1,6 +1,67 @@
 {
-  "fetchedAt": "2026-10-18T19:51:47.246Z",
+  "fetchedAt": "2026-10-28T22:39:53.380Z",
+  "githubFetchedAt": "2026-10-28T22:39:53.380Z",
   "items": [
+    {
+      "name": "modelforge",
+      "url": "https://huggingface.co/spaces/jacobroutzong/modelforge",
+      "description": "",
+      "platform": "Hugging Face",
+      "kind": "Space",
+      "language": "",
+      "updated": "2026-10-28T22:39:50.000Z",
+      "archived": false
+    },
+    {
+      "name": "portfolio-website",
+      "url": "https://github.com/jacobhroutzong/portfolio-website",
+      "description": "",
+      "platform": "GitHub",
+      "kind": "Repository",
+      "language": "HTML",
+      "updated": "2026-10-28T22:38:28Z",
+      "archived": false
+    },
+    {
+      "name": "harness2-lab",
+      "url": "https://huggingface.co/spaces/jacobroutzong/harness2-lab",
+      "description": "",
+      "platform": "Hugging Face",
+      "kind": "Space",
+      "language": "",
+      "updated": "2026-10-26T16:19:09.000Z",
+      "archived": false
+    },
+    {
+      "name": "harness2-lab",
+      "url": "https://github.com/jacobhroutzong/harness2-lab",
+      "description": "An independent implementation of recursive agent harnessing with an interactive web lab",
+      "platform": "GitHub",
+      "kind": "Repository",
+      "language": "Python",
+      "updated": "2026-10-26T16:17:29Z",
+      "archived": false
+    },
+    {
+      "name": "Reinforcement-Learning",
+      "url": "https://github.com/jacobhroutzong/Reinforcement-Learning",
+      "description": "",
+      "platform": "GitHub",
+      "kind": "Repository",
+      "language": "Jupyter Notebook",
+      "updated": "2026-10-26T00:14:43Z",
+      "archived": false
+    },
+    {
+      "name": "ascent",
+      "url": "https://huggingface.co/spaces/jacobroutzong/ascent",
+      "description": "",
+      "platform": "Hugging Face",
+      "kind": "Space",
+      "language": "",
+      "updated": "2026-10-24T18:51:19.000Z",
+      "archived": false
+    },
     {
       "name": "decision-intelligence-engine",
       "url": "https://github.com/jacobhroutzong/decision-intelligence-engine",
@@ -8,7 +69,7 @@
       "platform": "GitHub",
       "kind": "Repository",
       "language": "Python",
-      "updated": "2026-10-18T13:20:44Z",
+      "updated": "2026-10-19T00:32:29Z",
       "archived": false
     },
     {
@@ -18,7 +79,7 @@
       "platform": "Hugging Face",
       "kind": "Space",
       "language": "",
-      "updated": "2026-10-18T13:20:41.000Z",
+      "updated": "2026-10-19T00:32:27.000Z",
       "archived": false
     },
     {
@@ -42,16 +103,6 @@
       "archived": false
     },
     {
-      "name": "Reinforcement-Learning",
-      "url": "https://github.com/jacobhroutzong/Reinforcement-Learning",
-      "description": "",
-      "platform": "GitHub",
-      "kind": "Repository",
-      "language": "Jupyter Notebook",
-      "updated": "2026-10-11T14:49:06Z",
-      "archived": false
-    },
-    {
       "name": "GitHubGraduation-2022",
       "url": "https://github.com/jacobhroutzong/GitHubGraduation-2022",
       "description": "I graduated from Auburn University!",
@@ -59,7 +110,7 @@
       "kind": "Fork",
       "language": "",
       "updated": "2026-10-11T14:44:33Z",
-      "archived": false
+      "archived": true
     },
     {
       "name": "coding-challenges",
@@ -99,16 +150,6 @@
       "kind": "Repository",
       "language": "Python",
       "updated": "2025-12-18T23:05:58Z",
-      "archived": false
-    },
-    {
-      "name": "insightflow-data",
-      "url": "https://github.com/jacobhroutzong/insightflow-data",
-      "description": "my portfolio",
-      "platform": "GitHub",
-      "kind": "Repository",
-      "language": "HTML",
-      "updated": "2025-03-19T14:58:33Z",
       "archived": false
     },
     {
