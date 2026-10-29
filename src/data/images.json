@@ -10,5 +10,11 @@
     "height": 926,
     "src": "/media/generated/equityscout-desktop.png-1425.webp",
     "srcSet": "/media/generated/equityscout-desktop.png-480.webp 480w, /media/generated/equityscout-desktop.png-960.webp 960w, /media/generated/equityscout-desktop.png-1425.webp 1425w"
+  },
+  "/media/recursa-studio.png": {
+    "width": 1265,
+    "height": 712,
+    "src": "/media/generated/recursa-studio.png-1265.webp",
+    "srcSet": "/media/generated/recursa-studio.png-480.webp 480w, /media/generated/recursa-studio.png-960.webp 960w, /media/generated/recursa-studio.png-1265.webp 1265w"
   }
 }
