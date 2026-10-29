@@ -55,5 +55,12 @@ export const selectedProjects = [
     "description": "Set up a Qwen3 fine-tuning run, check your dataset, and see how saved checkpoints help recover interrupted training.",
     "href": "/projects/tunera/",
     "linkLabel": "Explore Tunera →"
+  },
+  {
+    "title": "Recursa — Recursive Application Synthesis",
+    "eyebrow": "PYTHON / RECURSIVE INFERENCE / RESEARCH IN PROGRESS",
+    "description": "Inspect the progress of an application-synthesis research workbench: external requirements, dependency-aware plans, saved artifacts, and clearly labeled execution evidence.",
+    "href": "/projects/recursa/",
+    "linkLabel": "Explore Recursa & progress →"
   }
 ];
