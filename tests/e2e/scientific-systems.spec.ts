@@ -29,7 +29,7 @@ test('Scientific lab routes, honest statuses and recorded controls', async ({ pa
 test('Scientific lab remains legible without JavaScript', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
-  await page.goto('http://127.0.0.1:4321/labs/scientific-systems/');
+  await page.goto(`${process.env.PLAYWRIGHT_BASE_URL || 'http://127.0.0.1:4321'}/labs/scientific-systems/`);
   await expect(page.locator('.lab-card')).toHaveCount(7);
   await expect(page.locator('[data-lu-stage="2"]')).toBeVisible();
   await context.close();

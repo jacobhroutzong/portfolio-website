@@ -35,3 +35,6 @@ service-account*.json
 *.pfx
 .dev.vars
 .dev.vars.*
+
+/public/engines/
+/public/.wasm-tmp/
