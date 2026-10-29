@@ -1,0 +1,47 @@
+{
+  "compiler": "emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 6.0.13 (e13ee988ce3d87a738dd8f3661d02223308c412a)",
+  "engine": "symbolic",
+  "sources": {
+    "src/integer.cpp": "1eb65f29de9dd2a6e26efe074a4819920ed4c14d87f343606ad0b1f59070e701",
+    "src/rational.cpp": "e170e6fc182a5cab5d152239f72acd1bd0433977abeb5236861cbc77ccecfd92",
+    "src/expression.cpp": "0403d77cb320fa56612497c445c4fc301100af7361798435a36e6c6671f36be7",
+    "browser/adapter.cpp": "0eb34f7514dbf96055b49818c482f5c39dcbab4288247c8364e1831e27399c44"
+  },
+  "headers": {
+    "include/ssm/expression.hpp": "edd689845cbb312de581da9c508be921a5f022367154bb62132be9bc6ae34905",
+    "include/ssm/integer.hpp": "da6639c23ee809463cf4959b97b9e0a9f4282a3319539878110f3c434d799392",
+    "include/ssm/rational.hpp": "7f7b3885aa8b07c8d90b4ff509db09d8eee114f4d2cd61ff87a50f68299d61a5",
+    "include/ssm/trace.hpp": "6cccec83a9115cb1c561e184fc2d4ecaaa0872bd273999b14fbd50905f51ec47"
+  },
+  "buildScriptSha256": "85f35253cc585f6a934971afa471fcdb5ef2a639be28806876f06da8c0f6d863",
+  "outputs": {
+    "symbolic.mjs": {
+      "sha256": "1845f7cc95b5a297c18873865c184fd49d857c7c61e2b224ee951fdf320b651e",
+      "bytes": 35060
+    },
+    "symbolic.wasm": {
+      "sha256": "117897e74f0400f20b90bc6cebc748020c8c53f1b1b06445febac2ef673810a7",
+      "bytes": 249065
+    }
+  },
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-ffp-contract=off",
+    "-fexceptions",
+    "--bind",
+    "--no-entry",
+    "-sMODULARIZE=1",
+    "-sEXPORT_ES6=1",
+    "-sENVIRONMENT=worker,node",
+    "-sALLOW_MEMORY_GROWTH=1",
+    "-sINITIAL_MEMORY=16777216",
+    "-sMAXIMUM_MEMORY=134217728",
+    "-sSTACK_SIZE=1048576",
+    "-sFILESYSTEM=0"
+  ],
+  "scope": "Source-only project license and third-party notices apply; retain runtime notices when distributing generated artifacts",
+  "sourceHashing": "SHA-256 of UTF-8 source bytes with CRLF normalized to LF",
+  "sourceCommit": "03ea8e5537d3101900b4294a7e1a43eb6472f813",
+  "sourceTreeClean": true
+}

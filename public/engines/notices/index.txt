@@ -1,0 +1,8 @@
+Scientific Systems Lab browser engines — 29 October 2026
+
+Numerical original additions: BSD-3-Clause. Retain Numerical-LICENSE.txt and the full LAPACK-3.12.0-LICENSE.txt for adapted LU control flow.
+Symbolic original implementation: MIT; see Symbolic-MIT-LICENSE.txt.
+
+Generated runtime: Emscripten6.0.13 (MIT/NCSA; complete Emscripten-LICENSE.txt includes Node notice), musl libc/libm (complete musl-COPYRIGHT.txt with component terms), LLVM libc++/libc++abi/compiler-rt/libunwind (Apache2 with LLVM exceptions; complete files retained). dlmalloc upstream public-domain notice is retained separately; Emscripten modifications remain under its license. No optional ports, GMP, Octave or LAPACK DLL is bundled or linked.
+
+Exact source commits and output SHA-256 hashes are in the sibling engine manifest JSON files and /media/scientific-systems/release.json. Source URLs identify authored/adapted code; they do not claim exact source equivalence with the originally analyzed DLLs. Original binary research remains static-only.

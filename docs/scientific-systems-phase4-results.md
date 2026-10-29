@@ -1,6 +1,6 @@
 # Phase 4 validation and release status
 
-Local development, 28 October 2026. Nothing merged, pushed, published or deployed.
+Development validation snapshot, 28 October 2026. The following results describe the original local milestone. See `scientific-systems-phase4-release.md` for the 29 October publication review and current source pins.
 
 | Check | Observed result |
 | --- | --- |

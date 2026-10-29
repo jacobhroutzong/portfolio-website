@@ -1,6 +1,6 @@
 # Scientific Systems Lab Phase 4 — private development
 
-28 October 2026. Branch codex/scientific-systems-phase4. No deployment authorization.
+Development architecture snapshot, 28 October 2026. Branch codex/scientific-systems-phase4. Subsequent explicit publication authorization and license decisions are recorded in `scientific-systems-phase4-release.md`; the pending-release statements below describe the earlier development checkpoint.
 
 ## Interactive architecture and reproduction
 

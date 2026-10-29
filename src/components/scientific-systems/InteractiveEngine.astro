@@ -3,7 +3,7 @@ interface Props { kind: 'numerical' | 'symbolic'; }
 const { kind } = Astro.props;
 ---
 <section class="lab-example cpp-demo" data-engine={kind}>
-  <p class="lab-kicker">LIVE C++20 / WEBASSEMBLY DEVELOPMENT PREVIEW</p>
+  <p class="lab-kicker">LIVE C++20 / WEBASSEMBLY</p>
   <h2>{kind === 'numerical' ? 'Solve your matrix.' : 'Differentiate an expression.'}</h2>
   <p>Runs the actual C++ engine in a dedicated browser worker. Inputs stay in your browser. Engine downloads occur on first run; recorded examples below remain available.</p>
   <form>
@@ -23,7 +23,8 @@ const { kind } = Astro.props;
   <p role="status" aria-live="polite" data-status>Ready. The C++ engine has not been loaded.</p>
   <pre data-result role="region" tabindex="0" aria-label="Engine result"></pre>
   <noscript><p>The interactive C++ engine requires JavaScript and WebAssembly. Recorded native examples remain available below.</p></noscript>
-  <p class="lab-source-note">128 MiB WebAssembly memory ceiling; 5-second computation deadline. These demo limits are narrower than the native API. Generated engines remain local pending license approval.</p>
+  <p class="lab-source-note">128 MiB WebAssembly memory ceiling; 5-second computation deadline. These demo limits are narrower than the native API. Source-verified release bundles.</p>
+  <p class="lab-source-note"><a href="/media/scientific-systems/release.json">Source commits and bundle hashes</a> · <a href="/engines/notices/index.txt">Engine and runtime licenses</a></p>
 </section>
 <script>
   import { mountEngineDemos } from '../../scripts/scientific-systems/demo';
