@@ -4,6 +4,13 @@ import ProjectCard from '../../components/ProjectCard.astro';
 import { visibleProjects } from '../../lib/projects';
 import { selectedProjects } from '../../data/selected-projects';
 const workDetails: Record<string,{description:string;links:{primary:boolean;href:string;label:string}[]}> = {
+  "Recursa — Recursive Application Synthesis": {
+    "description": "A research workbench for external specification inspection, synthesis planning, and transparent execution replays. Explore the CPU-only progress demo; genuine model-backed generation and comparative evaluation remain unverified.",
+    "links": [
+      { "primary": true, "href": "/projects/recursa/", "label": "Explore Recursa & progress →" },
+      { "primary": false, "href": "https://github.com/jacobhroutzong/recursa", "label": "Source code ↗" }
+    ]
+  },
   "Ascent — AI Lab Preparation": {
     "description": "A local-first learning workspace with short lessons, original Python problems, spaced reviews, and progress tracking.",
     "links": [
