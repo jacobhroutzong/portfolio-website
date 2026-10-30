@@ -1,6 +1,6 @@
 {
-  "fetchedAt": "2026-10-29T13:20:43.717Z",
-  "githubFetchedAt": "2026-10-29T13:20:43.717Z",
+  "fetchedAt": "2026-10-30T06:01:53.241Z",
+  "githubFetchedAt": "2026-10-30T06:01:53.241Z",
   "items": [
     {
       "name": "portfolio-website",
@@ -9,7 +9,27 @@
       "platform": "GitHub",
       "kind": "Repository",
       "language": "HTML",
-      "updated": "2026-10-29T11:24:48Z",
+      "updated": "2026-10-29T23:10:15Z",
+      "archived": false
+    },
+    {
+      "name": "recursa",
+      "url": "https://github.com/jacobhroutzong/recursa",
+      "description": "CPU-first recursive application synthesis research workbench — development preview",
+      "platform": "GitHub",
+      "kind": "Repository",
+      "language": "Python",
+      "updated": "2026-10-29T23:08:48Z",
+      "archived": false
+    },
+    {
+      "name": "recursa",
+      "url": "https://huggingface.co/spaces/jacobroutzong/recursa",
+      "description": "",
+      "platform": "Hugging Face",
+      "kind": "Space",
+      "language": "",
+      "updated": "2026-10-29T23:08:47.000Z",
       "archived": false
     },
     {
@@ -20,26 +40,6 @@
       "kind": "Space",
       "language": "",
       "updated": "2026-10-29T11:24:21.000Z",
-      "archived": false
-    },
-    {
-      "name": "recursa",
-      "url": "https://huggingface.co/spaces/jacobroutzong/recursa",
-      "description": "",
-      "platform": "Hugging Face",
-      "kind": "Space",
-      "language": "",
-      "updated": "2026-10-29T11:18:19.000Z",
-      "archived": false
-    },
-    {
-      "name": "recursa",
-      "url": "https://github.com/jacobhroutzong/recursa",
-      "description": "CPU-first recursive application synthesis research workbench — development preview",
-      "platform": "GitHub",
-      "kind": "Repository",
-      "language": "Python",
-      "updated": "2026-10-29T11:18:12Z",
       "archived": false
     },
     {
