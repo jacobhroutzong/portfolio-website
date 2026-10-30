@@ -1,0 +1,83 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { robotFields } from '../../../lib/decision-contract.mjs';
+import metadata from '../../../data/decision-scenarios.json';
+import '../../../styles/decision-workbench.css';
+---
+<Base title="Robot trajectory safety · Workbench preview" description="Inspect robotics telemetry assumptions in the first-party Decision Intelligence workbench preview." noindex={true}>
+<div class="decision-workbench container">
+  <a class="dw-back" href="/projects/decision-intelligence-engine/">← Decision Intelligence Engine</a>
+  <header class="dw-opening"><div><p class="dw-kicker">Decision & Optimization Systems</p><h1>Robot trajectory safety</h1><p>Compare motion assumptions. Inspect the decision and its evidence.</p></div><span class="dw-mode">First-party preview · M1</span></header>
+  <aside class="dw-preservation"><span aria-hidden="true">7</span><div><strong>The full application stays available.</strong><p>This workbench adds robotics only. <a href="/projects/decision-intelligence-engine/#application">Open all seven scenarios in the existing application ↗</a></p></div></aside>
+  <div class="dw-workspace">
+    <form id="telemetry-form" class="dw-inputs">
+      <h2>Telemetry inputs</h2><div class="dw-presets" role="group" aria-label="Input examples"><button type="button" data-example="baseline" aria-pressed="true">Baseline</button><button type="button" data-example="margin" aria-pressed="false">More stopping margin</button></div>
+      {robotFields.map(field => <div class="dw-field"><div class="dw-field-title"><label for={field.id}>{field.label}</label><span>{field.min}–{field.max} {field.unit} · step {field.step}</span></div><div class="dw-number"><input id={field.id} name={field.id} type="number" required min={field.min} max={field.max} step={field.step} value={field.value} aria-describedby={`${field.id}-help`} /><span>{field.unit}</span></div><p id={`${field.id}-help`}>{field.help}</p></div>)}
+      <div class="dw-threshold"><div><label for="threshold">Confidence threshold</label><output id="threshold-value" for="threshold">85%</output></div><input id="threshold" type="range" min="50" max="99" step="1" value="85" aria-describedby="threshold-help" /><p id="threshold-help">50–99%. Sets the display gate only. It does not change model output or establish safety.</p></div>
+      <button class="dw-run" type="button" disabled aria-describedby="connection-status">Run evaluation <span aria-hidden="true">↗</span></button>
+      <p id="connection-status" class="dw-connection">Evaluation unavailable — protected backend and spending controls are not yet verified.</p>
+      <button class="dw-reset" type="reset">Reset baseline</button>
+      <noscript><p>JavaScript is needed to update the input comparison. The existing application is available above.</p></noscript>
+    </form>
+    <section class="dw-results" aria-labelledby="results-title"><div class="dw-result-heading"><h2 id="results-title">Decision & evidence</h2><span>Not run</span></div>
+      <div class="dw-empty"><span aria-hidden="true">↗</span><h3>Ready to inspect an answer.</h3><p>Action, confidence, risk and severity will appear only after a real, validated backend response.</p></div>
+      <section class="dw-comparison" aria-labelledby="comparison-title"><div class="dw-result-heading"><h3 id="comparison-title">Compare the entered times</h3><span>Input calculation</span></div>
+        <div class="dw-time"><div><span>Time to collision</span><output id="collision-value">1.1 s</output></div><div class="dw-track"><span id="collision-bar" style="width:22%"></span></div></div>
+        <div class="dw-time dw-stopping"><div><span>Required stopping time</span><output id="stopping-value">1.4 s</output></div><div class="dw-track"><span id="stopping-bar" style="width:28%"></span></div></div>
+        <div class="dw-margin"><span>Available stopping margin</span><output id="margin" aria-live="polite">−0.3 s</output></div><p id="margin-explanation">1.1 − 1.4 = −0.3 seconds. The entered stopping time exceeds the collision time.</p><p class="dw-caveat">Calculated from entered assumptions. This is neither a model prediction nor a safety certification. Both bars share a scale that updates with the inputs.</p><p id="input-error" role="status" hidden></p>
+      </section>
+      <section class="dw-probabilities"><h3>Action probabilities</h3><p>No model probabilities to plot yet. The connected experience will show labeled bars and a matching text table.</p></section>
+    </section>
+  </div>
+  <div class="dw-evidence">
+    <details><summary>How the scenario works</summary><p>Three assumed telemetry values are passed to the existing structured decision engine. Possible actions are proceed, replan, protective stop or manual review. No robot is connected or controlled.</p><p>The second example changes inputs to 4 s until collision, 1.4 s to stop and 0.2 m localization uncertainty. It has more arithmetic stopping margin; no model action or lower risk is implied.</p></details>
+    <details><summary>Method, assumptions & limitations</summary><p>The current engine uses TypeSafe and OpenRouter with <code>{metadata.model}</code>. Risk is a model-produced binary-event probability, not observed collision frequency. Severity is an ordinal model score from 0 (clear) to 4 (imminent collision). Confidence is not evidence of calibration.</p><p>Physical safety controllers and human oversight remain authoritative. This preview does not certify any motion plan.</p></details>
+    <details><summary>Input payload & source provenance</summary><p>Local input only — not an inference audit. Nothing entered here is sent to a provider.</p><pre id="input-payload"></pre><p>Schema {metadata.schemaVersion} · source <code>{metadata.sourceRevision}</code></p><a href={`https://huggingface.co/spaces/jacobroutzong/decision-intelligence-engine/blob/${metadata.sourceRevision}/app.py`} target="_blank" rel="noopener noreferrer">Inspect the existing computation ↗</a></details>
+  </div>
+</div>
+</Base>
+<script>
+import { robotFields, validateTelemetry, stoppingMargin } from '../../../lib/decision-contract.mjs';
+const form = document.querySelector<HTMLFormElement>('#telemetry-form')!;
+const output = (id: string, text: string) => { document.getElementById(id)!.textContent = text; };
+function update() {
+  const input = Object.fromEntries(robotFields.map(field => { const el = form.elements.namedItem(field.id) as HTMLInputElement; return [field.id, el.value === '' ? NaN : el.valueAsNumber]; }));
+  const error = document.getElementById('input-error')!;
+  try {
+    validateTelemetry(input);
+    const margin = stoppingMargin(input);
+    const format = (n: number) => n.toFixed(1).replace('-', '−');
+    output('collision-value', `${format(input.time_to_collision_s)} s`);
+    output('stopping-value', `${format(input.stop_time_s)} s`);
+    output('margin', `${format(margin)} s`);
+    const scale = Math.max(5, input.time_to_collision_s, input.stop_time_s);
+    document.getElementById('collision-bar')!.style.width = `${input.time_to_collision_s / scale * 100}%`;
+    document.getElementById('stopping-bar')!.style.width = `${input.stop_time_s / scale * 100}%`;
+    output('margin-explanation', `${format(input.time_to_collision_s)} − ${format(input.stop_time_s)} = ${format(margin)} seconds. ${margin < 0 ? 'The entered stopping time exceeds the collision time.' : 'The entered collision time is at least the stopping time. This alone does not establish safety.'}`);
+    output('input-payload', JSON.stringify({ schemaVersion: 1, scenario: 'robot_trajectory', telemetry: input }, null, 2));
+    error.hidden = true;
+  } catch (err) {
+    error.hidden = false; error.textContent = err instanceof Error ? err.message : 'Check the telemetry inputs.';
+    output('margin', 'Unavailable'); output('margin-explanation', 'Correct the inputs to calculate the comparison.');
+    output('collision-value', 'Unavailable'); output('stopping-value', 'Unavailable');
+    document.getElementById('collision-bar')!.style.width = '0%'; document.getElementById('stopping-bar')!.style.width = '0%';
+    output('input-payload', 'Input is incomplete or invalid.');
+  }
+  output('threshold-value', `${(document.getElementById('threshold') as HTMLInputElement).value}%`);
+}
+form.addEventListener('input', () => { form.querySelectorAll('[data-example]').forEach(el => el.setAttribute('aria-pressed', 'false')); update(); });
+form.addEventListener('submit', event => event.preventDefault());
+form.addEventListener('reset', event => {
+  event.preventDefault();
+  robotFields.forEach(field => { (form.elements.namedItem(field.id) as HTMLInputElement).value = String(field.value); });
+  (document.getElementById('threshold') as HTMLInputElement).value = '85';
+  update();
+  form.querySelectorAll<HTMLElement>('[data-example]').forEach(el => el.setAttribute('aria-pressed', String(el.dataset.example === 'baseline')));
+});
+form.querySelectorAll<HTMLButtonElement>('[data-example]').forEach(button => button.addEventListener('click', () => {
+  const values = button.dataset.example === 'baseline' ? [1.1, 1.4, 0.8] : [4, 1.4, 0.2];
+  robotFields.forEach((field, i) => { (form.elements.namedItem(field.id) as HTMLInputElement).value = String(values[i]); });
+  form.querySelectorAll('[data-example]').forEach(el => el.setAttribute('aria-pressed', String(el === button))); update();
+}));
+update();
+</script>
