@@ -43,11 +43,11 @@ export const selectedProjects = [
     "linkLabel": "Explore the lab →"
   },
   {
-    "title": "ModelForge",
+    "title": "Crucible",
     "eyebrow": "PYTHON / MODEL EVALUATION / POST-TRAINING RESEARCH",
     "description": "Inspect tool-use failures, compare saved evaluations, and plan model memory budgets in a small-model research workspace. Training and GPU benchmarks are the next stage.",
     "href": "/projects/modelforge/",
-    "linkLabel": "Explore ModelForge & app →"
+    "linkLabel": "Explore Crucible & app →"
   },
   {
     "title": "Tunera",

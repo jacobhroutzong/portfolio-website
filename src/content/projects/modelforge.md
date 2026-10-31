@@ -1,5 +1,5 @@
 ---
-title: ModelForge
+title: Crucible
 summary: A small-model research workspace with strict tool-use evaluation, inspectable failures, saved-output comparisons, and an analytical memory planner.
 category: AI / Machine Learning
 technologies: [Python, JavaScript, Model evaluation, Docker, Hugging Face Spaces]
@@ -15,7 +15,7 @@ videos: []
 
 ## Small models. Measurable progress.
 
-ModelForge investigates a specific question: how much useful capability can a small model deliver under a fixed memory, latency, and training budget? The current implementation establishes the evaluation workspace before model adaptation or performance claims.
+Crucible investigates a specific question: how much useful capability can a small model deliver under a fixed memory, latency, and training budget? The current implementation establishes the evaluation workspace before model adaptation or performance claims.
 
 [Open the app full screen](https://jacobroutzong-modelforge.hf.space/) · [Browse the source](https://huggingface.co/spaces/jacobroutzong/modelforge/tree/main)
 
@@ -23,7 +23,7 @@ ModelForge investigates a specific question: how much useful capability can a sm
 
 The app runs on a free CPU Hugging Face Docker Space. Loading the embed connects your browser to Hugging Face; scoring runs only when you select **Run evaluation**. A sleeping Space may take a moment to start. Use the full-screen link if the embed or browser storage is unavailable.
 
-<iframe src="https://jacobroutzong-modelforge.hf.space/" title="ModelForge evaluation and optimization workspace" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" style="width:100%;height:1100px;border:1px solid var(--border);border-radius:8px;"></iframe>
+<iframe src="https://jacobroutzong-modelforge.hf.space/" title="Crucible evaluation and optimization workspace" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" style="width:100%;height:1100px;border:1px solid var(--border);border-radius:8px;"></iframe>
 
 ## What works today
 
