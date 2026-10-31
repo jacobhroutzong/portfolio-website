@@ -1,17 +1,7 @@
 {
-  "fetchedAt": "2026-10-30T13:11:41.449Z",
-  "githubFetchedAt": "2026-10-30T13:11:41.449Z",
+  "fetchedAt": "2026-10-31T21:45:14.774Z",
+  "githubFetchedAt": "2026-10-31T21:45:14.774Z",
   "items": [
-    {
-      "name": "recursa",
-      "url": "https://github.com/jacobhroutzong/recursa",
-      "description": "CPU-first recursive application synthesis research workbench — development preview",
-      "platform": "GitHub",
-      "kind": "Repository",
-      "language": "Python",
-      "updated": "2026-10-30T11:01:02Z",
-      "archived": false
-    },
     {
       "name": "recursa",
       "url": "https://huggingface.co/spaces/jacobroutzong/recursa",
@@ -19,7 +9,17 @@
       "platform": "Hugging Face",
       "kind": "Space",
       "language": "",
-      "updated": "2026-10-30T11:01:02.000Z",
+      "updated": "2026-10-31T20:01:54.000Z",
+      "archived": false
+    },
+    {
+      "name": "recursa",
+      "url": "https://github.com/jacobhroutzong/recursa",
+      "description": "CPU-first recursive application synthesis research workbench — development preview",
+      "platform": "GitHub",
+      "kind": "Repository",
+      "language": "Python",
+      "updated": "2026-10-31T20:01:53Z",
       "archived": false
     },
     {
@@ -29,7 +29,17 @@
       "platform": "GitHub",
       "kind": "Repository",
       "language": "HTML",
-      "updated": "2026-10-29T23:10:15Z",
+      "updated": "2026-10-31T13:54:35Z",
+      "archived": false
+    },
+    {
+      "name": "modelforge",
+      "url": "https://huggingface.co/spaces/jacobroutzong/modelforge",
+      "description": "",
+      "platform": "Hugging Face",
+      "kind": "Space",
+      "language": "",
+      "updated": "2026-10-31T13:54:04.000Z",
       "archived": false
     },
     {
@@ -60,16 +70,6 @@
       "kind": "Repository",
       "language": "C++",
       "updated": "2026-10-29T11:14:48Z",
-      "archived": false
-    },
-    {
-      "name": "modelforge",
-      "url": "https://huggingface.co/spaces/jacobroutzong/modelforge",
-      "description": "",
-      "platform": "Hugging Face",
-      "kind": "Space",
-      "language": "",
-      "updated": "2026-10-28T22:39:50.000Z",
       "archived": false
     },
     {
