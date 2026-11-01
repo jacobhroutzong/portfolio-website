@@ -4,6 +4,10 @@
 // Planned engines (circuit simulation, compiler tools, vision math, typesetting) are intentionally
 // absent: nothing unbuilt is presented as available.
 // `runs` states honestly where a member executes today; it changes as members move to native workspaces.
+//
+// Naming: display names are the approved ones. Crucible is also known as ModelForge (route and Space:
+// /projects/modelforge/, jacobroutzong/modelforge); Tunera is also known as TuneLedger (Space:
+// jacobroutzong/tuneledger). Do not rename them on the site without explicit approval.
 
 export type RunsOn = 'browser' | 'hosted';
 
@@ -20,6 +24,8 @@ export interface Member {
   href: string;
   runs: RunsOn;
   tags: string[];
+  /** Other names the project is known by (repository, Space, or earlier names). Not displayed. */
+  aliases?: string[];
   /** Secondary links shown on the full card. */
   links: ProjectLink[];
   /** A member that is its own business or ecosystem: link out instead of restyling it. */
@@ -66,6 +72,7 @@ export const collections: Collection[] = [
           {
             id: 'modelforge',
             title: 'Crucible',
+            aliases: ['ModelForge'],
             summary: 'Score a small model’s tool use, inspect exactly where it fails, and plan its memory budget before any training.',
             href: '/projects/modelforge/',
             runs: 'hosted',
@@ -75,6 +82,7 @@ export const collections: Collection[] = [
           {
             id: 'tunera',
             title: 'Tunera',
+            aliases: ['TuneLedger'],
             summary: 'Set up a Qwen3 QLoRA fine-tuning run, validate the dataset, and resume interrupted training from checkpoints.',
             href: '/projects/tunera/',
             runs: 'hosted',
@@ -190,13 +198,13 @@ export const collections: Collection[] = [
     id: 'business-operations',
     number: '05',
     title: 'Business & Operations Systems',
-    blurb: 'Tools for underwriting acquisitions and scoping practical AI work.',
+    blurb: 'Tools for underwriting acquisitions and scoping operational improvements.',
     glyph: 'steps',
     suites: [
       {
         id: 'business-operations-systems',
         title: 'Business & Operations Systems',
-        summary: 'Two separate workspaces: acquisition underwriting in EquityScout, AI opportunity scoping in Leverline.',
+        summary: 'Two separate workspaces: acquisition underwriting in EquityScout, workflow-opportunity scoping in Leverline.',
         members: [
           {
             id: 'equityscout',
@@ -210,10 +218,10 @@ export const collections: Collection[] = [
           {
             id: 'leverline',
             title: 'Leverline',
-            summary: 'Estimate where AI could save a small business time and money, with an opportunity scan and ROI calculator. Estimates come from a catalog, not a live model.',
+            summary: 'Estimate where workflow improvements could save a small business time and money, with an opportunity scan and ROI calculator. Estimates come from a catalog, not a live model.',
             href: '/projects/leverline/',
             runs: 'browser',
-            tags: ['Applied AI', 'ROI modeling'],
+            tags: ['ROI modeling', 'Opportunity scan'],
             links: [],
             standalone: { label: 'Open the Leverline site', href: '/apps/leverline/' },
           },

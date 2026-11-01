@@ -20,7 +20,7 @@ const memberTotal = (c: (typeof collections)[number]) => c.suites.reduce((n, s) 
     <section class="home-hero" aria-labelledby="home-title">
       <div>
         <p class="kicker reveal" style="--i:0">Jacob Routzong</p>
-        <h1 id="home-title" class="reveal" style="--i:1">Software you can <em>run</em>: models, decisions, and mathematics.</h1>
+        <h1 id="home-title" class="reveal" style="--i:1">Engineering projects you can <em>explore</em>: models, decisions, and mathematics.</h1>
         <p class="home-hero__lede reveal" style="--i:2">I’m an engineer working across machine learning, data, and scientific computing. These are the applications I’ve built, grouped by what they help you do.</p>
         <div class="cta-row reveal" style="--i:3">
           <a class="button primary" href="/projects/">Browse the work</a>
@@ -60,7 +60,7 @@ const memberTotal = (c: (typeof collections)[number]) => c.suites.reduce((n, s) 
             <CollectionGlyph kind={c.glyph} />
           </header>
           <div class="collection-row__cards">
-            {c.suites.map(suite => <WorkCard suite={suite} variant="compact" />)}
+            {c.suites.map(suite => <WorkCard suite={suite} variant="compact" hideTitle={suite.title === c.title} />)}
           </div>
         </article>
       ))}

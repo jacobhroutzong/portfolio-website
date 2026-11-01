@@ -40,7 +40,7 @@ const drafts = (await visibleProjects()).filter(project => !registeredMemberIds.
               <CollectionGlyph kind={c.glyph} />
             </header>
             <div class="work-collection__cards">
-              {c.suites.map(suite => <WorkCard suite={suite} variant="full" />)}
+              {c.suites.map(suite => <WorkCard suite={suite} variant="full" hideTitle={suite.title === c.title} />)}
             </div>
           </section>
         ))}

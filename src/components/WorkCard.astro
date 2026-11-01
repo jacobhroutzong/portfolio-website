@@ -1,6 +1,8 @@
 ---
-// A suite card. Single-member suites that share their member's name (Decision Intelligence, Ascent)
-// render as one flat card; multi-member suites list their member apps beneath the suite summary.
+// A suite card. A single-member suite whose name the member repeats (Decision Intelligence ->
+// Decision Intelligence Engine, Ascent -> Ascent) renders as one flat card under the member's name.
+// Multi-member suites list their member apps beneath the suite summary. `hideTitle` drops a suite
+// heading that only repeats its collection's heading.
 import type { Suite } from '../data/collections';
 import { runsLabel } from '../data/collections';
 
@@ -8,16 +10,19 @@ interface Props {
   suite: Suite;
   /** compact: homepage. full: work page, with tags and secondary links. */
   variant?: 'compact' | 'full';
+  hideTitle?: boolean;
 }
-const { suite, variant = 'compact' } = Astro.props;
-const flat = suite.members.length === 1 && suite.members[0].title === suite.title;
+const { suite, variant = 'compact', hideTitle = false } = Astro.props;
+const flat = suite.members.length === 1 && suite.members[0].title.startsWith(suite.title);
 const isExternal = (href: string) => href.startsWith('https:');
 const arrow = 'M5 12h14M13 6l6 6-6 6';
 ---
 <article class:list={['work-card', `work-card--${variant}`, flat && 'work-card--flat']}>
-  <h3 class="work-card__title">
-    {flat ? <a class="work-card__link" href={suite.members[0].href}>{suite.title}</a> : suite.title}
-  </h3>
+  {(flat || !hideTitle) && (
+    <h3 class="work-card__title">
+      {flat ? <a class="work-card__link" href={suite.members[0].href}>{suite.members[0].title}</a> : suite.title}
+    </h3>
+  )}
   <p class="work-card__summary">{suite.summary}</p>
   {flat && (
     <p class="work-card__runs" data-runs={suite.members[0].runs}><span class="work-card__dot" aria-hidden="true"></span>{runsLabel[suite.members[0].runs]}</p>
