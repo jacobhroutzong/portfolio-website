@@ -19,11 +19,13 @@ test('Scientific lab routes, honest statuses and recorded controls', async ({ pa
   await page.screenshot({ path: `test-results/scientific-lab-dark-${test.info().project.name}.png`, animations: 'disabled' });
   await page.locator('[data-project="numerical"] a').click();
   await expect(page.getByRole('heading', { name: 'Numerical Computing Engine.' })).toBeVisible();
+  await page.locator('#benchmarks > summary').click(); // benchmarks now sit behind progressive disclosure
   await expect(page.getByRole('table').filter({ hasText: 'Matrix order' })).toBeVisible();
   await page.goto('/labs/scientific-systems/symbolic/');
   await expect(page.getByRole('heading', { name: 'Symbolic Mathematics Engine.' })).toBeVisible();
+  await page.locator('#recorded > summary').click(); // recorded native output sits behind progressive disclosure
   await page.locator('summary').filter({ hasText: 'x^0' }).click();
-  await expect(page.locator('details').filter({ hasText: 'x^0' })).toContainText('x ≠ 0');
+  await expect(page.locator('.lab-example details').filter({ hasText: 'x^0' })).toContainText('x ≠ 0');
   await expect(page.locator('.katex-mathml').first()).toBeAttached();
 });
 test('Scientific lab remains legible without JavaScript', async ({ browser }) => {
