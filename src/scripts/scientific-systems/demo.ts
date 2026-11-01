@@ -1,6 +1,6 @@
 import {
   parseMatrixText, reshapeMatrixText, residualMatrix, rowOrderFromPivots, formatNumber, logPosition,
-  parseExpression, toLatex, freeVariables, sampleFunction, derivativeCrossCheck, expressionAdvice, treeSvg, plotSvg,
+  createResultGate, parseExpression, toLatex, freeVariables, sampleFunction, derivativeCrossCheck, expressionAdvice, treeSvg, plotSvg,
 } from '../../lib/scientific-ui.mjs';
 
 type Tree = ReturnType<typeof parseExpression>;
@@ -190,35 +190,51 @@ export function mountEngineDemos() {
     const view = kind === 'numerical' ? numericalView(root) : symbolicView(root);
     let worker: Worker | undefined, timer: ReturnType<typeof setTimeout> | undefined;
     let pending: Record<string, unknown> | undefined, pendingRun: unknown;
+    // Stale-result protection: any input change invalidates results shown or still being computed.
+    const gate = createResultGate();
+    let running = false, shown = false, activeToken = gate.token(); // token of the run whose reply is awaited
+    const clearResult = () => { output.textContent = ''; view.clear(); shown = false; };
+    const invalidate = () => {
+      gate.invalidate();
+      if (shown) { clearResult(); status.textContent = 'Inputs changed. The previous result was cleared; run again.'; }
+      else if (running) { view.clear(); status.textContent = 'Inputs changed while computing. That result will be discarded; run again when it finishes.'; }
+    };
+    form.addEventListener('input', invalidate);
+    root.addEventListener('click', event => { if ((event.target as Element).closest('[data-preset],[data-example]')) invalidate(); });
+    for (const name of ['order', 'rhs']) form.elements.namedItem(name)?.addEventListener('change', invalidate);
+    const discard = () => { clearResult(); running = false; status.textContent = 'Inputs changed during the computation. The result was discarded; run again.'; busy(false); };
     const busy = (value: boolean) => { submit.disabled = value; cancel.disabled = !worker; root.setAttribute('aria-busy', String(value)); };
-    const reset = () => { clearTimeout(timer); worker?.terminate(); worker = undefined; pending = undefined; busy(false); };
+    const reset = () => { clearTimeout(timer); worker?.terminate(); worker = undefined; pending = undefined; running = false; busy(false); };
     const fail = (message: string) => { reset(); status.textContent = message; };
     const deadline = (ms: number) => { clearTimeout(timer); timer = setTimeout(() => fail('Time limit reached. Worker terminated; reduce the input and retry.'), ms); };
     const run = () => { status.textContent = 'Computing in C++…'; deadline(5000); worker!.postMessage(pending); };
-    cancel.addEventListener('click', () => { reset(); output.textContent = ''; view.clear(); status.textContent = 'Cancelled. Engine worker reset.'; });
+    cancel.addEventListener('click', () => { reset(); clearResult(); status.textContent = 'Cancelled. Engine worker reset.'; });
     window.addEventListener('pagehide', reset, { once: true });
     form.addEventListener('submit', event => {
-      event.preventDefault(); output.textContent = ''; view.clear();
+      event.preventDefault(); clearResult();
       try {
         const collected = view.collect();
-        pending = collected.message; pendingRun = collected.run;
+        pending = collected.message; pendingRun = collected.run; running = true;
+        activeToken = gate.token();
         busy(true);
         if (worker) { run(); return; }
         status.textContent = 'Loading C++ WebAssembly engine…'; deadline(20000);
         worker = new Worker('/scientific-engine.worker.js', { type: 'module' }); busy(true);
         worker.onerror = () => fail('C++ engine could not load or stopped. Build the local WebAssembly artifacts and retry.');
         worker.onmessage = async ({ data: message }) => {
-          if (message.type === 'ready') { run(); return; }
+          if (message.type === 'ready') { if (!gate.isCurrent(activeToken)) { discard(); return; } run(); return; }
           clearTimeout(timer);
           if (message.type === 'failure') { fail(`Engine unavailable: ${message.error}. Local WASM artifacts may be missing.`); return; }
           const result = message.result;
-          if (!result.ok) { status.textContent = `Input rejected: ${result.error}`; busy(false); return; }
+          if (!gate.isCurrent(activeToken)) { discard(); return; }
+          if (!result.ok) { status.textContent = `Input rejected: ${result.error}`; running = false; shown = true; busy(false); return; }
           output.textContent = view.format(result);
           try { await (view.render as (run: unknown, result: unknown) => unknown)(pendingRun, result); } catch { /* raw output remains */ }
-          status.textContent = 'Complete. Computed by the C++ engine.'; busy(false);
+          if (!gate.isCurrent(activeToken)) { discard(); return; }
+          status.textContent = 'Complete. Computed by the C++ engine.'; running = false; shown = true; busy(false);
         };
         worker.postMessage({ type: 'load', kind });
-      } catch (error) { status.textContent = error instanceof Error ? error.message : 'Invalid input'; busy(false); }
+      } catch (error) { running = false; status.textContent = error instanceof Error ? error.message : 'Invalid input'; busy(false); }
     });
   });
 }

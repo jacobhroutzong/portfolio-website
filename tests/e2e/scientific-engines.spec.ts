@@ -58,3 +58,87 @@ test('load deadline terminates a stalled worker', async ({ page }) => {
   await expect(demo.getByRole('status')).toContainText('Time limit reached');
   await expect(demo.getByRole('button', { name: 'Solve with C++' })).toBeEnabled();
 });
+
+// Stale-result regressions: a result must never stay visible, or appear, for inputs that are no longer in the form.
+test.describe('stale results', () => {
+  test('numerical: editing, resizing or choosing an example after a solve clears the old result', async ({ page }) => {
+    await page.goto('/labs/scientific-systems/numerical/');
+    const demo = page.locator('.cpp-demo');
+    await demo.getByRole('button', { name: 'Solve with C++' }).click();
+    await expect(demo.getByRole('status')).toContainText('Complete.');
+    await expect(demo.locator('[data-results]')).toBeVisible();
+    await expect(demo.locator('[data-result]')).not.toBeEmpty();
+    await demo.locator('[name=a]').fill('2 0\n0 2');
+    await expect(demo.getByRole('status')).toContainText('Inputs changed');
+    await expect(demo.locator('[data-results]')).toBeHidden();
+    await expect(demo.locator('[data-result]')).toBeEmpty();
+    await demo.getByRole('button', { name: 'Solve with C++' }).click();
+    await expect(demo.getByRole('status')).toContainText('Complete.');
+    await demo.locator('[name=order]').fill('3'); await demo.locator('[name=order]').blur();
+    await expect(demo.getByRole('status')).toContainText('Inputs changed');
+    await expect(demo.locator('[data-results]')).toBeHidden();
+    await demo.getByRole('button', { name: 'Solve with C++' }).click();
+    await expect(demo.getByRole('status')).toContainText('Complete.');
+    await demo.getByRole('button', { name: 'Baseline 2 × 2' }).click();
+    await expect(demo.getByRole('status')).toContainText('Inputs changed');
+    await expect(demo.locator('[data-results]')).toBeHidden();
+    await expect(demo.locator('[data-result]')).toBeEmpty();
+  });
+
+  test('numerical: an edit during an in-flight computation discards its output', async ({ page }) => {
+    await page.route('**/engines/numerical.mjs', async route => { await new Promise(resolve => setTimeout(resolve, 1500)); await route.continue(); });
+    await page.goto('/labs/scientific-systems/numerical/');
+    const demo = page.locator('.cpp-demo');
+    await demo.getByRole('button', { name: 'Solve with C++' }).click();
+    await expect(demo.getByRole('status')).toContainText('Loading');
+    await demo.locator('[name=a]').fill('2 0\n0 2');
+    await demo.locator('[name=b]').fill('4 4\n6 6');
+    await expect(demo.getByRole('status')).toContainText('Inputs changed while computing');
+    await expect(demo.getByRole('status')).toContainText('discarded', { timeout: 10000 });
+    await expect(demo.locator('[data-results]')).toBeHidden();
+    await expect(demo.locator('[data-result]')).toBeEmpty();
+    await expect(demo.getByRole('button', { name: 'Solve with C++' })).toBeEnabled();
+    await demo.getByRole('button', { name: 'Solve with C++' }).click();
+    await expect(demo.getByRole('status')).toContainText('Complete.');
+    await expect(demo.locator('[data-result]')).toContainText('2  2\n3  3');
+    await expect(demo.locator('[data-results]')).toBeVisible();
+  });
+
+  test('symbolic: editing, choosing an example or changing the variable clears the old derivative', async ({ page }) => {
+    await page.goto('/labs/scientific-systems/symbolic/');
+    const demo = page.locator('.cpp-demo');
+    const run = demo.getByRole('button', { name: 'Differentiate with C++' });
+    await run.click();
+    await expect(demo.getByRole('status')).toContainText('Complete.');
+    await expect(demo.locator('[data-results]')).toBeVisible();
+    await demo.locator('[name=expression]').fill('x^2');
+    await expect(demo.getByRole('status')).toContainText('Inputs changed');
+    await expect(demo.locator('[data-results]')).toBeHidden();
+    await expect(demo.locator('[data-result]')).toBeEmpty();
+    await run.click();
+    await expect(demo.getByRole('status')).toContainText('Complete.');
+    await demo.locator('[name=variable]').fill('y');
+    await expect(demo.locator('[data-results]')).toBeHidden();
+    await run.click();
+    await expect(demo.getByRole('status')).toContainText('Complete.');
+    await demo.getByRole('button', { name: '1/x', exact: true }).click();
+    await expect(demo.getByRole('status')).toContainText('Inputs changed');
+    await expect(demo.locator('[data-results]')).toBeHidden();
+  });
+
+  test('symbolic: an edit during an in-flight computation discards its output', async ({ page }) => {
+    await page.route('**/engines/symbolic.mjs', async route => { await new Promise(resolve => setTimeout(resolve, 1500)); await route.continue(); });
+    await page.goto('/labs/scientific-systems/symbolic/');
+    const demo = page.locator('.cpp-demo');
+    await demo.getByRole('button', { name: 'Differentiate with C++' }).click();
+    await expect(demo.getByRole('status')).toContainText('Loading');
+    await demo.locator('[name=expression]').fill('x^2');
+    await expect(demo.getByRole('status')).toContainText('Inputs changed while computing');
+    await expect(demo.getByRole('status')).toContainText('discarded', { timeout: 10000 });
+    await expect(demo.locator('[data-results]')).toBeHidden();
+    await expect(demo.locator('[data-result]')).toBeEmpty();
+    await demo.getByRole('button', { name: 'Differentiate with C++' }).click();
+    await expect(demo.getByRole('status')).toContainText('Complete.');
+    await expect(demo.locator('[data-result]')).toContainText('Derivative: (2*x)');
+  });
+});

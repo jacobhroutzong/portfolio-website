@@ -259,3 +259,12 @@ export function plotSvg(series, min, max) {
   }).join('');
   return `<svg class="lab-plot" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(series.map(s => s.name).join(' and '))} plotted from ${min} to ${max}">${grid}${axes}${paths}</svg>`;
 }
+
+/**
+ * Guards displayed results against stale inputs. Each run captures a token; any edit invalidates every
+ * earlier token, so a result computed from old inputs can never be presented as current.
+ */
+export function createResultGate() {
+  let generation = 0;
+  return { token: () => generation, invalidate: () => { generation += 1; }, isCurrent: token => token === generation };
+}

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { parseMatrixText, reshapeMatrixText, residualMatrix, rowOrderFromPivots, parseExpression, toLatex, evaluate, freeVariables, derivativeCrossCheck, expressionAdvice, logPosition, treeSvg, plotSvg, sampleFunction } from '../src/lib/scientific-ui.mjs';
+import { parseMatrixText, reshapeMatrixText, residualMatrix, rowOrderFromPivots, parseExpression, toLatex, evaluate, freeVariables, derivativeCrossCheck, expressionAdvice, createResultGate, logPosition, treeSvg, plotSvg, sampleFunction } from '../src/lib/scientific-ui.mjs';
 
 test('matrix parsing mirrors engine limits and names the offending cell', () => {
   assert.deepEqual(parseMatrixText('1 2\n3 4', 2, 2).values, [1, 2, 3, 4]);
@@ -81,4 +81,17 @@ test('drawings are produced from real data and degrade to null', () => {
   const s = sampleFunction(parseExpression('(x^2)'), 'x', -2, 2, 40);
   assert.match(plotSvg([{ name: 'f', points: s }], -2, 2), /<path class="series s0"/);
   assert.equal(plotSvg([{ name: 'f', points: [[0, NaN]] }], -1, 1), null);
+});
+
+test('result gate invalidates every earlier token and only the newest run is current', () => {
+  const gate = createResultGate();
+  const first = gate.token();
+  assert.ok(gate.isCurrent(first));
+  gate.invalidate();
+  assert.equal(gate.isCurrent(first), false);
+  const second = gate.token();
+  assert.ok(gate.isCurrent(second));
+  gate.invalidate(); gate.invalidate();
+  assert.equal(gate.isCurrent(second), false);
+  assert.equal(gate.isCurrent(gate.token()), true);
 });

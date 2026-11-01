@@ -26,7 +26,7 @@ const presets = [
     </div>
     <div class="wb-matrices">
       <div class="field"><label for="m-a" class="field-name">Matrix A</label><textarea id="m-a" name="a" rows="4" maxlength="20000" required spellcheck="false" aria-describedby="h-a">{'1 2\n3 4'}</textarea><span class="field-hint" id="h-a">One row per line; separate entries with spaces or commas. Decimals and e-notation are fine; entries must be finite, at most 10¹⁰⁰ in size.</span><div data-preview="a" class="preview"></div></div>
-      <div class="field"><label for="m-b" class="field-name">Matrix B</label><textarea id="m-b" name="b" rows="4" maxlength="6000" required spellcheck="false" aria-describedby="h-b">{'5 5\n11 9'}</textarea><span class="field-hint" id="h-b">One row per line, n entries wide per right-hand side. Changing the sizes above resizes both matrices and keeps what you typed.</span><div data-preview="b" class="preview"></div></div>
+      <div class="field"><label for="m-b" class="field-name">Matrix B</label><textarea id="m-b" name="b" rows="4" maxlength="6000" required spellcheck="false" aria-describedby="h-b">{'5 5\n11 9'}</textarea><span class="field-hint" id="h-b">n rows, one column per right-hand side: each line holds as many entries as the right-hand-sides count above. Changing the sizes above resizes both matrices and keeps what you typed.</span><div data-preview="b" class="preview"></div></div>
     </div>
     <p class="wb-validation" data-validation aria-live="polite"></p>
     <div class="demo-actions"><button type="submit" class="primary-button">Solve with C++</button><button type="button" data-cancel disabled>Cancel / reset engine</button></div>
