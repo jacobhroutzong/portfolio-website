@@ -1,0 +1,40 @@
+---
+import '../../styles/lab-workbench.css';
+import fixtures from '../../data/scientific-symbolic-fixtures.json';
+// Examples are inputs for the engine. Notes say what to look for; recorded outputs live in the disclosure below.
+const examples = [
+  { expression: 'x^3 + 2*x', variable: 'x', note: 'A polynomial. Differentiation is exact and has no domain restriction.' },
+  ...fixtures.map(f => ({ expression: f.input, variable: 'x', note: f.nonzeroConditions.length ? `The original expression is undefined at x = 0, and the engine keeps that restriction with the derivative.` : 'A shifted cube. The chain rule appears as 3·(x+1)².' })),
+  { expression: 'x^x', variable: 'x', note: 'Variable exponents are outside the engine’s supported scope. Expect it to be rejected.' },
+  { expression: '1/0', variable: 'x', note: 'Division by a literal zero. Expect the engine to refuse it.' },
+].filter((e, i, all) => all.findIndex(o => o.expression === e.expression) === i);
+---
+<section class="cpp-demo workbench" data-engine="symbolic" aria-labelledby="wb-title">
+  <header class="wb-head">
+    <p class="lab-kicker">LIVE C++20 / WEBASSEMBLY</p>
+    <h2 id="wb-title">Differentiate an expression</h2>
+    <p class="wb-lede">Type an expression using integers, one or more variables and + − * / ^. The C++ engine parses it, differentiates exactly, and reports where the original expression is undefined. Everything runs in your browser.</p>
+  </header>
+  <form novalidate>
+    <div class="wb-presets" role="group" aria-label="Examples">
+      <span class="wb-label">Examples</span>
+      {examples.map(e => <button type="button" class="chip-button" aria-pressed="false" data-example={e.expression} data-variable={e.variable} data-note={e.note}>{e.expression}</button>)}
+    </div>
+    <p class="wb-cap" data-example-note aria-live="polite"></p>
+    <div class="wb-fields wb-fields--symbolic">
+      <label class="field"><span class="field-name">Expression</span><input name="expression" value="x^3 + 2*x" maxlength="256" required autocomplete="off" spellcheck="false" aria-describedby="h-expr" class="mono" /><span class="field-hint" id="h-expr">Up to 256 ASCII characters. Write multiplication as 2*x. Integer literals only; integer powers from −16 to 16. No function calls.</span></label>
+      <label class="field"><span class="field-name">Differentiate with respect to</span><input name="variable" value="x" maxlength="32" pattern="[A-Za-z_][A-Za-z_0-9]*" required autocomplete="off" aria-describedby="h-var" class="mono" /><span class="field-hint" id="h-var">A name starting with a letter or underscore (default x).</span></label>
+    </div>
+    <p class="wb-validation" data-validation aria-live="polite"></p>
+    <div class="demo-actions"><button type="submit" class="primary-button">Differentiate with C++</button><button type="button" data-cancel disabled>Cancel / reset engine</button></div>
+  </form>
+  <p role="status" aria-live="polite" data-status class="wb-status">Ready. The C++ engine has not been loaded.</p>
+  <div class="wb-results" data-results hidden></div>
+  <details class="wb-raw"><summary>Raw engine output</summary><pre data-result role="region" tabindex="0" aria-label="Engine result"></pre></details>
+  <noscript><p>The interactive C++ engine requires JavaScript and WebAssembly. Recorded native examples remain available below.</p></noscript>
+  <p class="lab-source-note">Limits: 256 characters, 64 nodes, depth 32, 128 MiB memory, 5-second deadline. Narrower than the native API. <a href="/media/scientific-systems/release.json">Source commits and bundle hashes</a> · <a href="/engines/notices/index.txt">Engine and runtime licenses</a></p>
+</section>
+<script>
+  import { mountEngineDemos } from '../../scripts/scientific-systems/demo';
+  mountEngineDemos();
+</script>

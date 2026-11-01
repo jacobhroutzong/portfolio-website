@@ -2,3 +2,15 @@
 .scientific-lab .scientific-section{display:block;padding-block:50px 0}.scientific-lab .scientific-section.lab-two-column{display:grid;grid-template-columns:1fr 1fr;gap:45px}@media(max-width:760px){.scientific-lab .scientific-section.lab-two-column{grid-template-columns:1fr;gap:25px}}
 
 .scientific-lab .lab-source-note a{text-decoration:underline;text-underline-offset:3px}
+
+/* Portfolio visual language: tokens replace the former hard-coded fonts and sizes. */
+.scientific-lab h1 { font-family: var(--font-display); letter-spacing: -.02em; }
+.scientific-lab h3, .lab-equation, .lab-snapshot strong, .lab-stat strong { font-family: var(--font-display); }
+.scientific-lab .lab-kicker, .lab-source-note, .lab-mono, .lab-status, .lab-number, .lab-table th, .lab-topics, .lab-matrices figcaption { font-family: var(--font-mono); }
+.scientific-lab .lab-detail-header h1 { letter-spacing: -.02em; }
+.scientific-lab .lab-stat span { font-size: var(--step--1); }
+.scientific-lab .lab-source-note { font-size: var(--step--1); }
+.lab-card { background: var(--bg-elevated); box-shadow: var(--shadow-card); }
+.lab-detail-header { padding-bottom: var(--space-5); }
+.lab-detail-header .lab-status { display: inline-block; }
+.lab-stats { margin-bottom: var(--space-4); }

@@ -1,0 +1,43 @@
+---
+import '../../styles/lab-workbench.css';
+// Presets are ordinary inputs for the real engine; the notes describe what to look for, not recorded outputs.
+const presets = [
+  { label: 'Baseline 2 × 2', order: 2, rhs: 2, a: '1 2\n3 4', b: '5 5\n11 9', note: 'Two right-hand sides solved from one factorization. The first column of B is [5, 11] and the second is [5, 9].' },
+  { label: 'Needs pivoting 3 × 3', order: 3, rhs: 1, a: '0 2 1\n1 1 1\n2 1 3', b: '4\n3\n7', note: 'A starts with a zero in the corner, so rows must be swapped before elimination. Watch the pivoting panel.' },
+  { label: 'Nearly singular 2 × 2', order: 2, rhs: 1, a: '1 1\n1 1.0000001', b: '2\n2.0000001', note: 'Rows are almost identical. The backward error can stay tiny while X is very sensitive to small changes in the inputs.' },
+  { label: 'Exactly singular 2 × 2', order: 2, rhs: 1, a: '1 2\n2 4', b: '1\n2', note: 'The second row is twice the first. The engine should reject this rather than return a number.' },
+];
+---
+<section class="cpp-demo workbench" data-engine="numerical" aria-labelledby="wb-title">
+  <header class="wb-head">
+    <p class="lab-kicker">LIVE C++20 / WEBASSEMBLY</p>
+    <h2 id="wb-title">Solve A·X = B</h2>
+    <p class="wb-lede">Enter a square matrix A and one or more right-hand sides B. The C++ engine factors A with partial pivoting and returns X. Everything runs in your browser; the engine downloads on first use.</p>
+  </header>
+  <form novalidate>
+    <div class="wb-presets" role="group" aria-label="Examples">
+      <span class="wb-label">Examples</span>
+      {presets.map(p => <button type="button" class="chip-button" aria-pressed="false" data-preset={JSON.stringify(p)}>{p.label}</button>)}
+    </div>
+    <p class="wb-cap" data-preset-note aria-live="polite"></p>
+    <div class="wb-fields">
+      <label class="field"><span class="field-name">Matrix order n</span><input name="order" type="number" min="1" max="16" value="2" required inputmode="numeric" aria-describedby="h-order" /><span class="field-hint" id="h-order">Whole number, 1 to 16 (default 2). A is n × n.</span></label>
+      <label class="field"><span class="field-name">Right-hand sides</span><input name="rhs" type="number" min="1" max="4" value="2" required inputmode="numeric" aria-describedby="h-rhs" /><span class="field-hint" id="h-rhs">Whole number, 1 to 4 (default 2). B has n rows and this many columns.</span></label>
+    </div>
+    <div class="wb-matrices">
+      <div class="field"><label for="m-a" class="field-name">Matrix A</label><textarea id="m-a" name="a" rows="4" maxlength="20000" required spellcheck="false" aria-describedby="h-a">{'1 2\n3 4'}</textarea><span class="field-hint" id="h-a">One row per line; separate entries with spaces or commas. Decimals and e-notation are fine; entries must be finite, at most 10¹⁰⁰ in size.</span><div data-preview="a" class="preview"></div></div>
+      <div class="field"><label for="m-b" class="field-name">Matrix B</label><textarea id="m-b" name="b" rows="4" maxlength="6000" required spellcheck="false" aria-describedby="h-b">{'5 5\n11 9'}</textarea><span class="field-hint" id="h-b">n rows, one column per right-hand side: each line holds as many entries as the right-hand-sides count above. Changing the sizes above resizes both matrices and keeps what you typed.</span><div data-preview="b" class="preview"></div></div>
+    </div>
+    <p class="wb-validation" data-validation aria-live="polite"></p>
+    <div class="demo-actions"><button type="submit" class="primary-button">Solve with C++</button><button type="button" data-cancel disabled>Cancel / reset engine</button></div>
+  </form>
+  <p role="status" aria-live="polite" data-status class="wb-status">Ready. The C++ engine has not been loaded.</p>
+  <div class="wb-results" data-results hidden></div>
+  <details class="wb-raw"><summary>Raw engine output</summary><pre data-result role="region" tabindex="0" aria-label="Engine result"></pre></details>
+  <noscript><p>The interactive C++ engine requires JavaScript and WebAssembly. Recorded native examples remain available below.</p></noscript>
+  <p class="lab-source-note">Limits: order ≤ 16, 128 MiB WebAssembly memory, 5-second deadline. Narrower than the native API. <a href="/media/scientific-systems/release.json">Source commits and bundle hashes</a> · <a href="/engines/notices/index.txt">Engine and runtime licenses</a></p>
+</section>
+<script>
+  import { mountEngineDemos } from '../../scripts/scientific-systems/demo';
+  mountEngineDemos();
+</script>
