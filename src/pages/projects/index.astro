@@ -63,17 +63,23 @@ const drafts = (await visibleProjects()).filter(project => !registeredMemberIds.
 </Base>
 
 <script>
-  // Highlight the collection currently in view in the rail.
+  // Mark the collection in view in the rail. Position-based rather than observer-based so jumps
+  // (chip clicks, anchor links) always resolve to the section sitting at the activation line.
   const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-rail]'));
   const sections = links.map(link => document.getElementById(link.dataset.rail || '')).filter((el): el is HTMLElement => !!el);
-  const mark = (id: string) => links.forEach(link => {
-    if (link.dataset.rail === id) link.setAttribute('aria-current', 'true'); else link.removeAttribute('aria-current');
-  });
-  if ('IntersectionObserver' in window && sections.length) {
-    const observer = new IntersectionObserver(entries => {
-      const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
-      if (visible) mark(visible.target.id);
-    }, { rootMargin: '-20% 0px -65% 0px' });
-    sections.forEach(section => observer.observe(section));
-  }
+  let queued = false;
+  const update = () => {
+    queued = false;
+    if (!sections.length) return;
+    const line = window.innerHeight * 0.35;
+    let current = sections[0];
+    for (const section of sections) if (section.getBoundingClientRect().top <= line) current = section;
+    links.forEach(link => {
+      if (link.dataset.rail === current.id) link.setAttribute('aria-current', 'true'); else link.removeAttribute('aria-current');
+    });
+  };
+  const schedule = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule);
+  update();
 </script>
