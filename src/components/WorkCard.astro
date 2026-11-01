@@ -1,0 +1,66 @@
+---
+// A suite card. A single-member suite whose name the member repeats (Decision Intelligence ->
+// Decision Intelligence Engine, Ascent -> Ascent) renders as one flat card under the member's name.
+// Multi-member suites list their member apps beneath the suite summary. `hideTitle` drops a suite
+// heading that only repeats its collection's heading.
+import type { Suite } from '../data/collections';
+import { runsLabel } from '../data/collections';
+
+interface Props {
+  suite: Suite;
+  /** compact: homepage. full: work page, with tags and secondary links. */
+  variant?: 'compact' | 'full';
+  hideTitle?: boolean;
+}
+const { suite, variant = 'compact', hideTitle = false } = Astro.props;
+const flat = suite.members.length === 1 && suite.members[0].title.startsWith(suite.title);
+const isExternal = (href: string) => href.startsWith('https:');
+const arrow = 'M5 12h14M13 6l6 6-6 6';
+---
+<article class:list={['work-card', `work-card--${variant}`, flat && 'work-card--flat']}>
+  {(flat || !hideTitle) && (
+    <h3 class="work-card__title">
+      {flat ? <a class="work-card__link" href={suite.members[0].href}>{suite.members[0].title}</a> : suite.title}
+    </h3>
+  )}
+  <p class="work-card__summary">{suite.summary}</p>
+  {flat && (
+    <p class="work-card__runs" data-runs={suite.members[0].runs}><span class="work-card__dot" aria-hidden="true"></span>{runsLabel[suite.members[0].runs]}</p>
+  )}
+  {flat && variant === 'full' && (
+    <>
+      <p class="work-card__detail">{suite.members[0].summary}</p>
+      <ul class="work-card__tags" aria-label="Technologies">{suite.members[0].tags.map(tag => <li>{tag}</li>)}</ul>
+      <ul class="work-card__links">
+        {suite.members[0].links.map(link => (
+          <li><a href={link.href} target={isExternal(link.href) ? '_blank' : undefined} rel={isExternal(link.href) ? 'noopener noreferrer' : undefined}>{link.label}{isExternal(link.href) ? ' ↗' : ' →'}</a></li>
+        ))}
+      </ul>
+    </>
+  )}
+  {!flat && (
+    <ul class="work-card__members">
+      {suite.members.map(member => (
+        <li class="member">
+          <div class="member__head">
+            <a class="member__link" href={member.href}>{member.title}</a>
+            <span class="work-card__runs" data-runs={member.runs}><span class="work-card__dot" aria-hidden="true"></span>{runsLabel[member.runs]}</span>
+          </div>
+          {variant === 'full' && <p class="member__summary">{member.summary}</p>}
+          {variant === 'full' && <ul class="work-card__tags" aria-label={`${member.title} technologies`}>{member.tags.map(tag => <li>{tag}</li>)}</ul>}
+          {variant === 'full' && (member.links.length > 0 || member.standalone) && (
+            <ul class="work-card__links">
+              {member.links.map(link => (
+                <li><a href={link.href} target={isExternal(link.href) ? '_blank' : undefined} rel={isExternal(link.href) ? 'noopener noreferrer' : undefined}>{link.label}{isExternal(link.href) ? ' ↗' : ' →'}</a></li>
+              ))}
+              {member.standalone && (
+                <li><a class="work-card__standalone" href={member.standalone.href}>{member.standalone.label} →</a><span class="work-card__note">Its own site</span></li>
+              )}
+            </ul>
+          )}
+        </li>
+      ))}
+    </ul>
+  )}
+  {flat && <svg class="work-card__arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={arrow} /></svg>}
+</article>
