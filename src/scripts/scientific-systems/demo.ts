@@ -201,7 +201,7 @@ export function mountEngineDemos() {
     };
     form.addEventListener('input', invalidate);
     root.addEventListener('click', event => { if ((event.target as Element).closest('[data-preset],[data-example]')) invalidate(); });
-    for (const name of ['order', 'rhs']) form.elements.namedItem(name)?.addEventListener('change', invalidate);
+    for (const name of ['order', 'rhs']) (form.elements.namedItem(name) as HTMLInputElement | null)?.addEventListener('change', invalidate);
     const discard = () => { clearResult(); running = false; status.textContent = 'Inputs changed during the computation. The result was discarded; run again.'; busy(false); };
     const busy = (value: boolean) => { submit.disabled = value; cancel.disabled = !worker; root.setAttribute('aria-busy', String(value)); };
     const reset = () => { clearTimeout(timer); worker?.terminate(); worker = undefined; pending = undefined; running = false; busy(false); };
