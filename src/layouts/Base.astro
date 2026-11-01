@@ -1,5 +1,12 @@
 ---
+import '@fontsource-variable/newsreader';
+import '@fontsource-variable/newsreader/wght-italic.css';
+import '@fontsource-variable/geist';
+import '@fontsource-variable/geist-mono';
 import '../styles/global.css';
+import '../styles/tokens.css';
+import '../styles/portfolio.css';
+import { collections } from '../data/collections';
 import Icon from '../components/Icon.astro';
 import { profile, socialLinks } from '../config/profile';
 import { previewDrafts } from '../lib/projects';
@@ -29,7 +36,13 @@ const active = (href: string) => path.startsWith(href) ? 'page' : undefined;
       <a class="brand" href="/" aria-label={`${profile.name} home`}><span class="brand-mark">{profile.initials}<span>.</span></span><span class="brand-name">{profile.name}<small>Engineering portfolio</small></span></a>
       <button id="mobile-toggle" class="icon-button mobile-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navigation"><Icon name="menu" /></button>
       <nav id="navigation" aria-label="Main navigation">
-        <a href="/projects/" aria-current={active('/projects/')}>Work</a>
+        <details class="nav-dropdown">
+          <summary class:list={[(path.startsWith('/projects/') || path.startsWith('/labs/') || path.startsWith('/ascent/') || path.startsWith('/apps/')) && 'current']}>Work <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg></summary>
+          <div class="dropdown-panel">
+            <a class="dd-all" href="/projects/">All work</a>
+            {collections.map(c => <a href={`/projects/#${c.id}`} data-collection={c.id}><span class="dd-num">{c.number}</span><span>{c.title}</span></a>)}
+          </div>
+        </details>
         <a href="/links/" aria-current={active('/links/')}>Links</a>
         <a href="/connect/" aria-current={active('/connect/')}>Contact</a>
         <a href="/" aria-current={path === '/' ? 'page' : undefined}>About me</a>

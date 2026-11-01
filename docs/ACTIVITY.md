@@ -14,6 +14,6 @@ Run `npm run sync:activity` locally to refresh immediately. The script writes af
 
 Only unauthenticated public Hub metadata is used. Private repositories are not published. Provider tokens stay in CLI stores or Actions secrets; they are never written to the snapshot. The script optionally uses `GITHUB_TOKEN` in memory for GitHub API authentication and sends it only to api.github.com.
 
-`src/data/selected-projects.ts` remains the shared oldest-first curated project registry. Append newly added projects to its end. The homepage and Work page reverse it; the homepage initially shows three with an expand arrow. Curated projects stay independent of repository push activity.
+`src/data/collections.ts` is the shared project registry: six collections, each holding suites, each holding member apps. Add a new app as a member of an existing suite (or add a suite) there; the homepage and Work page both render from it. Planned engines are deliberately not listed until they exist. Curated projects stay independent of repository push activity.
 
 Official references: [GitHub schedule behavior](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule), [Hugging Face Hub API](https://huggingface.co/docs/hub/en/api).
