@@ -78,7 +78,8 @@ const drafts = (await visibleProjects()).filter(project => !registeredMemberIds.
       if (link.dataset.rail === current.id) link.setAttribute('aria-current', 'true'); else link.removeAttribute('aria-current');
     });
   };
-  const schedule = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
+  // Timer fallback: animation frames are throttled in background or embedded views, and the update is idempotent.
+  const schedule = () => { if (!queued) { queued = true; requestAnimationFrame(update); setTimeout(update, 120); } };
   window.addEventListener('scroll', schedule, { passive: true });
   window.addEventListener('resize', schedule);
   update();
