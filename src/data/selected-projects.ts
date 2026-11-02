@@ -62,5 +62,12 @@ export const selectedProjects = [
     "description": "Inspect the progress of an application-synthesis research workbench: external requirements, dependency-aware plans, saved artifacts, and clearly labeled execution evidence.",
     "href": "/projects/recursa/",
     "linkLabel": "Explore Recursa & progress →"
+  },
+  {
+    "title": "Lintel",
+    "eyebrow": "PYTHON / SMART HOME / INTERACTIVE TOOLS",
+    "description": "Plan smart-home upgrades with a home scan, room planner and savings calculator for an Atlanta-area installation business in development.",
+    "href": "/projects/lintel/",
+    "linkLabel": "Explore Lintel & app →"
   }
 ];

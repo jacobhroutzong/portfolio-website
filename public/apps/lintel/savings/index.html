@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Smart Home Savings Calculator · Lintel</title>
+<meta name="description" content="Estimate what leak protection, a smart thermostat, irrigation and more are worth each year for your home, with your own numbers.">
+<link rel="canonical" href="https://jacobroutzong.dev/apps/lintel/savings/">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Lintel">
+<meta property="og:title" content="Smart Home Savings Calculator">
+<meta property="og:description" content="Estimate what leak protection, a smart thermostat, irrigation and more are worth each year for your home, with your own numbers.">
+<meta property="og:url" content="https://jacobroutzong.dev/apps/lintel/savings/">
+<meta property="og:image" content="https://jacobroutzong.dev/apps/lintel/assets/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#16202A" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#EEF3F6" media="(prefers-color-scheme: light)">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Atkinson+Hyperlegible+Next:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../assets/site.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "item": "https://jacobroutzong.dev/apps/lintel/", "name": "Home", "position": 1}, {"@type": "ListItem", "item": "https://jacobroutzong.dev/apps/lintel/savings/", "name": "Savings calculator", "position": 2}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header" data-header>
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="Lintel home"><svg class="logo" viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><rect x="3" y="6" width="26" height="5" rx="1.5" fill="currentColor"/><rect x="7" y="11" width="4" height="18" rx="1" fill="currentColor"/><rect x="21" y="11" width="4" height="18" rx="1" fill="currentColor"/><rect x="12.5" y="13" width="7" height="16" rx="1" fill="var(--amber)"/></svg><span>Lintel</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>Menu</button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="../upgrades/index.html">Upgrades</a>
+      <a href="../packages/index.html">Packages</a>
+      <a href="../plan/index.html">Plan your home</a>
+      <a href="index.html" aria-current="page">Savings</a>
+      <a href="../guides/index.html">Guides</a><a class="nav-phone" href="tel:334-405-7235">334-405-7235</a>
+      <a class="btn btn-s" href="../scan/index.html">Free scan</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<nav class="crumbs wrap" aria-label="Breadcrumb"><a href="../index.html">Home</a><span aria-hidden="true">/</span><span aria-current="page">Savings calculator</span>
+</nav>
+
+<section class="page-head"><div class="wrap narrow"><h1>What would each upgrade be worth to you?</h1><p class="lede">Pick an upgrade and enter your own numbers. We separate real dollar savings from time saved, so you can judge each one honestly.</p></div></section>
+<section class="section tight">
+  <div class="wrap calc" data-savings>
+    <div class="panel">
+      <div class="field"><label for="sav-up">Upgrade</label>
+        <select id="sav-up" data-sav-upgrade><optgroup label="Foundation"><option value="wifi-network-foundation">Whole-Home Wi-Fi &amp; Network Foundation</option></optgroup><optgroup label="Safety &amp; Protection"><option value="water-leak-protection" selected>Leak Detection &amp; Automatic Water Shutoff</option><option value="doorbell-locks-access">Video Doorbells, Smart Locks &amp; Access</option><option value="security-cameras-local">Security Cameras with Local Recording</option><option value="preventive-maintenance-sensors">Preventive Maintenance Sensors</option></optgroup><optgroup label="Comfort &amp; Energy"><option value="smart-climate-zoning">Smart Thermostat, Room Sensors &amp; Zoning</option><option value="lighting-control">Smart Lighting Control &amp; Scenes</option><option value="motorized-shades">Motorized Shades</option><option value="energy-management">Energy Management: Panels, Solar &amp; EV Charging</option><option value="smart-irrigation">Smart Irrigation</option></optgroup><optgroup label="Everyday Living"><option value="ai-voice-assistant">AI Voice Assistant Setup, Cloud or Fully Private</option><option value="home-mapping-dashboard">Home Mapping &amp; Live Floor-Plan Dashboard</option><option value="whole-home-audio">Whole-Home Audio</option></optgroup><optgroup label="Care &amp; Peace of Mind"><option value="aging-in-place">Aging in Place &amp; Remote Family Care</option></optgroup><optgroup label="Property Projects"><option value="short-term-rental-automation">Short-Term Rental Automation</option><option value="new-construction-prewire">New-Construction &amp; Remodel Pre-Wire</option></optgroup>
+        </select></div>
+      <div class="grid-2" data-sav-inputs>
+        <div class="field"><label for="sav-claim_chance_pct">Chance of a serious leak in a year (%)</label><input id="sav-claim_chance_pct" type="number" value="2" min="0" max="20" step="0.1" data-sav-in="claim_chance_pct"></div>
+        <div class="field"><label for="sav-avg_claim">Typical cost of one ($)</label><input id="sav-avg_claim" type="number" value="15000" min="0" max="200000" step="500" data-sav-in="avg_claim"></div>
+        <div class="field"><label for="sav-prevented_pct">Share an automatic shutoff prevents (%)</label><input id="sav-prevented_pct" type="number" value="70" min="0" max="100" step="5" data-sav-in="prevented_pct"></div>
+        <div class="field"><label for="sav-annual_premium">Yearly home insurance premium ($)</label><input id="sav-annual_premium" type="number" value="2000" min="0" max="20000" step="50" data-sav-in="annual_premium"></div>
+        <div class="field"><label for="sav-discount_pct">Insurance discount for leak protection (%)</label><input id="sav-discount_pct" type="number" value="5" min="0" max="20" step="0.5" data-sav-in="discount_pct"></div>
+      </div>
+      <div class="field"><label for="sav-price">Installed price ($)</label><input id="sav-price" type="number" min="0" step="10" value="1440" data-sav-price></div>
+      <p class="small muted">Formula: <span data-sav-formula>chance of a water-damage claim per year × average claim × share prevented + premium × discount</span>.</p>
+    </div>
+    <div class="panel result" aria-live="polite">
+      <p class="eyebrow">Each year</p>
+      <p class="big mint" data-sav-dollars>$310</p>
+      <p class="small" data-sav-kind>Counts toward payback</p>
+      <dl class="facts col">
+        <div><dt>Time back</dt><dd data-sav-hours>–</dd></div>
+        <div><dt>Payback</dt><dd data-sav-payback>4.7 years</dd></div>
+        <div><dt>10-year net</dt><dd data-sav-net>$1,657</dd></div>
+      </dl>
+      <p class="small muted" data-sav-note>Claim chance and discount are assumptions; discounts vary by insurer and state. Stand Insurance and Moen launched a leak-device discount program in California and Florida in July 2026.</p>
+      <a class="link" data-sav-link href="../upgrades/water-leak-protection/index.html">About Leak Detection &amp; Automatic Water Shutoff</a>
+    </div>
+  </div>
+</section>
+<section class="section alt">
+  <div class="wrap narrow prose">
+    <h2>How we count savings</h2>
+    <p>We only count money you would actually keep as savings: lower energy bills, insurance discounts, avoided repair costs and rental turnover costs. Time saved is real, but it isn't cash, so we show it as hours and never fold it into payback.</p>
+    <p>Default numbers are starting assumptions you should replace with your own. For example, the leak-protection default uses a 1% yearly chance of a serious leak and a $30,000 claim, close to State Farm's average frozen-pipe claim from January 2024 to June 2025 (<a href="https://www.carriermanagement.com/news/2026/01/27/283869.htm" rel="noopener" target="_blank">Carrier Management, January 2026</a>). Smart thermostats default to 8% of heating and cooling costs, in line with ENERGY STAR's estimate as cited by the <a href="https://www.dcseu.com/smart-thermostats" rel="noopener" target="_blank">DC Sustainable Energy Utility</a>. Change any number to match your home.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    <div class="cta-band">
+      <div><h2>Want the real numbers for your house?</h2><p>The design visit measures what&#39;s there and gives you a fixed-price plan.</p></div>
+      <div class="actions">
+        <a class="btn" href="../scan/index.html">Start the free scan</a>
+        <a class="btn btn-quiet" href="../contact/index.html?package=design_visit">Book a design visit</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-about">
+        <a class="brand" href="../index.html"><svg class="logo" viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><rect x="3" y="6" width="26" height="5" rx="1.5" fill="currentColor"/><rect x="7" y="11" width="4" height="18" rx="1" fill="currentColor"/><rect x="21" y="11" width="4" height="18" rx="1" fill="currentColor"/><rect x="12.5" y="13" width="7" height="16" rx="1" fill="var(--amber)"/></svg><span>Lintel</span></a>
+        <p>Your home, working for you. Smart-home design, installation and support across Atlanta.</p>
+        <p>Email <span class="copyable">jacobroutzong@gmail.com</span><br>Call 334-405-7235<br><span class="muted">Mon–Sat, 8am–6pm</span></p>
+      </div>
+      <div>
+        <h2>Upgrades</h2>
+        <ul><li><a href="../upgrades/wifi-network-foundation/index.html">Wi-Fi Foundation</a></li><li><a href="../upgrades/water-leak-protection/index.html">Leak Protection</a></li><li><a href="../upgrades/doorbell-locks-access/index.html">Doorbells &amp; Locks</a></li><li><a href="../upgrades/security-cameras-local/index.html">Security Cameras</a></li><li><a href="../upgrades/preventive-maintenance-sensors/index.html">Maintenance Sensors</a></li><li><a href="../upgrades/smart-climate-zoning/index.html">Smart Climate</a></li><li><a href="../upgrades/lighting-control/index.html">Lighting Control</a></li>
+          <li><a href="../upgrades/index.html">All 16 upgrades</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Who we help</h2>
+        <ul><li><a href="../for/new-homeowners/index.html">New Homeowners</a></li><li><a href="../for/aging-in-place/index.html">Families Helping a Parent Age in Place</a></li><li><a href="../for/short-term-rental-hosts/index.html">Short-Term Rental Hosts</a></li><li><a href="../for/home-sellers/index.html">Home Sellers</a></li><li><a href="../for/renovators/index.html">Homeowners Renovating</a></li><li><a href="../for/new-construction/index.html">Building a New Home</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Plan and price</h2>
+        <ul>
+          <li><a href="../scan/index.html">Free Smart Home Scan</a></li>
+          <li><a href="../packages/index.html">Packages and Care plans</a></li>
+          <li><a href="../plan/index.html">Room-by-room planner</a></li>
+          <li><a href="index.html">Savings calculator</a></li>
+          <li><a href="../rebates/index.html">Rebates and discounts</a></li>
+          <li><a href="../guides/index.html">Guides</a> · <a href="../insights/index.html">Insights</a></li>
+          <li><a href="../about/index.html">About</a> · <a href="../partners/index.html">Partners</a> · <a href="../contact/index.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-legal">
+      <span>&copy; 2026 Lintel</span>
+      <a href="../privacy/index.html">Privacy</a>
+      <a href="../terms/index.html">Terms</a>
+      <span>Prices in US dollars for a typical 2,000 sq ft home. Examples are illustrative.</span>
+    </div>
+  </div>
+</footer>
+
+<script>window.LL_CONFIG = {"apiBase": "", "base": "../", "bookingUrl": "", "brand": "Lintel", "contactEmail": "jacobroutzong@gmail.com", "indexSuffix": "index.html", "refDays": 120};</script>
+<script src="../assets/site.js" defer></script>
+<script src="../assets/catalog.js" defer></script>
+<script src="../assets/tools.js" defer></script>
+</body>
+</html>
