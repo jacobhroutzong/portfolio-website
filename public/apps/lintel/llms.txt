@@ -1,0 +1,58 @@
+# Lintel
+
+> Lintel designs, installs and supports smart-home upgrades for homeowners: leak protection, smart climate and lighting, whole-home Wi-Fi, security, AI voice control and a live map of your home, set up by people who know the technology and backed by a support plan.
+
+Prices below are typical installed prices for a ~2,000 sq ft home from our published price list.
+
+## Packages
+- Safe & Dry: from $1,430. Stop a burst pipe before it becomes a $30,000 claim.
+- Comfort & Savings: from $1,840. Lower heating and cooling bills, and lights that run themselves.
+- Connected Foundation: from $980. Fast Wi-Fi in every room and a secure network for smart devices.
+- Front Door: from $1,140. See who's there, let in who you trust, and never hide a key again.
+
+## Upgrades
+- [Whole-Home Wi-Fi & Network Foundation](https://jacobroutzong.dev/apps/lintel/upgrades/wifi-network-foundation/): typically $980 installed. We test your coverage room by room, place mesh nodes where they actually help, wire the backhaul where we can, and set up a separate, locked-down network for cameras, locks and sensors.
+- [Leak Detection & Automatic Water Shutoff](https://jacobroutzong.dev/apps/lintel/upgrades/water-leak-protection/): typically $1,440 installed. We place leak sensors where water problems start and install a smart valve on your main line that watches water flow and shuts it off automatically when something goes wrong, even when you're away.
+- [Video Doorbells, Smart Locks & Access](https://jacobroutzong.dev/apps/lintel/upgrades/doorbell-locks-access/): typically $1,140 installed. A wired video doorbell, keypad deadbolts on the doors you use, and a smart garage controller, all in one app with separate codes and schedules for everyone who comes and goes.
+- [Security Cameras with Local Recording](https://jacobroutzong.dev/apps/lintel/upgrades/security-cameras-local/): typically $1,810 installed. Wired PoE cameras at the doors, driveway and yard, recording around the clock to a local recorder you own. Smart person and vehicle alerts, no required subscription.
+- [Preventive Maintenance Sensors](https://jacobroutzong.dev/apps/lintel/upgrades/preventive-maintenance-sensors/): typically $680 installed. A sump pump monitor, freezer and humidity sensors, and smoke and CO listeners, connected so you get one clear alert when something in the house starts to go wrong.
+- [Smart Thermostat, Room Sensors & Zoning](https://jacobroutzong.dev/apps/lintel/upgrades/smart-climate-zoning/): typically $840 installed. We install an ENERGY STAR smart thermostat that works with your system, add room sensors so it heats and cools where people actually are, and fix hot and cold rooms with smart vents.
+- [Smart Lighting Control & Scenes](https://jacobroutzong.dev/apps/lintel/upgrades/lighting-control/): typically $1,670 installed. Smart dimmers replace your existing switches so lights work for everyone, with or without a phone, plus scenes for mornings, movie night and leaving the house.
+- [Motorized Shades](https://jacobroutzong.dev/apps/lintel/upgrades/motorized-shades/): typically $3,340 installed. Battery-powered motorized shades for the windows that matter, on schedules that block afternoon heat in summer and let the sun warm rooms in winter.
+- [Energy Management: Panels, Solar & EV Charging](https://jacobroutzong.dev/apps/lintel/upgrades/energy-management/): typically $1,900 installed. An energy monitor or smart panel shows usage circuit by circuit, and a smart EV charger with load management can avoid an expensive service upgrade.
+- [Smart Irrigation](https://jacobroutzong.dev/apps/lintel/upgrades/smart-irrigation/): typically $360 installed. We replace your sprinkler timer with a weather-based controller, set up each zone by plant and soil type, and apply for your water utility's rebate.
+- [AI Voice Assistant Setup, Cloud or Fully Private](https://jacobroutzong.dev/apps/lintel/upgrades/ai-voice-assistant/): typically $2,040 installed. We set up the voice assistant you prefer, name every device and room so commands work the first time, and offer a private option where speech is processed on a small server in your home.
+- [Home Mapping & Live Floor-Plan Dashboard](https://jacobroutzong.dev/apps/lintel/upgrades/home-mapping-dashboard/): typically $1,210 installed. A LiDAR room scan becomes an accurate floor plan we use to design your system, then a wall-mounted dashboard showing what's on, open, wet or using power, room by room.
+- [Whole-Home Audio](https://jacobroutzong.dev/apps/lintel/upgrades/whole-home-audio/): typically $3,220 installed. In-ceiling or outdoor speakers driven by streaming amps, grouped by room and controlled from any phone or voice assistant.
+- [Aging in Place & Remote Family Care](https://jacobroutzong.dev/apps/lintel/upgrades/aging-in-place/): typically $2,030 installed. Motion and door sensors learn a parent's normal day and alert family only when something looks wrong, while night lighting, voice control and smart locks make the house easier to live in.
+- [Short-Term Rental Automation](https://jacobroutzong.dev/apps/lintel/upgrades/short-term-rental-automation/): typically $1,370 installed. Smart locks that create a code for each booking, thermostats that set back between stays, noise monitors that don't record audio, and leak sensors for the nights the property sits empty.
+- [New-Construction & Remodel Pre-Wire](https://jacobroutzong.dev/apps/lintel/upgrades/new-construction-prewire/): typically $2,630 installed. We plan and run Ethernet, camera, speaker and shade wiring to a structured media panel during framing, coordinated with your builder's schedule.
+
+## Who we help
+- [New Homeowners](https://jacobroutzong.dev/apps/lintel/for/new-homeowners/): The weeks after closing are when you find the dead Wi-Fi zones, wonder who still has keys and learn where the water heater is. It's also the easiest time to fix all of it, before furniture blocks the walls and routines set in.
+- [Families Helping a Parent Age in Place](https://jacobroutzong.dev/apps/lintel/for/aging-in-place/): Most people want to stay in their own homes as they get older, and their families want to know they're all right. A few well-chosen sensors and a voice assistant can give both, without cameras or complicated apps.
+- [Short-Term Rental Hosts](https://jacobroutzong.dev/apps/lintel/for/short-term-rental-hosts/): Every stay means a code to send, a thermostat to check and a turnover to coordinate. Automation handles the routine parts and warns you about the expensive ones: parties, leaks and freezing pipes in empty weeks.
+- [Home Sellers](https://jacobroutzong.dev/apps/lintel/for/home-sellers/): Buyers notice a video doorbell, a smart thermostat and lights that work from the wall. They also notice a hub nobody can log into. We install a small set of upgrades that show well, and hand everything over cleanly at closing.
+- [Homeowners Renovating](https://jacobroutzong.dev/apps/lintel/for/renovators/): During a remodel, running a cable costs a fraction of what it costs once the drywall is up. We plan the technology with your contractor so it arrives on schedule and doesn't hold up the job.
+- [Building a New Home](https://jacobroutzong.dev/apps/lintel/for/new-construction/): Builder technology packages are usually minimal. We work from your plans, coordinate with the builder and electrician, and finish the system the week you move in.
+
+## Tools
+- [Free Smart Home Scan](https://jacobroutzong.dev/apps/lintel/scan/)
+- [Room-by-room planner](https://jacobroutzong.dev/apps/lintel/plan/)
+- [Savings calculator](https://jacobroutzong.dev/apps/lintel/savings/)
+- [Rebates and discounts](https://jacobroutzong.dev/apps/lintel/rebates/)
+- [Packages and pricing](https://jacobroutzong.dev/apps/lintel/packages/)
+
+## Guides
+- [The New Homeowner's Smart Home Checklist](https://jacobroutzong.dev/apps/lintel/guides/smart-home-checklist-new-homeowners/)
+- [Leak Protection for Older Homes](https://jacobroutzong.dev/apps/lintel/guides/leak-protection-older-homes/)
+- [Smart Thermostat Savings and Rebates After the Tax Credit Ended](https://jacobroutzong.dev/apps/lintel/guides/thermostat-rebates-and-savings/)
+- [A Camera-Free Sensor Plan for an Aging Parent](https://jacobroutzong.dev/apps/lintel/guides/aging-parent-sensor-plan/)
+- [Automating a Short-Term Rental, Step by Step](https://jacobroutzong.dev/apps/lintel/guides/airbnb-host-automation-guide/)
+- [The Pre-Wire Checklist for a New Build](https://jacobroutzong.dev/apps/lintel/guides/prewire-checklist-new-build/)
+- [Private Voice Control Without the Cloud](https://jacobroutzong.dev/apps/lintel/guides/private-voice-assistant-home/)
+- [Smart Upgrades Worth Making Before You List](https://jacobroutzong.dev/apps/lintel/guides/pre-listing-smart-upgrades/)
+
+## Insights
+- [Automatic Water Shutoff Valves: Cost, Savings and Insurance Discounts](https://jacobroutzong.dev/apps/lintel/insights/automatic-water-shutoff-valve-cost-and-savings/): What a smart water shutoff costs to install, how to think about the savings, and where insurance discounts stand in 2026.
+- [Is Professional Smart Home Installation Worth It?](https://jacobroutzong.dev/apps/lintel/insights/is-professional-smart-home-installation-worth-it/): Most smart-home owners try DIY first, and many end up calling a pro. When doing it yourself makes sense, when it doesn't, and what a good installer does differently.
