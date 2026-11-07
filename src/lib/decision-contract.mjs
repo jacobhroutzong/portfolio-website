@@ -15,10 +15,17 @@ export const gnssActionLabels = {
   suspected_spoofing: 'Suspected spoofing',
   indeterminate: 'Indeterminate',
 };
+export const orderBookActionLabels = {
+  normal: 'Continue quoting',
+  reduce_risk: 'Reduce quoting risk',
+  cancel_review: 'Cancel quotes and review',
+  strategy_halt: 'Suspend quoting',
+};
 const scenarios = new Map([
   ['robot_trajectory', { fields: robotFields, actions: robotActions }],
   ['aviation_operations', { fields: metadata.scenarios.aviation_operations.inputs, actions: Object.keys(aviationActionLabels) }],
   ['gnss_integrity', { fields: metadata.scenarios.gnss_integrity.inputs, actions: Object.keys(gnssActionLabels) }],
+  ['lob_risk', { fields: metadata.scenarios.lob_risk.inputs, actions: Object.keys(orderBookActionLabels) }],
 ]);
 export function validateTelemetry(input, scenario = 'robot_trajectory') {
   const fields = scenarios.get(scenario)?.fields;
