@@ -15,7 +15,7 @@ Open `http://127.0.0.1:4321/ascent/`. Python's first use downloads Pyodide 0.29.
 
 - 11 lessons with 66 original exercises: four initial foundations lessons plus a coding/testing workshop; hashing, matrix shapes, chain rule, scalar autodiff, stable softmax and attention.
 - All eleven exercise categories have examples, including a bug selection plus executable fix and cumulative multi-part code. Wrong answers reappear, mistakes are categorized, and self-assessment reveals a rubric after a written attempt.
-- 29 original problems, each with 3 visible and 8 additional practice checks, reference implementations, three hints, editorials, and complexity notes. Monaco on desktop, a plain-editor alternative, and read-only saved code on phones.
+- 34 original problems, each with 3 visible and 8 additional practice checks, reference implementations, three hints, editorials, and complexity notes. Monaco on desktop, a plain-editor alternative, and read-only saved code on phones.
 - IndexedDB progress, SM-2 reviews, mastery with separate-day evidence and decay, XP, goal, weekly streak freeze, badges, backups, activity history, and transparent readiness heuristics.
 - Adaptive 20-question placement for diagnosis. It does not certify mastery or automatically skip prerequisite bosses.
 - Timed coding and attention rounds, phase tracking, a three-stage evolving counter, a story bank, and a written system-design exercise with a self-assessment rubric.
@@ -39,7 +39,7 @@ npx playwright install --with-deps chromium
 npm run test:e2e
 ```
 
-`npm run verify` includes the existing portfolio tests, Ascent engine tests, the shared Zod schemas, execution of all original reference solutions (319 checks), lesson code references, 150 deterministic randomized numerical comparisons against independent NumPy operations, the static build, and internal link validation. Set `ASCENT_PYTHON` to your Python executable if it is not `python3`.
+`npm run verify` includes the existing portfolio tests, Ascent engine tests, the shared Zod schemas, execution of all original reference solutions (374 checks), lesson code references, 150 deterministic randomized numerical comparisons against independent NumPy operations, the static build, and internal link validation. Set `ASCENT_PYTHON` to your Python executable if it is not `python3`.
 
 On Windows PowerShell:
 
@@ -83,7 +83,7 @@ The `.yaml` files currently use JSON-compatible YAML syntax and support ordinary
 
 ## Advanced knowledge and Hugging Face
 
-The home screen now prioritizes 30 technical references and 30 original interview questions across six AI domains, four study paths, and 29 coding problems. Foundation refreshers remain available. Content lives in `content/knowledge/library.json`; references include primary sources and verification dates. Self-rated retrieval schedules reviews and does not certify mastery.
+The home screen now prioritizes 42 technical references and 42 original interview questions across six AI domains, four study paths, and 34 coding problems. Foundation refreshers remain available. Content lives in `content/knowledge/library.json`; references include primary sources and verification dates. Self-rated retrieval schedules reviews and does not certify mastery. See [Frontier curriculum review](ASCENT_FRONTIER.md) for the before/after inventory, dated primary sources, interview objectives and validation.
 
 The public Space uses the free Static SDK: https://huggingface.co/spaces/jacobroutzong/ascent. After `npm run build`, run `npm run package:space` and upload the three files in the printed folder to the Space repository root. The dependency-free Node build restores the verified static assets and nested directories from the bundled snapshot. This does not require running a development server. `npm run dev` is only a local editing preview. The Space is a compiled snapshot; future GitHub changes need a fresh build/upload. Progress stays in each browser origin; export/import transfers it between hosts. PyTorch and server-side model inference are not included.
 

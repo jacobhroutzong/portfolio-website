@@ -94,7 +94,26 @@ export const knowledgeSchema = z.object({
   prerequisites: z.array(z.string()).default([]),
   level: z.enum(["Intermediate", "Advanced"]),
   last_verified: z.iso.date(),
-  sources: z.array(z.object({ title: z.string(), url: z.url() })).min(1),
+  sources: z
+    .array(
+      z.object({
+        title: z.string(),
+        url: z.url({ protocol: /^https$/ }),
+        published: z
+          .union([z.iso.date(), z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/)])
+          .optional(),
+        evidence_kind: z
+          .enum([
+            "research",
+            "engineering",
+            "deployment",
+            "release",
+            "documentation",
+          ])
+          .optional(),
+      }),
+    )
+    .min(1),
   question: z.object({
     id: z.string(),
     prompt: z.string(),

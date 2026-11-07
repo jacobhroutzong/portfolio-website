@@ -58,6 +58,33 @@ test("search, explain, assess, bookmark and restore an advanced concept", async 
     ),
   ).toBe(true);
 });
+
+test("frontier study paths expose dated reading and correctly labeled drills", async ({
+  page,
+}) => {
+  await page.goto("/ascent/#paths");
+  const mla = page.getByRole("link", {
+    name: /Multi-head Latent Attention and cache economics/,
+  });
+  await mla.first().click();
+  await expect(
+    page.getByText("2024-05-07 · research", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: /Open application exercise/ }),
+  ).toHaveAttribute("href", "#problem/mla-cache-budget");
+  await page.goto("/ascent/#concept/distributed-sharding");
+  await expect(
+    page.getByRole("link", { name: /Open prerequisite drill/ }),
+  ).toHaveAttribute("href", "#problem/accumulate-grads");
+  await expect(
+    page.getByText("linked drill is a prerequisite", { exact: false }),
+  ).toBeVisible();
+  await page.goto("/ascent/#concept/budgeted-agent-evals");
+  await expect(
+    page.getByText("2026-11-03 · research", { exact: true }),
+  ).toBeVisible();
+});
 test("interview answer stays hidden until an attempt and study paths link real content", async ({
   page,
 }) => {

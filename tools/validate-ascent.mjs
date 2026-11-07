@@ -43,15 +43,6 @@ const paths = studyPathSchema
     ),
   );
 validateGraph(knowledge, paths, new Set(problems.map((p) => p.id)));
-if (new Set(knowledge.map((k) => k.id)).size !== knowledge.length)
-  throw new Error("Duplicate knowledge ID");
-for (const k of knowledge) {
-  for (const id of k.related)
-    if (!knowledge.some((item) => item.id === id))
-      throw new Error("Unknown concept " + id);
-  if (!problems.some((p) => p.id === k.problem))
-    throw new Error("Unknown implementation link " + k.problem);
-}
 console.log(
   `Validated ${knowledge.length} connected references, primary source dates and original interview questions.`,
 );
