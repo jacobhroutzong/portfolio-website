@@ -1,0 +1,290 @@
+{
+  "runs": [
+    {
+      "notice": "Scores supplied outputs only; no model inference or GPU benchmark executed.",
+      "n_cases": 8,
+      "n_predictions": 8,
+      "json_parse_rate": 0.875,
+      "schema_compliance_rate": 0.875,
+      "semantic_success_rate": 0.5,
+      "tool_selection_accuracy": 1.0,
+      "clarification_precision": 1.0,
+      "clarification_recall": 0.5,
+      "success_by_action": {
+        "tool_call": 0.75,
+        "clarify": 0.25
+      },
+      "cases": [
+        {
+          "id": "dev-01",
+          "raw_output": "{\"action\":\"tool_call\",\"tool\":\"search_docs\",\"arguments\":{\"query\":\"gradient checkpointing\"}}",
+          "expected": {
+            "action": "tool_call",
+            "tool": "search_docs",
+            "arguments": {
+              "query": "gradient checkpointing"
+            }
+          },
+          "json_valid": true,
+          "schema_valid": true,
+          "success": true,
+          "request": "Search the documentation for the exact phrase gradient checkpointing."
+        },
+        {
+          "id": "dev-02",
+          "raw_output": "{\"action\":\"tool_call\",\"tool\":\"get_run\",\"arguments\":{\"run_id\":\"run-99\"}}",
+          "expected": {
+            "action": "tool_call",
+            "tool": "get_run",
+            "arguments": {
+              "run_id": "run-17"
+            }
+          },
+          "json_valid": true,
+          "schema_valid": true,
+          "success": false,
+          "failure": "semantic_mismatch",
+          "request": "Retrieve experiment run run-17."
+        },
+        {
+          "id": "dev-03",
+          "raw_output": "{\"action\":\"tool_call\",\"tool\":\"compare_runs\",\"arguments\":{\"run_ids\":[\"run-28\",\"run-17\"]}}",
+          "expected": {
+            "action": "tool_call",
+            "tool": "compare_runs",
+            "arguments": {
+              "run_ids": [
+                "run-17",
+                "run-28"
+              ]
+            }
+          },
+          "json_valid": true,
+          "schema_valid": true,
+          "success": true,
+          "request": "Compare run-17 and run-28."
+        },
+        {
+          "id": "dev-04",
+          "raw_output": "{\"action\":\"clarify\",\"missing\":[\"run_id\"]}",
+          "expected": {
+            "action": "clarify",
+            "missing": [
+              "run_id"
+            ]
+          },
+          "json_valid": true,
+          "schema_valid": true,
+          "success": true,
+          "request": "Retrieve the experiment run."
+        },
+        {
+          "id": "dev-05",
+          "raw_output": "{\"action\":\"clarify\",\"missing\":[\"query\"]}",
+          "expected": {
+            "action": "clarify",
+            "missing": [
+              "run_ids"
+            ]
+          },
+          "json_valid": true,
+          "schema_valid": true,
+          "success": false,
+          "failure": "semantic_mismatch",
+          "request": "Compare run-17 with the other experiment."
+        },
+        {
+          "id": "dev-06",
+          "raw_output": "Please tell me what to search for.",
+          "expected": {
+            "action": "clarify",
+            "missing": [
+              "query"
+            ]
+          },
+          "json_valid": false,
+          "schema_valid": false,
+          "success": false,
+          "failure": "invalid_json: Expecting value: line 1 column 1 (char 0)",
+          "request": "Search the documentation."
+        },
+        {
+          "id": "dev-07",
+          "raw_output": "{\"action\":\"tool_call\",\"tool\":\"compare_runs\",\"arguments\":{\"run_ids\":[\"run-03\",\"run-04\",\"run-05\"]}}",
+          "expected": {
+            "action": "tool_call",
+            "tool": "compare_runs",
+            "arguments": {
+              "run_ids": [
+                "run-03",
+                "run-04",
+                "run-05"
+              ]
+            }
+          },
+          "json_valid": true,
+          "schema_valid": true,
+          "success": true,
+          "request": "Compare experiments run-03, run-04, and run-05."
+        },
+        {
+          "id": "dev-08",
+          "raw_output": "{\"action\":\"tool_call\",\"tool\":\"get_run\",\"arguments\":{\"run_id\":\"latest\"}}",
+          "expected": {
+            "action": "clarify",
+            "missing": [
+              "run_id"
+            ]
+          },
+          "json_valid": true,
+          "schema_valid": true,
+          "success": false,
+          "failure": "semantic_mismatch",
+          "request": "Show the latest run. No run identifier is available in this conversation."
+        }
+      ],
+      "id": "fixture-001",
+      "label": "Evaluator walkthrough",
+      "created_at": "2026-10-27T20:00:00-04:00",
+      "kind": "Hand-authored fixture",
+      "hardware": "CPU",
+      "model": "Not executed",
+      "sha256": {
+        "cases": "a79b72d21f72bb1c943e856653ffd5533e4f11f715890640600ef78e55d35162",
+        "predictions": "fe1fbe31b957abe4d8ed54b12044e383a79761492fbd336c67f695b7e5ee0cc3"
+      }
+    }
+  ],
+  "cases": [
+    {
+      "id": "dev-01",
+      "request": "Search the documentation for the exact phrase gradient checkpointing.",
+      "expected": {
+        "action": "tool_call",
+        "tool": "search_docs",
+        "arguments": {
+          "query": "gradient checkpointing"
+        }
+      }
+    },
+    {
+      "id": "dev-02",
+      "request": "Retrieve experiment run run-17.",
+      "expected": {
+        "action": "tool_call",
+        "tool": "get_run",
+        "arguments": {
+          "run_id": "run-17"
+        }
+      }
+    },
+    {
+      "id": "dev-03",
+      "request": "Compare run-17 and run-28.",
+      "expected": {
+        "action": "tool_call",
+        "tool": "compare_runs",
+        "arguments": {
+          "run_ids": [
+            "run-17",
+            "run-28"
+          ]
+        }
+      }
+    },
+    {
+      "id": "dev-04",
+      "request": "Retrieve the experiment run.",
+      "expected": {
+        "action": "clarify",
+        "missing": [
+          "run_id"
+        ]
+      }
+    },
+    {
+      "id": "dev-05",
+      "request": "Compare run-17 with the other experiment.",
+      "expected": {
+        "action": "clarify",
+        "missing": [
+          "run_ids"
+        ]
+      }
+    },
+    {
+      "id": "dev-06",
+      "request": "Search the documentation.",
+      "expected": {
+        "action": "clarify",
+        "missing": [
+          "query"
+        ]
+      }
+    },
+    {
+      "id": "dev-07",
+      "request": "Compare experiments run-03, run-04, and run-05.",
+      "expected": {
+        "action": "tool_call",
+        "tool": "compare_runs",
+        "arguments": {
+          "run_ids": [
+            "run-03",
+            "run-04",
+            "run-05"
+          ]
+        }
+      }
+    },
+    {
+      "id": "dev-08",
+      "request": "Show the latest run. No run identifier is available in this conversation.",
+      "expected": {
+        "action": "clarify",
+        "missing": [
+          "run_id"
+        ]
+      }
+    }
+  ],
+  "predictions": [
+    {
+      "id": "dev-01",
+      "raw_output": "{\"action\":\"tool_call\",\"tool\":\"search_docs\",\"arguments\":{\"query\":\"gradient checkpointing\"}}"
+    },
+    {
+      "id": "dev-02",
+      "raw_output": "{\"action\":\"tool_call\",\"tool\":\"get_run\",\"arguments\":{\"run_id\":\"run-99\"}}"
+    },
+    {
+      "id": "dev-03",
+      "raw_output": "{\"action\":\"tool_call\",\"tool\":\"compare_runs\",\"arguments\":{\"run_ids\":[\"run-28\",\"run-17\"]}}"
+    },
+    {
+      "id": "dev-04",
+      "raw_output": "{\"action\":\"clarify\",\"missing\":[\"run_id\"]}"
+    },
+    {
+      "id": "dev-05",
+      "raw_output": "{\"action\":\"clarify\",\"missing\":[\"query\"]}"
+    },
+    {
+      "id": "dev-06",
+      "raw_output": "Please tell me what to search for."
+    },
+    {
+      "id": "dev-07",
+      "raw_output": "{\"action\":\"tool_call\",\"tool\":\"compare_runs\",\"arguments\":{\"run_ids\":[\"run-03\",\"run-04\",\"run-05\"]}}"
+    },
+    {
+      "id": "dev-08",
+      "raw_output": "{\"action\":\"tool_call\",\"tool\":\"get_run\",\"arguments\":{\"run_id\":\"latest\"}}"
+    }
+  ],
+  "backend": "Python · standard library",
+  "version": "0.1.0",
+  "mode": "public-demo",
+  "storage": "browser-local",
+  "max_cases": 200
+}

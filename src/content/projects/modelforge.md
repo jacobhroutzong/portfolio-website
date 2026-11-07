@@ -8,7 +8,6 @@ featured: false
 status: In progress
 order: 1
 sourceUrl: https://huggingface.co/spaces/jacobroutzong/modelforge/tree/main
-demoUrl: https://huggingface.co/spaces/jacobroutzong/modelforge
 screenshots: []
 videos: []
 ---
@@ -17,13 +16,11 @@ videos: []
 
 Crucible investigates a specific question: how much useful capability can a small model deliver under a fixed memory, latency, and training budget? The current implementation establishes the evaluation workspace before model adaptation or performance claims.
 
-[Open the app full screen](https://jacobroutzong-modelforge.hf.space/) · [Browse the source](https://huggingface.co/spaces/jacobroutzong/modelforge/tree/main)
-
 ## Explore the workspace
 
-The app runs on a free CPU Hugging Face Docker Space. Loading the embed connects your browser to Hugging Face; scoring runs only when you select **Run evaluation**. A sleeping Space may take a moment to start. Use the full-screen link if the embed or browser storage is unavailable.
+<a class="button primary" href="/apps/crucible/">Open Crucible →</a>
 
-<iframe src="https://jacobroutzong-modelforge.hf.space/" title="Crucible evaluation and optimization workspace" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" style="width:100%;height:1100px;border:1px solid var(--border);border-radius:8px;"></iframe>
+Explore the examples and memory planner directly on this site. When you select **Run evaluation**, the site forwards the inputs to a Python scorer on Hugging Face and displays the report in the workspace. Scoring may take a moment if the backend is waking up.
 
 ## What works today
 
@@ -33,7 +30,7 @@ The app runs on a free CPU Hugging Face Docker Space. Loading the embed connects
 - **Memory planning:** vary parameter count, precision, assumed runtime overhead, and GPU memory budget to estimate storage requirements.
 - **Research notes:** save browser-local observations and export reports and notes as JSON.
 
-The public API processes submitted data to calculate scores, but does not retain request bodies or reports on its server. Visitor reports remain in browser storage when available. Use public or synthetic data only, and export any report you want to keep; browser storage may be cleared or restricted inside embeds.
+The public API processes submitted data to calculate scores and does not retain request bodies or reports. Reports and notes are stored in this site's browser storage when available. Use public or synthetic data only, and export reports you want to keep. Reports saved by the older embedded app remain in the browser storage of that app's original domain.
 
 ## Method and limits
 
@@ -45,6 +42,6 @@ No model inference, fine-tuning, DPO, quantization experiment, or GPU benchmark 
 
 ## Engineering and verification
 
-The frontend uses HTML, CSS, and JavaScript. A stateless Python WSGI API serves the public demo through Waitress, with bounded inputs and no model-provider credentials. The portfolio page uses the existing Astro and Cloudflare Pages deployment.
+Cloudflare Pages serves the interface and public examples. A Pages Function forwards scoring requests to the stateless Python API on a free CPU Hugging Face Space. Evaluation uses bounded inputs and does not require an account or API key.
 
 The evaluator and API have executable tests for semantic failures, strict parsing, report isolation, invalid inputs, and public-demo limits. The workspace has also been checked interactively on desktop and at a phone breakpoint. These checks establish application behavior, not model quality.
