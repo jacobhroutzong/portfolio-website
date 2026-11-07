@@ -6,7 +6,7 @@ test('Scientific lab routes, honest statuses and recorded controls', async ({ pa
   await expect(switcher).toHaveCSS('position', 'static');
   await expect(switcher.getByRole('link', { name: 'Overview' })).toHaveAttribute('aria-current', 'page');
   await expect(page.locator('.lab-card')).toHaveCount(7);
-  await expect(page.locator('.lab-card .lab-active')).toHaveCount(2);
+  await expect(page.locator('.lab-card .lab-status').filter({ hasText: /^Stable$/ })).toHaveCount(2);
   await expect(page.locator('.lab-card').filter({ hasText: 'Planning' })).toHaveCount(5);
   expect(await page.locator('.lab-card').first().evaluate(element => element.getBoundingClientRect().width)).toBeGreaterThan(250);
   await page.getByLabel('Inspect a stage').selectOption('2');

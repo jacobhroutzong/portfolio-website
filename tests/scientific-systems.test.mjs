@@ -8,8 +8,9 @@ const registry = await import(`data:text/javascript;base64,${Buffer.from(javascr
 test('Scientific Systems registry keeps seven honest project scopes', () => {
   assert.equal(registry.labProjects.length, 7);
   assert.equal(new Set(registry.labProjects.map(p => p.id)).size, 7);
-  assert.equal(registry.labProjects.filter(p => p.status === 'In progress').length, 2);
+  assert.equal(registry.labProjects.filter(p => p.status === 'Stable').length, 2);
   assert.equal(registry.labProjects.filter(p => p.status === 'Planning').length, 5);
+  assert.equal(registry.labProjects.find(p => p.id === 'compiler').status, 'Planning');
   for (const project of registry.labProjects) {
     if (project.status === 'Planning') assert.deepEqual(project.implemented, []);
     if (project.sourceUrl) assert.match(project.sourceUrl, /^https:\/\/github\.com\/jacobhroutzong\//);

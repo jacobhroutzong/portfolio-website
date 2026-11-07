@@ -4,7 +4,7 @@ interface Props { project: LabProject; }
 const { project } = Astro.props;
 ---
 <article class="lab-card" data-project={project.id}>
-  <div class="lab-card-top"><span class="lab-number">{project.number}</span><span class:list={['lab-status', { 'lab-active': project.status === 'In progress' }]}>{project.status}</span></div>
+  <div class="lab-card-top"><span class="lab-number">{project.number}</span><span class:list={['lab-status', { 'lab-active': project.status === 'Stable' }]}>{project.status}</span></div>
   <p class="lab-kicker">{project.discipline}</p>
   <h3>{project.title}</h3><p>{project.summary}</p>
   <div class="lab-card-scope"><span>{project.implemented.length ? 'IMPLEMENTED SCOPE' : 'FIRST MILESTONE'}</span><p>{project.implemented.length ? project.implemented.join(' · ') : project.next}</p></div>
