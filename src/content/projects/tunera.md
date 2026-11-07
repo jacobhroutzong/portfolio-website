@@ -36,7 +36,11 @@ The base model's billions of weights stay frozen.
 <span style="display:inline-flex;align-items:center;gap:8px"><img src="/media/tunera/googlecolab.svg" width="22" height="22" alt="" />Google Colab</span>
 </div>
 
-[Download the source ZIP](/downloads/tunera-ai-0.3.1.zip)
+[Download the Tunera 0.3.1 source ZIP](/downloads/tunera-ai-0.3.1.zip)
+
+The ZIP includes the CLI, both model recipes, pinned dependencies, and guides
+for training, checkpoint recovery, and evaluation. The frozen CPU checks
+passed locally on Windows and Ubuntu with Python 3.11, 3.12, and 3.13.
 
 ## What the settings mean
 
@@ -81,11 +85,12 @@ measurements. Test data stays out of training and model selection.
 
 **Working and tested:** the CPU planner, Dataset Studio, saved-response and
 tool-use evaluation, report import and export, and checkpoint-handling code.
-Qwen3-4B remains the default recipe.
+Qwen3-4B QLoRA remains the default recipe. A fresh GPU acceptance run for
+Qwen3-4B is still pending.
 
 ## Qwen3.5 GPU validation
 
-The **Qwen3.5-2B BF16 LoRA reference recipe is GPU-tested**. On November 7, 2026,
+The **experimental Qwen3.5-2B BF16 LoRA recipe is GPU-tested**. On November 7, 2026,
 the full model completed 20 optimizer steps on an NVIDIA L4 in Google Colab Pro.
 A fresh process resumed from checkpoint 15 and reached step 20 again. Peak GPU
 allocation was **4.33 GiB**, and all 11 files in the recovered checkpoint passed

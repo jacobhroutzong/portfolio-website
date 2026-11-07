@@ -1,9 +1,9 @@
 <section id="tunera-training" class="training" aria-labelledby="tunera-training-title">
   <h2 id="tunera-training-title">Fine-tuning</h2>
-  <p>Download a planner configuration, split your JSONL dataset, then run the training CLI on a compatible GPU. Qwen3-4B QLoRA is the default. The Qwen3.5-2B BF16 LoRA reference recipe passed training and checkpoint recovery on an NVIDIA L4. <a href="#qwen35-gpu-validation">See the Colab results</a>.</p>
+  <p>Download a planner configuration, split your JSONL dataset, then run the training CLI on a compatible GPU. Qwen3-4B QLoRA is the default. The experimental Qwen3.5-2B BF16 LoRA recipe passed training and checkpoint recovery on an NVIDIA L4. <a href="#qwen35-gpu-validation">See the Colab results</a>.</p>
   <ol>
     <li>Validate and export conversations from Dataset Studio.</li>
-    <li>Download a configuration and follow the CLI instructions in the <a href="/downloads/tunera-ai-0.3.1.zip">Qwen3 source release</a>.</li>
+    <li>Download a configuration and follow the instructions for your recipe in the <a href="/downloads/tunera-ai-0.3.1.zip">Tunera source ZIP</a>.</li>
     <li>Keep the run directory. Its manifest records the configuration, data and software. A resumable checkpoint also needs optimizer, scheduler and random state.</li>
   </ol>
   <div class="inputs">

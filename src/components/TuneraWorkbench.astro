@@ -37,7 +37,7 @@ const controls = [
         <label>Model and training strategy
           <select name="size" aria-describedby="tunera-size-help">
             {['0.6B', '1.7B', '4B', '8B'].map(size => <option value={size} selected={size === '4B'}>Qwen3-{size} · QLoRA</option>)}
-            <option value="qwen35">Qwen3.5-2B · BF16 LoRA (GPU-tested)</option>
+            <option value="qwen35">Qwen3.5-2B · Experimental BF16 LoRA (GPU-tested)</option>
           </select>
           <span class="help" id="tunera-size-help" data-recipe-help>Qwen3 QLoRA uses 4-bit base weights. Larger models generally need more GPU memory.</span>
         </label>
