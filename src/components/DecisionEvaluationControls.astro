@@ -1,0 +1,11 @@
+<div class="dw-threshold">
+        <div class="dw-section-heading"><label for="threshold">Confidence threshold</label><output id="threshold-value" for="threshold" aria-hidden="true">85%</output></div>
+        <input id="threshold" type="range" min="50" max="99" step="1" value="85" aria-valuetext="85 percent" aria-describedby="threshold-help" />
+        <p id="threshold-help">50–99%. Flags low confidence for review without changing the model’s answer.</p>
+      </div>
+      <div class="dw-run-row">
+        <button class="dw-run" type="submit" disabled aria-describedby="connection-status">Run evaluation <span aria-hidden="true">→</span></button>
+        <button class="dw-cancel" id="cancel-evaluation" type="button" hidden>Cancel waiting</button>
+      </div>
+      <p id="connection-status" class="dw-connection" role="status">Model evaluation is disabled in this preview.</p>
+      <a id="view-decision" class="dw-view-decision" href="#results-title" hidden>View model decision ↓</a>
