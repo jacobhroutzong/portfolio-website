@@ -3,8 +3,8 @@
 The Tunera project page keeps its existing `/api/tunera` planner, dataset checker,
 and conversation-response scorer. The tool-use Evaluation Lab submits to the
 existing `/api/crucible/evaluate` Pages Function and reads the original public
-Crucible fixture. It adds a first-party interface around the same Python scorer.
-The Crucible page, app, routes, and deploy settings remain available.
+Crucible fixture. The former Crucible project and app URLs redirect to Tunera’s
+Evaluation Lab.
 
 Historical web reports use a parsed-case hash. The original CLI reports use a
 raw-file hash. Tunera reads either report shape, keeps its contents for export,
@@ -20,5 +20,3 @@ Run status and benchmark panels display locally imported artifacts with their
 reported values and provenance. The hardware planner is an analytical estimate.
 
 Review the release with the portfolio build and `tests/e2e/tunera.spec.ts`.
-The standalone Crucible retirement is a separate approval after parity and
-deployment verification. Preserve the scorer and its API during that change.

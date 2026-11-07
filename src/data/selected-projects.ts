@@ -43,16 +43,9 @@ export const selectedProjects = [
     "linkLabel": "Explore the lab →"
   },
   {
-    "title": "Crucible",
-    "eyebrow": "PYTHON / MODEL EVALUATION / POST-TRAINING RESEARCH",
-    "description": "Inspect tool-use failures, compare saved evaluations, and plan model memory budgets in a small-model research workspace. Training and GPU benchmarks are the next stage.",
-    "href": "/projects/modelforge/",
-    "linkLabel": "Explore Crucible & app →"
-  },
-  {
     "title": "Tunera",
     "eyebrow": "PYTHON / MODEL FINE-TUNING",
-    "description": "Set up a Qwen3 fine-tuning run, check your dataset, and see how saved checkpoints help recover interrupted training.",
+    "description": "Plan a Qwen fine-tuning run, validate datasets, and evaluate and compare saved model responses.",
     "href": "/projects/tunera/",
     "linkLabel": "Explore Tunera →"
   },
