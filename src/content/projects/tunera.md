@@ -1,7 +1,7 @@
 ---
 title: Tunera
 brandLogo: /media/tunera/mark.svg
-summary: A Python toolkit for fine-tuning Qwen3 models, checking training data, and resuming interrupted runs.
+summary: Plan Qwen fine-tuning, prepare datasets, and evaluate saved responses in one workbench.
 category: AI / Machine Learning
 technologies: [Qwen3, QLoRA, Training checkpoints]
 draft: false
@@ -18,6 +18,12 @@ videos: []
 Tunera is a Python toolkit for fine-tuning Qwen3 language models on your own
 examples. It checks the data, records the settings, saves training progress, and
 compares the adapted model with the original on the same test cases.
+
+The Evaluation Lab uses Crucible's existing strict tool-use scorer. It keeps JSON
+parsing, schema compliance, and exact action correctness separate. You can work
+through examples, inspect failures, and compare or export saved reports. Those
+scores describe submitted responses. Live training and model benchmarks are run
+separately through the CLI.
 
 It uses **QLoRA**: the base model's weights are stored in 4-bit form to reduce
 memory use, while training updates small extra weight matrices called **adapters**.
@@ -39,7 +45,7 @@ defaults are starting values for testing, not a claim that they are best for eve
 
 | Control | Default | What it changes |
 | --- | --- | --- |
-| **Qwen3 model size** | **4B** | The size of the original model. 4B means roughly four billion learned weights—not four billion training examples. Larger models generally need more GPU memory. The available sizes are 0.6B, 1.7B, 4B and 8B. |
+| **Model and training strategy** | **Qwen3-4B QLoRA** | 4B means roughly four billion learned weights. Qwen3 sizes from 0.6B to 8B use 4-bit base weights in the QLoRA recipe. The separate Qwen3.5-2B experiment uses BF16 weights and requires a GPU with native BF16 support. |
 | **Maximum context tokens** | **512** | The cap for the prompt and answer together in each example. A token is a piece of text, sometimes part of a word. Longer examples need more memory. Text beyond this cap is cut off; training rejects an example if no answer tokens remain. |
 | **LoRA rank** | **16** | The size of the adapter matrices being trained. A higher rank gives the adapter more capacity and uses more memory. It does not guarantee better answers. |
 | **Optimizer steps** | **100** | The number of weight updates. This is not the number of unique examples or full passes through the dataset. Training can see the same examples more than once. |
