@@ -69,5 +69,12 @@ export const selectedProjects = [
     "description": "Plan smart-home upgrades with a home scan, room planner and savings calculator for an Atlanta-area installation business in development.",
     "href": "/projects/lintel/",
     "linkLabel": "Explore Lintel & app →"
+  },
+  {
+    "title": "Pursuit",
+    "eyebrow": "WEB APPLICATION / WORKFLOW AUTOMATION",
+    "description": "Review job recommendations one at a time, save roles worth a closer look, and track applications. Try the workflow with three sample jobs.",
+    "href": "/projects/pursuit/",
+    "linkLabel": "Explore Pursuit →"
   }
 ];
