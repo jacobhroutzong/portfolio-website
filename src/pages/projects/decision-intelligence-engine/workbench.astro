@@ -1,5 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import DecisionEvaluationControls from '../../../components/DecisionEvaluationControls.astro';
+import DecisionEvaluationResult from '../../../components/DecisionEvaluationResult.astro';
 import DecisionScenarioNav from '../../../components/DecisionScenarioNav.astro';
 import DecisionTelemetryFields from '../../../components/DecisionTelemetryFields.astro';
 import { actionLabels, robotFields } from '../../../lib/decision-contract.mjs';
@@ -27,17 +29,7 @@ const fields = robotFields.map(field => field.id === 'localization_sigma_m'
         <button type="button" data-example="margin" aria-pressed="false">More time to stop</button>
       </div>
       <DecisionTelemetryFields fields={fields} />
-      <div class="dw-threshold">
-        <div class="dw-section-heading"><label for="threshold">Confidence threshold</label><output id="threshold-value" for="threshold" aria-hidden="true">85%</output></div>
-        <input id="threshold" type="range" min="50" max="99" step="1" value="85" aria-valuetext="85 percent" aria-describedby="threshold-help" />
-        <p id="threshold-help">50–99%. Flags low confidence for review without changing the model’s answer.</p>
-      </div>
-      <div class="dw-run-row">
-        <button class="dw-run" type="submit" disabled aria-describedby="connection-status">Run evaluation <span aria-hidden="true">→</span></button>
-        <button class="dw-cancel" id="cancel-evaluation" type="button" hidden>Cancel waiting</button>
-      </div>
-      <p id="connection-status" class="dw-connection" role="status">Model evaluation is disabled in this preview. You can still compare stopping times.</p>
-      <a id="view-decision" class="dw-view-decision" href="#results-title" hidden>View model decision ↓</a>
+      <DecisionEvaluationControls />
       <noscript><p>Enable JavaScript to update the comparison or use the full application linked above.</p></noscript>
     </form>
     <div class="dw-readout">
@@ -51,31 +43,7 @@ const fields = robotFields.map(field => field.id === 'localization_sigma_m'
         <p class="dw-caveat">Time to collision minus stopping time. This comparison uses timing only.</p>
         <p id="input-error" role="status" hidden></p>
       </section>
-      <section class="dw-results" aria-labelledby="results-title">
-        <div class="dw-section-heading"><h2 id="results-title" tabindex="-1">Model decision</h2><span class="dw-state" id="result-state">Disabled</span></div>
-        <p id="result-message" class="dw-result-message" role="status">This preview calculates the stopping margin from the telemetry you enter.</p>
-        <div id="model-result" hidden>
-          <p class="dw-action-label">Recommended action</p>
-          <h3 id="model-action" class="dw-action"></h3>
-          <dl class="dw-metrics">
-            <div><dt>Confidence</dt><dd id="model-confidence"></dd><dd class="dw-metric-help" id="model-threshold" role="status"></dd></div>
-            <div><dt>Collision risk</dt><dd id="model-risk"></dd><dd class="dw-metric-help">Model estimate for staying on course</dd></div>
-            <div><dt>Hazard severity</dt><dd id="model-severity"></dd><dd class="dw-metric-help">0 clear · 4 imminent collision</dd></div>
-          </dl>
-          <table class="dw-probabilities">
-            <caption>Action probabilities</caption>
-            <tbody>
-              {Object.entries(actionLabels).map(([key, label]) => (
-                <tr data-action={key}>
-                  <th scope="row">{label}</th>
-                  <td class="dw-probability-bar" aria-hidden="true"><span></span></td>
-                  <td class="dw-probability-value"></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
+      <DecisionEvaluationResult actionLabels={actionLabels} riskLabel="Collision risk" riskHelp="Model estimate for staying on course" severityHelp="0 clear · 4 imminent collision" />
     </div>
   </div>
   <div class="dw-evidence">
@@ -85,110 +53,12 @@ const fields = robotFields.map(field => field.id === 'localization_sigma_m'
 </div>
 </Base>
 <script>
-import { robotFields, validateTelemetry, stoppingMargin, passesThreshold, actionLabels } from '../../../lib/decision-contract.mjs';
-import { evaluateClient } from '../../../lib/decision-client.mjs';
+import { robotFields, validateTelemetry, stoppingMargin, actionLabels } from '../../../lib/decision-contract.mjs';
+import { bindDecisionEvaluation } from '../../../lib/decision-workbench';
 const form = document.querySelector<HTMLFormElement>('#telemetry-form')!;
 const output = (id: string, text: string) => { document.getElementById(id)!.textContent = text; };
-const run = form.querySelector<HTMLButtonElement>('.dw-run')!;
-const cancel = document.querySelector<HTMLButtonElement>('#cancel-evaluation')!;
-const thresholdInput = document.querySelector<HTMLInputElement>('#threshold')!;
+const invalidate = bindDecisionEvaluation(form, 'robot_trajectory', actionLabels);
 const marginReadout = document.querySelector<HTMLOutputElement>('#margin')!;
-const modelResult = document.querySelector<HTMLElement>('#model-result')!;
-const resultMessage = document.querySelector<HTMLElement>('#result-message')!;
-const audit = document.querySelector<HTMLElement>('#model-audit')!;
-const timing = document.querySelector<HTMLElement>('#model-timing')!;
-const viewDecision = document.querySelector<HTMLAnchorElement>('#view-decision')!;
-const probabilityRows = modelResult.querySelectorAll<HTMLTableRowElement>('[data-action]');
-let controller: AbortController | undefined;
-let revision = 0;
-let ready = false;
-let lastResult: Awaited<ReturnType<typeof evaluateClient>> | undefined;
-
-function showState(state: string, message: string) {
-  output('result-state', state);
-  resultMessage.hidden = false;
-  resultMessage.textContent = message;
-}
-
-function invalidate() {
-  if (controller || lastResult) showState('Inputs changed', 'Run another evaluation to see results for the new telemetry.');
-  if (controller) output('connection-status', 'Stopped waiting after an input change. Backend work may continue.');
-  revision++; controller?.abort(); controller = undefined; lastResult = undefined;
-  cancel.hidden = true; run.disabled = !ready;
-  modelResult.hidden = true; audit.hidden = true; timing.hidden = true; viewDecision.hidden = true;
-}
-
-function renderThreshold(confidence: number) {
-  const threshold = thresholdInput.valueAsNumber;
-  const passes = passesThreshold(confidence, threshold);
-  output('model-threshold', passes ? `Meets ${threshold}% threshold` : `Below ${threshold}% · review`);
-}
-
-function renderResult(result: NonNullable<typeof lastResult>, roundTripMs: number) {
-  const percent = (value: number) => `${(value * 100).toFixed(1)}%`;
-  const action = actionLabels[result.action as keyof typeof actionLabels];
-  output('model-action', action);
-  output('model-confidence', percent(result.confidence));
-  output('model-risk', percent(result.risk));
-  output('model-severity', `${result.severity.toFixed(2)} / 4`);
-  renderThreshold(result.confidence);
-  for (const row of probabilityRows) {
-    const key = row.dataset.action as keyof typeof actionLabels;
-    const probability = result.probabilities[key];
-    row.toggleAttribute('data-recommended', key === result.action);
-    row.querySelector<HTMLElement>('.dw-probability-bar > span')!.style.width = `${probability * 100}%`;
-    row.querySelector<HTMLElement>('.dw-probability-value')!.textContent = percent(probability);
-  }
-  output('model-audit', JSON.stringify(result, null, 2));
-  output('model-timing', `Backend evaluation: ${result.backendElapsedMs.toFixed(0)} ms. End to end: ${roundTripMs.toFixed(0)} ms.`);
-  output('result-state', 'Complete');
-  resultMessage.hidden = true; modelResult.hidden = false; audit.hidden = false; timing.hidden = false; viewDecision.hidden = false;
-}
-form.addEventListener('submit', async event => {
-  event.preventDefault();
-  if (!ready || controller || !form.reportValidity()) return;
-  invalidate(); const current = revision; controller = new AbortController(); const active = controller;
-  run.disabled = true; cancel.hidden = false;
-  showState('Evaluating', 'Waiting for the model’s response…');
-  output('connection-status', 'One request is in progress.');
-  const timer = setTimeout(() => active.abort('timeout'), 35000); const start = performance.now();
-  try {
-    const telemetry = Object.fromEntries(robotFields.map(f => [f.id, (form.elements.namedItem(f.id) as HTMLInputElement).valueAsNumber]));
-    const result = await evaluateClient(telemetry, active.signal);
-    if (current !== revision) return;
-    lastResult = result; renderResult(result, performance.now() - start); output('connection-status', `Evaluation complete. Recommended action: ${actionLabels[result.action as keyof typeof actionLabels]}.`);
-  } catch (error) {
-    if (current !== revision) return;
-    const state = active.signal.reason === 'timeout' ? 'Timed out' : active.signal.aborted ? 'Waiting cancelled' : 'Evaluation failed';
-    showState(state, active.signal.aborted ? 'The backend may still be processing this request.' : error instanceof Error ? error.message : 'The evaluation could not be completed.');
-    output('connection-status', `${state}. No automatic retry was made.`);
-  } finally {
-    clearTimeout(timer);
-    if (current === revision) {
-      const returnFocus = document.activeElement === cancel;
-      controller = undefined; cancel.hidden = true; run.disabled = !ready;
-      if (returnFocus) run.focus();
-    }
-  }
-});
-cancel.addEventListener('click', () => controller?.abort());
-// Public hosts never contact the evaluation API. Private staging still checks server readiness.
-if (import.meta.env.DEV || location.hostname.endsWith('.decision-intelligence-staging.pages.dev')) {
-  output('connection-status', 'Checking evaluation availability…');
-  fetch('/api/decision-engine/evaluate', { signal: AbortSignal.timeout(5000) }).then(async res => {
-    if (res.ok && res.headers.get('Content-Type')?.includes('application/json') && (await res.json()).ready === true) {
-      ready = true;
-      run.disabled = false;
-      output('connection-status', 'Protected evaluation ready.');
-      showState('Not run', 'Run an evaluation to see the model’s recommended action, confidence, risk, and severity.');
-      return;
-    }
-    throw new Error('Evaluation unavailable');
-  }).catch(() => {
-    output('connection-status', 'Model evaluation is unavailable here. You can still compare stopping times.');
-    showState('Unavailable', 'Model results appear when protected evaluation is enabled.');
-  });
-}
 function update() {
   const input = Object.fromEntries(robotFields.map(field => { const el = form.elements.namedItem(field.id) as HTMLInputElement; return [field.id, el.value === '' ? NaN : el.valueAsNumber]; }));
   const error = document.getElementById('input-error')!;
@@ -215,15 +85,11 @@ function update() {
     document.getElementById('collision-bar')!.style.width = '0%'; document.getElementById('stopping-bar')!.style.width = '0%';
     output('input-payload', 'Input is incomplete or invalid.');
   }
-  output('threshold-value', `${thresholdInput.value}%`);
-  thresholdInput.setAttribute('aria-valuetext', `${thresholdInput.value} percent`);
 }
-form.addEventListener('input', event => { if (event.target === thresholdInput) { if (lastResult) renderThreshold(lastResult.confidence); } else { invalidate(); form.querySelectorAll('[data-example]').forEach(el => el.setAttribute('aria-pressed', 'false')); } update(); });
+form.addEventListener('input', event => { if ((event.target as HTMLElement).id === 'threshold') return; form.querySelectorAll('[data-example]').forEach(el => el.setAttribute('aria-pressed', 'false')); update(); });
 form.addEventListener('reset', event => {
   event.preventDefault();
-  invalidate();
   robotFields.forEach(field => { (form.elements.namedItem(field.id) as HTMLInputElement).value = String(field.value); });
-  thresholdInput.value = thresholdInput.defaultValue;
   update();
   form.querySelectorAll<HTMLElement>('[data-example]').forEach(el => el.setAttribute('aria-pressed', String(el.dataset.example === 'baseline')));
 });
