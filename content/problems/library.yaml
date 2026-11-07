@@ -1170,5 +1170,195 @@
     ],
     "complexity": "O(1) time and space",
     "prerequisites": []
+  },
+  {
+    "id": "moe-budget",
+    "title": "Budget resident weights and routed assignments",
+    "track": 6,
+    "topic": "Sparse models",
+    "difficulty": 4,
+    "labs": [
+      "General"
+    ],
+    "minutes": 30,
+    "statement": "Return (resident_bytes_by_rank, active_parameters_per_token, assignments_by_rank). Each expert lives on exactly one rank; shared/dense parameters are replicated on every rank. Each token route contains exactly k distinct expert indices. Use integer counts, require positive per-expert size, bytes_per_weight, ranks and k (k cannot exceed expert count); shared may be zero. Reject out-of-range rank or expert indices and malformed routes with ValueError. Ignore packing overhead, KV and communication bytes.",
+    "signature": "def solve(shared, per_expert, bytes_per_weight, rank_by_expert, ranks, k, routes):",
+    "starter": "def solve(shared, per_expert, bytes_per_weight, rank_by_expert, ranks, k, routes):\n    pass\n",
+    "constraints": "Use standard-library Python. Do not mutate inputs. The checks cover this component only.",
+    "examples": [
+      "4 shared, two 3-parameter experts on separate ranks, k=1, 2 B/weight → [14,14] bytes and 7 active parameters.",
+      "Two tokens sent to the same rank yield load [2,0].",
+      "With no tokens, assignment loads are all zero; weights are still resident."
+    ],
+    "visible": [
+      "assert solve(4,3,2,[0,1],2,1,[[0],[0]]) == ([14,14],7,[2,0])",
+      "assert solve(2,5,1,[1,1,0],2,2,[[0,2],[0,1]]) == ([7,12],12,[1,3])",
+      "assert solve(0,9,2,[0],1,1,[]) == ([18],9,[0])"
+    ],
+    "hints": [
+      "Start every rank with one copy of the shared weights.",
+      "Count resident experts by placement, not by observed routes.",
+      "Accumulate one assignment for every selected expert, even if two selected experts share a rank."
+    ],
+    "editorial": "Build a per-rank resident budget and a separate dispatch histogram. The top-k active count is per token, independent of expert placement or the number of supplied routes.",
+    "mistakes": [
+      "Charging shared weights once across ranks",
+      "Counting one dispatch per token rather than k",
+      "Using observed routes to decide which weights reside"
+    ],
+    "complexity": "O(R + E + Tk) time, O(R + k) extra space",
+    "prerequisites": []
+  },
+  {
+    "id": "mla-cache-budget",
+    "title": "Compare paged GQA and replicated MLA bytes",
+    "track": 8,
+    "topic": "Latent attention",
+    "difficulty": 4,
+    "labs": [
+      "General"
+    ],
+    "minutes": 30,
+    "statement": "Return (GQA allocated bytes per rank, MLA allocated bytes per rank). Every nonnegative sequence length rounds up independently to a whole page. GQA shards whole KV heads evenly across ranks and stores both K and V. MLA replicates one latent plus one rotary key per token on every rank. All dimensions except rope and lengths must be positive integers; rope and lengths may be zero. Reject negative lengths, invalid dimensions or uneven head sharding with ValueError. Exclude allocator metadata and workspace.",
+    "signature": "def solve(lengths, page, layers, heads, width, latent, rope, dtype_bytes, ranks):",
+    "starter": "def solve(lengths, page, layers, heads, width, latent, rope, dtype_bytes, ranks):\n    pass\n",
+    "constraints": "Use standard-library Python. Do not mutate inputs. The checks cover this component only.",
+    "examples": [
+      "Lengths [1,5], page=4 allocate 12 slots.",
+      "Four KV heads over two ranks store two heads' K and V per rank.",
+      "An empty sequence allocates no page."
+    ],
+    "visible": [
+      "assert solve([1,5],4,2,4,8,12,4,2,2) == (1536,768)",
+      "assert solve([0,0],4,1,2,3,4,0,1,1) == (0,0)",
+      "assert solve([4],4,1,4,8,12,4,2,4) == (128,128)"
+    ],
+    "hints": [
+      "Round each sequence independently.",
+      "Shard GQA heads, not MLA latent width.",
+      "Count the rotary key and the layer multiplier."
+    ],
+    "editorial": "Compute reserved token slots before applying bytes per slot per rank. The representation with lower unsharded logical bytes can lose once sharding differs.",
+    "mistakes": [
+      "Rounding only the sum of lengths",
+      "Sharding the replicated latent",
+      "Dropping either the GQA values or the MLA positional key"
+    ],
+    "complexity": "O(number of sequences) time and O(1) extra space",
+    "prerequisites": []
+  },
+  {
+    "id": "recovery-plan",
+    "title": "Reconcile a durable pending operation after restart",
+    "track": 10,
+    "topic": "Workflow recovery",
+    "difficulty": 4,
+    "labs": [
+      "General"
+    ],
+    "minutes": 30,
+    "statement": "Return (action, operation), keeping the original operation key. receipt is (status, observed_operation, observed_digest), where status is committed, absent, or unknown. A committed receipt must match both original key and digest; matching means commit locally even if current authorization has expired (no new effect). A mismatched committed receipt means conflict. Noncommitted receipts have both observed fields None. With revoked authorization, return pause for any noncommitted receipt. With authorization, absent means retry; unknown means retry only with provider_dedup, otherwise pause. Reject unknown statuses or invalid receipt shapes/fields with ValueError. Assume absent is authoritative and retry uses a fresh authorization check at execution.",
+    "signature": "def solve(operation, digest, receipt, authorized, provider_dedup):",
+    "starter": "def solve(operation, digest, receipt, authorized, provider_dedup):\n    pass\n",
+    "constraints": "Use standard-library Python. Do not mutate inputs. The checks cover this component only.",
+    "examples": [
+      "Matching committed receipt → commit, even after revocation.",
+      "Authoritative absence plus valid authority → retry with the same key.",
+      "Unknown effect and no deduplication guarantee → pause."
+    ],
+    "visible": [
+      "assert solve('a','v',('committed','a','v'),False,False)==('commit','a')",
+      "assert solve('a','v',('absent',None,None),True,False)==('retry','a')",
+      "assert solve('a','v',('unknown',None,None),True,False)==('pause','a')"
+    ],
+    "hints": [
+      "Validate the receipt before making a decision.",
+      "A matching committed receipt never triggers a new external call.",
+      "Unknown is neither absent nor committed."
+    ],
+    "editorial": "Separate receipt reconciliation from execution. This pure state decision is testable; a full harness still needs durable storage, fencing, and a real fault-injection test of side-effect counts.",
+    "mistakes": [
+      "Retrying on ambiguity without a provider guarantee",
+      "Replacing the original operation key",
+      "Confusing a read-only reconciliation with authorization for a new write"
+    ],
+    "complexity": "O(1) time and space in the number of workflow steps",
+    "prerequisites": []
+  },
+  {
+    "id": "lineage-overlap",
+    "title": "Quarantine training descendants of held-out sources",
+    "track": 5,
+    "topic": "Data lineage",
+    "difficulty": 4,
+    "labs": [
+      "General"
+    ],
+    "minutes": 30,
+    "statement": "Each record is (unique id, split, family, parent_ids); id and family are nonempty strings, split is train or eval, and each parent ID must resolve. Family and parent links are undirected for quarantine: return sorted train IDs in any connected component containing an eval record. Reject duplicate IDs, invalid split, empty ID/family and unknown parents with ValueError. You receive candidate family links; this drill does not infer semantic similarity or prove a clean holdout.",
+    "signature": "def solve(records):",
+    "starter": "def solve(records):\n    pass\n",
+    "constraints": "Use standard-library Python. Do not mutate inputs. The checks cover this component only.",
+    "examples": [
+      "A train record sharing an eval family is quarantined.",
+      "A train paraphrase of a quarantined training record is also quarantined.",
+      "A separate training component is retained."
+    ],
+    "visible": [
+      "assert solve([('a','eval','x',[]),('b','train','x',[])])==['b']",
+      "assert solve([('c','train','z',['b']),('b','train','y',['a']),('a','eval','x',[])])==['b','c']",
+      "assert solve([('a','train','x',[]),('b','eval','y',[])])==[]"
+    ],
+    "hints": [
+      "Treat each family as a hub instead of building a clique.",
+      "Build the graph before validating parent references so forward links work.",
+      "Start a multi-source walk from all eval IDs."
+    ],
+    "editorial": "Reachability gives the quarantine component under supplied evidence. It deliberately over-quarantines a connected family when any member reaches the holdout; candidate-link precision is a separate concern.",
+    "mistakes": [
+      "Only matching direct parents",
+      "Missing reverse links from eval to its ancestors",
+      "Returning eval IDs or unrelated training records"
+    ],
+    "complexity": "O(V+E+Q log Q) time and O(V+E) space for Q quarantined records",
+    "prerequisites": []
+  },
+  {
+    "id": "quantization-gate",
+    "title": "Select quantization under hard service and quality gates",
+    "track": 8,
+    "topic": "Serving precision",
+    "difficulty": 4,
+    "labs": [
+      "General"
+    ],
+    "minutes": 30,
+    "statement": "Each candidate is (unique name, measured p95 ms, peak memory MiB, slice_quality dict, cost in integer microcredits, eligible completion count). Ignore candidates missing a required slice or with zero eligible completions. Filter by all minimum slice scores and inclusive upper limits, then minimize exact cost per eligible completion. Break equal ratios by lower p95, then lexicographic name. Return the winner's name or None. Numeric inputs are valid and nonnegative; reported metrics come from the same workload and hardware cost accounting.",
+    "signature": "def solve(candidates, min_slice, max_p95, max_memory):",
+    "starter": "def solve(candidates, min_slice, max_p95, max_memory):\n    pass\n",
+    "constraints": "Use standard-library Python. Do not mutate inputs. The checks cover this component only.",
+    "examples": [
+      "A cheap candidate missing a rare-language score is ineligible.",
+      "100 credits for 10 eligible requests loses to 150 credits for 20.",
+      "No feasible candidate → None."
+    ],
+    "visible": [
+      "assert solve([('q4',8,4,{'rare':0.7},3,3),('q8',10,7,{'rare':0.9},4,4)],{'rare':0.8},10,7)=='q8'",
+      "assert solve([('a',1,1,{},100,10),('b',2,2,{},150,20)],{},2,2)=='b'",
+      "assert solve([('a',1,1,{},0,0)],{},2,2) is None"
+    ],
+    "hints": [
+      "Reject infeasible candidates before ranking them.",
+      "Compare exact ratios by cross-multiplication or Fraction.",
+      "Do not use raw total cost as the objective."
+    ],
+    "editorial": "Hard requirements constrain the feasible set. Within it, compare normalized cost exactly and apply deterministic tie-breakers. This is selection on measured inputs, not a hardware benchmark.",
+    "mistakes": [
+      "Treating a missing quality slice as a zero that can pass",
+      "Using total spend instead of per-eligible-request cost",
+      "Rounding near-equal ratios before comparing"
+    ],
+    "complexity": "O(CS) comparisons and O(1) extra candidates, ignoring integer bit cost",
+    "prerequisites": []
   }
 ]

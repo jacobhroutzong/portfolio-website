@@ -1,4 +1,5 @@
 import { evidence, knowledge, recommend, studyPaths } from "./curriculum";
+import type { Knowledge } from "./schema";
 import type { Progress } from "./engine";
 import { day, mastery, reward, schedule } from "./engine";
 import katex from "katex";
@@ -14,6 +15,14 @@ const esc = (value: unknown) =>
   );
 const a = (to: string, title: string, primary = false) =>
   `<a class="btn ${primary ? "primary" : ""}" href="#${to}">${title}</a>`;
+function sourceCitation(source: Knowledge["sources"][number]) {
+  if (!source.published || !source.evidence_kind) return "";
+  const label =
+    source.evidence_kind === "deployment"
+      ? "deployment case study"
+      : source.evidence_kind;
+  return `<br><span class="subtle">${source.published} · ${label}</span>`;
+}
 type Context = {
   root: HTMLElement;
   progress: () => Progress;
@@ -60,7 +69,7 @@ export function advancedUI(c: Context) {
         "Connect the mechanism, the implementation, and the evidence. Built for an intermediate Python and ML baseline.",
         a("knowledge", "Explore the knowledge base →", true),
       ) +
-        `<div class="stats"><div class="metric"><strong>${knowledge.length}</strong><span>Connected technical references</span></div><div class="metric"><strong>${knowledge.length}</strong><span>Original interview questions</span></div><div class="metric"><strong>${reviewed} / ${knowledge.length}</strong><span>Concepts retrieved from memory</span></div><div class="metric"><strong>${reviewList().length}</strong><span>Concepts & questions due for review</span></div></div><div class="dashboard"><div><article class="panel feature"><div class="eyebrow">START WITH DEPTH</div><h2>Know why it works.<br>Then defend the tradeoff.</h2><p>Study attention, training objectives, inference systems, evaluation and tool reliability. Every note connects to a worked example, interview question and implementation exercise.</p><div class="actions">${a(recommendation?.to ?? "knowledge-review", recommendation ? "Continue: " + esc(next.title) + " →" : "Review after a gap →", true)}</div></article><article class="panel"><div class="panel-top"><h2>A focused study session</h2><span class="subtle">~35 MIN</span></div>${[
+        `<div class="stats"><div class="metric"><strong>${knowledge.length}</strong><span>Connected technical references</span></div><div class="metric"><strong>${knowledge.length}</strong><span>Original interview questions</span></div><div class="metric"><strong>${reviewed} / ${knowledge.length}</strong><span>Concepts retrieved from memory</span></div><div class="metric"><strong>${reviewList().length}</strong><span>Concepts & questions due for review</span></div></div><div class="dashboard"><div><article class="panel feature"><div class="eyebrow">START WITH DEPTH</div><h2>Know why it works.<br>Then defend the tradeoff.</h2><p>Study attention, training objectives, inference systems, evaluation and tool reliability. Every note connects to a worked example, interview question, and either a direct application exercise or a prerequisite drill.</p><div class="actions">${a(recommendation?.to ?? "knowledge-review", recommendation ? "Continue: " + esc(next.title) + " →" : "Review after a gap →", true)}</div></article><article class="panel"><div class="panel-top"><h2>A focused study session</h2><span class="subtle">~35 MIN</span></div>${[
           [
             recommendation?.to ?? `concept/${next.id}`,
             "01",
@@ -76,8 +85,12 @@ export function advancedUI(c: Context) {
           [
             `problem/${next.problem}`,
             "03",
-            "Test the implementation",
-            "Write code; test shapes, numerics and edge cases",
+            next.exercise_role === "application"
+              ? "Test the implementation"
+              : "Revisit a prerequisite",
+            next.exercise_role === "application"
+              ? "Write code and test the stated contract"
+              : "Practice a supporting skill before the advanced scenario",
           ],
         ]
           .map(
@@ -187,7 +200,7 @@ export function advancedUI(c: Context) {
           .map((item) => a("concept/" + item.id, esc(item.title) + " ↗"))
           .join(
             "",
-          )}</div></article><article class="panel"><h2>Primary reading</h2>${k.sources.map((source) => `<p><a class="source" href="${source.url}" target="_blank" rel="noopener noreferrer">${esc(source.title)} ↗</a></p>`).join("")}<p class="subtle">Source checked ${k.last_verified}. Notes and interview questions are original educational synthesis. No claim of an official lab question.</p></article><article class="panel"><h2>Your evidence</h2><p>${done ? "✓ Previously retrieved or assessed" : "No retrieval assessment yet."}</p><ul class="rubric"><li>Mechanism recall: ${proof.recall ? "self-assessed" : "not recorded"}</li><li>Interview explanation: ${proof.explanation ? "self-assessed" : "not recorded"}</li><li>Application code: ${k.exercise_role === "prerequisite" ? "linked drill is a prerequisite" : proof.code ? "local checks passed without hints" : "no independent passing submission"}</li><li>Recall on separate days: ${proof.spaced ? "recorded" : "not recorded"}</li></ul><p class="subtle">Code checks cover this exercise’s contract, not the whole system or a GPU deployment.</p><p>Reading does not automatically mark a concept mastered. Your ratings are self-assessments, not externally graded results.</p>${p().cards[key] ? `<p>Next review: ${esc(p().cards[key].due)}</p>` : ""}</article></aside></div>`,
+          )}</div></article><article class="panel"><h2>Primary reading</h2>${k.sources.map((source) => `<p><a class="source" href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(source.title)} ↗</a>${sourceCitation(source)}</p>`).join("")}<p class="subtle">Source checked ${k.last_verified}. Notes and interview questions are original educational synthesis. No claim of an official lab question.</p></article><article class="panel"><h2>Your evidence</h2><p>${done ? "✓ Previously retrieved or assessed" : "No retrieval assessment yet."}</p><ul class="rubric"><li>Mechanism recall: ${proof.recall ? "self-assessed" : "not recorded"}</li><li>Interview explanation: ${proof.explanation ? "self-assessed" : "not recorded"}</li><li>Application code: ${k.exercise_role === "prerequisite" ? "linked drill is a prerequisite" : proof.code ? "local checks passed without hints" : "no independent passing submission"}</li><li>Recall on separate days: ${proof.spaced ? "recorded" : "not recorded"}</li></ul><p class="subtle">Code checks cover this exercise’s contract, not the whole system or a GPU deployment.</p><p>Reading does not automatically mark a concept mastered. Your ratings are self-assessments, not externally graded results.</p>${p().cards[key] ? `<p>Next review: ${esc(p().cards[key].due)}</p>` : ""}</article></aside></div>`,
     );
     const saveDraft = () => {
       p().stories[draft] = $<HTMLTextAreaElement>("#knowledge-note").value;

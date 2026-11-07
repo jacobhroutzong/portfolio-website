@@ -3,7 +3,16 @@
     "id": "transformer-depth",
     "title": "Transformer implementation depth",
     "goal": "Verify information flow and cached decoding before optimizing attention.",
-    "ids": ["attention-contract", "rope", "kv-cache", "gqa", "flash-attention"],
+    "ids": [
+      "attention-contract",
+      "rope",
+      "kv-cache",
+      "gqa",
+      "flash-attention",
+      "mla-cache",
+      "moe-routing",
+      "multimodal-grounding"
+    ],
     "capstone": {
       "title": "A verified decoder and cache",
       "project": "ModelForge",
@@ -11,7 +20,8 @@
       "steps": [
         "Implement next-token inputs, a small causal decoder and explicit position handling.",
         "Compare full-prefix and cached logits at every step, including offset and capacity edge cases.",
-        "Profile a fixed workload only after correctness tests pass."
+        "Profile a fixed workload only after correctness tests pass.",
+        "Estimate GQA versus MLA cache budgets and distinguish logical cache savings from measured allocation."
       ],
       "acceptance": [
         "Future tokens cannot change earlier outputs.",
@@ -28,10 +38,12 @@
       "benchmark-validity",
       "reproducibility",
       "data-pipeline",
+      "training-data-lineage",
       "compute-budget",
       "adamw",
       "gradient-accumulation",
       "mixed-precision",
+      "distributed-sharding",
       "token-loss-contract",
       "sft-data",
       "lora",
@@ -39,7 +51,8 @@
       "paired-evaluation",
       "preference-data",
       "dpo",
-      "reasoning-verifiers"
+      "reasoning-verifiers",
+      "verifier-robustness"
     ],
     "capstone": {
       "title": "A reproducible specialization experiment",
@@ -53,7 +66,8 @@
       "acceptance": [
         "No retained example has zero supervised causal targets.",
         "Record actual checkpoint, optimizer, RNG and sampler recovery evidence.",
-        "Publish measured quality/regressions and hardware/resource metadata; clearly label smoke data."
+        "Publish measured quality/regressions and hardware/resource metadata; clearly label smoke data.",
+        "Keep holdout source families out of synthesis and test the verifier on equivalent correct and adversarial incorrect outputs."
       ]
     }
   },
@@ -68,7 +82,12 @@
       "continuous-batching",
       "speculative-decoding",
       "qlora-precision",
-      "performance-diagnosis"
+      "performance-diagnosis",
+      "mla-cache",
+      "moe-routing",
+      "quantized-serving",
+      "serving-goodput",
+      "adaptive-test-compute"
     ],
     "capstone": {
       "title": "A measured inference comparison",
@@ -82,7 +101,8 @@
       "acceptance": [
         "Report p50/p95 latency, throughput and memory from executed runs.",
         "Preserve request isolation and check exported-model quality.",
-        "Explain one rejected optimization and the evidence behind that choice."
+        "Explain one rejected optimization and the evidence behind that choice.",
+        "Report cost per eligible completion at matched workload and quality; compare at least two feasible serving policies if available."
       ]
     }
   },
@@ -99,7 +119,10 @@
       "agent-permissions",
       "context-state",
       "agent-evaluation",
-      "paired-evaluation"
+      "paired-evaluation",
+      "durable-agent-recovery",
+      "budgeted-agent-evals",
+      "computer-use-boundaries"
     ],
     "capstone": {
       "title": "A recoverable, evaluated tool workflow",
@@ -113,7 +136,8 @@
       "acceptance": [
         "Replaying a completed operation produces no duplicate effect.",
         "Untrusted documents cannot expand execution authority.",
-        "Report success, safety violations, recovery and cost separately across repeatable trials."
+        "Report success, safety violations, recovery and cost separately across repeatable trials.",
+        "Inject a crash after the effect but before local commit, and a redirect after confirmation; check effect counts and destination scope."
       ]
     }
   }
