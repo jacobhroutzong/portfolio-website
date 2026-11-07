@@ -8,9 +8,17 @@ export const robotFields = [
 export const robotActions = ['proceed', 'replan', 'controlled_stop', 'manual_review'];
 export const actionLabels = { proceed: 'Proceed', replan: 'Replan path', controlled_stop: 'Protective stop', manual_review: 'Manual review' };
 export const aviationActionLabels = { continue_approach: 'Continue approach', divert_alternate: 'Divert to alternate', emergency_priority: 'ATC emergency priority' };
+export const gnssActionLabels = {
+  nominal: 'Nominal',
+  fading: 'Signal fading',
+  jamming: 'Jamming',
+  suspected_spoofing: 'Suspected spoofing',
+  indeterminate: 'Indeterminate',
+};
 const scenarios = new Map([
   ['robot_trajectory', { fields: robotFields, actions: robotActions }],
   ['aviation_operations', { fields: metadata.scenarios.aviation_operations.inputs, actions: Object.keys(aviationActionLabels) }],
+  ['gnss_integrity', { fields: metadata.scenarios.gnss_integrity.inputs, actions: Object.keys(gnssActionLabels) }],
 ]);
 export function validateTelemetry(input, scenario = 'robot_trajectory') {
   const fields = scenarios.get(scenario)?.fields;

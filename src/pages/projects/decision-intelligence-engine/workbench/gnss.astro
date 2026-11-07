@@ -1,0 +1,117 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import DecisionEvaluationControls from '../../../../components/DecisionEvaluationControls.astro';
+import DecisionEvaluationResult from '../../../../components/DecisionEvaluationResult.astro';
+import DecisionScenarioNav from '../../../../components/DecisionScenarioNav.astro';
+import DecisionTelemetryFields from '../../../../components/DecisionTelemetryFields.astro';
+import { gnssActionLabels } from '../../../../lib/decision-contract.mjs';
+import metadata from '../../../../data/decision-scenarios.json';
+import '../../../../styles/decision-workbench.css';
+
+const scenario = metadata.scenarios.gnss_integrity;
+const [signal, position, noise] = scenario.inputs;
+const fields = [
+  { ...signal, label: 'GNSS signal quality drop', help: 'Decrease in carrier-to-noise density (C/N₀) from the assumed reference level.' },
+  { ...position, label: 'Position disagreement', help: 'Distance between the satellite navigation and inertial navigation position estimates.' },
+  { ...noise, label: 'Radio noise floor rise', help: 'Increase in background radio noise above the assumed reference level.' },
+];
+---
+<Base title="GNSS integrity · Workbench preview" description="Compare satellite navigation signal quality, position disagreement, and radio noise in a simulated scenario." noindex={true}>
+  <div class="decision-workbench container">
+    <header class="dw-opening">
+      <a class="dw-back" href="/projects/decision-intelligence-engine/">← Decision Intelligence Engine</a>
+      <h1>GNSS integrity</h1>
+      <p>Compare signal quality, radio noise, and the distance between satellite and inertial position estimates.</p>
+      <a class="dw-scenarios" href="/projects/decision-intelligence-engine/#application">Original seven-scenario app</a>
+    </header>
+    <DecisionScenarioNav active="gnss" />
+    <div class="dw-workspace">
+      <form id="gnss-telemetry" class="dw-inputs">
+        <div class="dw-section-heading"><h2>Telemetry</h2><button class="dw-reset" type="reset">Reset defaults</button></div>
+        <p class="dw-input-intro">Start with an example or enter your own estimates.</p>
+        <div class="dw-presets" role="group" aria-label="Telemetry examples">
+          <button type="button" data-example="baseline" aria-pressed="true">Position mismatch</button>
+          <button type="button" data-example="noise" aria-pressed="false">Higher radio noise</button>
+        </div>
+        <DecisionTelemetryFields fields={fields} />
+        <DecisionEvaluationControls />
+        <noscript><p>Enable JavaScript to update the readout.</p></noscript>
+      </form>
+      <div class="dw-readout">
+        <section class="dw-comparison" aria-labelledby="gnss-readout">
+          <p class="dw-kicker">Entered telemetry</p>
+          <div class="dw-section-heading"><h2 id="gnss-readout">Signal and position</h2></div>
+          {fields.map(field => (
+            <div class="dw-time" data-readout={field.id}>
+              <div><span>{field.label}</span><output for={field.id} aria-live="off">{field.value} {field.unit}</output></div>
+              <div class="dw-track" aria-hidden="true"><span style={`width:${field.value / field.max * 100}%`}></span></div>
+              <div class="dw-axis" aria-hidden="true"><span>0 {field.unit}</span><span>{field.max} {field.unit}</span></div>
+            </div>
+          ))}
+          <p class="dw-caveat">Each bar shows where the input falls within its own range. A position mismatch can be large even when the radio measurements change very little.</p>
+          <p id="input-error" role="status" hidden></p>
+        </section>
+        <DecisionEvaluationResult actionLabels={gnssActionLabels} riskLabel="Navigation integrity risk" riskHelp="Model estimate that GNSS position should be treated as compromised pending verification" severityHelp="0 normal · 4 critical" />
+      </div>
+    </div>
+    <div class="dw-evidence">
+      <details><summary>How to read this preview</summary><p>The bars display simulated telemetry. An integrity assessment considers the measurements together. In a real system, independent sensors and navigation safeguards determine whether to use the GNSS position.</p></details>
+      <details><summary>Possible classifications</summary><dl class="dw-dispatch-actions">
+        {Object.entries(gnssActionLabels).map(([key, label]) => <div><dt>{label}</dt><dd>{scenario.choices[key as keyof typeof gnssActionLabels]}</dd></div>)}
+      </dl></details>
+      <details><summary>Input payload and model evidence</summary><pre id="gnss-payload"></pre><p id="model-timing" hidden></p><pre id="model-audit" hidden></pre></details>
+    </div>
+  </div>
+</Base>
+<script>
+  import { gnssActionLabels, validateTelemetry } from '../../../../lib/decision-contract.mjs';
+  import { bindDecisionEvaluation } from '../../../../lib/decision-workbench';
+
+  const scenario = 'gnss_integrity';
+  const form = document.querySelector<HTMLFormElement>('#gnss-telemetry')!;
+  const invalidate = bindDecisionEvaluation(form, scenario, gnssActionLabels);
+  const fields = Array.from(form.querySelectorAll<HTMLInputElement>('input[type="number"]'));
+  const examples = Array.from(form.querySelectorAll<HTMLButtonElement>('[data-example]'));
+  const readouts = new Map(Array.from(document.querySelectorAll<HTMLElement>('[data-readout]'), row => [row.dataset.readout, row]));
+  const error = document.querySelector<HTMLElement>('#input-error')!;
+  const payload = document.querySelector<HTMLElement>('#gnss-payload')!;
+
+  function update() {
+    for (const field of fields) {
+      const row = readouts.get(field.name)!;
+      const unit = field.parentElement!.querySelector('span')!.textContent;
+      const valid = field.validity.valid;
+      row.querySelector('output')!.value = valid ? `${field.valueAsNumber} ${unit}` : '—';
+      row.querySelector<HTMLElement>('.dw-track span')!.style.width = valid ? `${field.valueAsNumber / Number(field.max) * 100}%` : '0%';
+    }
+    const telemetry = Object.fromEntries(fields.map(field => [field.name, field.valueAsNumber]));
+    try {
+      validateTelemetry(telemetry, scenario);
+      error.hidden = true;
+      payload.textContent = JSON.stringify({ schemaVersion: 1, scenario, telemetry }, null, 2);
+    } catch (invalid) {
+      error.hidden = false;
+      error.textContent = invalid instanceof Error ? invalid.message : 'Check the telemetry inputs.';
+      payload.textContent = 'Enter valid values for all three inputs to see the payload.';
+    }
+  }
+
+  function applyExample(example: string) {
+    fields.forEach(field => { field.value = field.defaultValue; });
+    if (example === 'noise') {
+      (form.elements.namedItem('cn0_drop_dbhz') as HTMLInputElement).value = '18';
+      (form.elements.namedItem('noise_floor_rise_db') as HTMLInputElement).value = '24';
+    }
+    examples.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.example === example)));
+    update();
+  }
+
+  form.addEventListener('reset', event => { event.preventDefault(); applyExample('baseline'); });
+  form.addEventListener('input', event => {
+    if ((event.target as HTMLElement).id === 'threshold') return;
+    examples.forEach(button => button.setAttribute('aria-pressed', 'false'));
+    update();
+  });
+  examples.forEach(button => button.addEventListener('click', () => { invalidate(); applyExample(button.dataset.example!); }));
+  update();
+</script>
