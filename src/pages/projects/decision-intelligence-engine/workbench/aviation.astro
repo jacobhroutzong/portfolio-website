@@ -1,0 +1,132 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import DecisionScenarioNav from '../../../../components/DecisionScenarioNav.astro';
+import DecisionTelemetryFields from '../../../../components/DecisionTelemetryFields.astro';
+import metadata from '../../../../data/decision-scenarios.json';
+import '../../../../styles/decision-workbench.css';
+
+const scenario = metadata.scenarios.aviation_operations;
+const [reserve, wind, alternate] = scenario.inputs;
+const fields = [
+  { ...reserve, label: 'Alternate fuel reserve margin', help: 'Projected fuel at the alternate, expressed as minutes above or below the scenario’s reserve requirement.' },
+  { ...wind, label: 'Destination crosswind', help: 'Wind across the runway at the planned destination, measured in knots.' },
+  { ...alternate, label: 'Time to alternate airport', help: 'Estimated flight time to the backup airport if the approach is abandoned.' },
+];
+const actionLabels = {
+  continue_approach: 'Continue approach',
+  divert_alternate: 'Divert to alternate',
+  emergency_priority: 'ATC emergency priority',
+};
+const reservePosition = (value: number) => ((value - reserve.min) / (reserve.max - reserve.min)) * 100;
+---
+<Base title="Aviation dispatch · Workbench preview" description="Explore fuel reserve, crosswind, and diversion time in a simulated aviation dispatch scenario." noindex={true}>
+  <div class="decision-workbench container">
+    <header class="dw-opening">
+      <a class="dw-back" href="/projects/decision-intelligence-engine/">← Decision Intelligence Engine</a>
+      <h1>Aviation dispatch &amp; diversion</h1>
+      <p>Explore the telemetry a dispatch decision would use when the planned destination has a crosswind and an alternate airport is available.</p>
+      <a class="dw-scenarios" href="/projects/decision-intelligence-engine/#application">Original seven-scenario app</a>
+    </header>
+    <DecisionScenarioNav active="aviation" />
+    <div class="dw-workspace">
+      <form id="aviation-telemetry" class="dw-inputs">
+        <div class="dw-section-heading"><h2>Telemetry</h2><button class="dw-reset" type="reset">Reset defaults</button></div>
+        <p class="dw-input-intro">Start with an example or enter your own estimates.</p>
+        <div class="dw-presets" role="group" aria-label="Telemetry examples">
+          <button type="button" data-example="baseline" aria-pressed="true">Tight reserve</button>
+          <button type="button" data-example="shortfall" aria-pressed="false">Below reserve</button>
+        </div>
+        <DecisionTelemetryFields fields={fields} />
+        <div class="dw-run-row dw-aviation-run">
+          <button class="dw-run" type="button" disabled aria-describedby="aviation-connection">Run evaluation <span aria-hidden="true">→</span></button>
+        </div>
+        <p class="dw-connection" id="aviation-connection">Model evaluation is disabled. The telemetry readout updates as you edit.</p>
+        <noscript><p>Enable JavaScript to update the readout.</p></noscript>
+      </form>
+      <div class="dw-readout">
+        <section class="dw-comparison" aria-labelledby="dispatch-readout">
+          <p class="dw-kicker">Entered telemetry</p>
+          <div class="dw-section-heading dw-margin">
+            <h2 id="dispatch-readout">Fuel reserve margin</h2>
+            <output id="reserve-value" for={reserve.id} aria-live="off">+{reserve.value} min</output>
+          </div>
+          <p class="dw-aviation-explanation" id="reserve-explanation" role="status">{reserve.value} minutes above the assumed reserve requirement.</p>
+          <div class="dw-fuel-axis" id="fuel-axis" style={`--reserve-zero:${reservePosition(0)}%;--reserve-value:${reservePosition(reserve.value)}%`} aria-hidden="true">
+            <div class="dw-fuel-track"><span class="dw-fuel-zero"></span><span class="dw-fuel-marker"></span></div>
+            <div class="dw-fuel-ticks"><span>{String(reserve.min).replace('-', '−')} min</span><span>0</span><span>+{reserve.max} min</span></div>
+          </div>
+          <dl class="dw-dispatch-context">
+            <div><dt>Destination crosswind</dt><dd id="wind-value">{wind.value} kt</dd></div>
+            <div><dt>Time to alternate</dt><dd id="alternate-value">{alternate.value} min</dd></div>
+          </dl>
+          <p class="dw-caveat">Zero marks the assumed reserve requirement. Crosswind and diversion time are separate inputs, each with its own unit.</p>
+          <p id="input-error" role="status" hidden></p>
+        </section>
+        <section class="dw-results" aria-labelledby="aviation-results">
+          <div class="dw-section-heading"><h2 id="aviation-results">Model decision</h2><span class="dw-state">Disabled</span></div>
+          <p class="dw-result-message">Possible actions in this scenario.</p>
+          <dl class="dw-dispatch-actions">
+            {Object.entries(actionLabels).map(([key, label]) => <div><dt>{label}</dt><dd>{scenario.choices[key as keyof typeof actionLabels]}</dd></div>)}
+          </dl>
+        </section>
+      </div>
+    </div>
+    <div class="dw-evidence">
+      <details><summary>How to read this preview</summary><p>The fuel reserve margin is a supplied estimate. It can be positive, zero, or negative. The preview does not calculate fuel burn or compare crosswind with an aircraft’s operating limits. Use this simulated example to explore the inputs.</p></details>
+      <details><summary>Input payload</summary><p>This is the payload format used by the workbench.</p><pre id="aviation-payload"></pre></details>
+    </div>
+  </div>
+</Base>
+<script>
+  const form = document.querySelector<HTMLFormElement>('#aviation-telemetry')!;
+  const fields = Array.from(form.querySelectorAll<HTMLInputElement>('input[type="number"]'));
+  const [reserve, wind, alternate] = fields;
+  const examples = Array.from(form.querySelectorAll<HTMLButtonElement>('[data-example]'));
+  const axis = document.querySelector<HTMLElement>('#fuel-axis')!;
+  const margin = document.querySelector<HTMLOutputElement>('#reserve-value')!;
+  const error = document.querySelector<HTMLElement>('#input-error')!;
+  const write = (id: string, value: string) => { document.getElementById(id)!.textContent = value; };
+
+  function update() {
+    const value = reserve.valueAsNumber;
+    margin.value = reserve.validity.valid ? `${value > 0 ? '+' : ''}${String(value).replace('-', '−')} min` : '—';
+    margin.toggleAttribute('data-shortfall', reserve.validity.valid && value < 0);
+    axis.toggleAttribute('data-invalid', !reserve.validity.valid);
+    if (reserve.validity.valid) {
+      const minimum = Number(reserve.min);
+      axis.style.setProperty('--reserve-value', `${((value - minimum) / (Number(reserve.max) - minimum)) * 100}%`);
+    }
+    const minutes = Math.abs(value) === 1 ? 'minute' : 'minutes';
+    write('reserve-explanation', !reserve.validity.valid ? 'Enter a fuel reserve margin within the allowed range.'
+      : value === 0 ? 'Exactly at the assumed reserve requirement.'
+      : `${Math.abs(value)} ${minutes} ${value < 0 ? 'below' : 'above'} the assumed reserve requirement.`);
+    write('wind-value', wind.validity.valid ? `${wind.valueAsNumber} kt` : '—');
+    write('alternate-value', alternate.validity.valid ? `${alternate.valueAsNumber} min` : '—');
+
+    const invalid = fields.find(field => !field.validity.valid);
+    error.hidden = !invalid;
+    if (invalid) {
+      error.textContent = `Check ${invalid.labels?.[0].textContent}: enter a whole number from ${invalid.min} to ${invalid.max}.`;
+      write('aviation-payload', 'Enter valid values for all three inputs to see the payload.');
+      return;
+    }
+    const telemetry = Object.fromEntries(fields.map(field => [field.name, field.valueAsNumber]));
+    write('aviation-payload', JSON.stringify({ schemaVersion: 1, scenario: 'aviation_operations', telemetry }, null, 2));
+  }
+
+  function applyExample(example: string) {
+    fields.forEach(field => { field.value = field.defaultValue; });
+    if (example === 'shortfall') reserve.value = '-5';
+    examples.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.example === example)));
+    update();
+  }
+
+  form.addEventListener('submit', event => event.preventDefault());
+  form.addEventListener('reset', event => { event.preventDefault(); applyExample('baseline'); });
+  form.addEventListener('input', () => {
+    examples.forEach(button => button.setAttribute('aria-pressed', 'false'));
+    update();
+  });
+  examples.forEach(button => button.addEventListener('click', () => applyExample(button.dataset.example!)));
+  update();
+</script>

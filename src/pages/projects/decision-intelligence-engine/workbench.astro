@@ -1,8 +1,13 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import DecisionScenarioNav from '../../../components/DecisionScenarioNav.astro';
+import DecisionTelemetryFields from '../../../components/DecisionTelemetryFields.astro';
 import { actionLabels, robotFields } from '../../../lib/decision-contract.mjs';
 import metadata from '../../../data/decision-scenarios.json';
 import '../../../styles/decision-workbench.css';
+const fields = robotFields.map(field => field.id === 'localization_sigma_m'
+  ? { ...field, label: 'Position uncertainty', help: 'How uncertain the robot is about its position.' }
+  : field);
 ---
 <Base title="Robot trajectory safety · Workbench preview" description="Inspect robotics telemetry assumptions in the first-party Decision Intelligence workbench preview." noindex={true}>
 <div class="decision-workbench container">
@@ -10,8 +15,9 @@ import '../../../styles/decision-workbench.css';
     <a class="dw-back" href="/projects/decision-intelligence-engine/">← Decision Intelligence Engine</a>
     <h1>Robot trajectory safety</h1>
     <p>Explore how collision time and braking assumptions affect the stopping margin in this robotics preview.</p>
-    <a class="dw-scenarios" href="/projects/decision-intelligence-engine/#application">Explore all 7 scenarios <span aria-hidden="true">↗</span></a>
+    <a class="dw-scenarios" href="/projects/decision-intelligence-engine/#application">Original seven-scenario app</a>
   </header>
+  <DecisionScenarioNav active="robotics" />
   <div class="dw-workspace">
     <form id="telemetry-form" class="dw-inputs">
       <div class="dw-section-heading"><h2>Telemetry</h2><button class="dw-reset" type="reset">Reset defaults</button></div>
@@ -20,17 +26,7 @@ import '../../../styles/decision-workbench.css';
         <button type="button" data-example="baseline" aria-pressed="true">Short on time</button>
         <button type="button" data-example="margin" aria-pressed="false">More time to stop</button>
       </div>
-      {robotFields.map(field => (
-        <div class="dw-field">
-          <label for={field.id}>{field.id === 'localization_sigma_m' ? 'Position uncertainty' : field.label}</label>
-          <div class="dw-number">
-            <input id={field.id} name={field.id} type="number" inputmode="decimal" required min={field.min} max={field.max} step={field.step} value={field.value} aria-describedby={`${field.id}-help ${field.id}-range`} />
-            <span aria-hidden="true">{field.unit}</span>
-          </div>
-          <p id={`${field.id}-help`}>{field.id === 'localization_sigma_m' ? 'How uncertain the robot is about its position.' : field.help}</p>
-          <span class="dw-range" id={`${field.id}-range`}>{field.min}–{field.max} {field.unit} · step {field.step}</span>
-        </div>
-      ))}
+      <DecisionTelemetryFields fields={fields} />
       <div class="dw-threshold">
         <div class="dw-section-heading"><label for="threshold">Confidence threshold</label><output id="threshold-value" for="threshold" aria-hidden="true">85%</output></div>
         <input id="threshold" type="range" min="50" max="99" step="1" value="85" aria-valuetext="85 percent" aria-describedby="threshold-help" />
@@ -57,7 +53,7 @@ import '../../../styles/decision-workbench.css';
       </section>
       <section class="dw-results" aria-labelledby="results-title">
         <div class="dw-section-heading"><h2 id="results-title" tabindex="-1">Model decision</h2><span class="dw-state" id="result-state">Disabled</span></div>
-        <p id="result-message" class="dw-result-message" role="status">For model evaluations, open the existing application from the seven-scenario link above.</p>
+        <p id="result-message" class="dw-result-message" role="status">This preview calculates the stopping margin from the telemetry you enter.</p>
         <div id="model-result" hidden>
           <p class="dw-action-label">Recommended action</p>
           <h3 id="model-action" class="dw-action"></h3>
@@ -84,7 +80,7 @@ import '../../../styles/decision-workbench.css';
   </div>
   <div class="dw-evidence">
     <details><summary>How to interpret the results</summary><p>Confidence is the model’s self-reported certainty. Action probabilities compare the options it considered. Collision risk estimates whether staying on course would create an unacceptable collision margin. Hazard severity scores how serious the model considers the situation.</p><p>This is a simulated scenario. Physical safety controllers and human oversight remain authoritative.</p></details>
-    <details><summary>Request data and model evidence</summary><p>Inputs are sent only when you run an enabled evaluation.</p><pre id="input-payload"></pre><p id="model-timing" hidden></p><pre id="model-audit" hidden></pre><p>Schema {metadata.schemaVersion} · source <code>{metadata.sourceRevision}</code></p><a href={`https://huggingface.co/spaces/jacobroutzong/decision-intelligence-engine/blob/${metadata.sourceRevision}/app.py`} target="_blank" rel="noopener noreferrer">Inspect the existing computation ↗</a></details>
+    <details><summary>Request data and model evidence</summary><p>Inputs are sent only when you run an enabled evaluation.</p><pre id="input-payload"></pre><p id="model-timing" hidden></p><pre id="model-audit" hidden></pre><p>Schema {metadata.schemaVersion} · source <code>{metadata.sourceRevision}</code></p></details>
   </div>
 </div>
 </Base>

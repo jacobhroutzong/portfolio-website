@@ -20,6 +20,21 @@
   margin: 16px 0 9px;
 }
 .dw-opening p { max-width: 60ch; margin: 0; font-size: clamp(14px, 2vw, 16px); }
+.dw-scenario-nav {
+  position: static;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  padding: 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--dw-line);
+  background: transparent;
+}
+.dw-scenario-nav a {
+  padding: 10px 0;
+  font-size: 13px;
+}
+.dw-scenario-nav a[aria-current="page"] { font-weight: 700; }
 .dw-workspace {
   display: grid;
   grid-template-columns: minmax(290px, .77fr) minmax(0, 1.23fr);
@@ -192,6 +207,40 @@
 .dw-evidence a { display: inline-block; margin-bottom: 10px; }
 .dw-evidence pre { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 12px; padding: 12px; background: var(--bg-soft); }
 .dw-evidence code { overflow-wrap: anywhere; font-size: 11px; }
+.dw-aviation-run { margin-top: 15px; }
+.dw-aviation-explanation { margin: 7px 0 18px; font-size: 14px; }
+.dw-fuel-axis { margin: 0 6px 16px; }
+.dw-fuel-track {
+  position: relative;
+  height: 9px;
+  border-radius: 3px;
+  background: linear-gradient(to right, color-mix(in srgb, var(--dw-shortfall) 22%, var(--bg-elevated)) var(--reserve-zero), var(--bg-elevated) var(--reserve-zero));
+}
+.dw-fuel-zero, .dw-fuel-marker { position: absolute; top: 50%; transform: translate(-50%, -50%); }
+.dw-fuel-zero { left: var(--reserve-zero); height: 15px; border-left: 1px solid var(--subtle); }
+.dw-fuel-marker {
+  left: var(--reserve-value);
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--bg-elevated);
+  border-radius: 50%;
+  background: var(--accent);
+  outline: 1px solid var(--accent);
+}
+.dw-fuel-axis[data-invalid] .dw-fuel-marker { visibility: hidden; }
+.dw-fuel-ticks { position: relative; display: flex; justify-content: space-between; margin-top: 6px; color: var(--muted); font-size: 10px; }
+.dw-fuel-ticks span:nth-child(2) { position: absolute; left: var(--reserve-zero); transform: translateX(-50%); }
+.dw-dispatch-context {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+}
+.dw-dispatch-context > div, .dw-dispatch-actions > div { border-top: 1px solid var(--dw-line); padding-top: 8px; }
+.dw-dispatch-context dt, .dw-dispatch-actions dt { font-size: 13px; font-weight: 650; }
+.dw-dispatch-context dd { margin: 0; font-size: 22px; font-variant-numeric: tabular-nums; }
+.dw-dispatch-actions { display: grid; gap: 9px; margin: 13px 0 0; }
+.dw-dispatch-actions dd { margin: 0; color: var(--muted); font-size: 13px; }
 @media (max-width: 760px) {
   .dw-workspace { grid-template-columns: 1fr; gap: 14px; }
   .dw-inputs, .dw-results, .dw-comparison { border-radius: 9px; }

@@ -1,0 +1,8 @@
+---
+const { active } = Astro.props as { active: 'robotics' | 'aviation' };
+const root = '/projects/decision-intelligence-engine/';
+---
+<nav class="dw-scenario-nav" aria-label="Workbench scenarios">
+  <a href={`${root}workbench/`} aria-current={active === 'robotics' ? 'page' : undefined}>Robotics</a>
+  <a href={`${root}workbench/aviation/`} aria-current={active === 'aviation' ? 'page' : undefined}>Aviation dispatch</a>
+</nav>
