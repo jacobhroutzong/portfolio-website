@@ -25,6 +25,15 @@ export function validateGraph(
         throw new Error("Unknown related concept: " + related);
     if (problemIds && !problemIds.has(concept.problem))
       throw new Error("Unknown exercise: " + concept.problem);
+    const dated = concept.sources.some(
+      (source) => source.published || source.evidence_kind,
+    );
+    for (const source of concept.sources) {
+      if (dated && (!source.published || !source.evidence_kind))
+        throw new Error("Incomplete source metadata: " + concept.id);
+      if (source.published && source.published > concept.last_verified)
+        throw new Error("Source date after verification: " + concept.id);
+    }
     active.delete(id);
     done.add(id);
   }

@@ -1,0 +1,170 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const summary = 'A job search workspace for turning recommendations into a shortlist and keeping track of applications.';
+const samples = [
+  { employer: 'Northstar Workshop', role: 'Software Engineering Intern', detail: 'Remote · Summer internship', note: 'Build tools that help a small engineering team test and ship changes.' },
+  { employer: 'Signal Grove Labs', role: 'Junior Data Engineer', detail: 'Atlanta, GA · Full time', note: 'Make research datasets easier to find, validate, and reuse.' },
+  { employer: 'Harborline Systems', role: 'Simulation Research Assistant', detail: 'Hybrid · Part time', note: 'Help compare simulation results and document where models disagree.' },
+];
+---
+
+<Base title="Pursuit" description={summary}>
+  <article class="container page-shell pursuit">
+    <a class="text-link" href="/projects/">← All projects</a>
+    <header class="pursuit-hero">
+      <div>
+        <p class="eyebrow">SELECTED PROJECT / CAREER WORKFLOW</p>
+        <h1 class="page-title">Pursuit.</h1>
+        <p class="page-intro">{summary}</p>
+        <div class="pursuit-links">
+          <a class="button primary" href="https://pursuit.jacobroutzong.dev/" target="_blank" rel="noopener noreferrer">Open full Pursuit app ↗</a>
+          <a class="button secondary" href="#pursuit-preview">Try the sample workflow ↓</a>
+        </div>
+        <p class="access-note">The full app requires authorized sign-in.</p>
+      </div>
+      <aside class="workflow" aria-label="Pursuit workflow">
+        <p class="eyebrow">THE WORKFLOW</p>
+        <ol>
+          <li><span>01</span><div><strong>Discover</strong><small>Review one recommendation at a time.</small></div></li>
+          <li><span>02</span><div><strong>Shortlist</strong><small>Keep promising roles in To Apply.</small></div></li>
+          <li><span>03</span><div><strong>Track</strong><small>Record decisions, interview stages, and notes.</small></div></li>
+        </ol>
+      </aside>
+    </header>
+
+    <section id="pursuit-preview" class="sample-section" aria-labelledby="sample-title">
+      <div class="sample-heading">
+        <div><p class="eyebrow">INTERACTIVE PREVIEW</p><h2 id="sample-title">Try the job queue.</h2></div>
+        <span class="sample-badge">Synthetic jobs</span>
+      </div>
+      <p class="sample-intro">Decide what to do with each sample role. Your choices stay on this page and reset when you reload.</p>
+      <div data-pursuit-demo>
+        <div class="sample-stats" aria-label="Sample decisions">
+          <span><strong data-count="saved">0</strong> To apply</span>
+          <span><strong data-count="applied">0</strong> Applied</span>
+          <span><strong data-count="passed">0</strong> Passed</span>
+        </div>
+        <div class="sample-cards">
+          {samples.map((job, i) => (
+            <div class="sample-card" data-card hidden={i !== 0}>
+              <p class="eyebrow">{job.employer}</p>
+              <h3>{job.role}</h3>
+              <p class="sample-detail">{job.detail}</p>
+              <p>{job.note}</p>
+            </div>
+          ))}
+          <div class="sample-card" data-finished hidden>
+            <p class="eyebrow">QUEUE COMPLETE</p>
+            <h3>All sample jobs reviewed.</h3>
+            <p>Use the counts above to review your decisions, or reset the queue to try again.</p>
+          </div>
+        </div>
+        <div class="sample-actions" data-actions>
+          <button type="button" data-decision="saved">Save to apply</button>
+          <button type="button" data-decision="applied">Mark applied</button>
+          <button type="button" data-decision="passed">Pass</button>
+        </div>
+        <div class="sample-footer">
+          <p data-progress role="status">Job 1 of {samples.length}</p>
+          <button class="sample-reset" type="button" data-reset>Reset preview</button>
+        </div>
+      </div>
+      <noscript><p>Enable JavaScript to try the sample workflow.</p></noscript>
+    </section>
+
+    <section class="section project-context" aria-labelledby="project-context-title">
+      <p class="eyebrow">BEHIND THE PROJECT</p>
+      <h2 id="project-context-title">A recommendation is only the start.</h2>
+      <p>Job links are easy to collect and harder to act on. I built Pursuit to keep the shortlist, application history, and interview notes in one place.</p>
+      <dl>
+        <div><dt>Recommendations</dt><dd>Bring in job lists and review them as a queue. A read-only Sheets feed can add new roles without overwriting decisions or notes.</dd></div>
+        <div><dt>Application tracking</dt><dd>Move a role from the queue to To Apply or Applied and keep its URL, notes, stage, and history together.</dd></div>
+        <div><dt>Private workspace</dt><dd>The app uses Cloudflare Workers and D1. The isolated staging workspace uses Supabase and Google sign-in. This public preview runs with invented examples.</dd></div>
+      </dl>
+    </section>
+  </article>
+</Base>
+
+<script>
+  const demo = document.querySelector<HTMLElement>('[data-pursuit-demo]');
+  if (demo) {
+    const cards = [...demo.querySelectorAll<HTMLElement>('[data-card]')];
+    const finished = demo.querySelector<HTMLElement>('[data-finished]')!;
+    const actions = demo.querySelector<HTMLElement>('[data-actions]')!;
+    const progress = demo.querySelector<HTMLElement>('[data-progress]')!;
+    const reset = demo.querySelector<HTMLButtonElement>('[data-reset]')!;
+    const decisions = demo.querySelectorAll<HTMLButtonElement>('[data-decision]');
+    const counts = { saved: 0, applied: 0, passed: 0 };
+    let current = 0;
+
+    function render() {
+      const complete = current === cards.length;
+      cards.forEach((card, i) => { card.hidden = i !== current; });
+      finished.hidden = !complete;
+      actions.hidden = complete;
+      progress.textContent = complete ? 'Sample queue complete' : `Job ${current + 1} of ${cards.length}`;
+      for (const [key, count] of Object.entries(counts)) {
+        demo?.querySelector<HTMLElement>(`[data-count="${key}"]`)?.replaceChildren(String(count));
+      }
+    }
+
+    decisions.forEach(button => button.addEventListener('click', () => {
+      const decision = button.dataset.decision as keyof typeof counts;
+      if (current === cards.length || !Object.hasOwn(counts, decision)) return;
+      counts[decision]++;
+      current++;
+      render();
+      if (current === cards.length) reset.focus();
+    }));
+
+    reset.addEventListener('click', () => {
+      current = 0;
+      counts.saved = counts.applied = counts.passed = 0;
+      render();
+      decisions[0]?.focus();
+    });
+  }
+</script>
+
+<style>
+  .pursuit { --pursuit-mint: #a4e9c4; }
+  .pursuit-hero { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:clamp(28px,6vw,86px); align-items:center; margin:34px 0 56px; }
+  .pursuit-hero .page-title { margin-bottom:14px; }
+  .pursuit-links { display:flex; flex-wrap:wrap; gap:10px; }
+  .access-note { font-size:0.83rem; margin:12px 0 0; }
+  .workflow { background:#14251f; color:#e1f6e9; border:1px solid #345044; border-radius:18px; padding:clamp(20px,4vw,32px); }
+  .workflow .eyebrow { color:var(--pursuit-mint); }
+  .workflow ol { list-style:none; margin:0; padding:0; }
+  .workflow li { display:flex; align-items:baseline; gap:15px; border-top:1px solid #345044; padding:12px 0; }
+  .workflow li > span { color:var(--pursuit-mint); font: 0.85rem ui-monospace, monospace; }
+  .workflow small { display:block; color:#b9cfc1; font-size:0.85rem; margin-top:3px; }
+  .sample-section { border:1px solid var(--border); background:var(--bg-soft); border-radius:18px; padding:clamp(18px,4vw,40px); scroll-margin-top:95px; }
+  .sample-heading, .sample-footer { display:flex; gap:14px; justify-content:space-between; align-items:center; flex-wrap:wrap; }
+  .sample-heading h2 { margin:0; }
+  .sample-badge { border:1px solid var(--border); padding:4px 10px; border-radius:100px; font-size:0.8rem; }
+  .sample-intro { max-width:64ch; }
+  .sample-stats { display:flex; flex-wrap:wrap; gap:8px 22px; margin:20px 0 12px; font-size:0.9rem; }
+  .sample-stats strong { margin-right:4px; font-variant-numeric:tabular-nums; }
+  .sample-card { background:#14251f; border:1px solid #345044; color:#e1f6e9; border-radius:12px; padding:clamp(16px,4vw,28px); min-height:180px; }
+  .sample-card .eyebrow { color:var(--pursuit-mint); }
+  .sample-card h3 { margin:0; font-size:clamp(1.25rem,3vw,1.7rem); }
+  .sample-card p { color:#c4d8ce; margin:8px 0; }
+  .sample-detail { font-size:0.88rem; }
+  .sample-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+  .sample-actions[hidden], .sample-card[hidden] { display:none; }
+  .sample-actions button,.sample-reset { min-height:44px; padding:8px 14px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--text); cursor:pointer; font:inherit; }
+  .sample-actions button:first-child { background:var(--pursuit-mint); color:#12251c; border-color:var(--pursuit-mint); }
+  .sample-footer { margin-top:10px; font-size:0.85rem; }
+  .sample-footer p { margin:0; }
+  .sample-reset { font-size:0.85rem; }
+  .project-context > p { max-width:65ch; }
+  .project-context dl { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+  .project-context dl div { border-top:1px solid var(--border); padding-top:14px; }
+  .project-context dt { font-weight:700; }
+  .project-context dd { margin:8px 0 0; color:var(--muted); }
+  @media(max-width:740px) {
+    .pursuit-hero,.project-context dl { grid-template-columns:1fr; }
+    .pursuit-hero { margin-bottom:28px; }
+  }
+</style>

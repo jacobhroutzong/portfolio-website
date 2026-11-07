@@ -83,7 +83,7 @@ describe("learning evidence", () => {
     expect(
       lessons.reduce((n, l) => n + l.exercises.length, 0),
     ).toBeGreaterThanOrEqual(60);
-    expect(problems.length).toBe(29);
+    expect(problems.length).toBe(34);
     expect(
       problems.every(
         (problem) =>

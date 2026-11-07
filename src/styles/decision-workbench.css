@@ -207,7 +207,6 @@
 .dw-evidence a { display: inline-block; margin-bottom: 10px; }
 .dw-evidence pre { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 12px; padding: 12px; background: var(--bg-soft); }
 .dw-evidence code { overflow-wrap: anywhere; font-size: 11px; }
-.dw-aviation-run { margin-top: 15px; }
 .dw-aviation-explanation { margin: 7px 0 18px; font-size: 14px; }
 .dw-fuel-axis { margin: 0 6px 16px; }
 .dw-fuel-track {
