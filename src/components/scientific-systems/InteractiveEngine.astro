@@ -1,44 +1,86 @@
 ---
 interface Props { kind: 'numerical' | 'symbolic'; }
 const { kind } = Astro.props;
+const numerical = kind === 'numerical';
+const examples = numerical ? [
+  { label: 'Two right-hand sides', note: 'Solve both columns of B from one factorization.', values: { order: '2', rhs: '2', a: '1 2\n3 4', b: '5 5\n11 9' } },
+  { label: 'Needs pivoting', note: 'The first pivot requires a row swap. Inspect the pivot rows after solving.', values: { order: '3', rhs: '1', a: '0 2 1\n1 1 1\n2 1 3', b: '4\n3\n7' } },
+  { label: 'Nearly singular', note: 'Almost identical rows make the solution sensitive to small changes in the inputs.', values: { order: '2', rhs: '1', a: '1 1\n1 1.0000001', b: '2\n2.0000001' } },
+  { label: 'Exactly singular', note: 'The second row is twice the first. The engine reports a singular matrix.', values: { order: '2', rhs: '1', a: '1 2\n2 4', b: '1\n2' } },
+] : [
+  { label: 'Polynomial', note: 'A polynomial with no original-domain restrictions.', values: { expression: 'x^3 + 2*x', variable: 'x' } },
+  { label: 'Shifted cube', note: 'A power of a sum illustrates the chain rule.', values: { expression: '(x+1)^3', variable: 'x' } },
+  { label: 'Reciprocal', note: 'The original denominator excludes x = 0.', values: { expression: '1/x', variable: 'x' } },
+  { label: 'Zero power', note: 'The derivative is zero and the original expression still excludes x = 0.', values: { expression: 'x^0', variable: 'x' } },
+];
 ---
-<section class="lab-example cpp-demo" data-engine={kind}>
+<section class="lab-example cpp-demo" data-engine={kind} id="workbench" aria-labelledby="workbench-title">
   <p class="lab-kicker">LIVE C++20 / WEBASSEMBLY</p>
-  <h2>{kind === 'numerical' ? 'Solve your matrix.' : 'Differentiate an expression.'}</h2>
-  <p>Runs the actual C++ engine in a dedicated browser worker. Inputs stay in your browser. Engine downloads occur on first run; recorded examples below remain available.</p>
+  <h2 id="workbench-title">{numerical ? 'Solve A·X = B' : 'Differentiate an expression'}</h2>
+  <p>{numerical ? 'Factor a square matrix A with partial pivoting and solve for every column of B.' : 'Compute an exact derivative and see where the original expression is defined.'} The engine downloads on first run. Inputs stay in your browser.</p>
   <form>
-    {kind === 'numerical' ? <>
-      <label>Matrix order (1–16)<input name="order" type="number" min="1" max="16" value="2" required /></label>
-      <label>Right-hand sides (1–4)<input name="rhs" type="number" min="1" max="4" value="2" required /></label>
-      <label>Matrix A (one row per line)<textarea name="a" rows="4" maxlength="20000" required>{'1 2\n3 4'}</textarea></label>
-      <label>Matrix B (one row per line)<textarea name="b" rows="4" maxlength="6000" required>{'5 5\n11 9'}</textarea></label>
-      <p class="lab-note">Separate entries with spaces or commas. Finite values only, magnitude ≤ 10¹⁰⁰. Binary64 arithmetic; small backward error does not guarantee forward accuracy for an ill-conditioned matrix.</p>
+    <fieldset class="demo-examples">
+      <legend>Load an example</legend>
+      <div class="demo-actions">
+        {examples.map(({ label, note, values }) => (
+          <button type="button" data-example={JSON.stringify(values)} data-note={note}>{label}</button>
+        ))}
+      </div>
+      <p data-example-note aria-live="polite"></p>
+    </fieldset>
+    {numerical ? <>
+      <label><strong id="order-label">Matrix order</strong> <input name="order" type="number" min="1" max="16" value="2" required aria-labelledby="order-label" aria-describedby="order-hint" /><span id="order-hint">Whole number from 1 to 16. A has this many rows and columns.</span></label>
+      <label><strong id="rhs-label">Right-hand sides</strong> <input name="rhs" type="number" min="1" max="4" value="2" required aria-labelledby="rhs-label" aria-describedby="rhs-hint" /><span id="rhs-hint">Whole number from 1 to 4. B has one column per right-hand side.</span></label>
+      <label><strong id="a-label">Matrix A</strong> <textarea name="a" rows="4" maxlength="20000" required spellcheck="false" aria-labelledby="a-label" aria-describedby="a-hint">{'1 2\n3 4'}</textarea><span id="a-hint">One row per line. Use spaces or commas between finite decimal values. Scientific notation is accepted. Magnitude ≤ 10¹⁰⁰.</span></label>
+      <label><strong id="b-label">Matrix B</strong> <textarea name="b" rows="4" maxlength="6000" required spellcheck="false" aria-labelledby="b-label" aria-describedby="b-hint">{'5 5\n11 9'}</textarea><span id="b-hint">Use the same row count as A and one entry per right-hand side on each row.</span></label>
     </> : <>
-      <label>Expression<input name="expression" value="x^3 + 2*x" maxlength="256" required autocomplete="off" spellcheck="false" /></label>
-      <label>Differentiate with respect to<input name="variable" value="x" maxlength="32" pattern="[A-Za-z_][A-Za-z_0-9]*" required autocomplete="off" /></label>
-      <p class="lab-note">Explicit operators + − * / ^ and integer literals. Browser limits: 256 ASCII characters, 64 nodes, depth 32, integer powers −16 to 16 and bounded arithmetic growth. No function calls or variable powers. Original-domain conditions are shown with the result.</p>
+      <label><strong id="expression-label">Expression</strong> <input name="expression" value="x^3 + 2*x" maxlength="256" required autocomplete="off" spellcheck="false" aria-labelledby="expression-label" aria-describedby="expression-hint" /><span id="expression-hint">Use integer literals, parentheses and explicit operators + − * / ^. Write 2*x for multiplication. Integer powers range from −16 to 16.</span></label>
+      <label><strong id="variable-label">Differentiate with respect to</strong> <input name="variable" value="x" maxlength="32" pattern="[A-Za-z_][A-Za-z_0-9]*" required autocomplete="off" aria-labelledby="variable-label" aria-describedby="variable-hint" /><span id="variable-hint">Start with an ASCII letter or underscore. Use up to 32 letters, digits or underscores.</span></label>
     </>}
-    <div class="demo-actions"><button type="submit">{kind === 'numerical' ? 'Solve with C++' : 'Differentiate with C++'}</button><button type="button" data-cancel disabled>Cancel / reset engine</button></div>
+    <div class="demo-actions"><button class="demo-run" type="submit" disabled>{numerical ? 'Solve with C++' : 'Differentiate with C++'}</button><button type="button" data-cancel disabled>Cancel / reset engine</button></div>
   </form>
-  <p role="status" aria-live="polite" data-status>Ready. The C++ engine has not been loaded.</p>
-  <pre data-result role="region" tabindex="0" aria-label="Engine result"></pre>
+  <p role="status" data-status>Ready. The C++ engine has not been loaded.</p>
+  <section class="demo-result" aria-labelledby="result-heading" data-panel hidden>
+    <h3 id="result-heading">{numerical ? 'Solution X' : 'Exact derivative'}</h3>
+    <pre data-primary role="region" tabindex="0" aria-label={numerical ? "Solution values" : "Derivative expression"}></pre>
+    {!numerical && <p><strong>Original-domain conditions</strong><br /><span data-conditions></span></p>}
+    <details data-diagnostics><summary>Engine details</summary><pre data-result role="region" tabindex="0" aria-label="Engine result"></pre></details>
+  </section>
+  <details class="demo-limits"><summary>Input limits and build provenance</summary>
+    <p>{numerical ? 'This solver uses binary64 arithmetic. Small backward error can coexist with poor forward accuracy for an ill-conditioned matrix.' : 'Inputs are limited to 256 ASCII characters, 64 nodes, depth 32 and bounded arithmetic growth. Use explicit operators and integer exponents. Function calls and variable powers are outside the supported grammar.'}</p>
+    <p>The worker has a 20-second load deadline and a 5-second computation deadline. WebAssembly memory is capped at 128 MiB.</p>
+    <p class="lab-source-note"><a href="/media/scientific-systems/release.json">Source commits and bundle hashes</a> · <a href="/engines/notices/index.txt">Engine and runtime licenses</a></p>
+  </details>
   <noscript><p>The interactive C++ engine requires JavaScript and WebAssembly. Recorded native examples remain available below.</p></noscript>
-  <p class="lab-source-note">128 MiB WebAssembly memory ceiling; 5-second computation deadline. These demo limits are narrower than the native API. Source-verified release bundles.</p>
-  <p class="lab-source-note"><a href="/media/scientific-systems/release.json">Source commits and bundle hashes</a> · <a href="/engines/notices/index.txt">Engine and runtime licenses</a></p>
 </section>
 <script>
   import { mountEngineDemos } from '../../scripts/scientific-systems/demo';
   mountEngineDemos();
 </script>
 <style>
+  .cpp-demo { border-top:3px solid var(--accent); scroll-margin-top:6rem; }
+  .cpp-demo > p:not(.lab-kicker) { margin-block:.55rem 1rem; }
   .cpp-demo form { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
-  .cpp-demo label { display:flex; flex-direction:column; gap:.4rem; font-size:.95rem; }
-  .cpp-demo input,.cpp-demo textarea { width:100%; box-sizing:border-box; padding:.7rem; color:inherit; background:var(--bg,#101318); border:1px solid #697580; border-radius:4px; font:inherit; }
-  .cpp-demo textarea,.cpp-demo pre { font-family:monospace; }
-  .cpp-demo .lab-note,.demo-actions { grid-column:1/-1; }
-  .demo-actions { display:flex; gap:.8rem; flex-wrap:wrap; }
-  .cpp-demo button { padding:.7rem 1rem; border:1px solid #8d9bab; border-radius:4px; background:transparent; color:inherit; cursor:pointer; }
+  .cpp-demo label { display:flex; flex-direction:column; gap:.4rem; font-size:.95rem; font-weight:600; }
+  .cpp-demo label span { font-size:.85rem; color:var(--muted); font-weight:400; }
+  .cpp-demo input,.cpp-demo textarea { min-height:44px; width:100%; box-sizing:border-box; padding:.65rem; color:var(--text); background:var(--bg); border:1px solid var(--border-strong); border-radius:4px; font:1rem monospace; }
+  .cpp-demo textarea { resize:vertical; }
+  .demo-examples,.demo-actions { grid-column:1/-1; }
+  .demo-examples { min-width:0; margin:0; padding:0; border:0; }
+  .demo-examples legend { margin-bottom:.45rem; font-weight:600; }
+  .demo-examples p:empty { display:none; }
+  .demo-actions { display:flex; gap:.5rem; flex-wrap:wrap; }
+  .cpp-demo button { min-height:44px; padding:.55rem .8rem; border:1px solid var(--border-strong); border-radius:5px; background:var(--bg); color:var(--text); cursor:pointer; font:inherit; }
+  .cpp-demo .demo-run { background:var(--accent-deep); color:var(--text); border-color:var(--accent); font-weight:700; }
+  .cpp-demo button:hover:not(:disabled) { border-color:var(--accent); text-decoration:underline; }
   .cpp-demo button:disabled { opacity:.55; cursor:default; }
-  .cpp-demo pre { white-space:pre-wrap; overflow-wrap:anywhere; max-height:28rem; overflow:auto; }
+  .cpp-demo :is(button,input,textarea,summary,pre):focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  .demo-result { border:1px solid var(--border); border-radius:6px; padding:clamp(.75rem,2vw,1.25rem); background:var(--bg-elevated); }
+  .demo-result h3 { margin:0 0 .5rem; }
+  .demo-result pre { max-height:22rem; overflow:auto; }
+  .demo-result [data-primary] { font-size:1rem; }
+  .demo-result p { overflow-wrap:anywhere; }
+  .cpp-demo details { padding:.75rem 0 0; margin-top:.75rem; }
+  .cpp-demo summary { min-height:34px; padding-block:.25rem; }
   @media(max-width:600px) { .cpp-demo form { grid-template-columns:minmax(0,1fr); } }
 </style>

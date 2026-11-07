@@ -2,6 +2,9 @@ import { test, expect } from '@playwright/test';
 test('Scientific lab routes, honest statuses and recorded controls', async ({ page }) => {
   await page.goto('/labs/scientific-systems/');
   await expect(page.getByRole('heading', { name: 'Scientific Systems Lab.' })).toBeVisible();
+  const switcher = page.getByRole('navigation', { name: 'Scientific Systems Lab' });
+  await expect(switcher).toHaveCSS('position', 'static');
+  await expect(switcher.getByRole('link', { name: 'Overview' })).toHaveAttribute('aria-current', 'page');
   await expect(page.locator('.lab-card')).toHaveCount(7);
   await expect(page.locator('.lab-card .lab-active')).toHaveCount(2);
   await expect(page.locator('.lab-card').filter({ hasText: 'Planning' })).toHaveCount(5);
@@ -20,11 +23,20 @@ test('Scientific lab routes, honest statuses and recorded controls', async ({ pa
   await page.locator('[data-project="numerical"] a').click();
   await expect(page.getByRole('heading', { name: 'Numerical Computing Engine.' })).toBeVisible();
   await expect(page.getByRole('table').filter({ hasText: 'Matrix order' })).toBeVisible();
-  await page.goto('/labs/scientific-systems/symbolic/');
+  await expect(switcher.getByRole('link', { name: 'Numerical' })).toHaveAttribute('aria-current', 'page');
+  await switcher.getByRole('link', { name: 'Symbolic' }).press('Enter');
   await expect(page.getByRole('heading', { name: 'Symbolic Mathematics Engine.' })).toBeVisible();
+  await expect(switcher.getByRole('link', { name: 'Symbolic' })).toHaveAttribute('aria-current', 'page');
+  await page.getByText('Recorded native differentiation examples', { exact: true }).click();
   await page.locator('summary').filter({ hasText: 'x^0' }).click();
-  await expect(page.locator('details').filter({ hasText: 'x^0' })).toContainText('x ≠ 0');
+  await expect(page.locator('.lab-research-disclosure details').filter({ hasText: 'x^0' })).toContainText('x ≠ 0');
   await expect(page.locator('.katex-mathml').first()).toBeAttached();
+  await expect(page.locator('#native')).toContainText('outside the browser workbench’s scope');
+  await switcher.getByRole('link', { name: 'Technical documentation' }).click();
+  await expect(page).toHaveURL(/#documentation$/);
+  await expect(page.getByRole('link', { name: 'Browser release manifest' })).toBeVisible();
+  await page.getByRole('link', { name: 'Phase 5 QR least squares (native only)' }).click();
+  await expect(page.locator('#native')).toContainText('outside the browser workbench’s scope');
 });
 test('Scientific lab remains legible without JavaScript', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });

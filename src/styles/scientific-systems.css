@@ -2,3 +2,7 @@
 .scientific-lab .scientific-section{display:block;padding-block:50px 0}.scientific-lab .scientific-section.lab-two-column{display:grid;grid-template-columns:1fr 1fr;gap:45px}@media(max-width:760px){.scientific-lab .scientific-section.lab-two-column{grid-template-columns:1fr;gap:25px}}
 
 .scientific-lab .lab-source-note a{text-decoration:underline;text-underline-offset:3px}
+
+.lab-research-disclosure { margin-block:2rem; border-block:1px solid var(--border); }
+.lab-research-disclosure > summary { padding-block:.8rem; cursor:pointer; color:var(--text); font-weight:600; }
+.lab-research-disclosure > summary:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
