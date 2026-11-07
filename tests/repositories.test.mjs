@@ -14,6 +14,11 @@ test('Hub-only projects remain visible and sortable; different repo names stay s
  assert.deepEqual(combined.map(item=>item.name),['hub','github','dataset']);
  assert.equal(combined[0].links[0].kind,'Space');assert.equal(combined[2].links[0].kind,'Dataset');
 });
+test('retired Crucible Space does not return through repository listings',()=>{
+ const source=[repo('modelforge','Hugging Face','2026-10-25'),repo('tuneledger','Hugging Face','2026-10-26')];
+ assert.deepEqual(combineRepositories(source).map(item=>item.name),['tuneledger']);
+ assert.equal(source.length,2);
+});
 test('fork labels survive merging and empty collections are valid',()=>{
  const combined=combineRepositories([repo('fork','GitHub','2026-10-20','Fork'),repo('fork','Hugging Face','2026-10-25')]);
  assert.equal(combined[0].kind,'Fork');assert.equal(combined[0].links.length,2);assert.deepEqual(combineRepositories([]),[]);

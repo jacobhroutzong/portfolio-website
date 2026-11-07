@@ -8,6 +8,8 @@ export function combineRepositories(items) {
   const groups = github.map(item => ({ ...item, links:[{platform:'GitHub',kind:item.kind,url:item.url}], githubUpdated:item.updated }));
   const byName = new Map(groups.map(item => [key(item.name),item]));
   for (const item of items.filter(item => item.platform === 'Hugging Face')) {
+    // Tunera replaced the Crucible portfolio listing. The Space still serves its scorer.
+    if (item.url === 'https://huggingface.co/spaces/jacobroutzong/modelforge') continue;
     const match = byName.get(key(item.name));
     if (match) {
       match.links.push({platform:item.platform,kind:item.kind,url:item.url});
