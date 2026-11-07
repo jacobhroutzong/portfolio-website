@@ -149,6 +149,10 @@ export function setupEvaluation(lab) {
       if (find('advanced').checked) {
         const cases = textField('cases').value;
         const predictions = textField('predictions').value;
+        const encoder = new TextEncoder();
+        if (encoder.encode(cases).length + encoder.encode(predictions).length > maxRequest) {
+          throw new Error('Evaluation input exceeds 2 MB.');
+        }
         const rows = [parseRecords(cases), parseRecords(predictions)];
         if (!rows[0].length || rows.some(list => list.length > 200)) throw new Error('Use 1–200 cases and up to 200 responses.');
         // Keep each raw record intact so Python can still reject duplicate JSON keys.
