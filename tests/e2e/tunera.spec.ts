@@ -34,7 +34,7 @@ test('Tunera guides scoring and preserves historical report details', async ({ p
   await page.getByRole('button', { name: 'Build plan' }).click();
   const config = JSON.parse(await page.getByLabel('Experiment plan', { exact: true }).textContent() ?? '{}');
   expect(config.config).toMatchObject({ model_id: 'Qwen/Qwen3.5-2B', rank: 8, max_length: 256 });
-  expect(config.experimental).toBe(true);
+  expect(config.status).toContain('GPU-tested on a Colab L4');
   await page.getByText('Validate a dataset', { exact: true }).click();
   await page.getByLabel('New user message').fill('A new user question');
   await page.getByLabel('Expected assistant reply').fill('An expected reply');

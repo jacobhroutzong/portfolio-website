@@ -83,7 +83,17 @@ measurements. Test data stays out of training and model selection.
 tool-use evaluation, report import and export, and checkpoint-handling code.
 Qwen3-4B remains the default recipe.
 
-**Experimental:** Qwen3.5-2B has a pinned BF16 LoRA recipe and a verified tokenizer
-contract. A tiny random-weight model exercised optimizer recovery on CPU.
-Full-model GPU training, recovery and paired evaluation remain the acceptance
-gate. The other Qwen3.5 sizes and gpt-oss are roadmap candidates.
+## Qwen3.5 GPU validation
+
+The **Qwen3.5-2B BF16 LoRA reference recipe is GPU-tested**. On November 7, 2026,
+the full model completed 20 optimizer steps on an NVIDIA L4 in Google Colab Pro.
+A fresh process resumed from checkpoint 15 and reached step 20 again. Peak GPU
+allocation was **4.33 GiB**, and all 11 files in the recovered checkpoint passed
+checksum verification.
+
+The paired evaluation used **four held-out synthetic cases**. The base model
+matched **0 of 4** expected answers, and the recovered adapter matched **4 of 4**.
+Both produced valid structured output on all four cases, and the paired regression
+check passed. This small test measures behavior on the synthetic fixture.
+
+The other Qwen3.5 sizes and gpt-oss are roadmap candidates.

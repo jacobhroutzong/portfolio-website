@@ -37,7 +37,7 @@ const controls = [
         <label>Model and training strategy
           <select name="size" aria-describedby="tunera-size-help">
             {['0.6B', '1.7B', '4B', '8B'].map(size => <option value={size} selected={size === '4B'}>Qwen3-{size} · QLoRA</option>)}
-            <option value="qwen35">Qwen3.5-2B · BF16 LoRA (experimental)</option>
+            <option value="qwen35">Qwen3.5-2B · BF16 LoRA (GPU-tested)</option>
           </select>
           <span class="help" id="tunera-size-help" data-recipe-help>Qwen3 QLoRA uses 4-bit base weights. Larger models generally need more GPU memory.</span>
         </label>
@@ -115,7 +115,7 @@ const controls = [
 
 <script>
   import { estimateMemory } from '../lib/tunera-reports.mjs';
-  import experimental from '../data/tunera-qwen35-recipe.json';
+  import qwen35Recipe from '../data/tunera-qwen35-recipe.json';
 
   function saveText(contents: string, filename: string) {
     const url = URL.createObjectURL(new Blob([contents], { type: 'text/plain' }));
@@ -135,17 +135,17 @@ const controls = [
     let configJson = '';
     download?.addEventListener('click', () => saveText(configJson, 'tunera-config.json'));
     model?.addEventListener('change', () => {
-      const experiment = model.value === 'qwen35';
-      const defaults = experiment ? [experimental.max_length, experimental.rank, experimental.max_steps] : [512, 16, 100];
+      const usesQwen35 = model.value === 'qwen35';
+      const defaults = usesQwen35 ? [qwen35Recipe.max_length, qwen35Recipe.rank, qwen35Recipe.max_steps] : [512, 16, 100];
       ['context', 'rank', 'steps'].forEach((name, index) => {
         form.querySelector<HTMLInputElement>(`[name=${name}]`)!.value = String(defaults[index]);
       });
-      form.querySelector('[data-recipe-help]')!.textContent = experiment
-        ? 'Experimental text-only LoRA uses BF16 base weights and requires native BF16 CUDA and a separate runtime.'
+      form.querySelector('[data-recipe-help]')!.textContent = usesQwen35
+        ? 'The reference recipe passed training and checkpoint recovery on a Colab L4. It requires native BF16 CUDA and a separate runtime.'
         : 'Qwen3 QLoRA uses 4-bit base weights. Larger models generally need more GPU memory.';
       const params = document.querySelector<HTMLInputElement>('[data-memory] [name=parameters]');
       if (params) {
-        params.value = String(experiment ? 2 : Number.parseFloat(model.value));
+        params.value = String(usesQwen35 ? 2 : Number.parseFloat(model.value));
         params.dispatchEvent(new Event('input', { bubbles: true }));
       }
       output.hidden = true;
@@ -176,9 +176,9 @@ const controls = [
         let result;
         if (action === 'plan' && fields.size === 'qwen35') {
           result = {
-            config: { ...experimental, max_length: fields.context, rank: fields.rank, max_steps: fields.steps },
-            strategy: 'BF16 LoRA', experimental: true,
-            status: 'Configuration only. Use the isolated experimental runner and a native BF16 CUDA GPU.',
+            config: { ...qwen35Recipe, max_length: fields.context, rank: fields.rank, max_steps: fields.steps },
+            strategy: 'BF16 LoRA',
+            status: 'Configuration only. The reference recipe was GPU-tested on a Colab L4. Use the dedicated runner and a native BF16 CUDA GPU.',
           };
         } else {
           const response = await fetch('/api/tunera', {
