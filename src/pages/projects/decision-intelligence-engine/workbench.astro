@@ -1,0 +1,241 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { actionLabels, robotFields } from '../../../lib/decision-contract.mjs';
+import metadata from '../../../data/decision-scenarios.json';
+import '../../../styles/decision-workbench.css';
+---
+<Base title="Robot trajectory safety · Workbench preview" description="Inspect robotics telemetry assumptions in the first-party Decision Intelligence workbench preview." noindex={true}>
+<div class="decision-workbench container">
+  <header class="dw-opening">
+    <a class="dw-back" href="/projects/decision-intelligence-engine/">← Decision Intelligence Engine</a>
+    <h1>Robot trajectory safety</h1>
+    <p>Explore how collision time and braking assumptions affect the stopping margin in this robotics preview.</p>
+    <a class="dw-scenarios" href="/projects/decision-intelligence-engine/#application">Explore all 7 scenarios <span aria-hidden="true">↗</span></a>
+  </header>
+  <div class="dw-workspace">
+    <form id="telemetry-form" class="dw-inputs">
+      <div class="dw-section-heading"><h2>Telemetry</h2><button class="dw-reset" type="reset">Reset defaults</button></div>
+      <p class="dw-input-intro">Start with an example or enter your own estimates.</p>
+      <div class="dw-presets" role="group" aria-label="Telemetry examples">
+        <button type="button" data-example="baseline" aria-pressed="true">Short on time</button>
+        <button type="button" data-example="margin" aria-pressed="false">More time to stop</button>
+      </div>
+      {robotFields.map(field => (
+        <div class="dw-field">
+          <label for={field.id}>{field.id === 'localization_sigma_m' ? 'Position uncertainty' : field.label}</label>
+          <div class="dw-number">
+            <input id={field.id} name={field.id} type="number" inputmode="decimal" required min={field.min} max={field.max} step={field.step} value={field.value} aria-describedby={`${field.id}-help ${field.id}-range`} />
+            <span aria-hidden="true">{field.unit}</span>
+          </div>
+          <p id={`${field.id}-help`}>{field.id === 'localization_sigma_m' ? 'How uncertain the robot is about its position.' : field.help}</p>
+          <span class="dw-range" id={`${field.id}-range`}>{field.min}–{field.max} {field.unit} · step {field.step}</span>
+        </div>
+      ))}
+      <div class="dw-threshold">
+        <div class="dw-section-heading"><label for="threshold">Confidence threshold</label><output id="threshold-value" for="threshold" aria-hidden="true">85%</output></div>
+        <input id="threshold" type="range" min="50" max="99" step="1" value="85" aria-valuetext="85 percent" aria-describedby="threshold-help" />
+        <p id="threshold-help">50–99%. Flags low confidence for review without changing the model’s answer.</p>
+      </div>
+      <div class="dw-run-row">
+        <button class="dw-run" type="submit" disabled aria-describedby="connection-status">Run evaluation <span aria-hidden="true">→</span></button>
+        <button class="dw-cancel" id="cancel-evaluation" type="button" hidden>Cancel waiting</button>
+      </div>
+      <p id="connection-status" class="dw-connection" role="status">Model evaluation is disabled in this preview. You can still compare stopping times.</p>
+      <a id="view-decision" class="dw-view-decision" href="#results-title" hidden>View model decision ↓</a>
+      <noscript><p>Enable JavaScript to update the comparison or use the full application linked above.</p></noscript>
+    </form>
+    <div class="dw-readout">
+      <section class="dw-comparison" aria-labelledby="comparison-title">
+        <p class="dw-kicker">Calculated from your inputs</p>
+        <div class="dw-section-heading dw-margin"><h2 id="comparison-title">Stopping margin</h2><output id="margin">−0.3 s</output></div>
+        <p id="margin-explanation" role="status">The robot needs 0.3 s more time to stop.</p>
+        <div class="dw-time"><div><span>Time to collision</span><output id="collision-value">1.1 s</output></div><div class="dw-track"><span id="collision-bar" style="width:22%"></span></div></div>
+        <div class="dw-time dw-stopping"><div><span>Required stopping time</span><output id="stopping-value">1.4 s</output></div><div class="dw-track"><span id="stopping-bar" style="width:28%"></span></div></div>
+        <div class="dw-axis" aria-hidden="true"><span>0 s</span><span id="scale-mid">2.5 s</span><span id="scale-end">5 s</span></div>
+        <p class="dw-caveat">Time to collision minus stopping time. This comparison uses timing only.</p>
+        <p id="input-error" role="status" hidden></p>
+      </section>
+      <section class="dw-results" aria-labelledby="results-title">
+        <div class="dw-section-heading"><h2 id="results-title" tabindex="-1">Model decision</h2><span class="dw-state" id="result-state">Disabled</span></div>
+        <p id="result-message" class="dw-result-message" role="status">For model evaluations, open the existing application from the seven-scenario link above.</p>
+        <div id="model-result" hidden>
+          <p class="dw-action-label">Recommended action</p>
+          <h3 id="model-action" class="dw-action"></h3>
+          <dl class="dw-metrics">
+            <div><dt>Confidence</dt><dd id="model-confidence"></dd><dd class="dw-metric-help" id="model-threshold" role="status"></dd></div>
+            <div><dt>Collision risk</dt><dd id="model-risk"></dd><dd class="dw-metric-help">Model estimate for staying on course</dd></div>
+            <div><dt>Hazard severity</dt><dd id="model-severity"></dd><dd class="dw-metric-help">0 clear · 4 imminent collision</dd></div>
+          </dl>
+          <table class="dw-probabilities">
+            <caption>Action probabilities</caption>
+            <tbody>
+              {Object.entries(actionLabels).map(([key, label]) => (
+                <tr data-action={key}>
+                  <th scope="row">{label}</th>
+                  <td class="dw-probability-bar" aria-hidden="true"><span></span></td>
+                  <td class="dw-probability-value"></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </div>
+  <div class="dw-evidence">
+    <details><summary>How to interpret the results</summary><p>Confidence is the model’s self-reported certainty. Action probabilities compare the options it considered. Collision risk estimates whether staying on course would create an unacceptable collision margin. Hazard severity scores how serious the model considers the situation.</p><p>This is a simulated scenario. Physical safety controllers and human oversight remain authoritative.</p></details>
+    <details><summary>Request data and model evidence</summary><p>Inputs are sent only when you run an enabled evaluation.</p><pre id="input-payload"></pre><p id="model-timing" hidden></p><pre id="model-audit" hidden></pre><p>Schema {metadata.schemaVersion} · source <code>{metadata.sourceRevision}</code></p><a href={`https://huggingface.co/spaces/jacobroutzong/decision-intelligence-engine/blob/${metadata.sourceRevision}/app.py`} target="_blank" rel="noopener noreferrer">Inspect the existing computation ↗</a></details>
+  </div>
+</div>
+</Base>
+<script>
+import { robotFields, validateTelemetry, stoppingMargin, passesThreshold, actionLabels } from '../../../lib/decision-contract.mjs';
+import { evaluateClient } from '../../../lib/decision-client.mjs';
+const form = document.querySelector<HTMLFormElement>('#telemetry-form')!;
+const output = (id: string, text: string) => { document.getElementById(id)!.textContent = text; };
+const run = form.querySelector<HTMLButtonElement>('.dw-run')!;
+const cancel = document.querySelector<HTMLButtonElement>('#cancel-evaluation')!;
+const thresholdInput = document.querySelector<HTMLInputElement>('#threshold')!;
+const marginReadout = document.querySelector<HTMLOutputElement>('#margin')!;
+const modelResult = document.querySelector<HTMLElement>('#model-result')!;
+const resultMessage = document.querySelector<HTMLElement>('#result-message')!;
+const audit = document.querySelector<HTMLElement>('#model-audit')!;
+const timing = document.querySelector<HTMLElement>('#model-timing')!;
+const viewDecision = document.querySelector<HTMLAnchorElement>('#view-decision')!;
+const probabilityRows = modelResult.querySelectorAll<HTMLTableRowElement>('[data-action]');
+let controller: AbortController | undefined;
+let revision = 0;
+let ready = false;
+let lastResult: Awaited<ReturnType<typeof evaluateClient>> | undefined;
+
+function showState(state: string, message: string) {
+  output('result-state', state);
+  resultMessage.hidden = false;
+  resultMessage.textContent = message;
+}
+
+function invalidate() {
+  if (controller || lastResult) showState('Inputs changed', 'Run another evaluation to see results for the new telemetry.');
+  if (controller) output('connection-status', 'Stopped waiting after an input change. Backend work may continue.');
+  revision++; controller?.abort(); controller = undefined; lastResult = undefined;
+  cancel.hidden = true; run.disabled = !ready;
+  modelResult.hidden = true; audit.hidden = true; timing.hidden = true; viewDecision.hidden = true;
+}
+
+function renderThreshold(confidence: number) {
+  const threshold = thresholdInput.valueAsNumber;
+  const passes = passesThreshold(confidence, threshold);
+  output('model-threshold', passes ? `Meets ${threshold}% threshold` : `Below ${threshold}% · review`);
+}
+
+function renderResult(result: NonNullable<typeof lastResult>, roundTripMs: number) {
+  const percent = (value: number) => `${(value * 100).toFixed(1)}%`;
+  const action = actionLabels[result.action as keyof typeof actionLabels];
+  output('model-action', action);
+  output('model-confidence', percent(result.confidence));
+  output('model-risk', percent(result.risk));
+  output('model-severity', `${result.severity.toFixed(2)} / 4`);
+  renderThreshold(result.confidence);
+  for (const row of probabilityRows) {
+    const key = row.dataset.action as keyof typeof actionLabels;
+    const probability = result.probabilities[key];
+    row.toggleAttribute('data-recommended', key === result.action);
+    row.querySelector<HTMLElement>('.dw-probability-bar > span')!.style.width = `${probability * 100}%`;
+    row.querySelector<HTMLElement>('.dw-probability-value')!.textContent = percent(probability);
+  }
+  output('model-audit', JSON.stringify(result, null, 2));
+  output('model-timing', `Backend evaluation: ${result.backendElapsedMs.toFixed(0)} ms. End to end: ${roundTripMs.toFixed(0)} ms.`);
+  output('result-state', 'Complete');
+  resultMessage.hidden = true; modelResult.hidden = false; audit.hidden = false; timing.hidden = false; viewDecision.hidden = false;
+}
+form.addEventListener('submit', async event => {
+  event.preventDefault();
+  if (!ready || controller || !form.reportValidity()) return;
+  invalidate(); const current = revision; controller = new AbortController(); const active = controller;
+  run.disabled = true; cancel.hidden = false;
+  showState('Evaluating', 'Waiting for the model’s response…');
+  output('connection-status', 'One request is in progress.');
+  const timer = setTimeout(() => active.abort('timeout'), 35000); const start = performance.now();
+  try {
+    const telemetry = Object.fromEntries(robotFields.map(f => [f.id, (form.elements.namedItem(f.id) as HTMLInputElement).valueAsNumber]));
+    const result = await evaluateClient(telemetry, active.signal);
+    if (current !== revision) return;
+    lastResult = result; renderResult(result, performance.now() - start); output('connection-status', `Evaluation complete. Recommended action: ${actionLabels[result.action as keyof typeof actionLabels]}.`);
+  } catch (error) {
+    if (current !== revision) return;
+    const state = active.signal.reason === 'timeout' ? 'Timed out' : active.signal.aborted ? 'Waiting cancelled' : 'Evaluation failed';
+    showState(state, active.signal.aborted ? 'The backend may still be processing this request.' : error instanceof Error ? error.message : 'The evaluation could not be completed.');
+    output('connection-status', `${state}. No automatic retry was made.`);
+  } finally {
+    clearTimeout(timer);
+    if (current === revision) {
+      const returnFocus = document.activeElement === cancel;
+      controller = undefined; cancel.hidden = true; run.disabled = !ready;
+      if (returnFocus) run.focus();
+    }
+  }
+});
+cancel.addEventListener('click', () => controller?.abort());
+// Public hosts never contact the evaluation API. Private staging still checks server readiness.
+if (import.meta.env.DEV || location.hostname.endsWith('.decision-intelligence-staging.pages.dev')) {
+  output('connection-status', 'Checking evaluation availability…');
+  fetch('/api/decision-engine/evaluate', { signal: AbortSignal.timeout(5000) }).then(async res => {
+    if (res.ok && res.headers.get('Content-Type')?.includes('application/json') && (await res.json()).ready === true) {
+      ready = true;
+      run.disabled = false;
+      output('connection-status', 'Protected evaluation ready.');
+      showState('Not run', 'Run an evaluation to see the model’s recommended action, confidence, risk, and severity.');
+      return;
+    }
+    throw new Error('Evaluation unavailable');
+  }).catch(() => {
+    output('connection-status', 'Model evaluation is unavailable here. You can still compare stopping times.');
+    showState('Unavailable', 'Model results appear when protected evaluation is enabled.');
+  });
+}
+function update() {
+  const input = Object.fromEntries(robotFields.map(field => { const el = form.elements.namedItem(field.id) as HTMLInputElement; return [field.id, el.value === '' ? NaN : el.valueAsNumber]; }));
+  const error = document.getElementById('input-error')!;
+  try {
+    validateTelemetry(input);
+    const margin = stoppingMargin(input);
+    const format = (n: number) => n.toFixed(1).replace('-', '−');
+    output('collision-value', `${format(input.time_to_collision_s)} s`);
+    output('stopping-value', `${format(input.stop_time_s)} s`);
+    output('margin', `${margin > 0 ? '+' : ''}${format(margin)} s`);
+    marginReadout.toggleAttribute('data-shortfall', margin < 0);
+    const scale = input.time_to_collision_s > 5 ? 10 : 5;
+    document.getElementById('collision-bar')!.style.width = `${input.time_to_collision_s / scale * 100}%`;
+    document.getElementById('stopping-bar')!.style.width = `${input.stop_time_s / scale * 100}%`;
+    output('scale-mid', `${scale / 2} s`); output('scale-end', `${scale} s`);
+    output('margin-explanation', margin < 0 ? `The robot needs ${format(-margin)} s more time to stop.` : margin === 0 ? 'The two times are equal. There is no spare time.' : `The entered times leave ${format(margin)} s to spare.`);
+    output('input-payload', JSON.stringify({ schemaVersion: 1, scenario: 'robot_trajectory', telemetry: input }, null, 2));
+    error.hidden = true;
+  } catch (err) {
+    error.hidden = false; error.textContent = err instanceof Error ? err.message : 'Check the telemetry inputs.';
+    marginReadout.removeAttribute('data-shortfall');
+    output('margin', '—'); output('margin-explanation', 'Correct the telemetry to calculate the margin.');
+    output('collision-value', '—'); output('stopping-value', '—');
+    document.getElementById('collision-bar')!.style.width = '0%'; document.getElementById('stopping-bar')!.style.width = '0%';
+    output('input-payload', 'Input is incomplete or invalid.');
+  }
+  output('threshold-value', `${thresholdInput.value}%`);
+  thresholdInput.setAttribute('aria-valuetext', `${thresholdInput.value} percent`);
+}
+form.addEventListener('input', event => { if (event.target === thresholdInput) { if (lastResult) renderThreshold(lastResult.confidence); } else { invalidate(); form.querySelectorAll('[data-example]').forEach(el => el.setAttribute('aria-pressed', 'false')); } update(); });
+form.addEventListener('reset', event => {
+  event.preventDefault();
+  invalidate();
+  robotFields.forEach(field => { (form.elements.namedItem(field.id) as HTMLInputElement).value = String(field.value); });
+  thresholdInput.value = thresholdInput.defaultValue;
+  update();
+  form.querySelectorAll<HTMLElement>('[data-example]').forEach(el => el.setAttribute('aria-pressed', String(el.dataset.example === 'baseline')));
+});
+form.querySelectorAll<HTMLButtonElement>('[data-example]').forEach(button => button.addEventListener('click', () => {
+  invalidate();
+  const values = button.dataset.example === 'baseline' ? robotFields.map(field => field.value) : [4, 1.4, 0.2];
+  robotFields.forEach((field, i) => { (form.elements.namedItem(field.id) as HTMLInputElement).value = String(values[i]); });
+  form.querySelectorAll('[data-example]').forEach(el => el.setAttribute('aria-pressed', String(el === button))); update();
+}));
+update();
+</script>
