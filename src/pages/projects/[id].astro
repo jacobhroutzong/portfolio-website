@@ -4,7 +4,7 @@ import Base from '../../layouts/Base.astro';
 import PortfolioImage from '../../components/PortfolioImage.astro';
 import Icon from '../../components/Icon.astro';
 import { visibleProjects } from '../../lib/projects';
-export async function getStaticPaths() { return (await visibleProjects()).map(project => ({ params: { id: project.id }, props: { project } })); }
+export async function getStaticPaths() { return (await visibleProjects()).filter(project => project.id !== 'harness2-lab').map(project => ({ params: { id: project.id }, props: { project } })); }
 const { project } = Astro.props;
 const p = project.data;
 const { Content } = await render(project);

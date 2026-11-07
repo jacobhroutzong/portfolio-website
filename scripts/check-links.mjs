@@ -20,7 +20,8 @@ for (const file of files) {
     try { if ((await stat(target)).isDirectory()) target = resolve(target,'index.html'); await stat(target); } catch { errors.push(`${relative(root,file)}: missing ${raw}`); continue; }
     if (url.hash && target.endsWith('.html')) {
       const targetHtml = target === file ? html : await readFile(target,'utf8');
-      if (!targetHtml.includes(`id="${decodeURIComponent(url.hash.slice(1))}"`)) errors.push(`${relative(root,file)}: missing anchor ${raw}`);
+      const clientRoute = url.hash.startsWith('#/') && targetHtml.includes('<body data-hash-router');
+      if (!clientRoute && !targetHtml.includes(`id="${decodeURIComponent(url.hash.slice(1))}"`)) errors.push(`${relative(root,file)}: missing anchor ${raw}`);
     }
     references++;
   }

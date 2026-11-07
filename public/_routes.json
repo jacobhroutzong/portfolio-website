@@ -1,1 +1,1 @@
-{"version":1,"include":["/api/equityscout/*"],"exclude":[]}
+{"version":1,"include":["/api/equityscout/*","/api/harness2-lab/*"],"exclude":[]}
