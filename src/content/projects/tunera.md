@@ -79,11 +79,11 @@ measurements. Test data stays out of training and model selection.
 
 ## Current status
 
-**Working and tested:** the CPU planner, data checks, saved-response scorer,
-packaging and checkpoint-handling code. The suite has 50 passing tests, including
-checks against Qwen3-4B's real tokenizer. Training lifecycle tests use CPU test
-doubles for the model and GPU.
+**Working and tested:** the CPU planner, Dataset Studio, saved-response and
+tool-use evaluation, report import and export, and checkpoint-handling code.
+Qwen3-4B remains the default recipe.
 
-**Still to run:** actual GPU training, recovery with a real optimizer checkpoint,
-and model benchmarks. No trained model or improvement result is claimed yet.
-Qwen3.5 and gpt-oss are placeholders, not supported training targets.
+**Experimental:** Qwen3.5-2B has a pinned BF16 LoRA recipe and a verified tokenizer
+contract. A tiny random-weight model exercised optimizer recovery on CPU.
+Full-model GPU training, recovery and paired evaluation remain the acceptance
+gate. The other Qwen3.5 sizes and gpt-oss are roadmap candidates.
