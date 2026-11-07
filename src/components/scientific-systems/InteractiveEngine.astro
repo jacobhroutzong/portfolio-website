@@ -37,7 +37,7 @@ const examples = numerical ? [
       <label><strong id="expression-label">Expression</strong> <input name="expression" value="x^3 + 2*x" maxlength="256" required autocomplete="off" spellcheck="false" aria-labelledby="expression-label" aria-describedby="expression-hint" /><span id="expression-hint">Use integer literals, parentheses and explicit operators + − * / ^. Write 2*x for multiplication. Integer powers range from −16 to 16.</span></label>
       <label><strong id="variable-label">Differentiate with respect to</strong> <input name="variable" value="x" maxlength="32" pattern="[A-Za-z_][A-Za-z_0-9]*" required autocomplete="off" aria-labelledby="variable-label" aria-describedby="variable-hint" /><span id="variable-hint">Start with an ASCII letter or underscore. Use up to 32 letters, digits or underscores.</span></label>
     </>}
-    <div class="demo-actions"><button class="demo-run" type="submit">{numerical ? 'Solve with C++' : 'Differentiate with C++'}</button><button type="button" data-cancel disabled>Cancel / reset engine</button></div>
+    <div class="demo-actions"><button class="demo-run" type="submit" disabled>{numerical ? 'Solve with C++' : 'Differentiate with C++'}</button><button type="button" data-cancel disabled>Cancel / reset engine</button></div>
   </form>
   <p role="status" data-status>Ready. The C++ engine has not been loaded.</p>
   <section class="demo-result" aria-labelledby="result-heading" data-panel hidden>

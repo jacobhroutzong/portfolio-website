@@ -39,7 +39,7 @@ const render = (formula: string) => katex.renderToString(formula, { throwOnError
   <section class="scientific-section" id="native">
     <p class="lab-kicker">PHASE 5 / NATIVE ONLY</p>
     <h2>{numerical ? 'QR least squares' : 'Exact linear-equation solving'}</h2>
-    <p>{numerical ? 'The draft native C++ API solves bounded, full-column-rank least-squares problems.' : 'The draft native C++ API solves bounded rational equations that reduce to an affine form and retains the original domain conditions.'} This feature is under review and unavailable in the browser workbench.</p>
-    <a class="text-link" href={project.sourceUrl + '/pull/1'}>Read the draft native implementation ↗</a>
+    <p>{numerical ? 'The native C++ API addresses bounded, full-column-rank least-squares problems.' : 'The native C++ API addresses bounded rational equations that reduce to an affine form and retains the original domain conditions.'} This feature is available through the native source and is outside the browser workbench’s scope.</p>
+    <a class="text-link" href={project.sourceUrl + '/pull/1'}>Read the native implementation and validation ↗</a>
   </section>
 </LabShell>

@@ -1,5 +1,31 @@
 import { test, expect } from '@playwright/test';
 
+test.describe('without JavaScript', () => {
+  test.use({ javaScriptEnabled: false });
+
+  for (const { kind, action, field, label, value } of [
+    { kind: 'numerical', action: 'Solve with C++', field: 'order', label: 'Matrix order', value: '3' },
+    { kind: 'symbolic', action: 'Differentiate with C++', field: 'expression', label: 'Expression', value: '42*x' },
+  ]) {
+    test(`${kind} inputs cannot submit through the browser`, async ({ page }) => {
+      const path = `/labs/scientific-systems/${kind}/`;
+      const submissions: string[] = [];
+      await page.route(url => url.pathname === path && url.searchParams.has(field), async route => {
+        submissions.push(route.request().url());
+        await route.fulfill({ body: 'Intercepted form submission' });
+      });
+      await page.goto(path);
+      const input = page.getByRole(kind === 'numerical' ? 'spinbutton' : 'textbox', { name: label, exact: true });
+      await input.fill(value);
+      await expect(page.getByRole('button', { name: action })).toBeDisabled();
+      await input.press('Enter');
+      await expect(page).toHaveURL(url => url.pathname === path && url.search === '');
+      await expect(input).toHaveValue(value);
+      expect(submissions).toEqual([]);
+    });
+  }
+});
+
 test('C++ matrix worker solves, rejects singular matrices, resets and recovers', async ({ page }) => {
   await page.goto('/labs/scientific-systems/numerical/');
   const demo = page.locator('.cpp-demo');

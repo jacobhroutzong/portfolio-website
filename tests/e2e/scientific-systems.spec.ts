@@ -31,12 +31,12 @@ test('Scientific lab routes, honest statuses and recorded controls', async ({ pa
   await page.locator('summary').filter({ hasText: 'x^0' }).click();
   await expect(page.locator('.lab-research-disclosure details').filter({ hasText: 'x^0' })).toContainText('x ≠ 0');
   await expect(page.locator('.katex-mathml').first()).toBeAttached();
-  await expect(page.locator('#native')).toContainText('unavailable in the browser workbench');
+  await expect(page.locator('#native')).toContainText('outside the browser workbench’s scope');
   await switcher.getByRole('link', { name: 'Technical documentation' }).click();
   await expect(page).toHaveURL(/#documentation$/);
   await expect(page.getByRole('link', { name: 'Browser release manifest' })).toBeVisible();
   await page.getByRole('link', { name: 'Phase 5 QR least squares (native only)' }).click();
-  await expect(page.locator('#native')).toContainText('unavailable in the browser workbench');
+  await expect(page.locator('#native')).toContainText('outside the browser workbench’s scope');
 });
 test('Scientific lab remains legible without JavaScript', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });

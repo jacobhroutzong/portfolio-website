@@ -142,5 +142,7 @@ export function mountEngineDemos() {
         fail(error instanceof Error ? error.message : 'Invalid input');
       }
     });
+    // Keep native form submission disabled until the local handler is attached.
+    submit.disabled = false;
   });
 }
