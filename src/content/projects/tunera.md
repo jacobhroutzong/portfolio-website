@@ -9,7 +9,6 @@ featured: false
 status: In progress
 order: 0
 sourceUrl: https://huggingface.co/spaces/jacobroutzong/tuneledger/tree/main
-demoUrl: https://huggingface.co/spaces/jacobroutzong/tuneledger
 screenshots: []
 videos: []
 ---
@@ -31,17 +30,7 @@ The base model's billions of weights stay frozen.
 <span style="display:inline-flex;align-items:center;gap:8px"><img src="/media/tunera/googlecolab.svg" width="22" height="22" alt="" />Google Colab</span>
 </div>
 
-[Open the demo full screen](https://jacobroutzong-tuneledger.hf.space/) ·
 [Download the source ZIP](/downloads/tunera-ai-0.3.1.zip)
-
-## Try the tools
-
-The demo lets you build a training configuration, check conversation data, and
-score responses you already have. **It does not train or run a model.** It runs
-on a free CPU Space, so it may take a moment to wake up. Use public or synthetic
-data only; submitted text is processed on that shared server.
-
-<iframe src="https://jacobroutzong-tuneledger.hf.space/" title="Tunera training planner and dataset tools" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" style="width:100%;height:1200px;border:1px solid var(--border);border-radius:8px;"></iframe>
 
 ## What the settings mean
 

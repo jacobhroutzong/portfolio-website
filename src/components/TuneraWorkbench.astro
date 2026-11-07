@@ -1,0 +1,150 @@
+---
+const cases = Array.from({ length: 12 }, (_, index) => {
+  const n = index + 1;
+  return {
+    id: `case-${String(n).padStart(2, '0')}`,
+    messages: [
+      { role: 'user', content: `Return only JSON with key result: ${n} + 2` },
+      { role: 'assistant', content: JSON.stringify({ result: n + 2 }) },
+    ],
+    required_keys: ['result'], scorer: 'json_exact',
+  };
+});
+const jsonl = cases.map(row => JSON.stringify(row)).join('\n');
+const predictions = JSON.stringify(Object.fromEntries(cases.map(row => [row.id, row.messages[1].content])), null, 2);
+const controls = [
+  { name: 'context', label: 'Maximum context tokens', min: 128, max: 4096, step: 128, value: 512, help: 'How much of the prompt and answer fits in one example.' },
+  { name: 'rank', label: 'LoRA rank', min: 4, max: 64, step: 4, value: 16, help: 'A higher rank gives the adapter more capacity and uses more memory.' },
+  { name: 'steps', label: 'Optimizer steps', min: 2, max: 1000, step: 1, value: 100, help: 'How many times training updates the adapter weights.' },
+];
+---
+
+<section id="tunera-tools" class="workbench" aria-labelledby="tunera-tools-title">
+  <h2 id="tunera-tools-title">Try Tunera</h2>
+  <p>Build a training plan, check your dataset, or score saved responses. These tools run on CPU and make no model calls.</p>
+  <p class="help">Use public or synthetic examples. Inputs are processed on a shared server, which can take a moment to wake up.</p>
+  <noscript>Enable JavaScript to use the interactive tools.</noscript>
+
+  <details open>
+    <summary>Plan an experiment</summary>
+    <form data-tool="plan" method="post">
+      <div class="controls">
+        <label>Qwen3 model size
+          <select name="size" aria-describedby="tunera-size-help">
+            {['0.6B', '1.7B', '4B', '8B'].map(size => <option selected={size === '4B'}>{size}</option>)}
+          </select>
+          <span class="help" id="tunera-size-help">Larger models generally need more GPU memory.</span>
+        </label>
+        {controls.map(({ name, label, help, ...input }) => (
+          <label>{label}
+            <input type="number" name={name} {...input} required aria-describedby={`tunera-${name}-help`} />
+            <span class="help" id={`tunera-${name}-help`}>{help}</span>
+          </label>
+        ))}
+      </div>
+      <div class="actions">
+        <button class="button primary" disabled>Build plan</button>
+        <a class="text-link" href="#what-the-settings-mean">What the settings mean</a>
+      </div>
+      <p data-status role="status" class="status"></p>
+      <pre data-result aria-label="Experiment plan" tabindex="0" hidden></pre>
+    </form>
+  </details>
+
+  <details>
+    <summary>Validate a dataset</summary>
+    <form data-tool="validate" method="post">
+      <p class="help">Check up to 250 conversations (256 KB) and preview the train, validation and test splits.</p>
+      <label>Conversation cases (JSONL)
+        <textarea name="cases" rows="8" required spellcheck="false">{jsonl}</textarea>
+      </label>
+      <button class="button primary" disabled>Validate dataset</button>
+      <p data-status role="status" class="status"></p>
+      <pre data-result aria-label="Dataset validation report" tabindex="0" hidden></pre>
+    </form>
+  </details>
+
+  <details>
+    <summary>Score saved responses</summary>
+    <form data-tool="score" method="post">
+      <p class="help">Match one saved response to each reference case ID. The included examples should score 100%.</p>
+      <label>Reference cases (JSONL)
+        <textarea name="cases" rows="6" required spellcheck="false">{jsonl}</textarea>
+      </label>
+      <label>Predictions (JSON object)
+        <textarea name="predictions" rows="6" required spellcheck="false">{predictions}</textarea>
+      </label>
+      <button class="button primary" disabled>Score responses</button>
+      <p data-status role="status" class="status"></p>
+      <pre data-result aria-label="Saved response scores" tabindex="0" hidden></pre>
+    </form>
+  </details>
+</section>
+
+<script>
+  for (const form of document.querySelectorAll<HTMLFormElement>('#tunera-tools form[data-tool]')) {
+    const button = form.querySelector('button')!;
+    const status = form.querySelector<HTMLElement>('[data-status]')!;
+    const output = form.querySelector<HTMLElement>('[data-result]')!;
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      if (button.disabled) return;
+      const values = new FormData(form);
+      const action = form.dataset.tool;
+      const fields = action === 'plan'
+        ? { size: values.get('size'), context: Number(values.get('context')), rank: Number(values.get('rank')), steps: Number(values.get('steps')) }
+        : Object.fromEntries(values);
+
+      output.hidden = true;
+      status.textContent = 'Working…';
+      button.disabled = true;
+      try {
+        for (const name of ['cases', 'predictions']) {
+          const text = values.get(name);
+          if (typeof text === 'string' && new TextEncoder().encode(text).length > 256_000) {
+            throw new Error('Each text field is limited to 256 KB.');
+          }
+        }
+        const response = await fetch('/api/tunera', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...fields, action }),
+        }).catch(() => null);
+        const result = await response?.json().catch(() => null);
+        if (!response?.ok || !result) {
+          throw new Error(result?.error || 'Tunera is temporarily unavailable. Try again in a moment.');
+        }
+        output.textContent = JSON.stringify(result, null, 2);
+        output.hidden = false;
+        status.textContent = action === 'score' ? `Accuracy: ${(result.accuracy * 100).toFixed(1)}% across ${result.count} cases.`
+          : action === 'validate' ? `${result.rows} conversations passed validation.` : 'Training plan ready.';
+      } catch (error) {
+        status.textContent = error instanceof Error ? error.message : 'Could not complete this request.';
+      } finally {
+        button.disabled = false;
+      }
+    });
+    button.disabled = false;
+  }
+</script>
+
+<style>
+  .workbench { margin-block: 2rem 3rem; padding: clamp(1rem, 3vw, 2rem); border: 1px solid var(--border); border-radius: 10px; background: var(--bg-soft); }
+  h2 { margin: 0 0 .5rem; }
+  p { margin: 0 0 .75rem; }
+  .help, .status { color: var(--muted); font-size: .875rem; }
+  details { margin-top: 1rem; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); }
+  summary { cursor: pointer; padding: .85rem 1rem; font-weight: 600; }
+  form { display: grid; gap: 1rem; padding: .5rem 1rem 1rem; }
+  .controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+  label { display: grid; align-content: start; gap: .4rem; color: var(--text); font-size: .9375rem; }
+  input, select, textarea, pre { width: 100%; border: 1px solid var(--border-strong); border-radius: 5px; background: var(--bg-soft); color: var(--text); padding: .6rem; }
+  textarea, pre { font-family: monospace; font-size: .85rem; }
+  textarea { resize: vertical; }
+  pre { max-height: 26rem; overflow: auto; margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .status { margin: 0; }
+  .status:empty { display: none; }
+  .actions { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1rem; }
+  button { justify-self: start; cursor: pointer; }
+  button:disabled { opacity: .6; cursor: wait; }
+  @media (max-width: 560px) { .controls { grid-template-columns: 1fr; } }
+</style>
