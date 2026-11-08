@@ -8,7 +8,7 @@ featured: false
 status: In progress
 order: 0
 sourceUrl: https://github.com/jacobhroutzong/recursa
-demoUrl: https://huggingface.co/spaces/jacobroutzong/recursa
+demoUrl: https://jacobroutzong-recursa.hf.space/
 screenshots:
   - src: /media/recursa-studio.png
     alt: Recursa Studio Execution Explorer displaying a recorded model call and its timing
