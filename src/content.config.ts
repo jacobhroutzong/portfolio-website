@@ -8,7 +8,7 @@ const projects = defineCollection({
     title: z.string().min(1),
     brandLogo: z.string().regex(/^\/media\/[a-zA-Z0-9/_.-]+\.svg$/).optional(),
     summary: z.string().min(1),
-    category: z.enum(['AI / Machine Learning', 'Data Engineering', 'Robotics & Simulation', 'Quantitative Research', 'GPU / High-Performance Computing', 'Signal Processing / Electronic Warfare']),
+    category: z.enum(['AI / Machine Learning', 'Business & Operations Systems', 'Data Engineering', 'Robotics & Simulation', 'Quantitative Research', 'GPU / High-Performance Computing', 'Signal Processing / Electronic Warfare']),
     technologies: z.array(z.string()).min(1),
     draft: z.boolean().default(true),
     featured: z.boolean().default(false),

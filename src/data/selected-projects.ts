@@ -69,5 +69,12 @@ export const selectedProjects = [
     "description": "Review job recommendations one at a time, save roles worth a closer look, and track applications. Try the workflow with three sample jobs.",
     "href": "/projects/pursuit/",
     "linkLabel": "Explore Pursuit →"
+  },
+  {
+    "title": "Convergence",
+    "eyebrow": "BUSINESS & OPERATIONS SYSTEMS / PRIVATE CRM",
+    "description": "A CRM and operations workspace that connects contacts, deal pipelines, projects, tasks, and automation. Explore the case study and screenshots from the working demo.",
+    "href": "/projects/convergence/",
+    "linkLabel": "Explore Convergence →"
   }
 ];
