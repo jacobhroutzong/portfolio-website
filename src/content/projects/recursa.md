@@ -1,8 +1,8 @@
 ---
 title: Recursa — Recursive Application Synthesis
-summary: A CPU-first research workbench for external specification inspection, dependency-aware synthesis plans, resumable experiments, and transparent execution replays. Genuine model-backed synthesis is the next verification gate.
+summary: A research workbench that uses a contained Recursive Language Model to inspect specifications, synthesize browser applications, and record how each run was verified.
 category: AI / Machine Learning
-technologies: [Python, Recursive Language Models, JavaScript, Experiment tracking, Docker, Hugging Face Spaces]
+technologies: [Python, Recursive Language Models, TypeScript, Docker, Playwright, Hugging Face Spaces]
 draft: false
 featured: false
 status: In progress
@@ -11,78 +11,51 @@ sourceUrl: https://github.com/jacobhroutzong/recursa
 demoUrl: https://huggingface.co/spaces/jacobroutzong/recursa
 screenshots:
   - src: /media/recursa-studio.png
-    alt: Recursa Studio showing a recorded deterministic requirement-validation trace and its node inspector
-    caption: Actual local Studio capture of a CPU validation run. This is infrastructure evidence, not model-backed recursion.
+    alt: Recursa Studio Execution Explorer displaying a recorded model call and its timing
+    caption: The Execution Explorer exposes timings and verification outcomes for each public benchmark trial.
+  - src: /media/recursa-aviation.png
+    alt: Aviation Operations board displaying synthetic arrivals, departures, and a stand conflict
+    caption: Chromium capture from the Aviation showcase. The verified build includes disclosed host assembly.
 videos: []
 ---
 
-## Build beyond the context window
+## From specification to verified workflow
 
-Recursa investigates whether a Recursive Language Model can synthesize software
-more reliably by exploring a large application specification in an external
-Python environment. The intended controller selects relevant requirements,
-invokes focused sub-model calls, assembles source artifacts, and verifies the
-result under explicit execution budgets.
-
-This is an **in-progress engineering and research project**. The published
-workspace makes the current evidence inspectable without presenting unfinished
-capabilities as completed results.
+Recursa asks what changes when a model can inspect a specification programmatically and make focused model calls. It wraps the official Recursive Language Models runtime with indexed requirements, budget enforcement, artifact verification, and a public Studio for inspecting the evidence.
 
 [Open Studio full screen](https://jacobroutzong-recursa.hf.space/) ·
 [Browse the source](https://github.com/jacobhroutzong/recursa) ·
-[Read the ordered implementation record](https://github.com/jacobhroutzong/recursa/blob/main/docs/implementation-progress.md)
+[Read the benchmark protocol](https://github.com/jacobhroutzong/recursa/blob/main/docs/baseline-protocol.md)
 
-## Explore the progress demo
+## Try the Studio
 
-Select a recorded CPU run, follow its dependency-validation events, open the node
-inspector, and export the saved report. The public application is **CPU-only and
-replay-only**: it does not start a model, execute visitor code, or provision a GPU.
-No API key is needed.
+Open **Generated artifacts** to inspect Task Management, Operations Analytics, or Aviation Operations. Each showcase has source, a screenshot, and four recorded Chromium workflows. Open **Benchmarks** to compare the three methods, then select a trial to see its recorded calls, durations, and verification outcomes. The CPU-hosted Studio serves recorded evidence without requiring an API key.
 
-The embedded Studio shows the currently published build and its development
-status. Updates represent reviewed releases of the workbench; recorded traces
-remain labeled by their actual execution mode. The full-screen link works
-independently of the embed. A sleeping Hugging Face Space may take a moment to
-wake up.
+<iframe src="https://jacobroutzong-recursa.hf.space/" title="Recursa Studio benchmark traces and verified application replays" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" style="display:block;inline-size:100%;block-size:clamp(36rem,90dvh,64rem);border:1px solid var(--border);border-radius:8px;"></iframe>
 
-<iframe src="https://jacobroutzong-recursa.hf.space/" title="Recursa Studio development progress and recorded CPU execution explorer" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" style="width:100%;height:1050px;border:1px solid var(--border);border-radius:8px;"></iframe>
+## How it works
 
-## Implemented foundation
+![Reviewed requirements enter the contained RLM. A host broker enforces model budgets, then returned source goes through build and browser checks. Reviewed evidence goes to the read-only Studio.](/media/recursa-architecture.svg)
 
-- **External specifications:** stable requirement IDs, dependencies, sections,
-  hierarchy, acceptance criteria, schemas, and bounded indexed inspection.
-- **Official runtime integration:** a pinned `rlms` adapter with separate root
-  and sub-model configuration, pre-dispatch usage reservations, and private
-  upstream trajectory capture.
-- **Synthesis planning:** dependency-aware task states, refinement of pending
-  tasks, validated intermediate artifacts, and declared-interface lookup.
-- **Verification infrastructure:** artifact path and provenance checks,
-  non-executing JavaScript/JSON syntax checks, and declared requirement-coverage
-  reports. These checks do not establish functional application success.
-- **Reproducibility:** source/configuration fingerprints, per-trial checkpoints,
-  JSON/CSV/ZIP exports, and a prepared Colab notebook with durable Drive output.
+The local controller inspects indexed requirements inside a network-disabled container. A host broker mediates the root and sub-model calls and reserves usage before dispatch. Returned files carry requirement references and content hashes. The host checks the source, builds the application, and runs independently authored browser scenarios. Reviewed results are exported separately to the replay service.
 
-## Evidence and remaining work
+An authorized local Qwen run recorded context inspection and a completed subcall. Its initial Task Management candidate built and failed browser checks. After targeted repair and host composition of the filter, it passed the four declared workflows. The Operations and Aviation showcases also include disclosed host corrections or assembly.
 
-Offline integration tests exercise the official RLM's REPL and subcall wiring
-with **scripted HTTP responses**. They verify context handling, state transitions,
-budget exhaustion, artifact persistence, and report generation. Those fixtures
-are not genuine model reasoning, generated application examples, or research
-benchmarks. The public CPU captures are deterministic validation runs.
+## What the comparison measured
 
-Genuine model-backed synthesis remains unverified. Full compilation, functional
-application tests, bounded repair, two independently verified generated apps,
-and fair direct/structured/RLM comparisons are still required. No measured
-advantage, reproduced paper result, or statistical significance is claimed.
+The expanded series ran **18 first-pass trials** across three specifications. Direct generation, structured nonrecursive generation, and contained RLM shared the same local Qwen weights, two matched seed blocks, and a per-trial ceiling of 120 seconds, six calls, and 2,304 output tokens per call. The series used zero repairs and zero paid API calls.
 
-Colab is reserved for later authorized accelerator experiments. Its notebook
-execution and GPU recovery have not yet been verified. The public Space stays
-independent of paid inference and GPU availability.
+| Method | Builds passed / measured | Browser checks passed / measured |
+| --- | ---: | ---: |
+| Direct LLM | 0 / 2 | Unmeasured |
+| Structured | 1 / 1 | 0 / 4 |
+| Contained RLM | 1 / 2 | 0 / 4 |
+
+All five measured builds came from Task Management. Operations and Aviation stopped before build measurement after incomplete responses, invalid manifests, or broker rejection. The independent Operations control passed the added sorting and CSV export checks. These results characterize one local model and budget, with too little measured browser coverage to rank the methods.
+
+[Explore the results and 45 benchmark traces](https://jacobroutzong-recursa.hf.space/#benchmarks) ·
+[Read the measured outcomes and limitations](https://github.com/jacobhroutzong/recursa/blob/main/docs/baseline-protocol.md#expanded-results)
 
 ## Research attribution
 
-The underlying method comes from Alex L. Zhang, Tim Kraska, and Omar Khattab's
-[Recursive Language Models](https://arxiv.org/abs/2512.24601) and the
-[official RLM implementation](https://github.com/alexzhang13/rlm). Recursa's
-contribution is the application-synthesis workbench, orchestration, validation,
-and planned independent evaluation around that runtime.
+The underlying inference method comes from Alex L. Zhang, Tim Kraska, and Omar Khattab. Recursa contributes the application-synthesis orchestration, verification harness, and replay workbench around their runtime. [Recursive Language Models](https://arxiv.org/abs/2512.24601) · [Official implementation](https://github.com/alexzhang13/rlm)
