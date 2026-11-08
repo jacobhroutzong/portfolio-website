@@ -2,13 +2,13 @@
 title: Recursa — Recursive Application Synthesis
 summary: A research workbench that uses a contained Recursive Language Model to inspect specifications, synthesize browser applications, and record how each run was verified.
 category: AI / Machine Learning
-technologies: [Python, Recursive Language Models, TypeScript, Docker, Playwright, Hugging Face Spaces]
+technologies: [Python, Recursive Language Models, TypeScript, Docker, Playwright]
 draft: false
 featured: false
 status: In progress
 order: 0
 sourceUrl: https://github.com/jacobhroutzong/recursa
-demoUrl: https://jacobroutzong-recursa.hf.space/
+demoUrl: /projects/recursa/studio/
 screenshots:
   - src: /media/recursa-studio.png
     alt: Recursa Studio Execution Explorer displaying a recorded model call and its timing
@@ -23,7 +23,6 @@ videos: []
 
 Recursa asks what changes when a model can inspect a specification programmatically and make focused model calls. It wraps the official Recursive Language Models runtime with indexed requirements, budget enforcement, artifact verification, and a public Studio for inspecting the evidence.
 
-[Open Studio full screen](https://jacobroutzong-recursa.hf.space/) ·
 [Browse the source](https://github.com/jacobhroutzong/recursa) ·
 [Read the benchmark protocol](https://github.com/jacobhroutzong/recursa/blob/main/docs/baseline-protocol.md)
 
@@ -31,7 +30,7 @@ Recursa asks what changes when a model can inspect a specification programmatica
 
 Open **Generated artifacts** to inspect Task Management, Operations Analytics, or Aviation Operations. Each showcase has source, a screenshot, and four recorded Chromium workflows. Open **Benchmarks** to compare the three methods, then select a trial to see its recorded calls, durations, and verification outcomes. The CPU-hosted Studio serves recorded evidence without requiring an API key.
 
-<iframe src="https://jacobroutzong-recursa.hf.space/" title="Recursa Studio benchmark traces and verified application replays" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" style="display:block;inline-size:100%;block-size:clamp(36rem,90dvh,64rem);border:1px solid var(--border);border-radius:8px;"></iframe>
+[Open Studio full screen](/projects/recursa/studio/)
 
 ## How it works
 
@@ -53,7 +52,7 @@ The expanded series ran **18 first-pass trials** across three specifications. Di
 
 All five measured builds came from Task Management. Operations and Aviation stopped before build measurement after incomplete responses, invalid manifests, or broker rejection. The independent Operations control passed the added sorting and CSV export checks. These results characterize one local model and budget, with too little measured browser coverage to rank the methods.
 
-[Explore the results and 45 benchmark traces](https://jacobroutzong-recursa.hf.space/#benchmarks) ·
+[Explore the results and 45 benchmark traces](/projects/recursa/studio/#benchmarks) ·
 [Read the measured outcomes and limitations](https://github.com/jacobhroutzong/recursa/blob/main/docs/baseline-protocol.md#expanded-results)
 
 ## Research attribution

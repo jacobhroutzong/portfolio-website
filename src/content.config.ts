@@ -2,6 +2,8 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'zod';
 
+const demoPath = /^\/(?:[a-z0-9-]+\/)+$/i;
+
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
   schema: z.object({
@@ -15,14 +17,15 @@ const projects = defineCollection({
     order: z.number().int().default(100),
     status: z.enum(['Planning', 'In progress', 'Completed']).default('Planning'),
     sourceUrl: z.url().optional(),
-    demoUrl: z.url().optional(),
+    demoUrl: z.union([z.url(), z.string().regex(demoPath)]).optional(),
     screenshots: z.array(z.object({ src: z.string(), alt: z.string().min(1), caption: z.string().min(1), example: z.boolean().default(false) })).default([]),
     videos: z.array(z.object({ url: z.url(), title: z.string().min(1) })).default([]),
   }).superRefine((project, context) => {
     if (project.featured && (project.draft || project.status !== 'Completed')) {
       context.addIssue({ code: 'custom', message: 'Featured projects must be published and completed.' });
     }
-    for (const url of [project.sourceUrl, project.demoUrl, ...project.videos.map(v => v.url)]) {
+    const externalDemo = project.demoUrl && !demoPath.test(project.demoUrl) ? project.demoUrl : undefined;
+    for (const url of [project.sourceUrl, externalDemo, ...project.videos.map(v => v.url)]) {
       if (url && !url.startsWith('https://')) context.addIssue({ code: 'custom', message: 'External URLs must use HTTPS.' });
     }
     for (const image of project.screenshots) {
