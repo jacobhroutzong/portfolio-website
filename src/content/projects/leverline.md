@@ -15,3 +15,5 @@ screenshots:
 ## Design
 
 The assessment starts with a repeatable workflow and a baseline the business can measure. It distinguishes a candidate automation from an estimate and leaves final decisions with the business owner.
+
+[Visit the Leverline public site](/apps/leverline/).

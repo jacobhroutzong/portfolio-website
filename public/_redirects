@@ -4,12 +4,6 @@
 /apps/equityscout /projects/equityscout/ 302
 /apps/equityscout/ /projects/equityscout/ 302
 /apps/equityscout/* /projects/equityscout/ 302
-/apps/lintel /projects/lintel/ 302
-/apps/lintel/ /projects/lintel/ 302
-/apps/lintel/* /projects/lintel/ 302
-/apps/leverline /projects/leverline/ 302
-/apps/leverline/ /projects/leverline/ 302
-/apps/leverline/* /projects/leverline/ 302
 /ascent /projects/ascent/ 302
 /ascent/ /projects/ascent/ 302
 /ascent/sw.js /maintenance/ascent-worker-retirement.js 200

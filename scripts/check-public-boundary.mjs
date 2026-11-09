@@ -25,6 +25,18 @@ function fail(kind) {
 
 const json = async path => JSON.parse(await readFile(join(root, path), 'utf8'));
 
+async function checkBusinessPages() {
+  const routes = new Set((await json('scripts/public-rendered-routes.json'))
+    .filter(path => /^apps\/(?:lintel|leverline)\//.test(path)));
+  const safeTag = /<\/?(?:section|article|div|span|h[1-5]|p|strong|em|b|i|ul|ol|li|dl|dt|dd|table|caption|thead|tbody|tr|th|td|details|summary|blockquote|code|pre|a|hr|br|sup|sub|time)>|<a href="(?:\/(?!\/)[a-z0-9/-]*|https:\/\/[^"< >\s]+)">|<th scope="(?:row|col)">/g;
+  for (const { path, body } of await json('src/data/public-business-pages.json')) {
+    if (!routes.delete(path + '/index.html') || /[<>]/.test(body.replace(safeTag, ''))) {
+      fail('unapproved business page markup');
+    }
+  }
+  if (routes.size) fail('missing business page');
+}
+
 async function inspect(directory, path, pins = {}) {
   const stat = await lstat(join(directory, path));
   if (!stat.isFile() || stat.isSymbolicLink()) { fail('nonregular file'); return; }
@@ -46,6 +58,7 @@ async function inspect(directory, path, pins = {}) {
 }
 
 async function repository() {
+  await checkBusinessPages();
   const approved = new Set(await json('scripts/public-repository-files.json'));
   const paths = execFileSync('git', ['ls-files', '-z', '--cached', '--others', '--exclude-standard'], {cwd:root,stdio:['ignore','pipe','ignore']})
     .toString('utf8').split('\0').filter(Boolean);
@@ -74,7 +87,9 @@ async function output() {
       seen.add(file);
       const derived = generated.exec(file);
       const approvedImage = derived && Number(derived[2]) <= 1920 && approved.has('media/' + derived[1]);
-      if (privatePath.test(file) || (!approved.has(file) && !approvedImage && !(mode === 'build' && (routes.has(file) || astroBundle.test(file))))) {
+      const publicBusinessPage = mode === 'build' && routes.has(file) &&
+        /^apps\/(?:lintel|leverline)\/(?:[a-z0-9-]+\/)*index\.html$/.test(file);
+      if ((privatePath.test(file) && !publicBusinessPage) || (!approved.has(file) && !approvedImage && !(mode === 'build' && (routes.has(file) || astroBundle.test(file))))) {
         fail('unapproved public asset');
         continue;
       }

@@ -15,3 +15,5 @@ screenshots:
 ## Design
 
 The workflow starts with the rooms and constraints a homeowner describes. It separates discovery, installation planning, and a follow-up estimate so assumptions are visible before work is scheduled.
+
+[Visit the Lintel public site](/apps/lintel/).
