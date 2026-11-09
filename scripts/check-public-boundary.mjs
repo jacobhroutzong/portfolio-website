@@ -27,6 +27,14 @@ async function walk(dir) {
     const derived = generated.exec(path);
     if (!type.isFile() || forbidden.test(path) || (!approved.has(path) && !(derived && Number(path.match(/-(\d+)\.webp$/)?.[1]) <= 1920 && approved.has('media/' + derived[1])) && !(mode === 'build' && built.test(path)))) {
       failures.push(path);
+      continue;
+    }
+    if (/\.(?:[cm]?js|css|html|json|svg|txt)$/i.test(path)) {
+      const text = await readFile(file, 'utf8');
+      if (/(?:\/\/[#@]|\/\*[#@])\s*sourceMappingURL\s*=/i.test(text)) failures.push(path + ' (source map directive)');
+      if (/-----BEGIN (?:RSA |EC |OPENSSH |ENCRYPTED )?PRIVATE KEY-----|\bgh[pousr]_[A-Za-z0-9]{30,}\b|\bhf_[A-Za-z0-9]{28,}\b/.test(text)) {
+        failures.push(path + ' (credential-shaped content)');
+      }
     }
   }
 }
