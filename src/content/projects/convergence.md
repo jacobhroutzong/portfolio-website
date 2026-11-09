@@ -38,6 +38,8 @@ Workspaces share a PostgreSQL schema with row-level security and tenant-scoped r
 
 A transactional outbox records business events for the automation worker. Cloudflare runs the catch-up job before the nightly reset. The reset checks that the database holds only the disposable demo workspace and its seeded accounts before rebuilding it.
 
+The owner’s private Operations workspace has a separate backup integration. [Read the Convergence Operations Backup privacy notice](/projects/convergence/backup-privacy/).
+
 ## Private staging architecture
 
 Cloudflare Access gates a Worker that routes requests to the Next.js web container and wakes the automation container when needed. Those containers stop after inactivity. A separate scheduled Worker runs the reset container. Supabase Free provides the isolated PostgreSQL database over verified TLS.

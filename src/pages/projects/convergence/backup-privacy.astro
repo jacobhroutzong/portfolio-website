@@ -1,0 +1,50 @@
+---
+import Base from '../../../layouts/Base.astro';
+---
+
+<Base
+  title="Convergence Operations Backup Privacy Notice"
+  description="How the private Convergence Operations backup integration uses Google Drive."
+>
+  <article class="container page-shell project-detail">
+    <a class="text-link" href="/projects/convergence/">← Convergence project</a>
+    <h1 class="page-title">Convergence Operations Backup Privacy Notice</h1>
+    <p class="page-intro">
+      This notice explains how the private backup integration uses the owner’s Google Drive.
+    </p>
+    <div class="prose">
+      <h2>Google Drive access</h2>
+      <p>
+        With the owner’s permission, the integration uses Google Drive’s per-file access to
+        write encrypted Convergence Operations database archives to the folder the owner selects.
+        It reads back those archives to verify their checksums and manages expiration for the
+        backups it creates. The integration uses Drive file identifiers, names, sizes, and
+        checksums for those operations.
+      </p>
+      <h2>Storage and sharing</h2>
+      <p>
+        The backup encrypts the database archive before uploading it to the owner’s Drive.
+        The backup service runs on Cloudflare and stores its Google authorization credential
+        as a secret. The owner keeps the recovery passphrase separately from the Drive archives.
+        The integration uses Google user data solely to provide backup, verification, retention,
+        and recovery. It does not sell Google user data or use it for advertising. Google Drive
+        stores the encrypted archives, and Cloudflare runs the authorized backup process.
+      </p>
+      <h2>Retention and control</h2>
+      <p>
+        The scheduled workflow is designed to keep the latest 30 verified daily backups and
+        three month-end recovery points. After verifying a replacement, it moves expired
+        archives it created to Drive Trash. The owner can remove archives in Drive and
+        <a href="https://myaccount.google.com/connections">revoke access in their Google Account</a>
+        to stop future Drive access.
+      </p>
+      <h2 id="terms">Use of the backup integration</h2>
+      <p>
+        The integration is for the Convergence Operations owner’s use. The owner manages the
+        Drive account, the recovery passphrase, and restore testing. The backup integration is
+        subject to Google Drive’s service terms. For questions about this notice,
+        <a href="/connect/">contact Jacob Routzong</a>.
+      </p>
+    </div>
+  </article>
+</Base>
