@@ -10,7 +10,7 @@
     "check": "astro check",
     "lint": "eslint .",
     "test": "node --test tests/*.test.mjs",
-    "build": "node scripts/check-public-boundary.mjs source && npm run images && astro build && node scripts/check-links.mjs && node scripts/check-public-boundary.mjs build",
+    "build": "node scripts/check-public-boundary.mjs repository && node scripts/check-public-boundary.mjs source && npm run images && astro build && node scripts/check-links.mjs && node scripts/check-public-boundary.mjs build",
     "verify": "npm run lint && npm run check && npm test && npm run build",
     "test:e2e": "playwright test",
     "images": "node scripts/optimize-images.mjs",

@@ -17,6 +17,7 @@ jobs:
         with:
           node-version: '24'
           cache: npm
+      - run: node scripts/check-public-boundary.mjs repository
       - run: npm ci
       - run: npm run verify
       - run: npx playwright install --with-deps chromium
