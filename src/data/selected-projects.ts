@@ -2,17 +2,17 @@
 export const selectedProjects = [
   {
     "title": "Decision Intelligence Engine",
-    "eyebrow": "PYTHON / GRADIO / INTERACTIVE APPLICATION",
-    "description": "Explore telemetry inputs, structured decision routing, and confidence gates in an interactive control room.",
+    "eyebrow": "AI / MACHINE LEARNING / CASE STUDY",
+    "description": "An engineering workbench for inspecting how a system turns telemetry into a decision.",
     "href": "/projects/decision-intelligence-engine/",
-    "linkLabel": "Explore project →"
+    "linkLabel": "Explore Decision Intelligence Engine →"
   },
   {
     "title": "Ascent — AI Lab Preparation",
     "eyebrow": "PYTHON / MACHINE LEARNING / FROM SCRATCH",
-    "description": "An advanced AI knowledge workspace with connected technical references, interview questions, executable Python problems, and spaced retrieval.",
-    "href": "/ascent/",
-    "linkLabel": "Open Ascent →"
+    "description": "A local-first workspace for studying machine learning and practicing technical reasoning.",
+    "href": "/projects/ascent/",
+    "linkLabel": "Explore Ascent →"
   },
   {
     "title": "Harness² Lab",
@@ -23,17 +23,17 @@ export const selectedProjects = [
   },
   {
     "title": "EquityScout",
-    "eyebrow": "PYTHON / REAL ESTATE / DETERMINISTIC UNDERWRITING",
-    "description": "A private acquisition research workstation with evidence gates, transparent refinance scenarios, and a synthetic calculator you can explore here.",
+    "eyebrow": "BUSINESS & OPERATIONS SYSTEMS / CASE STUDY",
+    "description": "An acquisition research workspace for reviewing evidence and comparing real estate scenarios.",
     "href": "/projects/equityscout/",
     "linkLabel": "Explore EquityScout →"
   },
   {
     "title": "Leverline",
-    "eyebrow": "APPLIED AI / CONSULTING / INTERACTIVE TOOLS",
-    "description": "A working-name demo of my applied-AI consulting business, with an opportunity scan and ROI calculator for small and mid-sized businesses.",
+    "eyebrow": "BUSINESS & OPERATIONS SYSTEMS / CASE STUDY",
+    "description": "An applied AI consulting project for identifying automation opportunities in small businesses.",
     "href": "/projects/leverline/",
-    "linkLabel": "Explore Leverline & app →"
+    "linkLabel": "Explore Leverline →"
   },
   {
     "title": "Scientific Systems Lab",
@@ -45,7 +45,7 @@ export const selectedProjects = [
   {
     "title": "Tunera",
     "eyebrow": "PYTHON / MODEL FINE-TUNING",
-    "description": "Plan a Qwen fine-tuning run, validate datasets, and evaluate and compare saved model responses.",
+    "description": "A model development workflow for planning experiments and comparing results.",
     "href": "/projects/tunera/",
     "linkLabel": "Explore Tunera →"
   },
@@ -58,10 +58,10 @@ export const selectedProjects = [
   },
   {
     "title": "Lintel",
-    "eyebrow": "PYTHON / SMART HOME / INTERACTIVE TOOLS",
-    "description": "Plan smart-home upgrades with a home scan, room planner and savings calculator for an Atlanta-area installation business in development.",
+    "eyebrow": "BUSINESS & OPERATIONS SYSTEMS / CASE STUDY",
+    "description": "A smart-home planning project that connects homeowner goals to a practical installation plan.",
     "href": "/projects/lintel/",
-    "linkLabel": "Explore Lintel & app →"
+    "linkLabel": "Explore Lintel →"
   },
   {
     "title": "Pursuit",
@@ -72,8 +72,8 @@ export const selectedProjects = [
   },
   {
     "title": "Convergence",
-    "eyebrow": "BUSINESS & OPERATIONS SYSTEMS / PRIVATE CRM",
-    "description": "A CRM and operations workspace that connects contacts, deal pipelines, projects, tasks, and automation. Explore the case study and screenshots from the working demo.",
+    "eyebrow": "BUSINESS & OPERATIONS SYSTEMS / CASE STUDY",
+    "description": "A CRM and operations workspace that connects customer relationships with work in progress.",
     "href": "/projects/convergence/",
     "linkLabel": "Explore Convergence →"
   }
