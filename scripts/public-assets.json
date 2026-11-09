@@ -26,6 +26,7 @@
   "harness2-lab/app.js",
   "harness2-lab/charts.js",
   "harness2-lab/styles.css",
+  "maintenance/ascent-worker-retirement.js",
   "media/example-architecture.svg",
   "media/recursa-architecture.svg",
   "media/recursa-aviation.png",

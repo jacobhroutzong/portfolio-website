@@ -50,6 +50,7 @@
   "public/harness2-lab/app.js",
   "public/harness2-lab/charts.js",
   "public/harness2-lab/styles.css",
+  "public/maintenance/ascent-worker-retirement.js",
   "public/media/example-architecture.svg",
   "public/media/recursa-architecture.svg",
   "public/media/recursa-aviation.png",

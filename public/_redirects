@@ -12,6 +12,7 @@
 /apps/leverline/* /projects/leverline/ 302
 /ascent /projects/ascent/ 302
 /ascent/ /projects/ascent/ 302
+/ascent/sw.js /maintenance/ascent-worker-retirement.js 200
 /ascent/* /projects/ascent/ 302
 /projects/decision-intelligence-engine/workbench /projects/decision-intelligence-engine/ 302
 /projects/decision-intelligence-engine/workbench/ /projects/decision-intelligence-engine/ 302
