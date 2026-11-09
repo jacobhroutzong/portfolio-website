@@ -1,4 +1,5 @@
 import { readFile, writeFile } from 'node:fs/promises';
+const allowed = new Set(JSON.parse(await readFile(new URL('../src/data/public-repositories.json', import.meta.url), 'utf8')));
 const destination = new URL('../src/data/activity.json',import.meta.url);
 async function get(url) {
   const headers = {'User-Agent':'jacob-routzong-portfolio',Accept:'application/json'};
@@ -32,7 +33,7 @@ if (portfolio) {
 const items=[
  ...repos.filter(repo=>!repo.private).map(repo=>({name:repo.name,url:repo.html_url,description:repo.description||'',platform:'GitHub',kind:repo.fork?'Fork':'Repository',language:repo.language||'',updated:repo.pushed_at,archived:repo.archived})),
  ...[['Model',models],['Dataset',datasets],['Space',spaces]].flatMap(([kind,list])=>list.filter(repo=>!repo.private && repo.id?.startsWith('jacobroutzong/')).map(repo=>({name:repo.id.split('/').slice(1).join('/'),url:`https://huggingface.co/${kind==='Dataset'?'datasets/':kind==='Space'?'spaces/':''}${repo.id}`,description:repo.pipeline_tag||'',platform:'Hugging Face',kind,language:'',updated:repo.lastModified||repo.createdAt||null,archived:false}))),
-].sort((a,b)=>(b.updated||'').localeCompare(a.updated||'') || a.url.localeCompare(b.url));
+].filter(item => allowed.has(item.url)).sort((a,b)=>(b.updated||'').localeCompare(a.updated||'') || a.url.localeCompare(b.url));
 for (const item of items) {
  if (!item.name || !item.url.startsWith(item.platform==='GitHub'?'https://github.com/jacobhroutzong/':'https://huggingface.co/') || (item.updated && !Number.isFinite(Date.parse(item.updated)))) throw new Error('Invalid public repository metadata');
 }

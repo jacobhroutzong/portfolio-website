@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import Calculator from '../components/PublicBusinessCalculator.astro';
+import pages from '../data/public-business-pages.json';
+
+export function getStaticPaths() {
+  return pages.map(page => ({ params: { business: page.path }, props: { page } }));
+}
+
+const { page } = Astro.props;
+const lintel = page.path.startsWith('apps/lintel');
+const brand = lintel ? 'Lintel' : 'Leverline';
+const home = lintel ? '/apps/lintel/' : '/apps/leverline/';
+const calculator = home + (lintel ? 'savings/' : 'roi-calculator/');
+const project = lintel ? '/projects/lintel/' : '/projects/leverline/';
+const showCalculator = '/' + page.path + '/' === calculator;
+---
+<Base title={page.title}>
+  <div class="container business-page">
+    <nav aria-label={brand + ' navigation'}>
+      <a href={home}>{brand}</a>
+      <a href={calculator}>{lintel ? 'Savings calculator' : 'ROI calculator'}</a>
+      <a href={home + 'partners/'}>Referrals</a>
+      <a href={home + 'contact/'}>Contact</a>
+    </nav>
+    {showCalculator ? <Calculator {lintel} /> : <div class="business-copy" set:html={page.body} />}
+    <p><a href="/connect/">Contact about {brand}</a> · <a href={project}>Portfolio case study</a></p>
+  </div>
+</Base>
+<style>
+  .business-page { max-width: 64rem; padding-block: 2rem 4rem; }
+  nav { position: static; display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; padding-block-end: 1rem; }
+  .business-copy :global(h2), .business-copy :global(h3) { margin-block: 1.5rem .5rem; }
+  .business-copy :global(p), .business-copy :global(ul), .business-copy :global(ol) { margin-block: .65rem; }
+  .business-copy :global(a[href]), nav a { text-decoration: underline; }
+  .business-copy { overflow-wrap: anywhere; overflow-x: auto; }
+  .business-copy :global(details) { margin-block: .75rem; }
+</style>

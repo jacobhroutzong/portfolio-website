@@ -1,0 +1,76 @@
+---
+const { lintel } = Astro.props;
+const fields = lintel ? [
+  ['chance', 'Chance of a serious leak in a year (%)', 2, 100],
+  ['claim', 'Typical cost of one ($)', 15000, 200000],
+  ['prevented', 'Share an automatic shutoff prevents (%)', 70, 100],
+  ['premium', 'Yearly home insurance premium ($)', 2000, 20000],
+  ['discount', 'Insurance discount for leak protection (%)', 5, 100],
+  ['setup', 'Installed price ($)', 1440, 1000000],
+] : [
+  ['calls', 'Missed calls per month', 40, 10000],
+  ['answered', 'Share the AI answers (%)', 100, 100],
+  ['booked', 'Share that become jobs (%)', 25, 100],
+  ['value', 'Average job value ($)', 650, 100000],
+  ['margin', 'Gross margin on that revenue (%)', 50, 100],
+  ['setup', 'One-time implementation cost ($)', 7250, 1000000],
+  ['monthly', 'Monthly running cost ($)', 1250, 1000000],
+];
+---
+<h1>{lintel ? 'Home savings calculator' : 'Automation ROI calculator'}</h1>
+<p>{lintel ? 'Estimate potential annual savings from preventing water damage and earning an insurance discount.' : 'Estimate annual gross profit from recovered calls and compare it with setup and running costs.'}</p>
+<p>These are estimates from the assumptions you enter. Use the contact page for a tailored assessment.</p>
+<form id="business-calculator" data-model={lintel ? 'savings' : 'roi'}>
+  <fieldset>
+    <legend>Your assumptions</legend>
+    {fields.map(([name, label, value, max]) => (
+      <div>
+        <label for={String(name)}>{label}</label>
+        <input id={String(name)} name={String(name)} type="number" inputmode="decimal"
+          min="0" max={Number(max)} step="any" value={Number(value)} required />
+      </div>
+    ))}
+  </fieldset>
+  <p>{lintel ? 'Annual value = claim probability × claim cost × share prevented + premium × discount.' : 'Annual value = monthly missed calls × answer rate × booking rate × job value × gross margin × 12.'}</p>
+  <button type="submit">Calculate estimate</button>
+  <output id="business-estimate" aria-live="polite"></output>
+</form>
+<noscript><p>Use the formula above to calculate your estimate, or enable JavaScript to calculate it here.</p></noscript>
+<script>
+  const form = document.querySelector<HTMLFormElement>('#business-calculator');
+  const output = document.querySelector<HTMLOutputElement>('#business-estimate');
+  const dollars = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+  if (form && output) {
+    const calculate = () => {
+      const fields = new FormData(form);
+      const number = (key: string) => Number(fields.get(key));
+      const share = (key: string) => number(key) / 100;
+      if (form.dataset.model === 'savings') {
+        const yearly = share('chance') * number('claim') * share('prevented') + number('premium') * share('discount');
+        const cost = number('setup');
+        const payback = yearly > 0 ? (cost / yearly).toFixed(1) + ' years' : 'No payback at these inputs';
+        output.value = 'Annual savings ' + dollars.format(yearly) + ' · Payback ' + payback + ' · 10-year net ' + dollars.format(10 * yearly - cost);
+      } else {
+        const annual = 12 * number('calls') * share('answered') * share('booked') * number('value') * share('margin');
+        const monthly = number('monthly');
+        const setup = number('setup');
+        const netMonthly = annual / 12 - monthly;
+        const payback = netMonthly > 0 ? (setup / netMonthly).toFixed(1) + ' months' : 'No payback at these inputs';
+        output.value = 'Year-one value ' + dollars.format(annual) + ' · Year-one cost ' + dollars.format(setup + 12 * monthly) + ' · Payback ' + payback;
+      }
+    };
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      calculate();
+    });
+    calculate();
+  }
+</script>
+<style>
+  fieldset { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 1rem; border: 1px solid currentColor; padding: 1rem; }
+  label, output { display: block; }
+  input, button { font: inherit; min-height: 3rem; padding: .5rem; }
+  input { width: 100%; }
+  form p, output { margin-block: 1rem; }
+  output { font-weight: 600; }
+</style>

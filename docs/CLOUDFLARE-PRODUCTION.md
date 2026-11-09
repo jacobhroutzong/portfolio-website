@@ -19,7 +19,7 @@ Create a **Pages** project from the existing GitHub repository, not a new reposi
 
 The tracked `.node-version` selects Node 24; CI uses the same major version. Cloudflare installs npm dependencies before the build. Locally, use `npm ci` followed by `npm run build` to reproduce the locked install and static output. No Cloudflare adapter or API token is required for this static Pages deployment.
 
-Do not set `INCLUDE_DRAFTS`, `CHALLENGE_INDEX_FILE`, or `CHALLENGE_INDEX_URL` in Cloudflare for the current snapshot-based setup. The Hugging Face app remains hosted separately and is loaded only from its project page. Repository activity remains a dated snapshot until a separate refresh schedule is authorized.
+Keep private application credentials and origins out of the public build. The activity refresh publishes only reviewed repositories.
 
 ## Domain
 
@@ -27,7 +27,7 @@ After the first authorized deployment, add `jacobroutzong.dev` under the Pages p
 
 Astro's production origin defaults to `https://jacobroutzong.dev` and can be overridden with `SITE_URL`. The site currently retains its profile readiness guard (`profile.configured: false`): it serves normally but emits noindex, disallows crawling, and keeps the sitemap empty until the profile is approved for indexing. This does not make the deployment private.
 
-Once the domain is active, the app page will be `https://jacobroutzong.dev/projects/decision-intelligence-engine/`. You can then link it from Hugging Face. No DNS records or Hugging Face settings are changed by this repository preparation.
+Commercial project pages are public case studies. Configure and verify protected application routing separately before any production cutover.
 
 ## Publishing gate
 

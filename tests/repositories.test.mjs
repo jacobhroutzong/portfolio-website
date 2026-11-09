@@ -1,4 +1,5 @@
 import {test} from 'node:test';
+import { readFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 import {combineRepositories} from '../src/lib/repositories.mjs';
 const repo=(name,platform,updated,kind=platform==='GitHub'?'Repository':'Space')=>({name,platform,updated,kind,url:`https://${platform==='GitHub'?'github.com/jacobhroutzong':'huggingface.co/spaces/jacobroutzong'}/${name}`,description:'',language:'',archived:false});
@@ -14,10 +15,14 @@ test('Hub-only projects remain visible and sortable; different repo names stay s
  assert.deepEqual(combined.map(item=>item.name),['hub','github','dataset']);
  assert.equal(combined[0].links[0].kind,'Space');assert.equal(combined[2].links[0].kind,'Dataset');
 });
-test('retired Crucible Space does not return through repository listings',()=>{
- const source=[repo('modelforge','Hugging Face','2026-10-25'),repo('tuneledger','Hugging Face','2026-10-26')];
- assert.deepEqual(combineRepositories(source).map(item=>item.name),['tuneledger']);
- assert.equal(source.length,2);
+test('portfolio activity publishes only approved repositories and Spaces',async()=>{
+ const urls=JSON.parse(await readFile(new URL('../src/data/public-repositories.json',import.meta.url)));
+ const snapshot=JSON.parse(await readFile(new URL('../src/data/activity.json',import.meta.url)));
+ assert.ok(snapshot.items.length > 0);
+ for (const item of snapshot.items) assert.ok(urls.includes(item.url), item.name);
+ for (const id of ['tuneledger','modelforge','ascent','decision-intelligence-engine']) {
+   assert.ok(!urls.some(url => url.endsWith('/'+id)), id);
+ }
 });
 test('fork labels survive merging and empty collections are valid',()=>{
  const combined=combineRepositories([repo('fork','GitHub','2026-10-20','Fork'),repo('fork','Hugging Face','2026-10-25')]);
