@@ -15,3 +15,5 @@ screenshots:
 ## Design
 
 A workspace groups related contacts, deals, and tasks. Permissions apply at the workspace boundary; background jobs and integration actions are kept separate from the interactive application.
+
+The private Operations workspace has a separate backup integration. [Read its privacy notice](/projects/convergence/backup-privacy/).

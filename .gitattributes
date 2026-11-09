@@ -2,3 +2,6 @@
 public/engines/** -text -whitespace
 # Preserve upstream license notices verbatim, including their whitespace.
 public/engines/notices/*.txt -whitespace
+# These notices use the exact canonical LF bytes pinned by the public build.
+public/harness2-lab/LICENSE text eol=lf
+public/harness2-lab/NOTICE text eol=lf

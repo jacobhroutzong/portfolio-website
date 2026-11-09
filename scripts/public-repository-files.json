@@ -235,6 +235,7 @@
   "src/pages/labs/scientific-systems/index.astro",
   "src/pages/links.astro",
   "src/pages/projects/[id].astro",
+  "src/pages/projects/convergence/backup-privacy.astro",
   "src/pages/projects/harness2-lab.astro",
   "src/pages/projects/index.astro",
   "src/pages/projects/pursuit.astro",
