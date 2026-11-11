@@ -37,7 +37,10 @@ function acronymTerms(text){
  return found;
 }
 function isAcronymRecall(q){
- return /\b(?:stand for|expand|acronym|abbreviation|what does the ['"]?[A-Z]|which .* (?:letter|initial)\b|what is the ['"]?[A-Z])/.test(q.toLowerCase())===false? /\b(?:stand for|expand|acronym|abbreviation)\b/i.test(q) : true;
+ return /\b(?:stand for|expand|acronym|abbreviation)\b/i.test(q)
+ || /\bwhat (?:does|do)\b.*\b(?:mean|represent)\b/i.test(q)
+ || /^what is [A-Z][A-Z0-9-]+\?$/i.test(q)
+ || /\b(?:the|which) ['"]?[A-Z]['"]? (?:in|of)\b/.test(q);
 }
 function acronymHelp(text,showAll=false){
  if(!showAll&&isAcronymRecall(text))return "";
