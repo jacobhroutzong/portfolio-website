@@ -78,9 +78,9 @@ export const selectedProjects = [
     "linkLabel": "Explore Convergence →"
   },
   {
-    "title": "Q-SPECTRA // 17E Quantum CEMA & EMS Workbench",
-    "eyebrow": "QUANTUM SENSING / SDR / INTERACTIVE SIMULATION",
-    "description": "Explore Rydberg RF sensing, quantum illumination radar, and cold-atom magnetic navigation in a browser-based workbench.",
+    "title": "Q-SPECTRA // Universal Quantum Home & Simulation Platform",
+    "eyebrow": "QUANTUM SENSING / COMPUTING / CRYPTOGRAPHY",
+    "description": "Explore quantum sensing, build quantum circuits, and simulate BB84 key distribution in your browser.",
     "href": "/projects/q-spectra/",
     "linkLabel": "Explore Q-SPECTRA →"
   }
