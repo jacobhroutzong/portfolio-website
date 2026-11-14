@@ -6,7 +6,7 @@ technologies: [Quantum Sensing, Electronic Warfare (17E), Unsloth QLoRA, Qwen 27
 draft: false
 status: In progress
 sourceUrl: https://github.com/jacobhroutzong/q-spectra-17e-workbench
-demoUrl: https://qspectra.jacobroutzong.dev
+demoUrl: https://q-spectra-17e.pages.dev/
 ---
 
 ## Explore the simulation
