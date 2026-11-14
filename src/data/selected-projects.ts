@@ -79,6 +79,7 @@ export const selectedProjects = [
   },
   {
     "title": "Q-SPECTRA // Universal Quantum Home & Simulation Platform",
+    "homeTitle": "Q-SPECTRA",
     "eyebrow": "QUANTUM SENSING / COMPUTING / CRYPTOGRAPHY",
     "description": "Explore quantum sensing, build quantum circuits, and simulate BB84 key distribution in your browser.",
     "href": "/projects/q-spectra/",
