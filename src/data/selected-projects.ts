@@ -84,5 +84,12 @@ export const selectedProjects = [
     "description": "Explore quantum sensing, build quantum circuits, and simulate BB84 key distribution in your browser.",
     "href": "/projects/q-spectra/",
     "linkLabel": "Explore Q-SPECTRA →"
+  },
+  {
+    "title": "Rigor",
+    "eyebrow": "WEB APPLICATION / TECHNICAL INTERVIEW PREPARATION",
+    "description": "A private workspace for daily practice across 11 learning tracks, with three priorities and saved progress.",
+    "href": "/projects/rigor/",
+    "linkLabel": "Explore Rigor →"
   }
 ];
