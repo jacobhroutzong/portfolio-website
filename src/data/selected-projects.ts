@@ -76,5 +76,12 @@ export const selectedProjects = [
     "description": "A CRM and operations workspace that connects customer relationships with work in progress.",
     "href": "/projects/convergence/",
     "linkLabel": "Explore Convergence →"
+  },
+  {
+    "title": "Q-SPECTRA // 17E Quantum CEMA & EMS Workbench",
+    "eyebrow": "QUANTUM SENSING / SDR / INTERACTIVE SIMULATION",
+    "description": "Explore Rydberg RF sensing, quantum illumination radar, and cold-atom magnetic navigation in a browser-based workbench.",
+    "href": "/projects/q-spectra/",
+    "linkLabel": "Explore Q-SPECTRA →"
   }
 ];
