@@ -10,7 +10,7 @@ export const selectedProjects = [
   },
   {
     "title": "Ascent — AI Lab Preparation",
-    "group": "research",
+    "group": "business",
     "eyebrow": "PYTHON / MACHINE LEARNING / FROM SCRATCH",
     "description": "A local-first workspace for studying machine learning and practicing technical reasoning.",
     "href": "/projects/ascent/",
@@ -74,7 +74,7 @@ export const selectedProjects = [
   },
   {
     "title": "Pursuit",
-    "group": "research",
+    "group": "business",
     "eyebrow": "WEB APPLICATION / WORKFLOW AUTOMATION",
     "description": "Review job recommendations one at a time, save roles worth a closer look, and track applications. Try the workflow with three sample jobs.",
     "href": "/projects/pursuit/",
@@ -99,7 +99,7 @@ export const selectedProjects = [
   },
   {
     "title": "Rigor",
-    "group": "research",
+    "group": "business",
     "eyebrow": "WEB APPLICATION / TECHNICAL INTERVIEW PREPARATION",
     "description": "A private workspace for daily practice across 11 learning tracks, with three priorities and saved progress.",
     "href": "/projects/rigor/",

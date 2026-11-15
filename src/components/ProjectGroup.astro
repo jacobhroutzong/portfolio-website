@@ -13,42 +13,64 @@ const remaining = count - 3;
   <Heading id={id}>{title}</Heading>
   <div class="cards"><slot /></div>
   {remaining > 0 && (
-    <details>
-      <summary>
+    <>
+      <div class="cards extra-cards" id={`${id}-extra-projects`}><slot name="more" /></div>
+      <button class="project-toggle" type="button" hidden aria-expanded="false" aria-controls={`${id}-extra-projects`}>
         <span class="more">Show {remaining} more {remaining === 1 ? 'project' : 'projects'}</span>
         <span class="fewer">Show fewer projects</span>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
-      </summary>
-      <div class="cards"><slot name="more" /></div>
-    </details>
+      </button>
+    </>
   )}
 </section>
+
+<script>
+  function initializeProjectGroups() {
+    for (const button of document.querySelectorAll<HTMLButtonElement>('.project-toggle[hidden]')) {
+      const cards = document.getElementById(button.getAttribute('aria-controls') ?? '');
+      if (!cards) continue;
+
+      cards.hidden = true;
+      button.hidden = false;
+      button.addEventListener('click', event => {
+        const expanding = cards.hidden;
+        cards.hidden = !expanding;
+        button.setAttribute('aria-expanded', String(expanding));
+        if (expanding && event.detail === 0) cards.querySelector('a')?.focus();
+      });
+    }
+  }
+
+  initializeProjectGroups();
+  document.addEventListener('astro:page-load', initializeProjectGroups);
+</script>
 
 <style>
   .project-group + .project-group { margin-top: 32px; }
   .project-group > :is(h2, h3) { margin: 0 0 14px; }
   .cards { display: grid; gap: 16px; }
-  details { margin-top: 18px; }
-  details > .cards { margin-top: 16px; }
-  summary {
+  .extra-cards { margin-top: 16px; }
+  .project-toggle {
     display: flex;
+    width: 100%;
+    margin-top: 18px;
     align-items: center;
     justify-content: center;
     gap: 10px;
     padding: 12px;
     border: 1px solid var(--border);
     border-radius: 6px;
+    background: transparent;
     color: var(--accent);
     font-size: 12px;
     cursor: pointer;
-    list-style: none;
   }
-  summary::-webkit-details-marker { display: none; }
-  summary:hover { background: var(--bg-soft); }
-  summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
-  details:not([open]) .fewer, details[open] .more { display: none; }
-  details[open] svg { transform: rotate(180deg); }
+  .extra-cards[hidden], .project-toggle[hidden] { display: none; }
+  .project-toggle:hover { background: var(--bg-soft); }
+  .project-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+  [aria-expanded="false"] .fewer, [aria-expanded="true"] .more { display: none; }
+  [aria-expanded="true"] svg { transform: rotate(180deg); }
   @media (prefers-reduced-motion: no-preference) {
-    summary svg { transition: transform .15s; }
+    .project-toggle svg { transition: transform .15s; }
   }
 </style>
