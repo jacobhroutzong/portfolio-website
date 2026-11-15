@@ -128,6 +128,14 @@ export const selectedProjects = [
     "description": "I built a web app for my game.",
     "href": "/projects/video-game-tracker/",
     "linkLabel": "Explore Video Game Tracker →"
+  },
+  {
+    "title": "Causarium",
+    "group": "research",
+    "eyebrow": "MODEL INTERPRETABILITY / RESEARCH",
+    "description": "Inspect recorded activation swaps in Pythia-70M and Qwen3.5-2B with layer maps, donor controls, and measured logit margins.",
+    "href": "/projects/causarium/",
+    "linkLabel": "Explore the research exhibit →"
   }
 ];
 

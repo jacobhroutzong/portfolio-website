@@ -1,0 +1,44 @@
+---
+interface Props {
+  id: string;
+  caption: string;
+  headers: string[];
+  rows: { label: string; cells: (string | { value: string; level: number })[] }[];
+  compact?: boolean;
+}
+const { id, caption, headers, rows, compact = false } = Astro.props;
+---
+<div class:list={['table-scroll', { compact }]} role="region" aria-labelledby={id} tabindex="0">
+  <table>
+    <caption id={id}>{caption}</caption>
+    <thead><tr>{headers.map(header => <th scope="col">{header}</th>)}</tr></thead>
+    <tbody>
+      {rows.map(({ label, cells }) => (
+        <tr>
+          <th scope="row">{label}</th>
+          {cells.map(cell => typeof cell === 'string' ? <td>{cell}</td> :
+            <td class:list={['effect', {negative: cell.level < 0}]} style={{'--strength': Math.min(29, Math.abs(cell.level) * 29) + '%'}}>{cell.value}</td>)}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+<style>
+  .table-scroll { overflow-x:auto; max-inline-size:100%; border:1px solid var(--border); border-radius:8px; background:var(--bg-elevated); }
+  .table-scroll:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+  table { inline-size:100%; border-collapse:collapse; font-size:.85rem; }
+  caption { color:var(--muted); text-align:left; padding:.75rem 1rem; }
+  th, td { text-align:right; padding:.55rem .8rem; border-top:1px solid var(--border); white-space:nowrap; }
+  th { font-weight:600; }
+  thead { background:var(--bg-soft); }
+  th:first-child { text-align:left; }
+  tbody td { font-variant-numeric:tabular-nums; }
+  .effect { background:color-mix(in srgb,var(--accent) var(--strength),var(--bg-elevated)); }
+  .effect.negative { background:color-mix(in srgb,#a04e31 var(--strength),var(--bg-elevated)); }
+  @media (max-width:520px) {
+    th, td { padding:.5rem .62rem; }
+    .compact { padding:0; }
+    .compact table { font-size:.76rem; }
+    .compact th, .compact td { padding:.5rem .31rem; }
+  }
+</style>

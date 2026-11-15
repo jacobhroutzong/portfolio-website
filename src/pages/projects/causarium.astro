@@ -1,0 +1,225 @@
+---
+import { readFile } from 'node:fs/promises';
+import Base from '../../layouts/Base.astro';
+import ResearchTable from '../../components/ResearchTable.astro';
+import { evidenceSchema } from '../../lib/causarium.mjs';
+
+const evidencePath = '/media/causarium/evidence-v1.json';
+const data = evidenceSchema.parse(JSON.parse(await readFile('public' + evidencePath, 'utf8')));
+const { pythia, qwen } = data;
+const names: Record<string, string> = {
+  'capital-france-italy': 'France / Italy',
+  'capital-france-germany': 'France / Germany',
+  'water-hot-cold': 'Hot / cold water',
+  'arithmetic-a': 'Arithmetic A',
+  'arithmetic-b': 'Arithmetic B',
+  'sham': 'Recipient identity sham',
+  'matched-clean': 'France · capital',
+  'capital-spain': 'Spain · capital',
+  'capital-japan': 'Japan · capital',
+  'name-france': 'France · name',
+  'name-alice': 'Alice · name',
+  'identity_sham': 'Same-state sham',
+  'matched_transfer': 'Matched prompt',
+  'other_prompt_transfer': 'Other prompt',
+};
+const format = (value: number) => value.toFixed(4).replace('-', '−');
+const signed = (value: number) => value > 0 ? '+' + format(value) : format(value);
+const effect = (value: number, scale: number) => ({value: signed(value), level: value / scale});
+const matrixScale = Math.max(...pythia.selective.rows.flatMap(row => row.matrix.flat().map(score => Math.abs(score.delta))));
+const donorScale = Math.max(...pythia.donor.rows.flatMap(row => row.interventions.map(score => Math.abs(score.delta))));
+const transferScale = Math.max(...qwen.rows.flatMap(row => [...row.baseRecipient, ...row.adaptedRecipient].map(score => Math.abs(score.delta))));
+const fractions = qwen.rows.flatMap(row => [row.baseRecipient[1], row.adaptedRecipient[1]]
+  .map(score => 100 * Math.abs(score.delta / row.shift)));
+const fractionRange = `${Math.min(...fractions).toFixed(1)}–${Math.max(...fractions).toFixed(1)}%`;
+const donorLead = pythia.donor.rows.map(row => row.interventions[1].margin -
+  Math.max(...row.interventions.slice(2).map(score => score.margin)));
+const transferControlGap = Math.max(...qwen.rows.flatMap(row => [row.baseRecipient, row.adaptedRecipient]
+  .map(scores => Math.abs(scores[1].delta - scores[2].delta))));
+const sourceFor = (model: string, revision: string) => `https://huggingface.co/${model}/tree/${revision}`;
+const provenance = [
+  ['M1 whole-layer record', pythia.whole.sourceSha256],
+  ['M2 selective record', pythia.selective.sourceSha256],
+  ['M3 donor record', pythia.donor.sourceSha256],
+  ['M5 checkpoint-transfer record', qwen.sourceSha256],
+];
+---
+<Base title="Causarium" description="Explore recorded causal intervention experiments in Pythia-70M and Qwen3.5-2B, with measured logit margins and controls.">
+  <article class="container page-shell causarium" data-project="causarium">
+    <a class="text-link" href="/projects/">← All projects</a>
+    <header class="exhibit-hero">
+      <div>
+        <p class="eyebrow">MECHANISTIC INTERPRETABILITY</p>
+        <h1 class="page-title">Causarium.</h1>
+        <p class="page-intro">What changes when you replace a model’s activation at one position? Explore measured interventions in Pythia-70M and Qwen3.5-2B.</p>
+        <div class="button-row">
+          <a class="button primary" href="#localization">Explore the layer maps</a>
+          <a class="button secondary" href={evidencePath} download>Download evidence JSON</a>
+        </div>
+      </div>
+      <aside class="info-panel hero-result" aria-label="Qwen checkpoint transfer finding">
+        <p class="eyebrow">QWEN3.5 · BLOCK {qwen.layer}</p>
+        <strong>{fractionRange}</strong>
+        <p>of the base-to-adapted margin gap transferred under matched activation swaps.</p>
+        <p class="small muted">Other-prompt donors produced comparable shifts.</p>
+      </aside>
+    </header>
+    <nav class="exhibit-index" aria-label="Exhibit sections">
+      <a href="#localization">Pythia layer maps</a>
+      <a href="#donors">Donor controls</a>
+      <a href="#transfer">Qwen checkpoint swaps</a>
+      <a href="#provenance">Provenance &amp; reproduction</a>
+    </nav>
+
+    <section id="localization" class="exhibit-section" aria-labelledby="localization-title">
+      <p class="eyebrow">PYTHIA-70M · M1–M2</p>
+      <h2 id="localization-title">Where the effect moves</h2>
+      <p>Early patches at the country token produced the largest shifts. Late patches at the final token dominated, as expected from a next-token readout at that position. France supplies the clean activation, and Italy or Germany supplies the corrupted recipient. Each cell shows the change in the preferred-minus-alternative logit margin.</p>
+      <p class="key"><span>− Toward alternative</span><span>0 No change</span><span>+ Toward preferred</span></p>
+      {pythia.selective.rows.map((row, i) => (
+        <details open={i === 0} class="panel">
+          <summary>{names[row.id]} · layer × position</summary>
+          <p class="small muted">Clean margin {format(row.clean)} · corrupted margin {format(row.corrupt)}. The color scale is shared across both pairs.</p>
+          <ResearchTable id={`heat-${i}`} caption={`${names[row.id]} · change in logit margin`}
+            compact
+            headers={['Layer', ...pythia.selective.positions]}
+            rows={row.matrix.map((layer, j) => ({label: String(pythia.selective.layers[j]),
+              cells: layer.map(score => effect(score.delta, matrixScale))}))} />
+          <details class="readings">
+            <summary>Margins and controls</summary>
+            <ResearchTable id={`cells-${i}`} caption={`${names[row.id]} · patched margins by layer and position`}
+              headers={['Site', 'Sham margin', 'Patched margin', 'Δ vs corrupt']}
+              rows={row.matrix.flatMap((layer, j) => layer.map((score, k) => ({
+                label: `L${j} · ${k} ${pythia.selective.positions[k]}`,
+                cells: [format(score.sham), format(score.margin), signed(score.delta)],
+              })))} />
+            <ResearchTable id={`controls-${i}`} caption={`${names[row.id]} · control changes by layer`}
+              headers={['Layer', 'Whole layer Δ', 'Mismatched position Δ']}
+              rows={row.controls.map((control, j) => ({label: String(j),
+                cells: [signed(control.full.delta), signed(control.mismatched.delta)]}))} />
+          </details>
+        </details>
+      ))}
+      <details class="panel">
+        <summary>Whole-layer check · three measured pairs</summary>
+        <ResearchTable id="m1" caption="Pythia-70M · whole-layer margins at layer 3"
+          headers={['Pair', 'Clean', 'Corrupt', 'Sham', 'Patched', 'Δ vs corrupt']}
+          rows={pythia.whole.rows.map(row => ({label: names[row.id],
+            cells: [format(row.clean), format(row.corrupt), format(row.sham), format(row.margin), signed(row.delta)]}))} />
+        <p class="small muted">The cat/dog pair was excluded because its preferred continuation used two tokens. The water pair moved by 0.2002 logits and kept the same answer preference.</p>
+      </details>
+      <p class="notice"><strong>Limits.</strong> Whole-output swaps reproduced the clean margins, and every identity sham was zero. The mismatched-position control could also move the score strongly. The two selective pairs share a template and clean prompt, and the interventions replace entire vectors.</p>
+    </section>
+
+    <section id="donors" class="exhibit-section" aria-labelledby="donor-title">
+      <p class="eyebrow">PYTHIA-70M · M3</p>
+      <h2 id="donor-title">Which donors move the margin?</h2>
+      <p>The France capital donor led both comparisons at layer {pythia.donor.layer}, country position {pythia.donor.position}. Its lead over the strongest control was {format(donorLead[0])} logits for Italy and {format(donorLead[1])} for Germany.</p>
+      {pythia.donor.rows.map((row, i) => (
+        <details class="panel" open={i === 0}>
+          <summary>{names[row.id]} · six donor conditions</summary>
+          <p class="small muted">Clean margin {format(row.clean)} · corrupted margin {format(row.corrupt)}.</p>
+          <ResearchTable id={`donors-${i}`} caption={`${names[row.id]} · donor margins`}
+            headers={['Donor', 'Patched margin', 'Δ vs corrupt']}
+            rows={row.interventions.map(score => ({label: names[score.id],
+              cells: [format(score.margin), effect(score.delta, donorScale)]}))} />
+        </details>
+      ))}
+      <p class="notice"><strong>Limits.</strong> All eight alternative or neutral donor patches increased the Paris-relative margin. Seven reversed the preferred answer. The measurements leave the share attributable to France-specific information unresolved.</p>
+    </section>
+
+    <section id="transfer" class="exhibit-section" aria-labelledby="transfer-title">
+      <p class="eyebrow">QWEN3.5-2B · M4–M5</p>
+      <h2 id="transfer-title">What the adapter transfers</h2>
+      <p>With one resident BF16 model, the experiment compared the pristine base and the same checkpoint with the recovered rank-{qwen.adapterRank} LoRA enabled. It swapped a post-block {qwen.layer} vector at the last shared completion-prefix token, aligned to model position ID {qwen.positionId}. Positive margins favor the numeric branch.</p>
+      <p class="narrow-note small muted">Scroll within the tables to see all columns.</p>
+      <ResearchTable id="qwen-baselines" caption="Qwen checkpoint comparison · baseline logit margins"
+        headers={['Case', 'Base margin', 'Adapted margin', 'Adapted − base']}
+        rows={qwen.rows.map(row => ({label: names[row.id],
+          cells: [format(row.base.margin), format(row.adapted.margin), signed(row.shift)]}))} />
+      {qwen.rows.map((row, i) => (
+        <details class="panel" open={i === 0}>
+          <summary>{names[row.id]} · both swap directions</summary>
+          <p class="small muted">Shared prefix {row.prefixLength} tokens · activation L2 distance {format(row.l2)} · cosine similarity {format(row.cosine)}.</p>
+          <ResearchTable id={`qwen-${i}`} caption={`${names[row.id]} · swaps and shams`}
+            headers={['Donor → recipient', 'Numeric logit', 'Quoted logit', 'Margin', 'Δ vs recipient']}
+            rows={([
+              ['Base', row.baseRecipient], ['Adapted', row.adaptedRecipient],
+            ] as const).flatMap(([recipient, scores]) => scores.map(score => ({
+              label: `${score.donorState === 'base' ? 'Base' : 'Adapted'} → ${recipient.toLowerCase()} · ${names[score.condition]}`,
+              cells: [format(score.numeric), format(score.quoted), format(score.margin), effect(score.delta, transferScale)],
+            })))} />
+        </details>
+      ))}
+      <p class="notice"><strong>Limits.</strong> All four shams reproduced the candidate logits. Matched transfers moved margins toward the donor state, and the other-prompt effects were within {format(transferControlGap)} logits of the matched effects. Both prompts request the same format, so prompt specificity remains unresolved. The forced-prefix probe compares a standalone space with a space-plus-quote token. Full JSON generation and arithmetic accuracy remain unmeasured.</p>
+    </section>
+
+    <section id="provenance" class="exhibit-section" aria-labelledby="provenance-title">
+      <p class="eyebrow">EVIDENCE &amp; REPRODUCTION</p>
+      <h2 id="provenance-title">What was run</h2>
+      <p>The public artifact is a validated, versioned projection of the reviewed run records and retains full numeric precision. The independent Causarium checkout at <code>{data.researchCommit}</code> passed {data.offlineTests} offline tests. M4 was a compatibility assessment. The Qwen measurements come from M5.</p>
+      <div class="button-row">
+        <a class="button secondary" href={evidencePath}>Public evidence v{data.schemaVersion}</a>
+        <a class="button secondary" href={sourceFor(pythia.model, pythia.revision)}>Pinned Pythia source</a>
+        <a class="button secondary" href={sourceFor(qwen.model, qwen.revision)}>Pinned Qwen source</a>
+      </div>
+      <details class="panel">
+        <summary>Model revisions, fingerprints and experiment configurations</summary>
+        <dl>
+          <dt>Pythia model and tokenizer commit</dt><dd><code>{pythia.revision}</code></dd>
+          <dt>Qwen model and tokenizer commit</dt><dd><code>{qwen.revision}</code></dd>
+          <dt>Qwen base weights SHA-256</dt><dd><code>{qwen.weightsSha256}</code></dd>
+          <dt>Qwen tokenizer and chat template SHA-256</dt><dd><code>{qwen.tokenizerSha256}</code><br /><code>{qwen.templateSha256}</code></dd>
+          <dt>Qwen LoRA weights and config SHA-256 · rank {qwen.adapterRank} · step {qwen.adapterStep}</dt>
+          <dd><code>{qwen.adapterSha256}</code><br /><code>{qwen.adapterConfigSha256}</code></dd>
+          <dt>Pythia input configuration SHA-256 · M1, M2, M3</dt>
+          <dd><code>{pythia.whole.configSha256}</code><br /><code>{pythia.selective.configSha256}</code><br /><code>{pythia.donor.configSha256}</code></dd>
+          {provenance.map(([label, hash]) => <><dt>{label} · source SHA-256</dt><dd><code>{hash}</code></dd></>)}
+        </dl>
+      </details>
+      <details class="panel">
+        <summary>Reproduction instructions and runtime</summary>
+        <p>Run these commands from the independent Causarium checkout at the commit above. Pythia uses the project’s research extra, pinned checkpoint and CPU. The runners use seed 42. Output paths below are fresh local files.</p>
+        <p>The capital pairs use <code>The capital of [France, Italy, or Germany] is</code> and compare Paris with Rome or Berlin. The M2 sweep patches layers 0–5, one of five aligned positions at a time. M3 compares the capital template with Spain and Japan and the template <code>The name of [France or Alice] is</code> at the same country slot.</p>
+        <pre tabindex="0" aria-label="Pythia and offline test commands"><code>{`python -m pip install -e '.[research]'
+python -B -m unittest discover -s tests -v
+python -B -m causarium.run_pythia --config experiments.json --output runs/whole.json --device cpu --layer 3
+python -B -m causarium.run_selective --output runs/selective.json
+python -B -m causarium.run_donor_specificity --output runs/donor.json`}</code></pre>
+        <p>M2 and M3 require the cached pinned Pythia snapshot. For M5 use the locked Linux environment with Python {qwen.runtime.python}, Torch {qwen.runtime.torch}, Transformers {qwen.runtime.transformers}, PEFT {qwen.runtime.peft}, a native BF16 CUDA GPU, and authorized access to the sealed Tunera evidence archive. The saved training-source hash differs from the inspected Tunera checkout, which limits exact retraining. The checkpoint transfer uses the verified adapter bytes.</p>
+        <pre tabindex="0" aria-label="Qwen checkpoint transfer command"><code>{'python -B -m causarium.run_qwen35_transfer --evidence-zip "$EVIDENCE" --output runs/transfer.json'}</code></pre>
+        <p class="small muted">Recorded Qwen inference took {qwen.runtime.seconds.toFixed(2)} s and peaked at {(qwen.runtime.peakAllocatedBytes / 2 ** 30).toFixed(2)} GiB allocated on an RTX 4070 Laptop GPU. The exhibit reads static evidence and offers no model execution.</p>
+      </details>
+    </section>
+  </article>
+</Base>
+<style>
+  .causarium { max-width:1080px; }
+  .exhibit-hero { display:grid; grid-template-columns:minmax(0,1fr) minmax(16rem,.55fr); align-items:end; gap:clamp(1.5rem,5vw,4rem); padding:2.4rem 0 2rem; }
+  .exhibit-hero .eyebrow, .exhibit-section .eyebrow { margin-bottom:.7rem; }
+  .hero-result { align-self:end; padding:1.4rem; border-top:3px solid var(--accent); }
+  .hero-result strong { display:block; font:normal clamp(2.3rem,5vw,3.6rem)/1.12 Georgia,serif; letter-spacing:-.05em; color:var(--accent); }
+  .hero-result p { margin:.55rem 0 0; }
+  .exhibit-index { display:flex; flex-wrap:wrap; gap:.45rem 1.3rem; position:static; width:auto; overflow:visible; background:transparent; padding:.75rem 0; border-block:1px solid var(--border); }
+  .exhibit-index a { padding:.35rem 0; font-size:.875rem; text-decoration:underline; text-underline-offset:.2rem; }
+  .exhibit-section { scroll-margin-top:7rem; padding-block:clamp(1.75rem,5vw,3.45rem); border-bottom:1px solid var(--border); }
+  .exhibit-section h2 { margin-bottom:.75rem; font-size:clamp(1.6rem,4vw,2.4rem); }
+  .exhibit-section > p { max-width:79ch; }
+  .key { display:flex; flex-wrap:wrap; gap:.4rem 1.1rem; color:var(--muted); font-size:.8rem; }
+  .panel, .readings { margin-top:.9rem; padding:0 .9rem .8rem; border:1px solid var(--border); border-radius:7px; background:var(--bg-soft); }
+  .panel:not([open]), .readings:not([open]) { padding-bottom:0; }
+  .panel > summary, .readings > summary { color:var(--text); display:list-item; list-style:revert; white-space:normal; cursor:pointer; font-size:.95rem; padding:.8rem 0; }
+  summary::-webkit-details-marker { display:inline; }
+  summary::marker { color:var(--accent); }
+  .panel > p { margin:.4rem 0 .8rem; }
+  .readings { background:var(--bg-elevated); }
+  .readings :global(.table-scroll) + :global(.table-scroll) { margin-top:.8rem; }
+  .button-row + .panel { margin-top:1.3rem; }
+  dt { font-weight:600; margin-top:.85rem; }
+  dd { margin:0; color:var(--muted); }
+  dd code, p code { overflow-wrap:anywhere; }
+  pre { padding:.8rem; background:var(--bg-elevated); border:1px solid var(--border); border-radius:.3rem; overflow:auto; }
+  .narrow-note { display:none; }
+  @media (max-width:600px) { .narrow-note { display:block; } }
+  @media (max-width:680px) { .exhibit-hero { grid-template-columns:minmax(0,1fr); } .hero-result { max-width:25rem; } .panel { padding-inline:.65rem; } }
+</style>

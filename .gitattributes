@@ -5,3 +5,5 @@ public/engines/notices/*.txt -whitespace
 # These notices use the exact canonical LF bytes pinned by the public build.
 public/harness2-lab/LICENSE text eol=lf
 public/harness2-lab/NOTICE text eol=lf
+# Preserve the byte-level pin of the reviewed Causarium projection.
+public/media/causarium/evidence-v1.json text eol=lf

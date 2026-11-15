@@ -1,0 +1,836 @@
+{
+  "schemaVersion": 1,
+  "researchCommit": "08d3457da3ec65256cf96d133ecd45541220adf6",
+  "offlineTests": 26,
+  "pythia": {
+    "model": "EleutherAI/pythia-70m",
+    "revision": "de3e4e2d6cbb3b1a51f90fe153ea51fcd8c7c852",
+    "tokenizerRevision": "de3e4e2d6cbb3b1a51f90fe153ea51fcd8c7c852",
+    "whole": {
+      "sourceSha256": "0a357fdbe71c891f2f1606451b1626fefdd8edc721b4d61330880b8daf385160",
+      "configSha256": "289b2da406ceb242f9743f97568c4006ed0f616325551e5dc8eec00a3a9a1adf",
+      "layer": 3,
+      "seed": 42,
+      "seconds": 0.6931,
+      "rows": [
+        {
+          "id": "capital-france-italy",
+          "clean": 2.3382568359375,
+          "corrupt": -1.336669921875,
+          "sham": -1.336669921875,
+          "margin": 2.3382568359375,
+          "delta": 3.6749267578125
+        },
+        {
+          "id": "capital-france-germany",
+          "clean": 2.7664794921875,
+          "corrupt": -2.4705810546875,
+          "sham": -2.4705810546875,
+          "margin": 2.7664794921875,
+          "delta": 5.237060546875
+        },
+        {
+          "id": "water-hot-cold",
+          "clean": 1.771484375,
+          "corrupt": 1.5712890625,
+          "sham": 1.5712890625,
+          "margin": 1.771484375,
+          "delta": 0.2001953125
+        }
+      ]
+    },
+    "selective": {
+      "sourceSha256": "b9dfb03db528b4bbd2804743ac1d828067dbd8802ce624bb4c8982e6da912f4e",
+      "configSha256": "77a0f8a3f90c7ded0fc7e3db78cdf42128cf9157b910337a31e3aa27c0b67afd",
+      "promptsSha256": "289b2da406ceb242f9743f97568c4006ed0f616325551e5dc8eec00a3a9a1adf",
+      "seed": 42,
+      "layers": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "positions": [
+        "The",
+        "capital",
+        "of",
+        "country",
+        "is"
+      ],
+      "rows": [
+        {
+          "id": "capital-france-italy",
+          "clean": 2.3382568359375,
+          "corrupt": -1.336669921875,
+          "matrix": [
+            [
+              {
+                "sham": -1.336669921875,
+                "margin": -1.336669921875,
+                "delta": 0
+              },
+              {
+                "sham": -1.336669921875,
+                "margin": -1.336669921875,
+                "delta": 0
+              },
+              {
+                "sham": -1.336669921875,
+                "margin": -1.336669921875,
+                "delta": 0
+              },
+              {
+                "sham": -1.336669921875,
+                "margin": 2.328369140625,
+                "delta": 3.6650390625
+              },
+              {
+                "sham": -1.336669921875,
+                "margin": -1.343505859375,
+                "delta": -0.0068359375
+              }
+            ],
+            [
+              {
+                "sham": -1.336669921875,
+                "margin": -1.336669921875,
+                "delta": 0
+              },
+              {
+                "sham": -1.336669921875,
+                "margin": -1.336669921875,
+                "delta": 0
+              },
+              {
+                "sham": -1.336669921875,
+                "margin": -1.336669921875,
+                "delta": 0
+              },
+              {
+                "sham": -1.336669921875,
+                "margin": 2.3525390625,
+                "delta": 3.689208984375
+              },
+              {
+                "sham": -1.336669921875,
+                "margin": -1.297607421875,
+                "delta": 0.0390625
+              }
+            ],
+            [
+              {
+                "sham": -1.336669921875,
+                "margin": -1.336669921875,
+                "delta": 0
+              },
+              {
+                "sham": -1.336669921875,
+                "margin": -1.336669921875,
+                "delta": 0
+              },
+              {
+                "sham": -1.336669921875,
+                "margin": -1.336669921875,
+                "delta": 0
+              },
+              {
+                "sham": -1.336669921875,
+                "margin": 1.6474609375,
+                "delta": 2.984130859375
+              },
+              {
+                "sham": -1.336669921875,
+                "margin": -0.6275634765625,
+                "delta": 0.7091064453125
+              }
+            ],
+            [
+              {
+                "sham": -1.336669921875,
+                "margin": -1.336669921875,
+                "delta": 0
+              },
+              {
+                "sham": -1.336669921875,
+                "margin": -1.336669921875,
+                "delta": 0
+              },
+              {
+                "sham": -1.336669921875,
+                "margin": -1.336669921875,
+                "delta": 0
+              },
+              {
+                "sham": -1.336669921875,
+                "margin": 0.921875,
+                "delta": 2.258544921875
+              },
+              {
+                "sham": -1.336669921875,
+                "margin": 0.1572265625,
+                "delta": 1.493896484375
+              }
+            ],
+            [
+              {
+                "sham": -1.336669921875,
+                "margin": -1.336669921875,
+                "delta": 0
+              },
+              {
+                "sham": -1.336669921875,
+                "margin": -1.336669921875,
+                "delta": 0
+              },
+              {
+                "sham": -1.336669921875,
+                "margin": -1.336669921875,
+                "delta": 0
+              },
+              {
+                "sham": -1.336669921875,
+                "margin": -1.0888671875,
+                "delta": 0.247802734375
+              },
+              {
+                "sham": -1.336669921875,
+                "margin": 2.0693359375,
+                "delta": 3.406005859375
+              }
+            ],
+            [
+              {
+                "sham": -1.336669921875,
+                "margin": -1.336669921875,
+                "delta": 0
+              },
+              {
+                "sham": -1.336669921875,
+                "margin": -1.336669921875,
+                "delta": 0
+              },
+              {
+                "sham": -1.336669921875,
+                "margin": -1.336669921875,
+                "delta": 0
+              },
+              {
+                "sham": -1.336669921875,
+                "margin": -1.336669921875,
+                "delta": 0
+              },
+              {
+                "sham": -1.336669921875,
+                "margin": 2.3382568359375,
+                "delta": 3.6749267578125
+              }
+            ]
+          ],
+          "controls": [
+            {
+              "full": {
+                "sham": -1.336669921875,
+                "margin": 2.3382568359375,
+                "delta": 3.6749267578125
+              },
+              "mismatched": {
+                "sham": -1.336669921875,
+                "margin": 2.814453125,
+                "delta": 4.151123046875
+              }
+            },
+            {
+              "full": {
+                "sham": -1.336669921875,
+                "margin": 2.3382568359375,
+                "delta": 3.6749267578125
+              },
+              "mismatched": {
+                "sham": -1.336669921875,
+                "margin": 2.8509521484375,
+                "delta": 4.1876220703125
+              }
+            },
+            {
+              "full": {
+                "sham": -1.336669921875,
+                "margin": 2.3382568359375,
+                "delta": 3.6749267578125
+              },
+              "mismatched": {
+                "sham": -1.336669921875,
+                "margin": 2.2210693359375,
+                "delta": 3.5577392578125
+              }
+            },
+            {
+              "full": {
+                "sham": -1.336669921875,
+                "margin": 2.3382568359375,
+                "delta": 3.6749267578125
+              },
+              "mismatched": {
+                "sham": -1.336669921875,
+                "margin": 2.4832763671875,
+                "delta": 3.8199462890625
+              }
+            },
+            {
+              "full": {
+                "sham": -1.336669921875,
+                "margin": 2.3382568359375,
+                "delta": 3.6749267578125
+              },
+              "mismatched": {
+                "sham": -1.336669921875,
+                "margin": 2.5361328125,
+                "delta": 3.872802734375
+              }
+            },
+            {
+              "full": {
+                "sham": -1.336669921875,
+                "margin": 2.3382568359375,
+                "delta": 3.6749267578125
+              },
+              "mismatched": {
+                "sham": -1.336669921875,
+                "margin": 2.47607421875,
+                "delta": 3.812744140625
+              }
+            }
+          ]
+        },
+        {
+          "id": "capital-france-germany",
+          "clean": 2.7664794921875,
+          "corrupt": -2.4705810546875,
+          "matrix": [
+            [
+              {
+                "sham": -2.4705810546875,
+                "margin": -2.4705810546875,
+                "delta": 0
+              },
+              {
+                "sham": -2.4705810546875,
+                "margin": -2.4705810546875,
+                "delta": 0
+              },
+              {
+                "sham": -2.4705810546875,
+                "margin": -2.4705810546875,
+                "delta": 0
+              },
+              {
+                "sham": -2.4705810546875,
+                "margin": 2.66015625,
+                "delta": 5.1307373046875
+              },
+              {
+                "sham": -2.4705810546875,
+                "margin": -2.4139404296875,
+                "delta": 0.056640625
+              }
+            ],
+            [
+              {
+                "sham": -2.4705810546875,
+                "margin": -2.4705810546875,
+                "delta": 0
+              },
+              {
+                "sham": -2.4705810546875,
+                "margin": -2.4705810546875,
+                "delta": 0
+              },
+              {
+                "sham": -2.4705810546875,
+                "margin": -2.4705810546875,
+                "delta": 0
+              },
+              {
+                "sham": -2.4705810546875,
+                "margin": 2.7149658203125,
+                "delta": 5.185546875
+              },
+              {
+                "sham": -2.4705810546875,
+                "margin": -2.353759765625,
+                "delta": 0.1168212890625
+              }
+            ],
+            [
+              {
+                "sham": -2.4705810546875,
+                "margin": -2.4705810546875,
+                "delta": 0
+              },
+              {
+                "sham": -2.4705810546875,
+                "margin": -2.4705810546875,
+                "delta": 0
+              },
+              {
+                "sham": -2.4705810546875,
+                "margin": -2.4705810546875,
+                "delta": 0
+              },
+              {
+                "sham": -2.4705810546875,
+                "margin": 1.4599609375,
+                "delta": 3.9305419921875
+              },
+              {
+                "sham": -2.4705810546875,
+                "margin": -1.4483642578125,
+                "delta": 1.022216796875
+              }
+            ],
+            [
+              {
+                "sham": -2.4705810546875,
+                "margin": -2.4705810546875,
+                "delta": 0
+              },
+              {
+                "sham": -2.4705810546875,
+                "margin": -2.4705810546875,
+                "delta": 0
+              },
+              {
+                "sham": -2.4705810546875,
+                "margin": -2.4705810546875,
+                "delta": 0
+              },
+              {
+                "sham": -2.4705810546875,
+                "margin": 0.67724609375,
+                "delta": 3.1478271484375
+              },
+              {
+                "sham": -2.4705810546875,
+                "margin": -0.7962646484375,
+                "delta": 1.67431640625
+              }
+            ],
+            [
+              {
+                "sham": -2.4705810546875,
+                "margin": -2.4705810546875,
+                "delta": 0
+              },
+              {
+                "sham": -2.4705810546875,
+                "margin": -2.4705810546875,
+                "delta": 0
+              },
+              {
+                "sham": -2.4705810546875,
+                "margin": -2.4705810546875,
+                "delta": 0
+              },
+              {
+                "sham": -2.4705810546875,
+                "margin": -1.9981689453125,
+                "delta": 0.472412109375
+              },
+              {
+                "sham": -2.4705810546875,
+                "margin": 2.2845458984375,
+                "delta": 4.755126953125
+              }
+            ],
+            [
+              {
+                "sham": -2.4705810546875,
+                "margin": -2.4705810546875,
+                "delta": 0
+              },
+              {
+                "sham": -2.4705810546875,
+                "margin": -2.4705810546875,
+                "delta": 0
+              },
+              {
+                "sham": -2.4705810546875,
+                "margin": -2.4705810546875,
+                "delta": 0
+              },
+              {
+                "sham": -2.4705810546875,
+                "margin": -2.4705810546875,
+                "delta": 0
+              },
+              {
+                "sham": -2.4705810546875,
+                "margin": 2.7664794921875,
+                "delta": 5.237060546875
+              }
+            ]
+          ],
+          "controls": [
+            {
+              "full": {
+                "sham": -2.4705810546875,
+                "margin": 2.7664794921875,
+                "delta": 5.237060546875
+              },
+              "mismatched": {
+                "sham": -2.4705810546875,
+                "margin": 0.9921875,
+                "delta": 3.4627685546875
+              }
+            },
+            {
+              "full": {
+                "sham": -2.4705810546875,
+                "margin": 2.7664794921875,
+                "delta": 5.237060546875
+              },
+              "mismatched": {
+                "sham": -2.4705810546875,
+                "margin": 1.1722412109375,
+                "delta": 3.642822265625
+              }
+            },
+            {
+              "full": {
+                "sham": -2.4705810546875,
+                "margin": 2.7664794921875,
+                "delta": 5.237060546875
+              },
+              "mismatched": {
+                "sham": -2.4705810546875,
+                "margin": 0.9180908203125,
+                "delta": 3.388671875
+              }
+            },
+            {
+              "full": {
+                "sham": -2.4705810546875,
+                "margin": 2.7664794921875,
+                "delta": 5.237060546875
+              },
+              "mismatched": {
+                "sham": -2.4705810546875,
+                "margin": 1.3304443359375,
+                "delta": 3.801025390625
+              }
+            },
+            {
+              "full": {
+                "sham": -2.4705810546875,
+                "margin": 2.7664794921875,
+                "delta": 5.237060546875
+              },
+              "mismatched": {
+                "sham": -2.4705810546875,
+                "margin": 1.5191650390625,
+                "delta": 3.98974609375
+              }
+            },
+            {
+              "full": {
+                "sham": -2.4705810546875,
+                "margin": 2.7664794921875,
+                "delta": 5.237060546875
+              },
+              "mismatched": {
+                "sham": -2.4705810546875,
+                "margin": 1.42431640625,
+                "delta": 3.8948974609375
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "donor": {
+      "sourceSha256": "aba858db815f84cbac2008f90c19d84adafc8671960c3dfe660ee86b5b40aaf0",
+      "configSha256": "ce91f26995b73c4964727034b5b6115d9de25a8a62d5e86712d16f5f34535fcd",
+      "layer": 1,
+      "position": 3,
+      "seed": 42,
+      "rows": [
+        {
+          "id": "capital-france-italy",
+          "clean": 2.3382568359375,
+          "corrupt": -1.336669921875,
+          "interventions": [
+            {
+              "id": "sham",
+              "margin": -1.336669921875,
+              "delta": 0
+            },
+            {
+              "id": "matched-clean",
+              "margin": 2.3525390625,
+              "delta": 3.689208984375
+            },
+            {
+              "id": "capital-spain",
+              "margin": 0.3310546875,
+              "delta": 1.667724609375
+            },
+            {
+              "id": "capital-japan",
+              "margin": 0.793212890625,
+              "delta": 2.1298828125
+            },
+            {
+              "id": "name-france",
+              "margin": 1.9249267578125,
+              "delta": 3.2615966796875
+            },
+            {
+              "id": "name-alice",
+              "margin": 1.3009033203125,
+              "delta": 2.6375732421875
+            }
+          ]
+        },
+        {
+          "id": "capital-france-germany",
+          "clean": 2.7664794921875,
+          "corrupt": -2.4705810546875,
+          "interventions": [
+            {
+              "id": "sham",
+              "margin": -2.4705810546875,
+              "delta": 0
+            },
+            {
+              "id": "matched-clean",
+              "margin": 2.7149658203125,
+              "delta": 5.185546875
+            },
+            {
+              "id": "capital-spain",
+              "margin": 1.6982421875,
+              "delta": 4.1688232421875
+            },
+            {
+              "id": "capital-japan",
+              "margin": -0.3297119140625,
+              "delta": 2.140869140625
+            },
+            {
+              "id": "name-france",
+              "margin": 2.2158203125,
+              "delta": 4.6864013671875
+            },
+            {
+              "id": "name-alice",
+              "margin": 0.58642578125,
+              "delta": 3.0570068359375
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "qwen": {
+    "model": "Qwen/Qwen3.5-2B",
+    "revision": "15852e8c16360a2fea060d615a32b45270f8a8fc",
+    "tokenizerRevision": "15852e8c16360a2fea060d615a32b45270f8a8fc",
+    "sourceSha256": "4a5ca66ddb9352839c1e06d0188fa624e8ea01f2e498ec190b8736abf7575415",
+    "weightsSha256": "aa33250c4fc64891ddfaba3a314fd9542ea371843c387178b425fbcc5ed680b1",
+    "tokenizerSha256": "5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42",
+    "templateSha256": "273d8e0e683b885071fb17e08d71e5f2a5ddfb5309756181681de4f5a1822d80",
+    "adapterSha256": "c96c07dc20253ac40d0c74762885714c77d73e3b1d919ca665954a1ebb773ef7",
+    "adapterConfigSha256": "f6043b77e78816a52e97aa18290b33a8cf51f56dd3059c6ce02e5cb8746908ec",
+    "adapterRank": 8,
+    "adapterStep": 20,
+    "layer": 11,
+    "positionId": 31,
+    "seed": 42,
+    "dtype": "bfloat16",
+    "runtime": {
+      "python": "3.12.3",
+      "torch": "2.9.1+cu128",
+      "transformers": "5.13.0",
+      "peft": "0.20.0",
+      "seconds": 9.6722,
+      "peakAllocatedBytes": 4478675456
+    },
+    "rows": [
+      {
+        "id": "arithmetic-a",
+        "prefixLength": 31,
+        "base": {
+          "numeric": 19.5,
+          "quoted": 20,
+          "margin": -0.5
+        },
+        "adapted": {
+          "numeric": 31.5,
+          "quoted": 10.9375,
+          "margin": 20.5625
+        },
+        "shift": 21.0625,
+        "l2": 3.620958089828491,
+        "cosine": 0.7506011724472046,
+        "baseRecipient": [
+          {
+            "condition": "identity_sham",
+            "donorState": "base",
+            "donorCase": "arithmetic-a",
+            "donorIndex": 30,
+            "positionId": 31,
+            "numeric": 19.5,
+            "quoted": 20,
+            "margin": -0.5,
+            "delta": 0
+          },
+          {
+            "condition": "matched_transfer",
+            "donorState": "adapted",
+            "donorCase": "arithmetic-a",
+            "donorIndex": 30,
+            "positionId": 31,
+            "numeric": 22.625,
+            "quoted": 20.875,
+            "margin": 1.75,
+            "delta": 2.25
+          },
+          {
+            "condition": "other_prompt_transfer",
+            "donorState": "adapted",
+            "donorCase": "arithmetic-b",
+            "donorIndex": 31,
+            "positionId": 31,
+            "numeric": 22.5,
+            "quoted": 20.625,
+            "margin": 1.875,
+            "delta": 2.375
+          }
+        ],
+        "adaptedRecipient": [
+          {
+            "condition": "identity_sham",
+            "donorState": "adapted",
+            "donorCase": "arithmetic-a",
+            "donorIndex": 30,
+            "positionId": 31,
+            "numeric": 31.5,
+            "quoted": 10.9375,
+            "margin": 20.5625,
+            "delta": 0
+          },
+          {
+            "condition": "matched_transfer",
+            "donorState": "base",
+            "donorCase": "arithmetic-a",
+            "donorIndex": 30,
+            "positionId": 31,
+            "numeric": 30.25,
+            "quoted": 12,
+            "margin": 18.25,
+            "delta": -2.3125
+          },
+          {
+            "condition": "other_prompt_transfer",
+            "donorState": "base",
+            "donorCase": "arithmetic-b",
+            "donorIndex": 31,
+            "positionId": 31,
+            "numeric": 30.125,
+            "quoted": 11.8125,
+            "margin": 18.3125,
+            "delta": -2.25
+          }
+        ]
+      },
+      {
+        "id": "arithmetic-b",
+        "prefixLength": 32,
+        "base": {
+          "numeric": 20.625,
+          "quoted": 20,
+          "margin": 0.625
+        },
+        "adapted": {
+          "numeric": 32.25,
+          "quoted": 11,
+          "margin": 21.25
+        },
+        "shift": 20.625,
+        "l2": 3.7650771141052246,
+        "cosine": 0.7335741519927979,
+        "baseRecipient": [
+          {
+            "condition": "identity_sham",
+            "donorState": "base",
+            "donorCase": "arithmetic-b",
+            "donorIndex": 31,
+            "positionId": 31,
+            "numeric": 20.625,
+            "quoted": 20,
+            "margin": 0.625,
+            "delta": 0
+          },
+          {
+            "condition": "matched_transfer",
+            "donorState": "adapted",
+            "donorCase": "arithmetic-b",
+            "donorIndex": 31,
+            "positionId": 31,
+            "numeric": 23.125,
+            "quoted": 20.5,
+            "margin": 2.625,
+            "delta": 2
+          },
+          {
+            "condition": "other_prompt_transfer",
+            "donorState": "adapted",
+            "donorCase": "arithmetic-a",
+            "donorIndex": 30,
+            "positionId": 31,
+            "numeric": 23.125,
+            "quoted": 20.5,
+            "margin": 2.625,
+            "delta": 2
+          }
+        ],
+        "adaptedRecipient": [
+          {
+            "condition": "identity_sham",
+            "donorState": "adapted",
+            "donorCase": "arithmetic-b",
+            "donorIndex": 31,
+            "positionId": 31,
+            "numeric": 32.25,
+            "quoted": 11,
+            "margin": 21.25,
+            "delta": 0
+          },
+          {
+            "condition": "matched_transfer",
+            "donorState": "base",
+            "donorCase": "arithmetic-b",
+            "donorIndex": 31,
+            "positionId": 31,
+            "numeric": 30.875,
+            "quoted": 11.8125,
+            "margin": 19.0625,
+            "delta": -2.1875
+          },
+          {
+            "condition": "other_prompt_transfer",
+            "donorState": "base",
+            "donorCase": "arithmetic-a",
+            "donorIndex": 30,
+            "positionId": 31,
+            "numeric": 30.75,
+            "quoted": 11.875,
+            "margin": 18.875,
+            "delta": -2.375
+          }
+        ]
+      }
+    ]
+  }
+}
