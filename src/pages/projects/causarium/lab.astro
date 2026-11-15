@@ -1,0 +1,324 @@
+---
+import { readFile } from 'node:fs/promises';
+import Base from '../../../layouts/Base.astro';
+import ResearchTable from '../../../components/ResearchTable.astro';
+import { evidenceSchema } from '../../../lib/causarium.mjs';
+import '../../../styles/causarium-console.css';
+
+const exhibit = '/projects/causarium/';
+const asset = '/media/causarium/evidence-v1.json';
+const { pythia, qwen, offlineTests, researchCommit } = evidenceSchema.parse(
+  JSON.parse(await readFile('public' + asset, 'utf8'))
+);
+const names: Record<string, string> = {
+  'capital-france-italy': 'France → Italy',
+  'capital-france-germany': 'France → Germany',
+  'arithmetic-a': 'Arithmetic A',
+  'arithmetic-b': 'Arithmetic B',
+  'sham': 'Recipient identity sham',
+  'matched-clean': 'France · capital',
+  'capital-spain': 'Spain · capital',
+  'capital-japan': 'Japan · capital',
+  'name-france': 'France · name',
+  'name-alice': 'Alice · name',
+  'identity_sham': 'Same-state sham',
+  'matched_transfer': 'Matched prompt donor',
+  'other_prompt_transfer': 'Other prompt donor',
+};
+const fixed = (n: number, digits = 4) => (n < 0 ? '−' : n > 0 ? '+' : '') + Math.abs(n).toFixed(digits);
+const exact = (n: number) => String(n).replace('-', '−');
+const limits = {
+  delta: Math.max(...pythia.selective.rows.flatMap(row => row.matrix.flat().map(score => Math.abs(score.delta)))),
+  margin: Math.max(...pythia.selective.rows.flatMap(row => row.matrix.flat().map(score => Math.abs(score.margin)))),
+  transfer: Math.max(...qwen.rows.flatMap(row => [...row.baseRecipient, ...row.adaptedRecipient].map(score => Math.abs(score.delta)))),
+};
+const colorLevel = (n: number, maximum: number) => Math.abs(n) / maximum * 33;
+const pythiaMeasures = [
+  ['Clean margin', 'clean'], ['Unpatched recipient', 'corrupt'], ['Identity sham', 'sham'],
+  ['Patched margin', 'margin'], ['Change vs. recipient', 'delta'],
+] as const;
+const glossary = [
+  ['Activation patch', 'An activation is a vector of internal numbers. A patch puts the donor’s recorded vector into the recipient at one site and measures how the recipient’s output scores change. A whole vector may contain many kinds of information.'],
+  ['Layers and token positions', 'A layer is one processing stage of the transformer. A token position is a location in its input sequence. The map uses zero-based layers and the five aligned input tokens. The intervention happens immediately after the selected block.'],
+  ['Logit margin and change', 'A logit is an unnormalized token score. A margin subtracts the alternative score from the preferred score. A positive margin favors the preferred token within that pair. A change subtracts the unpatched recipient margin from the patched margin. These are logit differences, not probabilities or accuracy.'],
+  ['Donors, recipients and shams', 'The donor supplies an activation; the recipient is the run that receives it. In an identity sham the recipient receives its own vector. A zero sham checks that replacement alone leaves the measured margin unchanged. Other donor controls test whether an effect is specific to the matched donor.'],
+  ['Recovery', 'Recovery divides the change caused by a patch by the baseline clean-minus-corrupted gap. It can go above 100% or below zero, and is undefined at a zero denominator. The console displays the stored margins and deltas from evidence v1, which does not contain per-site recovery ratios.'],
+  ['Base and adapted checkpoints', 'The Qwen base and adapted states share the same pinned model and tokenizer. The adapted state enables a rank-8 LoRA. The donor-to-recipient arrow identifies which state supplies the vector and which state’s forward pass is patched.'],
+] as const;
+---
+<Base title="Causarium Research Console" description="Explore recorded activation patches, donor controls, and checkpoint swaps in Causarium’s read-only research console.">
+  <article class="container research-console" data-console>
+    <a class="lab-back" href={exhibit}>← Causarium case study</a>
+    <div class="lab-shell">
+      <header class="lab-header">
+        <div class="lab-brand">
+          <div>
+            <p class="lab-kicker">MODEL INTERPRETABILITY</p>
+            <h1>Causarium<span>.</span></h1>
+            <p class="lab-subtitle">Research console</p>
+          </div>
+          <p class="lab-status">Recorded evidence <span>v1</span></p>
+        </div>
+        <div class="lab-toolbar">
+          <nav class="lab-tabs" aria-label="Research console views">
+            <div data-tabs>
+              <a href="#explore" id="tab-explore" data-tab>Explore Activations</a>
+              <a href="#compare" id="tab-compare" data-tab>Compare Checkpoints</a>
+              <a href="#understand" id="tab-understand" data-tab>Understand Results</a>
+            </div>
+          </nav>
+          <div class="lab-mode" role="group" aria-label="Presentation mode" data-enhanced>
+            <button type="button" data-mode="guided" aria-pressed="true">Guided</button>
+            <button type="button" data-mode="expert" aria-pressed="false">Expert</button>
+          </div>
+        </div>
+      </header>
+
+      <div class="lab-body">
+        <section id="explore" data-view aria-labelledby="explore-title">
+          <header class="lab-section-head">
+            <p class="lab-kicker">M2–M3 · PYTHIA-70M</p>
+            <h2 id="explore-title">Where does a patch change the output?</h2>
+            <p data-guided>Pick a prompt pair and a cell. Each cell shows what happened when one internal vector was replaced with the clean donor’s vector.</p>
+            <p data-expert>Post-block residual-vector replacement, matched by token index. The margin is Paris minus the alternative, in logits.</p>
+          </header>
+          <div class="lab-controls lab-panel" data-enhanced>
+            <div><label for="lab-pair">Prompt comparison</label>
+              <select id="lab-pair" data-pair aria-describedby="lab-pair-help">
+                {pythia.selective.rows.map((row, i) => <option value={i}>{names[row.id]}</option>)}
+              </select>
+              <small id="lab-pair-help">France supplies the vector. Italy or Germany receives it.</small>
+            </div>
+            <div><label for="lab-measure">Map value</label>
+              <select id="lab-measure" data-measure aria-describedby="lab-measure-help">
+                <option value="delta">Margin change</option>
+                <option value="margin">Patched margin</option>
+              </select>
+              <small id="lab-measure-help">Change uses the unpatched recipient as baseline.</small>
+            </div>
+            <div><label for="lab-layer">Layer</label>
+              <select id="lab-layer" data-layer aria-describedby="lab-layer-help">
+                {pythia.selective.layers.map(layer => <option value={layer} selected={layer === 1}>Layer {layer}</option>)}
+              </select>
+              <small id="lab-layer-help">Processing block whose output is patched.</small>
+            </div>
+            <div><label for="lab-position">Token position</label>
+              <select id="lab-position" data-position aria-describedby="lab-position-help">
+                {pythia.selective.positions.map((position, i) => <option value={i} selected={i === 3}>{i} · {position}</option>)}
+              </select>
+              <small id="lab-position-help">Input location where the vector is replaced.</small>
+            </div>
+          </div>
+
+          {pythia.selective.rows.map((row, i) => {
+            const initial = row.matrix[1][3];
+            const donorRow = pythia.donor.rows[i];
+            return (
+              <div class="lab-selection" data-pythia={i}>
+                <div class="lab-workspace">
+                  <figure class="lab-panel lab-map">
+                    <figcaption><strong>Layer × token position</strong><span>{names[row.id]}</span></figcaption>
+                    <div class="lab-overflow" role="region" tabindex="0" aria-labelledby={`map-caption-${i}`}>
+                      <table class="lab-heatmap">
+                        <caption class="sr-only" id={`map-caption-${i}`}>{names[row.id]} heatmap, logit values</caption>
+                        <thead><tr><th scope="col">Layer</th>{pythia.selective.positions.map(position => <th scope="col">{position}</th>)}</tr></thead>
+                        <tbody>{row.matrix.map((scores, layer) => <tr>
+                          <th scope="row">L{layer}</th>
+                          {scores.map((score, position) => {
+                            const site = `Layer ${layer}, position ${position} ${pythia.selective.positions[position]}`;
+                            const selected = layer === 1 && position === 3;
+                            return <td data-heat-tone={score.delta < 0 ? 'negative' : 'positive'} style={{'--level':colorLevel(score.delta, limits.delta) + '%'}}>
+                              <span data-static>{fixed(score.delta, 3)}</span>
+                              <button type="button" data-enhanced data-site={site}
+                                data-site-layer={layer} data-site-position={position}
+                                data-delta={score.delta} data-margin={score.margin} data-sham={score.sham}
+                                data-delta-tone={colorLevel(score.delta, limits.delta) + '%'}
+                                data-margin-tone={colorLevel(score.margin, limits.margin) + '%'}
+                                aria-label={`${site}, change ${fixed(score.delta, 3)} logits`}
+                                aria-pressed={selected} tabindex={selected ? 0 : -1}>{fixed(score.delta, 3)}</button>
+                            </td>;
+                          })}
+                        </tr>)}</tbody>
+                      </table>
+                    </div>
+                    <p class="lab-legend"><span data-map-negative>− Toward alternative</span><i aria-hidden="true"></i><span data-map-positive>+ Toward preferred</span></p>
+                    <p class="lab-small" data-enhanced>Use arrow keys to move between cells, then Enter or Space to select.</p>
+                  </figure>
+                  <aside class="lab-panel lab-inspector" aria-label={`${names[row.id]} selected intervention`}>
+                    <p class="lab-kicker">SELECTED INTERVENTION</p>
+                    <div aria-live="polite" aria-atomic="true">
+                      <h3 data-output="site">Layer 1, position 3 country</h3>
+                      <strong class="lab-big" data-output="delta">{fixed(initial.delta)}</strong>
+                      <p class="lab-small">Change in logit margin</p>
+                    </div>
+                    <dl class="lab-readout">
+                      <div><dt>Unpatched recipient</dt><dd>{fixed(row.corrupt)}</dd></div>
+                      <div><dt>After patch</dt><dd data-output="margin">{fixed(initial.margin)}</dd></div>
+                      <div data-expert><dt>Clean baseline</dt><dd>{exact(row.clean)}</dd></div>
+                      <div data-expert><dt>Identity sham</dt><dd data-output="sham-exact">{exact(initial.sham)}</dd></div>
+                      <div data-expert><dt>Exact patched margin</dt><dd data-output="margin-exact">{exact(initial.margin)}</dd></div>
+                      <div data-expert><dt>Exact delta</dt><dd data-output="delta-exact">{exact(initial.delta)}</dd></div>
+                    </dl>
+                    <p class="lab-callout"><strong>What this tells us</strong><br />A strong effect shows that the patched vector mattered for this score. The donor controls below leave country specificity unresolved.</p>
+                  </aside>
+                </div>
+                <details class="lab-disclosure">
+                  <summary>Exact layer and position table</summary>
+                  <ResearchTable id={`lab-exact-${i}`} caption={`${names[row.id]} · recorded logit margins`}
+                    headers={['Site', ...pythiaMeasures.map(([label]) => label)]}
+                    rows={row.matrix.flatMap((scores, layer) => scores.map((score, position) => ({
+                      label: `L${layer} · ${position} ${pythia.selective.positions[position]}`,
+                      cells: pythiaMeasures.map(([,key]) => exact(({ ...row, ...score })[key])),
+                    })))} />
+                </details>
+                <details class="lab-disclosure">
+                  <summary>M2 control table · whole-layer and mismatched positions</summary>
+                  <p class="lab-small">Whole-layer controls replace every position. Mismatched controls copy the country donor into the final token position. The identity shams preserved the recipient margins.</p>
+                  <ResearchTable id={`lab-controls-${i}`} caption={`${names[row.id]} · M2 control margins and changes`}
+                    headers={['Layer', 'Whole margin', 'Whole Δ', 'Mismatch margin', 'Mismatch Δ']}
+                    rows={row.controls.map(({full, mismatched}, layer) => ({label: `L${layer}`,
+                      cells: [full.margin, full.delta, mismatched.margin, mismatched.delta].map(exact)}))} />
+                </details>
+                <details class="lab-disclosure">
+                  <summary>M3 donor controls · layer 1, country token</summary>
+                  <p class="lab-small">These controls use the fixed M3 site, independent of the selected heatmap cell. Several alternative donors also increased the Paris-relative margin.</p>
+                  <ResearchTable id={`lab-donors-${i}`} caption={`${names[row.id]} · alternate and neutral donors`}
+                    headers={['Donor', 'Patched margin', 'Change vs. recipient']}
+                    rows={donorRow.interventions.map(score => ({label: names[score.id], cells: [exact(score.margin), exact(score.delta)]}))} />
+                </details>
+              </div>
+            );
+          })}
+        </section>
+
+        <section id="compare" data-view aria-labelledby="compare-title">
+          <header class="lab-section-head">
+            <p class="lab-kicker">M5 · QWEN3.5-2B</p>
+            <h2 id="compare-title">What changed after fine-tuning?</h2>
+            <p data-guided>Compare the same checkpoint before and after the adapter is enabled. The arrow points from the state supplying the vector to the state receiving it.</p>
+            <p data-expert>Rank-{qwen.adapterRank} LoRA at step {qwen.adapterStep}, decoder block {qwen.layer}, aligned model position ID {qwen.positionId}, native BF16.</p>
+          </header>
+          <div class="lab-controls lab-controls-pair lab-panel" data-enhanced>
+            <div><label for="lab-example">Arithmetic example</label>
+              <select id="lab-example" data-qwen-case aria-describedby="lab-example-help">
+                {qwen.rows.map((row, i) => <option value={i}>{names[row.id]}</option>)}
+              </select>
+              <small id="lab-example-help">Two recorded cases with the same output format.</small>
+            </div>
+            <div><label for="lab-direction">Swap direction</label>
+              <select id="lab-direction" data-direction aria-describedby="lab-direction-help">
+                <option value="base">Adapted → base</option>
+                <option value="adapted">Base → adapted</option>
+              </select>
+              <small id="lab-direction-help">Donor state → recipient state.</small>
+            </div>
+          </div>
+          <p class="sr-only" role="status" data-compare-status></p>
+          {qwen.rows.map((row, i) => (
+            <div data-qwen={i} class="lab-selection">
+              <div class="lab-baselines">
+                <div class="lab-panel"><p class="lab-kicker">BASE MODEL MARGIN</p><strong>{fixed(row.base.margin)}</strong><p class="lab-small">LoRA disabled</p></div>
+                <div class="lab-panel"><p class="lab-kicker">ADAPTED MODEL MARGIN</p><strong>{fixed(row.adapted.margin)}</strong><p class="lab-small">Rank-{qwen.adapterRank} LoRA enabled</p></div>
+              </div>
+              {([
+                ['base', 'Adapted → base', row.base, row.baseRecipient],
+                ['adapted', 'Base → adapted', row.adapted, row.adaptedRecipient],
+              ] as const).map(([recipient, label, baseline, scores]) => (
+                <div data-recipient={recipient} class="lab-selection">
+                  <div class="lab-workspace">
+                    <figure class="lab-panel">
+                      <figcaption><strong>Donor effect on recipient</strong><span>{names[row.id]} · {label}</span></figcaption>
+                      <ul class="lab-bars">
+                        {scores.map(score => (
+                          <li><div><span>{names[score.condition]}</span><strong>{fixed(score.delta)}</strong></div>
+                            <div class="lab-track" aria-hidden="true">
+                              <span class:list={{negative:score.delta < 0}} style={{'--extent':Math.abs(score.delta) / limits.transfer * 50 + '%'}}></span>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                      <p class="lab-legend"><span>− Toward quoted</span><span>0</span><span>+ Toward numeric</span></p>
+                      <p class="lab-small">Bars show changes in logit margin on a common scale across examples and directions.</p>
+                    </figure>
+                    <aside class="lab-panel lab-inspector" aria-label={`${names[row.id]} ${label} readout`}>
+                      <p class="lab-kicker">MATCHED PATCH</p>
+                      <h3>{label}</h3>
+                      <output class="lab-big">{fixed(scores[1].delta)}</output>
+                      <p class="lab-small">Change in logit margin</p>
+                      <dl class="lab-readout">
+                        <div><dt>Recipient before</dt><dd>{fixed(baseline.margin)}</dd></div>
+                        <div><dt>Recipient after</dt><dd>{fixed(scores[1].margin)}</dd></div>
+                        <div data-expert><dt>Shared prefix length</dt><dd>{row.prefixLength}</dd></div>
+                        <div data-expert><dt>Activation L2 distance</dt><dd>{exact(row.l2)}</dd></div>
+                        <div data-expert><dt>Cosine similarity</dt><dd>{exact(row.cosine)}</dd></div>
+                      </dl>
+                      <p class="lab-callout">Other-prompt donors produced comparable effects. Prompt-specific transfer remains unresolved.</p>
+                    </aside>
+                  </div>
+                  <details class="lab-disclosure">
+                    <summary>Exact candidate logits and control table</summary>
+                    <ResearchTable id={`lab-qwen-${i}-${recipient}`} caption={`${names[row.id]} · ${label} · candidate logits`}
+                      headers={['Condition', 'Numeric logit', 'Quoted logit', 'Margin', 'Δ vs. recipient']}
+                      rows={[
+                        {label:'Unpatched base', cells:[exact(row.base.numeric), exact(row.base.quoted), exact(row.base.margin), '—']},
+                        {label:'Unpatched adapted', cells:[exact(row.adapted.numeric), exact(row.adapted.quoted), exact(row.adapted.margin), '—']},
+                        ...scores.map(score => ({label:`${names[score.condition]} · ${score.donorState} / ${names[score.donorCase]}`,
+                          cells:[score.numeric,score.quoted,score.margin,score.delta].map(exact)})),
+                      ]} />
+                  </details>
+                </div>
+              ))}
+            </div>
+          ))}
+          <p class="lab-callout">The recorded Qwen margin compares the first divergent tokens after a forced prefix: a standalone space and a space plus opening quote. The experiment measures that branch preference. Complete JSON generation and arithmetic accuracy are outside its scope.</p>
+        </section>
+
+        <section id="understand" data-view aria-labelledby="understand-title">
+          <header class="lab-section-head">
+            <p class="lab-kicker">METHODS &amp; EVIDENCE</p>
+            <h2 id="understand-title">Understand the results</h2>
+            <p>Use these definitions to read the charts and judge what the controls establish.</p>
+          </header>
+          <div class="lab-glossary">
+            {glossary.map(([term, description], i) => <details class="lab-disclosure" open={i === 0}>
+              <summary>{term}</summary><p>{description}</p>
+            </details>)}
+          </div>
+          <div class="lab-notes">
+            <div class="lab-panel">
+              <h3>What the controls show</h3>
+              <p>Pythia’s whole-layer controls restored the clean margin. Same-position identity shams preserved the corrupted margin. Mismatched positions and alternative donors could still move the score.</p>
+              <p>Matched Qwen swaps transferred part of the baseline shift in both directions. The other-prompt donors produced similar changes on these two examples.</p>
+            </div>
+            <div class="lab-panel">
+              <h3>Sources and reproducibility</h3>
+              <p>The console loads the validated projection of the reviewed measurements. The independent research checkout passed {offlineTests} offline tests.</p>
+              <ul>
+                <li><a href={exhibit + '#provenance'}>Pinned revisions, run commands and reproduction limits</a></li>
+                <li><a href={asset}>Evidence v1 JSON</a></li>
+                <li><a href={`https://huggingface.co/${pythia.model}/tree/${pythia.revision}`}>Pinned Pythia model source</a></li>
+                <li><a href={`https://huggingface.co/${qwen.model}/tree/${qwen.revision}`}>Pinned Qwen model source</a></li>
+              </ul>
+              <dl class="lab-hashes" data-expert>
+                <dt>Research checkout</dt><dd><code>{researchCommit}</code></dd>
+                <dt>Pythia model and tokenizer revision</dt><dd><code>{pythia.revision}</code></dd>
+                <dt>Qwen model and tokenizer revision</dt><dd><code>{qwen.revision}</code></dd>
+                <dt>Step-{qwen.adapterStep} adapter SHA-256</dt><dd><code>{qwen.adapterSha256}</code></dd>
+              </dl>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <footer class="lab-footer">
+        <a href={asset}>Research evidence v1</a>
+        <span>Read-only · recorded results</span>
+      </footer>
+    </div>
+  </article>
+</Base>
+<script>
+  import { initializeConsole } from '../../../scripts/causarium-console';
+  const root = document.querySelector<HTMLElement>('[data-console]');
+  if (root) initializeConsole(root);
+</script>
