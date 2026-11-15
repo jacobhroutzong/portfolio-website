@@ -130,6 +130,14 @@ export const selectedProjects = [
     "linkLabel": "Explore Video Game Tracker →"
   },
   {
+    "title": "Mercato",
+    "group": "business",
+    "eyebrow": "BUSINESS & OPERATIONS SYSTEMS / PRIVATE APP",
+    "description": "A private operations workspace combining ecommerce product research, sourcing, purchasing, inventory and finance with CreatorOS content planning and analytics. Hosted access and Google Sheets sync are undergoing release verification.",
+    "href": "/projects/mercato/",
+    "linkLabel": "Explore Mercato →"
+  },
+  {
     "title": "Causarium",
     "group": "research",
     "eyebrow": "MODEL INTERPRETABILITY / RESEARCH",
