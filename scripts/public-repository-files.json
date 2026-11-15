@@ -191,6 +191,8 @@
   "src/components/Icon.astro",
   "src/components/PortfolioImage.astro",
   "src/components/ProjectCard.astro",
+  "src/components/ProjectGroup.astro",
+  "src/components/SelectedProjectCard.astro",
   "src/components/PublicBusinessCalculator.astro",
   "src/components/scientific-systems/InteractiveEngine.astro",
   "src/components/scientific-systems/LabCard.astro",

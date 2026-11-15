@@ -2,7 +2,9 @@
 import Base from '../../layouts/Base.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import { visibleProjects } from '../../lib/projects';
-import { selectedProjects } from '../../data/selected-projects';
+import ProjectGroup from '../../components/ProjectGroup.astro';
+import SelectedProjectCard from '../../components/SelectedProjectCard.astro';
+import { selectedProjects, projectGroups, projectsInGroup } from '../../data/selected-projects';
 const workDetails: Record<string,{description:string;links:{primary:boolean;href:string;label:string}[]}> = {
   "Recursa — Recursive Application Synthesis": {
     "description": "A research workbench for external specification inspection, synthesis planning, and transparent execution replays. Explore the CPU-only progress demo; genuine model-backed generation and comparative evaluation remain unverified.",
@@ -47,9 +49,27 @@ const workDetails: Record<string,{description:string;links:{primary:boolean;href
     ]
   }
 };
-const orderedProjects = selectedProjects.toReversed();
-const registeredIds = new Set(orderedProjects.map(project => project.href.split('/').filter(Boolean).at(-1)));
+const registeredIds = new Set(selectedProjects.map(project => project.href.split('/').filter(Boolean).at(-1)));
 const projects = (await visibleProjects()).filter(project => !registeredIds.has(project.id));
+const groups = projectGroups.map(group => ({
+  ...group,
+  cards: projectsInGroup(group.id).map(project => {
+    const details = workDetails[project.title];
+    return {
+      ...project,
+      description: details?.description ?? project.description,
+      links: details?.links ?? [{ primary: true, href: project.href, label: project.linkLabel }]
+    };
+  })
+}));
 ---
-<Base title="Work"><div class="container page-shell"><div class="eyebrow">WORK / SELECTED PROJECTS</div><h1 class="page-title">Projects.</h1><p class="page-intro">Applications and project walkthroughs, each with a page of its own.</p>{orderedProjects.map(project => { const details = workDetails[project.title]; const links = details?.links || [{primary:true,href:project.href,label:project.linkLabel}]; return <article class="curated-project"><div><span class="eyebrow">{project.eyebrow}</span><h2>{project.title}</h2><p>{details?.description || project.description}</p><div class="button-row">{links.map(link => <a class={link.primary ? 'button primary' : 'text-link'} href={link.href} target={link.href.startsWith('https:') ? '_blank' : undefined} rel={link.href.startsWith('https:') ? 'noopener noreferrer' : undefined}>{link.label}</a>)}</div></div></article>; })}{projects.length > 0 && <section class="section"><h2>More project walkthroughs.</h2><div class="project-grid">{projects.map(project => <ProjectCard project={project} />)}</div></section>}<section class="section"><h2>Work in progress.</h2><p>For the broader collection of repositories and experiments, explore the activity tracker.</p><a class="text-link" href="/activity/">View recent GitHub & Hugging Face activity ↗</a></section></div></Base>
-<style>.curated-project{padding:35px;border:1px solid var(--border);background:var(--bg-soft);border-radius:8px}.curated-project+.curated-project{margin-top:24px}.curated-project h2{margin:16px 0}.curated-project p{max-width:680px;font-size:15px}.curated-project .eyebrow{font-size:10px}@media(max-width:760px){.curated-project{padding:24px}}</style>
+<Base title="Work"><div class="container page-shell"><div class="eyebrow">WORK / SELECTED PROJECTS</div><h1 class="page-title">Projects.</h1><p class="page-intro">Applications and project walkthroughs, each with a page of its own.</p>
+{groups.map(({ id, title, cards }) => (
+  <ProjectGroup id={id} title={title} heading="h2" count={cards.length}>
+    {cards.slice(0, 3).map(card => <SelectedProjectCard {...card} />)}
+    <Fragment slot="more">
+      {cards.slice(3).map(card => <SelectedProjectCard {...card} />)}
+    </Fragment>
+  </ProjectGroup>
+))}
+{projects.length > 0 && <section class="section"><h2>More project walkthroughs.</h2><div class="project-grid">{projects.map(project => <ProjectCard project={project} />)}</div></section>}<section class="section"><h2>Work in progress.</h2><p>For the broader collection of repositories and experiments, explore the activity tracker.</p><a class="text-link" href="/activity/">View recent GitHub & Hugging Face activity ↗</a></section></div></Base>

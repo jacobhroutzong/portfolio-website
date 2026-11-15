@@ -1,0 +1,42 @@
+---
+interface Props {
+  title: string;
+  eyebrow: string;
+  description: string;
+  links: { primary: boolean; href: string; label: string }[];
+  compact?: boolean;
+}
+
+const { title, eyebrow, description, links, compact = false } = Astro.props;
+const Heading = compact ? 'h4' : 'h3';
+---
+<article class:list={['selected-card', { compact }]}>
+  <div>
+    <span class="eyebrow">{eyebrow}</span>
+    <Heading>{title}</Heading>
+    <p>{description}</p>
+  </div>
+  <div class:list={{ 'button-row': !compact }}>
+    {links.map(({ primary, href, label }) => (
+      <a class={primary ? 'button primary' : 'text-link'} href={href}
+        target={href.startsWith('https:') ? '_blank' : undefined}
+        rel={href.startsWith('https:') ? 'noopener noreferrer' : undefined}>{label}</a>
+    ))}
+  </div>
+</article>
+
+<style>
+  .selected-card { padding: 35px; border: 1px solid var(--border); background: var(--bg-soft); border-radius: 8px; }
+  .selected-card h3 { margin: 16px 0; }
+  .selected-card p { max-width: 680px; font-size: 15px; }
+  .selected-card .eyebrow { font-size: 10px; }
+  .compact { display: flex; justify-content: space-between; align-items: center; gap: 30px; padding: 28px; border-radius: 6px; }
+  .compact > :last-child { flex-shrink: 0; }
+  .compact .eyebrow { font-size: 9px; margin-bottom: 14px; }
+  .compact h4 { font-size: 23px; margin: 0 0 12px; }
+  .compact p { font-size: 14px; max-width: 570px; margin: 0; }
+  @media (max-width: 760px) {
+    .selected-card { padding: 24px; }
+    .compact { align-items: start; flex-direction: column; padding: 23px; }
+  }
+</style>
