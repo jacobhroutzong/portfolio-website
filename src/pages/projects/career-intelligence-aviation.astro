@@ -1,0 +1,24 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const appUrl = 'https://jacobroutzong-career-intelligence-aviation.hf.space/';
+const description = 'Explore technical job listings, skills and career resources for Delta, United, American and Southwest.';
+---
+
+<Base title="Career Intelligence Aviation" description={description}>
+  <article class="container page-shell">
+    <a class="text-link" href="/projects/">← All projects</a>
+    <div class="eyebrow detail-eyebrow">AVIATION / CAREER RESEARCH</div>
+    <h1 class="page-title">Career Intelligence Aviation</h1>
+    <p class="page-intro">{description}</p>
+    <p>Listings reflect the source snapshot and its verification dates. Check the employer’s site for current availability.</p>
+    <div class="button-row">
+      <a class="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">Open full-screen app ↗</a>
+    </div>
+    <iframe src={appUrl} title="Career Intelligence Aviation dashboard" loading="lazy" width="1200" height="850"></iframe>
+  </article>
+</Base>
+
+<style>
+  iframe { display: block; width: 100%; border: 1px solid var(--border); border-radius: 8px; }
+</style>

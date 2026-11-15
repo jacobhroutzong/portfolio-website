@@ -91,5 +91,12 @@ export const selectedProjects = [
     "description": "A private workspace for daily practice across 11 learning tracks, with three priorities and saved progress.",
     "href": "/projects/rigor/",
     "linkLabel": "Explore Rigor →"
+  },
+  {
+    "title": "Career Intelligence Aviation",
+    "eyebrow": "AVIATION / CAREER RESEARCH",
+    "description": "Compare technical job listings, skills and engineering career resources across four airlines.",
+    "href": "/projects/career-intelligence-aviation/",
+    "linkLabel": "Explore Career Intelligence →"
   }
 ];
