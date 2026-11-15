@@ -248,6 +248,7 @@
   "src/pages/projects/harness2-lab.astro",
   "src/pages/projects/index.astro",
   "src/pages/projects/pursuit.astro",
+  "src/pages/projects/video-game-tracker.astro",
   "src/pages/robots.txt.ts",
   "src/pages/sitemap.xml.ts",
   "src/scripts/scientific-systems/demo.ts",

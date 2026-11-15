@@ -98,5 +98,19 @@ export const selectedProjects = [
     "description": "Compare technical job listings, skills and engineering career resources across four airlines.",
     "href": "/projects/career-intelligence-aviation/",
     "linkLabel": "Explore Career Intelligence →"
+  },
+  {
+    "title": "PhaseUp — 17E AIT Study Station",
+    "eyebrow": "INTERACTIVE STUDY TOOL",
+    "description": "I built a study web app to prepare for phase-ups during 17E Advanced Individual Training (AIT).",
+    "href": "/study/17e/",
+    "linkLabel": "Open PhaseUp →"
+  },
+  {
+    "title": "Video Game Tracker",
+    "eyebrow": "WEB APPLICATION",
+    "description": "I built a web app for my game.",
+    "href": "/projects/video-game-tracker/",
+    "linkLabel": "Explore Video Game Tracker →"
   }
 ];
