@@ -17,14 +17,6 @@ export const selectedProjects = [
     "linkLabel": "Explore Ascent →"
   },
   {
-    "title": "Harness² Lab",
-    "group": "research",
-    "eyebrow": "PYTHON / AGENT SYSTEMS / INTERACTIVE LAB",
-    "description": "Explore recursive agent harnessing through live execution traces, a reusable harness library, and adaptive compute budget experiments.",
-    "href": "/projects/harness2-lab/",
-    "linkLabel": "Explore project & app →"
-  },
-  {
     "title": "EquityScout",
     "group": "business",
     "eyebrow": "BUSINESS & OPERATIONS SYSTEMS / CASE STUDY",
@@ -49,12 +41,12 @@ export const selectedProjects = [
     "linkLabel": "Explore Tunera →"
   },
   {
-    "title": "Recursa — Recursive Application Synthesis",
+    "title": "Recursa Studio",
     "group": "research",
-    "eyebrow": "PYTHON / RECURSIVE INFERENCE / RESEARCH IN PROGRESS",
-    "description": "Inspect the progress of an application-synthesis research workbench: external requirements, dependency-aware plans, saved artifacts, and clearly labeled execution evidence.",
+    "eyebrow": "RECURSIVE AI SYSTEMS RESEARCH",
+    "description": "Explore Application Synthesis through recorded specifications, traces, and benchmarks, and Agent Optimization through an interactive lab for harness changes and reusable lessons.",
     "href": "/projects/recursa/",
-    "linkLabel": "Explore Recursa & progress →"
+    "linkLabel": "Explore Recursa Studio →"
   },
   {
     "title": "Lintel",
