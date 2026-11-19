@@ -5,7 +5,7 @@ const studies = [
   ['lintel', 'Lintel'],
   ['leverline', 'Leverline'],
   ['ascent', 'Ascent'],
-  ['decision-intelligence-engine', 'Decision Intelligence Engine'],
+  ['decision-intelligence-engine', 'Decision'],
   ['convergence', 'Convergence'],
 ] as const;
 
@@ -19,6 +19,27 @@ test('commercial projects remain navigable as static case studies', async ({ pag
     expect(html).toContain(title);
     expect(html).toContain('/media/showcase/' + slug + '.svg');
     expect(html).not.toMatch(/<iframe|href="\/downloads\/|src="\/apps\/(?:lintel|leverline)\//);
+  }
+});
+
+
+test('Apex and Decision are startups and all displayed project titles are one word', async ({ page }) => {
+  for (const route of ['/', '/projects/']) {
+    await page.goto(route);
+    const root = route === '/' ? page.locator('#projects') : page.locator('main');
+    const startups = root.locator('section.project-group').filter({
+      has: page.getByRole('heading', { name: 'Businesses + Startups' }),
+    });
+    const research = root.locator('section.project-group').filter({
+      has: page.getByRole('heading', { name: 'Research + Fun Projects' }),
+    });
+    for (const slug of ['career-intelligence-aviation', 'decision-intelligence-engine']) {
+      await expect(startups.locator('a[href="/projects/' + slug + '/"]')).toHaveCount(1);
+      await expect(research.locator('a[href="/projects/' + slug + '/"]')).toHaveCount(0);
+    }
+    const titles = await root.locator('.selected-card h3, .selected-card h4, .project-card h3').allTextContents();
+    expect(titles.length).toBeGreaterThan(0);
+    for (const title of titles) expect(title.trim()).toMatch(/^\S+$/u);
   }
 });
 
@@ -59,7 +80,7 @@ test('Empirava is the single flagship listing and supports keyboard navigation',
 
 test('historical Recursa Studio retains its two navigable research areas', async ({ page }) => {
   await page.goto('/projects/recursa/');
-  await expect(page.getByRole('heading', { name: 'Recursa Studio', level: 1 })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Recursa', level: 1 })).toBeVisible();
   for (const name of ['Application Synthesis', 'Agent Optimization']) {
     await expect(page.getByRole('heading', { name, level: 2 })).toBeVisible();
   }
@@ -99,11 +120,11 @@ test('Axiom Studio is featured and Q-SPECTRA remains an independent case study',
   for (const listing of ['/', '/projects/']) {
     await page.goto(listing);
     const selected = page.locator('article.selected-card');
-    const axiom = selected.filter({ has: page.getByRole('heading', { name: 'Axiom Studio', exact: true }) });
+    const axiom = selected.filter({ has: page.getByRole('heading', { name: 'Axiom', exact: true }) });
     await expect(axiom).toHaveCount(1);
     await expect(selected.filter({ hasText: 'Scientific Systems Lab' })).toHaveCount(0);
     await expect(selected.locator('a[href="' + quantum + '"]')).toHaveCount(0);
-    const start = axiom.getByRole('link', { name: 'Start with the Optimization Lab' });
+    const start = axiom.getByRole('link', { name: 'Explore Axiom →' });
     await expect(start).toBeVisible();
     await expect(start).toHaveAttribute('href', optimization);
     await start.click();
