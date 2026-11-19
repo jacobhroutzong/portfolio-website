@@ -5,7 +5,7 @@ const workerPath = '/scientific-engine.worker.js';
 
 test('ridge pilot runs both WASM engines against the same loss and passes independent checks', async ({ page }, testInfo) => {
   await page.goto('/labs/scientific-systems/');
-  await page.getByRole('link', { name: 'Try the Axiom Studio ridge regression pilot' }).click();
+  await page.getByRole('link', { name: 'Start with the Optimization Lab' }).click();
   await expect(page).toHaveURL(path);
   const pilot = page.getByRole('region', { name: 'Run the fit' });
   const run = pilot.getByRole('button', { name: 'Run both engines' });

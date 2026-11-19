@@ -27,26 +27,6 @@ const workDetails: Record<string,{description:string;links:{primary:boolean;href
         "label": "Source code ↗"
       }
     ]
-  },
-  "Scientific Systems Lab": {
-    "description": "Independent computational engines, native binary investigations, and reproducible mathematical tests. Numerical and symbolic cores are in progress; five further engines are planned.",
-    "links": [
-      {
-        "primary": true,
-        "href": "/labs/scientific-systems/",
-        "label": "Explore the lab →"
-      },
-      {
-        "primary": false,
-        "href": "/labs/scientific-systems/numerical/",
-        "label": "Numerical engine ↗"
-      },
-      {
-        "primary": false,
-        "href": "/labs/scientific-systems/symbolic/",
-        "label": "Symbolic engine ↗"
-      }
-    ]
   }
 };
 const registeredIds = new Set(selectedProjects.map(project => project.href.split('/').filter(Boolean).at(-1)));

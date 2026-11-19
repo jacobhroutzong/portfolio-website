@@ -41,14 +41,6 @@ export const selectedProjects = [
     "linkLabel": "Explore Leverline →"
   },
   {
-    "title": "Scientific Systems Lab",
-    "group": "research",
-    "eyebrow": "C++20 / SCIENTIFIC COMPUTING / RESEARCH",
-    "description": "Numerical and symbolic engines with traceable investigations, exact mathematics, and independent validation. Explore working subsystems and the seven-project roadmap.",
-    "href": "/labs/scientific-systems/",
-    "linkLabel": "Explore the lab →"
-  },
-  {
     "title": "Tunera",
     "group": "research",
     "eyebrow": "PYTHON / MODEL FINE-TUNING",
@@ -89,15 +81,6 @@ export const selectedProjects = [
     "linkLabel": "Explore Convergence →"
   },
   {
-    "title": "Q-SPECTRA // Universal Quantum Home & Simulation Platform",
-    "group": "research",
-    "homeTitle": "Q-SPECTRA",
-    "eyebrow": "QUANTUM SENSING / COMPUTING / CRYPTOGRAPHY",
-    "description": "Explore quantum sensing, build quantum circuits, and simulate BB84 key distribution in your browser.",
-    "href": "/projects/q-spectra/",
-    "linkLabel": "Explore Q-SPECTRA →"
-  },
-  {
     "title": "Rigor",
     "group": "business",
     "eyebrow": "WEB APPLICATION / TECHNICAL INTERVIEW PREPARATION",
@@ -136,6 +119,14 @@ export const selectedProjects = [
     "description": "Inspect recorded activation swaps in Pythia-70M and Qwen3.5-2B with layer maps, donor controls, and measured logit margins.",
     "href": "/projects/causarium/",
     "linkLabel": "Explore the research exhibit →"
+  },
+  {
+    "title": "Axiom Studio",
+    "group": "research",
+    "eyebrow": "MACHINE LEARNING / MATHEMATICAL COMPUTING",
+    "description": "Fit and verify a ridge regression model with numerical and symbolic WebAssembly engines, or use either workbench on its own.",
+    "href": "/labs/scientific-systems/axiom-studio/",
+    "linkLabel": "Start with the Optimization Lab"
   }
 ];
 

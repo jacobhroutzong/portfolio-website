@@ -1,11 +1,12 @@
 ---
 import LabShell from '../../../components/scientific-systems/LabShell.astro';
+import LabSwitcher from '../../../components/scientific-systems/LabSwitcher.astro';
 import { ridgeRows, maxLambda, gradientTolerance, referenceTolerance } from '../../../scripts/scientific-systems/ridge-pilot';
 ---
-<LabShell title="Axiom Studio · Ridge Regression Optimization" description="A local pilot using symbolic differentiation and a numerical WebAssembly solve on one ridge loss.">
-  <a class="lab-back" href="/labs/scientific-systems/">Back to Scientific Systems Lab</a>
+<LabShell title="Optimization Lab · Axiom Studio" description="Explore ridge regression with exact symbolic differentiation and a numerical WebAssembly solve.">
+  <LabSwitcher current="optimization" />
   <header class="lab-detail-header">
-    <h1>Axiom Studio</h1>
+    <h1>Optimization Lab</h1>
     <h2>Ridge Regression Optimization</h2>
     <p>Fit two coefficients from a fixed dataset. The symbolic engine differentiates the loss exactly, then the numerical engine solves its stationarity system in binary64. Both engines run locally in your browser.</p>
   </header>
