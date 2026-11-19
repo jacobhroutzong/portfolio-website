@@ -5,40 +5,14 @@ import { visibleProjects } from '../../lib/projects';
 import ProjectGroup from '../../components/ProjectGroup.astro';
 import SelectedProjectCard from '../../components/SelectedProjectCard.astro';
 import { selectedProjects, projectGroups, projectsInGroup } from '../../data/selected-projects';
-const workDetails: Record<string,{description:string;links:{primary:boolean;href:string;label:string}[]}> = {
-  "Scientific Systems Lab": {
-    "description": "Independent computational engines, native binary investigations, and reproducible mathematical tests. Numerical and symbolic cores are in progress; five further engines are planned.",
-    "links": [
-      {
-        "primary": true,
-        "href": "/labs/scientific-systems/",
-        "label": "Explore the lab →"
-      },
-      {
-        "primary": false,
-        "href": "/labs/scientific-systems/numerical/",
-        "label": "Numerical engine ↗"
-      },
-      {
-        "primary": false,
-        "href": "/labs/scientific-systems/symbolic/",
-        "label": "Symbolic engine ↗"
-      }
-    ]
-  }
-};
 const registeredIds = new Set(selectedProjects.map(project => project.href.split('/').filter(Boolean).at(-1)));
 const projects = (await visibleProjects()).filter(project => !registeredIds.has(project.id));
 const groups = projectGroups.map(group => ({
   ...group,
-  cards: projectsInGroup(group.id).map(project => {
-    const details = workDetails[project.title];
-    return {
-      ...project,
-      description: details?.description ?? project.description,
-      links: details?.links ?? [{ primary: true, href: project.href, label: project.linkLabel }]
-    };
-  })
+  cards: projectsInGroup(group.id).map(project => ({
+    ...project,
+    links: [{ primary: true, href: project.href, label: project.linkLabel }]
+  }))
 }));
 ---
 <Base title="Work"><div class="container page-shell"><div class="eyebrow">WORK / SELECTED PROJECTS</div><h1 class="page-title">Projects.</h1><p class="page-intro">Applications and project walkthroughs, each with a page of its own.</p>

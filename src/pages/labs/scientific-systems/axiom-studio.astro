@@ -1,0 +1,81 @@
+---
+import LabShell from '../../../components/scientific-systems/LabShell.astro';
+import LabSwitcher from '../../../components/scientific-systems/LabSwitcher.astro';
+import { ridgeRows, maxLambda, gradientTolerance, referenceTolerance } from '../../../scripts/scientific-systems/ridge-pilot';
+---
+<LabShell title="Optimization Lab · Axiom Studio" description="Explore ridge regression with exact symbolic differentiation and a numerical WebAssembly solve.">
+  <LabSwitcher current="optimization" />
+  <header class="lab-detail-header">
+    <h1>Optimization Lab</h1>
+    <h2>Ridge Regression Optimization</h2>
+    <p>Fit two coefficients from a fixed dataset. The symbolic engine differentiates the loss exactly, then the numerical engine solves its stationarity system in binary64. Both engines run locally in your browser.</p>
+  </header>
+
+  <div class="lab-two-column">
+    <div class="lab-table-wrap">
+      <table class="lab-table">
+        <caption>Fixed dataset</caption>
+        <thead><tr><th scope="col">Feature x₁</th><th scope="col">Feature x₂</th><th scope="col">Target y</th></tr></thead>
+        <tbody>{ridgeRows.map(([x1, x2, y]) => <tr><td>{x1}</td><td>{x2}</td><td>{y}</td></tr>)}</tbody>
+      </table>
+    </div>
+    <div>
+      <h3>Why regularize?</h3>
+      <p>The prediction is <code>a·x₁ + b·x₂</code>, with no intercept. Because <code>x₂ = 2·x₁</code>, the unregularized system is singular. Positive λ penalizes large coefficients and gives a unique fit.</p>
+      <p>The loss is the sum of squared prediction residuals plus <code>λ(a² + b²)</code>. Setting both partial derivatives to zero gives <code>(XᵀX + λI) [a, b]ᵀ = Xᵀy</code>.</p>
+    </div>
+  </div>
+
+  <section class="lab-example ridge-pilot" aria-labelledby="fit-heading" data-ridge-pilot>
+    <h3 id="fit-heading">Run the fit</h3>
+    <form>
+      <label for="ridge-lambda">Regularization λ</label>
+      <input id="ridge-lambda" name="lambda" type="number" min="0" max={maxLambda} step="1" value="1" required aria-describedby="ridge-hint" />
+      <p id="ridge-hint">Use a whole number from 0 to {maxLambda}. This pilot uses integer literals for exact symbolic input. Try 0 to see how the solver handles singularity.</p>
+      <div class="button-row">
+        <button class="button primary" type="submit" disabled>Run both engines</button>
+        <button class="button" type="button" data-cancel disabled>Cancel fit</button>
+      </div>
+    </form>
+    <p role="status">Ready to fit.</p>
+    <noscript><p>Running the fit requires JavaScript and WebAssembly.</p></noscript>
+
+    <section class="ridge-results" aria-labelledby="ridge-results-heading" data-ridge-result hidden>
+      <h3 id="ridge-results-heading">Fit and validation</h3>
+      <dl>
+        <dt>WASM coefficients (a, b)</dt><dd><code data-output="fit"></code></dd>
+        <dt>Reference coefficients (a, b)</dt><dd><code data-output="reference"></code></dd>
+        <dt>Maximum coefficient difference</dt><dd><code data-output="error"></code></dd>
+        <dt>Prediction residuals by row (prediction − target)</dt><dd><code data-output="residuals"></code></dd>
+        <dt>Numerical gradient at the fit (∂L/∂a, ∂L/∂b)</dt><dd><code data-output="gradient"></code></dd>
+        <dt>Exact loss sent to the symbolic engine</dt><dd><code data-output="loss"></code></dd>
+        <dt>Symbolic ∂L/∂a</dt><dd><code data-output="partialA"></code></dd>
+        <dt>Symbolic ∂L/∂b</dt><dd><code data-output="partialB"></code></dd>
+        <dt>Linear system sent to the numerical engine</dt><dd><code data-output="system"></code></dd>
+      </dl>
+    </section>
+  </section>
+
+  <section aria-labelledby="ridge-validation">
+    <h3 id="ridge-validation">How the fit is checked</h3>
+    <p>The pilot builds the numerical system from the same dataset and λ used in the exact loss. It checks the gradient directly from the prediction residuals using <code>2Xᵀr + 2λ[a, b]ᵀ</code>.</p>
+    <p>The independent reference uses the single feature direction <code>u = x₁</code> to obtain <code>a = (uᵀy)/(5uᵀu + λ)</code> and <code>b = 2a</code> for λ &gt; 0. Every gradient component must be within {gradientTolerance} of zero, and each coefficient must agree with the reference within {referenceTolerance}. These absolute tolerances apply to this fixed, small dataset.</p>
+    <p>The pilot uses the released <a href="/labs/scientific-systems/symbolic/#workbench">symbolic workbench</a> and <a href="/labs/scientific-systems/numerical/#workbench">numerical workbench</a> engine operations. Each worker has a 20-second load limit and a 5-second limit per calculation.</p>
+  </section>
+</LabShell>
+
+<script>
+  import { mountRidgePilot } from '../../../scripts/scientific-systems/ridge-pilot';
+  const pilot = document.querySelector<HTMLElement>('[data-ridge-pilot]');
+  if (pilot) mountRidgePilot(pilot);
+</script>
+
+<style>
+  .ridge-pilot label { display:block; font-weight:600; margin-bottom:.4rem; }
+  .ridge-pilot input { width:8rem; max-width:100%; min-height:44px; padding:.5rem .65rem; font:inherit; color:var(--text); background:var(--bg); border:1px solid var(--border-strong); border-radius:4px; }
+  .ridge-pilot :is(input, button):focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  .ridge-pilot button:disabled { opacity:.55; cursor:default; }
+  .ridge-results dt { font-weight:600; }
+  .ridge-results dd { margin:0 0 .85rem; overflow-wrap:anywhere; }
+  .ridge-results code { white-space:normal; }
+</style>
