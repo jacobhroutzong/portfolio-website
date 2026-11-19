@@ -4,6 +4,7 @@ summary: Recursive AI systems research across two areas. Application Synthesis s
 category: AI / Machine Learning
 technologies: [Python, Recursive Language Models, Agent systems, TypeScript, FastAPI, Docker, Playwright]
 draft: false
+unlisted: true
 featured: false
 status: In progress
 order: 0

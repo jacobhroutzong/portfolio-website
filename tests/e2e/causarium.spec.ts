@@ -31,10 +31,10 @@ test.describe('Causarium exhibit without JavaScript', () => {
 });
 
 test('project navigation and existing public research routes remain available', async ({ page, request }) => {
-  for (const route of ['/', '/projects/']) {
-    await page.goto(route);
-    await expect(page.getByRole('link', { name: 'Explore the research exhibit' })).toHaveAttribute('href', '/projects/causarium/');
-  }
+  await page.goto('/projects/empirava/');
+  await page.getByRole('link', { name: 'Causarium research exhibit' }).press('Enter');
+  await expect(page).toHaveURL('/projects/causarium/');
+  await expect(page.getByRole('heading', { name: 'Causarium.' })).toBeVisible();
   for (const route of ['/projects/tunera/', '/projects/recursa/', '/projects/harness2-lab/', '/labs/scientific-systems/']) {
     const response = await request.get(route);
     expect(response.status(), route).toBe(200);

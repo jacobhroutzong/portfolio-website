@@ -23,3 +23,9 @@ The independent checkout passed all 26 offline tests and remained clean. Portfol
 4. If a released exhibit needs rollback, restore the prior successful production deployment in the existing Cloudflare Pages project and revert the exhibit change on `main` through the normal history-preserving workflow. Verify the home, Projects, Tunera, Recursa, Harness², and lab routes and the removal of the exhibit links. The branch changes no runtime service or migration.
 
 The existing portfolio-wide profile readiness guard still sets noindex and keeps the sitemap empty. The exhibit follows that guard and remains reachable by its direct URL and site navigation.
+
+## Source snapshot verification for the Empirava consolidation
+
+The owner-local Causarium Git checkout was clean at the cited revision. Git object verification passed, and the exporter regenerated the public JSON byte for byte from all four digest-verified source records. The public JSON SHA-256 remains `232561831ace6f8c35b4fc4feda4730a3c69494e5ed6701879d836e361cfbbbd`.
+
+The checkout has no configured remote. The separate M0 starter ZIP contains starter code and tests. It predates the measured records and contains no Git history. An independent restorable backup of the M5 revision was not verified. Exact Qwen retraining also remains limited by the training-source mismatch documented in the exhibit.
