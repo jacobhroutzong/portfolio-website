@@ -33,22 +33,6 @@ export const selectedProjects = [
     "linkLabel": "Explore Leverline →"
   },
   {
-    "title": "Tunera",
-    "group": "research",
-    "eyebrow": "PYTHON / MODEL FINE-TUNING",
-    "description": "A model development workflow for planning experiments and comparing results.",
-    "href": "/projects/tunera/",
-    "linkLabel": "Explore Tunera →"
-  },
-  {
-    "title": "Recursa Studio",
-    "group": "research",
-    "eyebrow": "RECURSIVE AI SYSTEMS RESEARCH",
-    "description": "Explore Application Synthesis through recorded specifications, traces, and benchmarks, and Agent Optimization through an interactive lab for harness changes and reusable lessons.",
-    "href": "/projects/recursa/",
-    "linkLabel": "Explore Recursa Studio →"
-  },
-  {
     "title": "Lintel",
     "group": "business",
     "eyebrow": "BUSINESS & OPERATIONS SYSTEMS / CASE STUDY",
@@ -105,20 +89,20 @@ export const selectedProjects = [
     "linkLabel": "Explore Video Game Tracker →"
   },
   {
-    "title": "Causarium",
-    "group": "research",
-    "eyebrow": "MODEL INTERPRETABILITY / RESEARCH",
-    "description": "Inspect recorded activation swaps in Pythia-70M and Qwen3.5-2B with layer maps, donor controls, and measured logit margins.",
-    "href": "/projects/causarium/",
-    "linkLabel": "Explore the research exhibit →"
-  },
-  {
     "title": "Axiom Studio",
     "group": "research",
     "eyebrow": "MACHINE LEARNING / MATHEMATICAL COMPUTING",
     "description": "Fit and verify a ridge regression model with numerical and symbolic WebAssembly engines, or use either workbench on its own.",
     "href": "/labs/scientific-systems/axiom-studio/",
     "linkLabel": "Start with the Optimization Lab"
+  },
+  {
+    "title": "Empirava",
+    "group": "research",
+    "eyebrow": "AI RESEARCH & ENGINEERING LABORATORY",
+    "description": "Understand. Experiment. Prove. Develop models, test how they behave, and examine the evidence behind applications and agent workflows.",
+    "href": "/projects/empirava/",
+    "linkLabel": "Explore Empirava →"
   }
 ];
 

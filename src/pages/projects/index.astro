@@ -6,7 +6,7 @@ import ProjectGroup from '../../components/ProjectGroup.astro';
 import SelectedProjectCard from '../../components/SelectedProjectCard.astro';
 import { selectedProjects, projectGroups, projectsInGroup } from '../../data/selected-projects';
 const registeredIds = new Set(selectedProjects.map(project => project.href.split('/').filter(Boolean).at(-1)));
-const projects = (await visibleProjects()).filter(project => !registeredIds.has(project.id));
+const projects = (await visibleProjects()).filter(project => !project.data.unlisted && !registeredIds.has(project.id));
 const groups = projectGroups.map(group => ({
   ...group,
   cards: projectsInGroup(group.id).map(project => ({

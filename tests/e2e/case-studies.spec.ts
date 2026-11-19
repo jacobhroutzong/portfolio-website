@@ -6,7 +6,6 @@ const studies = [
   ['leverline', 'Leverline'],
   ['ascent', 'Ascent'],
   ['decision-intelligence-engine', 'Decision Intelligence Engine'],
-  ['tunera', 'Tunera'],
   ['convergence', 'Convergence'],
 ] as const;
 
@@ -23,22 +22,43 @@ test('commercial projects remain navigable as static case studies', async ({ pag
   }
 });
 
-test('Recursa Studio has one listing and two navigable research areas', async ({ page }) => {
+test('Empirava is the single flagship listing and supports keyboard navigation', async ({ page }) => {
+  await page.goto('/');
+  const toggle = page.getByRole('button', { name: 'Toggle navigation' });
+  if (await toggle.isVisible()) {
+    await toggle.press('Enter');
+    await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+  }
+  await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Work' }).press('Enter');
+  await expect(page).toHaveURL('/projects/');
+
   for (const route of ['/', '/projects/']) {
     await page.goto(route);
-    const main = page.getByRole('main');
-    const listing = main.locator('a[href="/projects/recursa/"]');
-    await expect(listing).toHaveCount(1);
-    await expect(main.locator('a[href="/projects/harness2-lab/"]')).toHaveCount(0);
-    await expect(main.getByText('Harness² Lab', { exact: true })).toHaveCount(0);
-    const research = main.getByRole('region', { name: 'Research + Fun Projects' });
-    await research.getByRole('button', { name: /Show \d+ more projects?/ }).press('Enter');
-    await expect(listing).toBeVisible();
-    await expect(listing).toHaveText(/Explore Recursa Studio/);
+    const projects = route === '/' ? page.locator('#projects') : page.getByRole('main');
+    await expect(projects.locator('a[href="/projects/empirava/"]')).toHaveCount(1);
+    const flagship = projects.getByRole('link', { name: /Explore Empirava/ });
+    await expect(flagship).toBeVisible();
+    for (const slug of ['tunera', 'causarium', 'recursa', 'harness2-lab']) {
+      await expect(projects.locator('a[href="/projects/' + slug + '/"]')).toHaveCount(0);
+    }
+    await flagship.press('Enter');
+    await expect(page).toHaveURL('/projects/empirava/');
+    await expect(page.getByRole('heading', { name: 'Empirava', level: 1 })).toBeVisible();
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /\/projects\/empirava\/$/);
+    await expect(page.getByRole('link', { name: 'Open the protected Empirava preview' }))
+      .toHaveAttribute('href', 'https://empirava.jacobroutzong.dev/');
+    expect(await page.locator('html').evaluate(root => root.scrollWidth <= root.clientWidth)).toBe(true);
   }
 
-  await page.getByRole('link', { name: /Explore Recursa Studio/ }).press('Enter');
-  await expect(page).toHaveURL(/\/projects\/recursa\/$/);
+  await page.goto('/projects/tunera/');
+  await page.getByRole('link', { name: /Explore Empirava/ }).press('Enter');
+  await expect(page).toHaveURL('/projects/empirava/');
+  await page.getByRole('link', { name: 'Recursa research case study' }).press('Enter');
+  await expect(page).toHaveURL('/projects/recursa/');
+});
+
+test('historical Recursa Studio retains its two navigable research areas', async ({ page }) => {
+  await page.goto('/projects/recursa/');
   await expect(page.getByRole('heading', { name: 'Recursa Studio', level: 1 })).toBeVisible();
   for (const name of ['Application Synthesis', 'Agent Optimization']) {
     await expect(page.getByRole('heading', { name, level: 2 })).toBeVisible();
