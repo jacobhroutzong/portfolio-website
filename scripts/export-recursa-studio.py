@@ -39,7 +39,7 @@ def export(source, output):
 
         try:
             page = read("/").decode("utf-8").replace("\r\n", "\n")
-            for anchor in ("overview", "benchmarks"):
+            for anchor in ("overview", "playground", "benchmarks"):
                 page = page.replace(f'data-view="{anchor}"', f'id="{anchor}" data-view="{anchor}"', 1)
             page = page.replace("/assets/", "./assets/")
             page = re.sub(r"/api/([a-z-]+)(?=['\"])", r"./api/\1.json", page)

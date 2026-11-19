@@ -6,28 +6,6 @@ import ProjectGroup from '../../components/ProjectGroup.astro';
 import SelectedProjectCard from '../../components/SelectedProjectCard.astro';
 import { selectedProjects, projectGroups, projectsInGroup } from '../../data/selected-projects';
 const workDetails: Record<string,{description:string;links:{primary:boolean;href:string;label:string}[]}> = {
-  "Recursa — Recursive Application Synthesis": {
-    "description": "A research workbench for external specification inspection, synthesis planning, and transparent execution replays. Explore the CPU-only progress demo; genuine model-backed generation and comparative evaluation remain unverified.",
-    "links": [
-      { "primary": true, "href": "/projects/recursa/", "label": "Explore Recursa & progress →" },
-      { "primary": false, "href": "https://github.com/jacobhroutzong/recursa", "label": "Source code ↗" }
-    ]
-  },
-  "Harness² Lab": {
-    "description": "A from-scratch implementation of recursive agent harnessing. Inspect proposals, execution traces, composed harnesses, and lessons carried between tasks.",
-    "links": [
-      {
-        "primary": true,
-        "href": "/projects/harness2-lab/",
-        "label": "Explore the project & app →"
-      },
-      {
-        "primary": false,
-        "href": "https://github.com/jacobhroutzong/harness2-lab",
-        "label": "Source code ↗"
-      }
-    ]
-  },
   "Scientific Systems Lab": {
     "description": "Independent computational engines, native binary investigations, and reproducible mathematical tests. Numerical and symbolic cores are in progress; five further engines are planned.",
     "links": [
