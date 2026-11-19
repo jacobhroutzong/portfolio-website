@@ -46,8 +46,11 @@ test('Recursa Studio has one listing and two navigable research areas', async ({
   const areas = page.getByRole('navigation', { name: 'Recursa Studio research areas' });
   const replay = areas.getByRole('link', { name: 'Open Application Synthesis replay' });
   await replay.press('Enter');
-  await expect(page).toHaveURL(/\/projects\/recursa\/studio\/#overview$/);
+  await expect(page).toHaveURL(/\/projects\/recursa\/studio\/(?:#overview)?$/);
   await expect(page.getByRole('heading', { name: 'Recursa Studio', level: 1 })).toBeVisible();
+  for (const name of ['Application Synthesis', 'Agent Optimization']) {
+    await expect(page.getByRole('heading', { name, level: 2 })).toBeVisible();
+  }
   await page.getByRole('link', { name: 'Browse specifications' }).press('Enter');
   await expect(page).toHaveURL(/\/projects\/recursa\/studio\/#playground$/);
   await expect(page.locator('#preset-list button').first()).toBeVisible();

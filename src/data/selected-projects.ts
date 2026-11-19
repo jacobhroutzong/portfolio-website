@@ -51,7 +51,7 @@ export const selectedProjects = [
   {
     "title": "Recursa Studio",
     "group": "research",
-    "eyebrow": "PYTHON / RECURSIVE INFERENCE / AGENT SYSTEMS",
+    "eyebrow": "RECURSIVE AI SYSTEMS RESEARCH",
     "description": "Explore Application Synthesis through recorded specifications, traces, and benchmarks, and Agent Optimization through an interactive lab for harness changes and reusable lessons.",
     "href": "/projects/recursa/",
     "linkLabel": "Explore Recursa Studio →"
