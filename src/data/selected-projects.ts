@@ -81,12 +81,12 @@ export const selectedProjects = [
     "linkLabel": "Explore Rigor →"
   },
   {
-    "title": "Career Intelligence Aviation",
+    "title": "Apex — Career Intelligence",
     "group": "research",
-    "eyebrow": "AVIATION / CAREER RESEARCH",
-    "description": "Compare technical job listings, skills and engineering career resources across four airlines.",
+    "eyebrow": "CAREER INTELLIGENCE / TECHNICAL SKILLS",
+    "description": "Explore aviation, government, high-paying and remote technical careers, with verified job evidence, skill breakdowns and guided learning pathways.",
     "href": "/projects/career-intelligence-aviation/",
-    "linkLabel": "Explore Career Intelligence →"
+    "linkLabel": "Explore Apex →"
   },
   {
     "title": "PhaseUp — 17E AIT Study Station",
