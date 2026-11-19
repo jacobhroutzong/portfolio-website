@@ -1,15 +1,16 @@
 ---
-interface Props { current: 'overview' | 'numerical' | 'symbolic'; }
+interface Props { current: 'overview' | 'optimization' | 'numerical' | 'symbolic'; }
 const { current } = Astro.props;
 const base = '/labs/scientific-systems/';
 const items = [
-  { id: 'overview', label: 'Overview', href: base },
-  { id: 'numerical', label: 'Numerical', href: base + 'numerical/' },
-  { id: 'symbolic', label: 'Symbolic', href: base + 'symbolic/' },
+  { id: 'overview', label: 'Axiom Studio', href: base },
+  { id: 'optimization', label: 'Optimization Lab', href: base + 'axiom-studio/' },
+  { id: 'numerical', label: 'Numerical Workbench', href: base + 'numerical/' },
+  { id: 'symbolic', label: 'Symbolic Workbench', href: base + 'symbolic/' },
   { id: 'docs', label: 'Technical documentation', href: base + '#documentation' },
 ];
 ---
-<nav class="lab-switcher" aria-label="Scientific Systems Lab">
+<nav class="lab-switcher" aria-label="Axiom Studio">
   {items.map(({ id, label, href }) => (
     <a href={href} aria-current={current === id ? 'page' : undefined}>{label}</a>
   ))}

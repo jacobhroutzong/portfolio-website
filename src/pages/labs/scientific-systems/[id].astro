@@ -13,11 +13,12 @@ export function getStaticPaths() {
 interface Props { project: LabProject; }
 const { project } = Astro.props;
 const numerical = project.id === 'numerical';
+const workbenchTitle = numerical ? 'Numerical Workbench' : 'Symbolic Workbench';
 const render = (formula: string) => katex.renderToString(formula, { throwOnError: true, trust: false, output: 'htmlAndMathml' });
 ---
-<LabShell title={project.title} description={project.summary}>
+<LabShell title={workbenchTitle + " · Axiom Studio"} description={project.summary}>
   <LabSwitcher current={numerical ? "numerical" : "symbolic"} />
-  <header class="lab-detail-header"><p class="lab-kicker">PROJECT {project.number} / {project.discipline}</p><span class="lab-status lab-active">{project.status}</span><h1>{project.title}.</h1><p>{project.summary}</p><p class="lab-source-note">C++20 · CMake · GoogleTest · interactive release 29 October 2026<br /><a href={project.sourceUrl}>Public C++ source and build instructions ↗</a></p></header>
+  <header class="lab-detail-header"><p class="lab-kicker">PROJECT {project.number} / {project.discipline}</p><span class="lab-status lab-active">{project.status}</span><h1>{workbenchTitle}</h1><p>{project.summary}</p><p class="lab-source-note">C++20 · CMake · GoogleTest · interactive release 29 October 2026<br /><a href={project.sourceUrl}>Public C++ source and build instructions ↗</a></p></header>
   <InteractiveEngine kind={numerical ? "numerical" : "symbolic"} />
   {numerical ? <>
     <p class="lab-source-note">Dated 26 October validation snapshot. The public native release adds two QR tests; current CI results are linked from its repository.</p>
