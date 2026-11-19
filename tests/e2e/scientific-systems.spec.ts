@@ -38,11 +38,37 @@ test('Scientific lab routes, honest statuses and recorded controls', async ({ pa
   await page.getByRole('link', { name: 'Phase 5 QR least squares (native only)' }).click();
   await expect(page.locator('#native')).toContainText('outside the browser workbench’s scope');
 });
-test('Scientific lab remains legible without JavaScript', async ({ browser }) => {
-  const context = await browser.newContext({ javaScriptEnabled: false });
-  const page = await context.newPage();
-  await page.goto(`${process.env.PLAYWRIGHT_BASE_URL || 'http://127.0.0.1:4321'}/labs/scientific-systems/`);
-  await expect(page.locator('.lab-card')).toHaveCount(7);
-  await expect(page.locator('[data-lu-stage="2"]')).toBeVisible();
-  await context.close();
+test.describe('without JavaScript', () => {
+  test.use({ javaScriptEnabled: false });
+
+  test('Scientific lab remains legible and Quantum Systems is keyboard accessible', async ({ page }) => {
+    const base = '/labs/scientific-systems/';
+    const switcher = page.getByRole('navigation', { name: 'Scientific Systems Lab' });
+    const quantumLink = switcher.getByRole('link', { name: 'Quantum Systems' });
+    const quantumSection = page.getByRole('region', { name: 'Quantum Systems — Q-SPECTRA' });
+
+    await page.goto(base);
+    await expect(page.locator('.lab-card')).toHaveCount(7);
+    await expect(page.locator('[data-lu-stage="2"]')).toBeVisible();
+
+    for (const route of ['', 'numerical/', 'symbolic/']) {
+      await page.goto(base + route);
+      await switcher.getByRole('link', { name: 'Symbolic' }).focus();
+      await page.keyboard.press('Tab');
+      await expect(quantumLink).toBeFocused();
+      await page.keyboard.press('Enter');
+      await expect(page).toHaveURL(/\/labs\/scientific-systems\/#quantum-systems$/);
+      await expect(quantumSection.getByRole('heading')).toBeInViewport();
+      await expect(switcher.getByRole('link', { name: 'Overview' })).toHaveAttribute('aria-current', 'page');
+    }
+
+    const researchLink = quantumSection.getByRole('link', { name: 'Read the Q-SPECTRA research overview' });
+    await page.keyboard.press('Tab');
+    await expect(researchLink).toBeFocused();
+    await expect(researchLink).toHaveAttribute('href', '/projects/q-spectra/');
+    await expect(quantumSection.getByRole('link', { name: 'Open the standalone Q-SPECTRA workbench' }))
+      .toHaveAttribute('href', 'https://qspectra.jacobroutzong.dev/');
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(/\/projects\/q-spectra\/$/);
+  });
 });
