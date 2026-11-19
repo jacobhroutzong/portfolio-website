@@ -1,5 +1,5 @@
 ---
-title: "Q-SPECTRA // Universal Quantum Home & Simulation Platform"
+title: "Q-SPECTRA"
 summary: "Interactive browser labs for Rydberg RF sensing, quantum illumination radar, magnetic navigation, quantum circuits, and BB84 key distribution."
 category: Robotics & Simulation
 technologies: [Quantum Sensing, Quantum Circuits, BB84 QKD, SDR DSP, React, FastAPI, Unsloth QLoRA]

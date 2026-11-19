@@ -1,15 +1,15 @@
 // Oldest first: append newly added projects at the end. Both project lists display newest first within each group.
 export const selectedProjects = [
   {
-    "title": "Decision Intelligence Engine",
-    "group": "research",
+    "title": "Decision",
+    "group": "business",
     "eyebrow": "AI / MACHINE LEARNING / CASE STUDY",
     "description": "An engineering workbench for inspecting how a system turns telemetry into a decision.",
     "href": "/projects/decision-intelligence-engine/",
-    "linkLabel": "Explore Decision Intelligence Engine →"
+    "linkLabel": "Explore Decision →"
   },
   {
-    "title": "Ascent — AI Lab Preparation",
+    "title": "Ascent",
     "group": "business",
     "eyebrow": "PYTHON / MACHINE LEARNING / FROM SCRATCH",
     "description": "A local-first workspace for studying machine learning and practicing technical reasoning.",
@@ -65,15 +65,15 @@ export const selectedProjects = [
     "linkLabel": "Explore Rigor →"
   },
   {
-    "title": "Apex — Career Intelligence",
-    "group": "research",
+    "title": "Apex",
+    "group": "business",
     "eyebrow": "CAREER INTELLIGENCE / TECHNICAL SKILLS",
     "description": "Explore aviation, government, high-paying and remote technical careers, with verified job evidence, skill breakdowns and guided learning pathways.",
     "href": "/projects/career-intelligence-aviation/",
     "linkLabel": "Explore Apex →"
   },
   {
-    "title": "PhaseUp — 17E AIT Study Station",
+    "title": "PhaseUp",
     "group": "research",
     "eyebrow": "INTERACTIVE STUDY TOOL",
     "description": "I built a study web app to prepare for phase-ups during 17E Advanced Individual Training (AIT).",
@@ -81,20 +81,20 @@ export const selectedProjects = [
     "linkLabel": "Open PhaseUp →"
   },
   {
-    "title": "Video Game Tracker",
+    "title": "GameTracker",
     "group": "research",
     "eyebrow": "WEB APPLICATION",
     "description": "I built a web app for my game.",
     "href": "/projects/video-game-tracker/",
-    "linkLabel": "Explore Video Game Tracker →"
+    "linkLabel": "Explore GameTracker →"
   },
   {
-    "title": "Axiom Studio",
+    "title": "Axiom",
     "group": "research",
     "eyebrow": "MACHINE LEARNING / MATHEMATICAL COMPUTING",
     "description": "Fit and verify a ridge regression model with numerical and symbolic WebAssembly engines, or use either workbench on its own.",
     "href": "/labs/scientific-systems/axiom-studio/",
-    "linkLabel": "Start with the Optimization Lab"
+    "linkLabel": "Explore Axiom →"
   },
   {
     "title": "Empirava",

@@ -1,5 +1,5 @@
 ---
-title: Recursa Studio
+title: Recursa
 summary: Recursive AI systems research across two areas. Application Synthesis studies how models build from specifications. Agent Optimization studies how agents revise the harnesses that guide them.
 category: AI / Machine Learning
 technologies: [Python, Recursive Language Models, Agent systems, TypeScript, FastAPI, Docker, Playwright]
