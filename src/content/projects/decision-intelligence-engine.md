@@ -1,5 +1,5 @@
 ---
-title: "Decision Intelligence Engine"
+title: "Decision"
 summary: "An engineering workbench for inspecting how a system turns telemetry into a decision."
 category: "AI / Machine Learning"
 technologies: ["Python", "TypeScript"]

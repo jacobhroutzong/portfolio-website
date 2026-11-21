@@ -2,20 +2,20 @@
 import Base from '../../layouts/Base.astro';
 
 const appUrl = 'https://apex.jacobroutzong.dev/';
-const description = 'Explore technical job listings, skills and career resources for Delta, United, American and Southwest.';
+const description = 'Explore aviation, government, high-paying and remote technical careers, with job evidence, interactive skill breakdowns and guided learning pathways.';
 ---
 
-<Base title="Career Intelligence Aviation" description={description}>
+<Base title="Apex — Career Intelligence" description={description}>
   <article class="container page-shell">
     <a class="text-link" href="/projects/">← All projects</a>
-    <div class="eyebrow detail-eyebrow">AVIATION / CAREER RESEARCH</div>
-    <h1 class="page-title">Career Intelligence Aviation</h1>
+    <div class="eyebrow detail-eyebrow">CAREER INTELLIGENCE / TECHNICAL SKILLS</div>
+    <h1 class="page-title">Apex — Career Intelligence</h1>
     <p class="page-intro">{description}</p>
     <p>Listings reflect the source snapshot and its verification dates. Check the employer’s site for current availability.</p>
     <div class="button-row">
       <a class="button primary" href={appUrl} target="_blank" rel="noopener noreferrer">Open full-screen app ↗</a>
     </div>
-    <iframe src={appUrl} title="Career Intelligence Aviation dashboard" loading="lazy" width="1200" height="850"></iframe>
+    <iframe src={appUrl} title="Apex Career Intelligence dashboard" loading="lazy" width="1200" height="850"></iframe>
   </article>
 </Base>
 

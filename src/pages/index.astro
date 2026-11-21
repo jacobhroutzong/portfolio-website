@@ -11,7 +11,6 @@ const groups = projectGroups.map(group => ({
   ...group,
   cards: projectsInGroup(group.id).map(project => ({
     ...project,
-    title: project.homeTitle ?? project.title,
     links: [{ primary: true, href: project.href, label: project.linkLabel }]
   }))
 }));

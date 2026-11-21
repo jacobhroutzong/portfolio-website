@@ -4,9 +4,10 @@ export default defineConfig({
   timeout: 120000,
   use: { baseURL: process.env.PLAYWRIGHT_BASE_URL || "http://127.0.0.1:4321",actionTimeout:15000 },
   webServer: process.env.PLAYWRIGHT_BASE_URL ? undefined : {
-    command: "npm run dev -- --port 4321",
+    // Test the published directory index for exports under public/.
+    command: "npm run preview -- --port 4321 --strictPort",
     url: "http://127.0.0.1:4321/",
-    reuseExistingServer: true,
+    reuseExistingServer: false,
   },
   projects: [
     { name: "desktop", use: { viewport: { width: 1440, height: 1000 } } },

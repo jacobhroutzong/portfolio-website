@@ -1,25 +1,20 @@
 ---
-title: "Mercato"
-summary: "A private business operations platform connecting ecommerce product research, sourcing, inventory, finance, and CreatorOS content workflows."
-category: "Business & Operations Systems"
-technologies: ["TypeScript", "Cloudflare Workers", "D1", "R2"]
+title: Mercato
+summary: "A private business operations workspace for ecommerce and CreatorOS content workflows."
+category: Business & Operations Systems
+technologies: [TypeScript]
 draft: false
 status: In progress
 ---
 
-## Overview
+## Commerce
 
-Mercato brings two business workflows into one private workspace:
+Mercato connects product research and scoring with supplier evidence, quotes, and landed-cost comparisons. The workflow follows purchasing and receiving through inventory, sales, and financial reconciliation. It keeps source evidence separate from decisions and transactions.
 
-- **Commerce:** Product discovery and scoring, supplier evidence, quote and landed-cost scenarios, development decisions, purchasing, receiving, inventory, sales, and financial reconciliation.
-- **CreatorOS:** Content ideas, story variants, production tasks, approvals, calendar planning, manual publishing records, performance observations, and partnership tracking.
+## CreatorOS
 
-## Architecture and privacy
+CreatorOS brings content ideas, story variants, production tasks, approvals, and calendar planning into the same workspace. It also tracks publishing records, performance observations, and partnerships.
 
-The application uses a dedicated Cloudflare Worker, D1 database, private R2 attachments, and owner-only Cloudflare Access. Research imports preserve their original evidence independently of owner decisions and operational transactions.
+## Private workspace status
 
-## Release status
-
-The private production hostname is configured, but owner sign-in and end-to-end hosted workflows have not yet been verified. Automated read-only synchronization with the original Commerce and CreatorOS Google Sheets also remains pending Google service-account configuration and live refresh tests.
-
-This is a public project overview, not a link into the private administrative interface.
+Mercato is intended for private use. Hosted sign-in and end-to-end workflows remain unverified. Read-only synchronization with Google Sheets also remains unverified.

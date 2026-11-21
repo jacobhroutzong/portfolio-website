@@ -1,5 +1,5 @@
 ---
-title: "Ascent \u2014 AI Lab Preparation"
+title: "Ascent"
 summary: "A local-first workspace for studying machine learning and practicing technical reasoning."
 category: "AI / Machine Learning"
 technologies: ["Python", "TypeScript"]

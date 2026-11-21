@@ -1,17 +1,10 @@
----
-import { getEntry, render } from 'astro:content';
-const project = await getEntry('projects', 'harness2-lab');
-if (!project) throw new Error('Harness² Lab project content is missing');
-const { Content } = await render(project);
----
-
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Harness² Lab</title>
-  <meta name="description" content="A readable, from-scratch implementation of Harness² (recursive agent harnessing) with a live lab, an improvement library and an adaptive-recursion Budget Lab.">
+  <title>Agent Optimization · Recursa Studio</title>
+  <meta name="description" content="Explore recursive agent harnessing in Harness² Lab, the interactive Agent Optimization research area of Recursa Studio.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232a78d6'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='system-ui' font-size='15' font-weight='700' fill='white'%3EH%C2%B2%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="/harness2-lab/styles.css">
 </head>
@@ -21,7 +14,7 @@ const { Content } = await render(project);
       <span class="brand-mark">H²</span>
       <span class="brand-name">Harness² Lab</span>
     </a>
-    <a class="btn portfolio-link" href="/projects/">← Portfolio projects</a>
+    <a class="btn portfolio-link" href="/projects/recursa/">← Recursa Studio</a>
     <nav class="tabs" aria-label="Sections">
       <a href="#/" data-route="overview">Overview</a>
       <a href="#/lab" data-route="lab">Run Lab</a>
@@ -52,8 +45,8 @@ const { Content } = await render(project);
 
   <footer class="foot">
     <details class="project-notes">
-      <summary>About this project</summary>
-      <Content />
+      <summary>About Agent Optimization</summary>
+      <p>Harness² Lab is the interactive Agent Optimization research area of Recursa Studio. See the <a href="/projects/recursa/#agent-optimization">case study</a> for the method, evidence, and limitations.</p>
     </details>
     <span>Harness² Lab — an independent, from-scratch implementation of
       <a href="https://arxiv.org/abs/2610.14224" target="_blank" rel="noopener">Harness²: Recursive Agent Harnessing for an Open World</a>

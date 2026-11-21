@@ -14,6 +14,7 @@ const projects = defineCollection({
     technologies: z.array(z.string()).min(1),
     draft: z.boolean().default(true),
     featured: z.boolean().default(false),
+    unlisted: z.boolean().default(false),
     order: z.number().int().default(100),
     status: z.enum(['Planning', 'In progress', 'Completed']).default('Planning'),
     sourceUrl: z.url().optional(),

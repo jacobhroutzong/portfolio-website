@@ -4,6 +4,7 @@ summary: "A model development workflow for planning experiments and comparing re
 category: "AI / Machine Learning"
 technologies: ["Python", "Model Evaluation"]
 draft: false
+unlisted: true
 status: In progress
 screenshots:
   - src: /media/showcase/tunera.svg
@@ -11,6 +12,8 @@ screenshots:
     caption: "Public illustration of the workflow."
     example: true
 ---
+
+Tunera’s model development work is now part of Empirava. [Explore Empirava →](/projects/empirava/)
 
 ## Design
 

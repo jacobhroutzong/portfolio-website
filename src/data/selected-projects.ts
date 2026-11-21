@@ -1,28 +1,20 @@
 // Oldest first: append newly added projects at the end. Both project lists display newest first within each group.
 export const selectedProjects = [
   {
-    "title": "Decision Intelligence Engine",
-    "group": "research",
+    "title": "Decision",
+    "group": "business",
     "eyebrow": "AI / MACHINE LEARNING / CASE STUDY",
     "description": "An engineering workbench for inspecting how a system turns telemetry into a decision.",
     "href": "/projects/decision-intelligence-engine/",
-    "linkLabel": "Explore Decision Intelligence Engine →"
+    "linkLabel": "Explore Decision →"
   },
   {
-    "title": "Ascent — AI Lab Preparation",
+    "title": "Ascent",
     "group": "business",
     "eyebrow": "PYTHON / MACHINE LEARNING / FROM SCRATCH",
     "description": "A local-first workspace for studying machine learning and practicing technical reasoning.",
     "href": "/projects/ascent/",
     "linkLabel": "Explore Ascent →"
-  },
-  {
-    "title": "Harness² Lab",
-    "group": "research",
-    "eyebrow": "PYTHON / AGENT SYSTEMS / INTERACTIVE LAB",
-    "description": "Explore recursive agent harnessing through live execution traces, a reusable harness library, and adaptive compute budget experiments.",
-    "href": "/projects/harness2-lab/",
-    "linkLabel": "Explore project & app →"
   },
   {
     "title": "EquityScout",
@@ -39,30 +31,6 @@ export const selectedProjects = [
     "description": "An applied AI consulting project for identifying automation opportunities in small businesses.",
     "href": "/projects/leverline/",
     "linkLabel": "Explore Leverline →"
-  },
-  {
-    "title": "Scientific Systems Lab",
-    "group": "research",
-    "eyebrow": "C++20 / SCIENTIFIC COMPUTING / RESEARCH",
-    "description": "Numerical and symbolic engines with traceable investigations, exact mathematics, and independent validation. Explore working subsystems and the seven-project roadmap.",
-    "href": "/labs/scientific-systems/",
-    "linkLabel": "Explore the lab →"
-  },
-  {
-    "title": "Tunera",
-    "group": "research",
-    "eyebrow": "PYTHON / MODEL FINE-TUNING",
-    "description": "A model development workflow for planning experiments and comparing results.",
-    "href": "/projects/tunera/",
-    "linkLabel": "Explore Tunera →"
-  },
-  {
-    "title": "Recursa — Recursive Application Synthesis",
-    "group": "research",
-    "eyebrow": "PYTHON / RECURSIVE INFERENCE / RESEARCH IN PROGRESS",
-    "description": "Inspect the progress of an application-synthesis research workbench: external requirements, dependency-aware plans, saved artifacts, and clearly labeled execution evidence.",
-    "href": "/projects/recursa/",
-    "linkLabel": "Explore Recursa & progress →"
   },
   {
     "title": "Lintel",
@@ -89,15 +57,6 @@ export const selectedProjects = [
     "linkLabel": "Explore Convergence →"
   },
   {
-    "title": "Q-SPECTRA // Universal Quantum Home & Simulation Platform",
-    "group": "research",
-    "homeTitle": "Q-SPECTRA",
-    "eyebrow": "QUANTUM SENSING / COMPUTING / CRYPTOGRAPHY",
-    "description": "Explore quantum sensing, build quantum circuits, and simulate BB84 key distribution in your browser.",
-    "href": "/projects/q-spectra/",
-    "linkLabel": "Explore Q-SPECTRA →"
-  },
-  {
     "title": "Rigor",
     "group": "business",
     "eyebrow": "WEB APPLICATION / TECHNICAL INTERVIEW PREPARATION",
@@ -106,15 +65,15 @@ export const selectedProjects = [
     "linkLabel": "Explore Rigor →"
   },
   {
-    "title": "Career Intelligence Aviation",
-    "group": "research",
-    "eyebrow": "AVIATION / CAREER RESEARCH",
-    "description": "Compare technical job listings, skills and engineering career resources across four airlines.",
+    "title": "Apex",
+    "group": "business",
+    "eyebrow": "CAREER INTELLIGENCE / TECHNICAL SKILLS",
+    "description": "Explore aviation, government, high-paying and remote technical careers, with verified job evidence, skill breakdowns and guided learning pathways.",
     "href": "/projects/career-intelligence-aviation/",
-    "linkLabel": "Explore Career Intelligence →"
+    "linkLabel": "Explore Apex →"
   },
   {
-    "title": "PhaseUp — 17E AIT Study Station",
+    "title": "PhaseUp",
     "group": "research",
     "eyebrow": "INTERACTIVE STUDY TOOL",
     "description": "I built a study web app to prepare for phase-ups during 17E Advanced Individual Training (AIT).",
@@ -122,28 +81,44 @@ export const selectedProjects = [
     "linkLabel": "Open PhaseUp →"
   },
   {
-    "title": "Video Game Tracker",
+    "title": "GameTracker",
     "group": "research",
     "eyebrow": "WEB APPLICATION",
     "description": "I built a web app for my game.",
     "href": "/projects/video-game-tracker/",
-    "linkLabel": "Explore Video Game Tracker →"
+    "linkLabel": "Explore GameTracker →"
+  },
+  {
+    "title": "Axiom",
+    "group": "research",
+    "eyebrow": "MACHINE LEARNING / MATHEMATICAL COMPUTING",
+    "description": "Fit and verify a ridge regression model with numerical and symbolic WebAssembly engines, or use either workbench on its own.",
+    "href": "/labs/scientific-systems/axiom-studio/",
+    "linkLabel": "Explore Axiom →"
+  },
+  {
+    "title": "Empirava",
+    "group": "research",
+    "eyebrow": "AI RESEARCH & ENGINEERING LABORATORY",
+    "description": "Understand. Experiment. Prove. Develop models, test how they behave, and examine the evidence behind applications and agent workflows.",
+    "href": "/projects/empirava/",
+    "linkLabel": "Explore Empirava →"
+  },
+  {
+    "title": "Muster",
+    "group": "business",
+    "eyebrow": "WEB APPLICATION / DATA ENGINEERING",
+    "description": "A private research workspace for comparing Army and Air National Guard AGR announcements and checking their official sources.",
+    "href": "/projects/muster/",
+    "linkLabel": "Explore Muster →"
   },
   {
     "title": "Mercato",
     "group": "business",
-    "eyebrow": "BUSINESS & OPERATIONS SYSTEMS / PRIVATE APP",
-    "description": "A private operations workspace combining ecommerce product research, sourcing, purchasing, inventory and finance with CreatorOS content planning and analytics. Hosted access and Google Sheets sync are undergoing release verification.",
+    "eyebrow": "BUSINESS & OPERATIONS SYSTEMS / CASE STUDY",
+    "description": "A private workspace for ecommerce research, sourcing, inventory, and finance alongside CreatorOS content planning and production.",
     "href": "/projects/mercato/",
     "linkLabel": "Explore Mercato →"
-  },
-  {
-    "title": "Causarium",
-    "group": "research",
-    "eyebrow": "MODEL INTERPRETABILITY / RESEARCH",
-    "description": "Inspect recorded activation swaps in Pythia-70M and Qwen3.5-2B with layer maps, donor controls, and measured logit margins.",
-    "href": "/projects/causarium/",
-    "linkLabel": "Explore the research exhibit →"
   }
 ];
 
