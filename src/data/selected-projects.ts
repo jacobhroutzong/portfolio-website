@@ -111,6 +111,14 @@ export const selectedProjects = [
     "description": "A private research workspace for comparing Army and Air National Guard AGR announcements and checking their official sources.",
     "href": "/projects/muster/",
     "linkLabel": "Explore Muster →"
+  },
+  {
+    "title": "Mercato",
+    "group": "business",
+    "eyebrow": "BUSINESS & OPERATIONS SYSTEMS / CASE STUDY",
+    "description": "A private workspace for ecommerce research, sourcing, inventory, and finance alongside CreatorOS content planning and production.",
+    "href": "/projects/mercato/",
+    "linkLabel": "Explore Mercato →"
   }
 ];
 
