@@ -103,6 +103,14 @@ export const selectedProjects = [
     "description": "Understand. Experiment. Prove. Develop models, test how they behave, and examine the evidence behind applications and agent workflows.",
     "href": "/projects/empirava/",
     "linkLabel": "Explore Empirava →"
+  },
+  {
+    "title": "Muster",
+    "group": "business",
+    "eyebrow": "WEB APPLICATION / DATA ENGINEERING",
+    "description": "A private research workspace for comparing Army and Air National Guard AGR announcements and checking their official sources.",
+    "href": "/projects/muster/",
+    "linkLabel": "Explore Muster →"
   }
 ];
 
