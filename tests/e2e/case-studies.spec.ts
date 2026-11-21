@@ -43,6 +43,24 @@ test('Apex and Decision are startups and all displayed project titles are one wo
   }
 });
 
+test('Muster has one startup card and a public case study with a protected app link', async ({ page }) => {
+  const path = '/projects/muster/';
+  for (const route of ['/', '/projects/']) {
+    await page.goto(route);
+    const card = page.locator('article.selected-card').filter({
+      has: page.getByRole('heading', { name: 'Muster', exact: true }),
+    });
+    await expect(page.locator(`a[href="${path}"]`)).toHaveCount(1);
+    await expect(page.getByRole('region', { name: 'Businesses + Startups' }).locator(card)).toHaveCount(1);
+    await card.getByRole('link', { name: 'Explore Muster →' }).click();
+    await expect(page).toHaveURL(path);
+    await expect(page.getByRole('heading', { name: 'Muster', level: 1 })).toBeVisible();
+  }
+  await expect(page.getByRole('link', { name: 'Open the protected Muster app' }))
+    .toHaveAttribute('href', 'https://muster.jacobroutzong.dev/');
+  await expect(page.locator('iframe, #muster-data')).toHaveCount(0);
+});
+
 test('Empirava is the single flagship listing and supports keyboard navigation', async ({ page }) => {
   await page.goto('/');
   const toggle = page.getByRole('button', { name: 'Toggle navigation' });
