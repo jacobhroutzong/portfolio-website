@@ -468,3 +468,74 @@
   .fs-field-board .fs-map-caption { line-height: 1.5; }
   .fs-compare-panel tbody td { font-size: 1.25rem; }
 }
+
+/* Verbatim source excerpts and parameter explanations; no changes to model behavior. */
+.fs-app .fs-research-footnote {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr);
+  align-items: end;
+  gap: 1.5rem;
+  margin: 1.25rem 0 1.75rem;
+  padding: 1.05rem 1.3rem;
+  border-left: 2px solid #aa7950;
+  border-top: 1px solid var(--fs-border);
+  background: transparent;
+}
+.fs-app .fs-research-footnote blockquote {
+  margin: .45rem 0 .4rem;
+  font-size: clamp(1.1rem, 1.7vw, 1.45rem);
+  line-height: 1.35;
+}
+.fs-app .fs-research-footnote cite {
+  display: block;
+  font: 11px/1.5 ui-monospace, Consolas, monospace;
+  color: var(--fs-muted);
+}
+.fs-app .fs-research-footnote > p,
+.fs-app .fs-parameter-aside {
+  margin: .65rem 0 1.1rem;
+  max-width: 74ch;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--fs-muted);
+}
+.fs-app .fs-parameter-guide {
+  border-top: 1px solid var(--fs-border);
+  margin: 1.2rem 0 0;
+  padding: .9rem 0 .15rem;
+}
+.fs-app .fs-parameter-guide summary {
+  color: var(--fs-green);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.5;
+}
+.fs-app .fs-parameter-guide dl {
+  margin: 1rem 0 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .9rem 1.2rem;
+}
+.fs-app .fs-parameter-guide dt {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--fs-text);
+}
+.fs-app .fs-parameter-guide dd {
+  margin: .2rem 0 0;
+  color: var(--fs-muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+.fs-app .fs-resource-note { margin: 1rem 0 1.4rem; }
+[data-project="fieldsense"] .prose table { width: 100%; max-width: 100%; border-collapse: collapse; }
+[data-project="fieldsense"] .prose th,
+[data-project="fieldsense"] .prose td { padding: .8rem .65rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--border, #b7c3b9); }
+[data-project="fieldsense"] .prose th:first-child,
+[data-project="fieldsense"] .prose td:first-child { width: 31%; }
+@media (max-width: 700px) {
+  .fs-app .fs-research-footnote { grid-template-columns: 1fr; gap: .45rem; }
+  .fs-app .fs-parameter-guide dl { grid-template-columns: 1fr; }
+  [data-project="fieldsense"] .prose table { display: block; overflow-x: auto; }
+}

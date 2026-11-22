@@ -47,7 +47,29 @@ These are **verbatim excerpts from the original 2025 submission**. They describe
 2. **Allocate.** A SciPy MILP chooses a resource bundle per field under shared water, fertilizer, labor and equipment constraints. Forecast yield affects the allocation score; the assigned water becomes a hard irrigation cap.
 3. **Decide.** A seven-day Markov decision process chooses among 0, 5 and 10 mm of irrigation with finite-horizon planning, a simplified soil-water balance and uncertain rainfall. Its comparison policy waters 5 mm whenever starting soil-water storage is below 10 mm and the budget allows it.
 
+<div class="fs-paper-passage">
+  <p>The proposed forecast inputs included weather observations. In the working 2026 demonstration, the comparable inputs are generated synthetically, not pulled from a NOAA station or field sensor.</p>
+  <figure>
+    <blockquote>“Weather data; temperature, rainfall, and humidity. These correlations capture impact on yields.”</blockquote>
+    <figcaption><cite>ISYE 6501 · Part 3, Input Data · 2025</cite></figcaption>
+  </figure>
+</div>
+
 The Python app is local. The browser exhibit is **not running inference**: it replays published, seeded outputs from that pipeline. The site does not receive live sensor readings or send commands to irrigation equipment.
+
+## Reading the parameters
+
+| Term | What it means here |
+| --- | --- |
+| **Scenario / weather seed** | A recorded set of synthetic budget and rainfall assumptions; the seed lets the weather path be replayed consistently. |
+| **Predicted yield (t/ha)** | The Random Forest estimate of crop output per hectare; it influences the resource allocation score. |
+| **Bundle / water cap** | The optimizer's illustrative resource choice for each field and the resulting seven-day irrigation limit. |
+| **MDP / threshold rule** | A policy that considers future outcomes versus a simpler policy that irrigates 5 mm when starting soil-water storage falls below 10 mm, if budget allows. |
+| **Soil-water storage / crop demand** | Modeled water remaining in the soil and the crop's illustrative daily requirement, both expressed as depths in mm. |
+| **Water used / unmet demand** | Irrigation volume versus modeled crop-water shortfall. Both are shown in m³ so the trade-off stays visible. |
+| **MAE / baseline MAE** | Average absolute yield-prediction error on held-out synthetic data versus predicting the training mean. Neither is field-validated accuracy. |
+
+The [interactive lab](https://fieldsense.jacobroutzong.dev/) also has expandable guides beside the field inspector and budget ledger. Units matter: **1 mm over 1 hectare = 10 m³**.
 
 ## What the runs actually show
 
@@ -56,6 +78,14 @@ The synthetic training run used 1,600 training records and 320 held-out records 
 In the balanced seven-day scenario (weather seed 41), the optimizer assigned **1,140 m³** across three fields. The MDP used **645 m³** for irrigation versus **945 m³** for the threshold rule. But the MDP also left **45.72 m³** of area-weighted unmet crop-water demand, compared with **0 m³** under the rule. Saving water and satisfying demand are different objectives. The dry-spell scenario tied on both measures; the strict full-service scenario stopped at an infeasible allocation instead of inventing a plan.
 
 All results are reproducible **synthetic simulations**. Water depth is converted using 1 mm over 1 ha = 10 m³. The interface keeps water use and unmet demand side by side rather than presenting a single unqualified "savings" number.
+
+<div class="fs-paper-passage">
+  <p>The paper also described the types of crop records that a real deployment would need. The current synthetic implementation does not claim access to planting records or seed-variety measurements.</p>
+  <figure>
+    <blockquote>“Crop data; crop type, seed variety, planting date. This defines crop-specific yield potential.”</blockquote>
+    <figcaption><cite>ISYE 6501 · Part 3, Input Data · 2025</cite></figcaption>
+  </figure>
+</div>
 
 ## What changed from the 2025 proposal
 
