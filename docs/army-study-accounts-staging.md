@@ -6,7 +6,7 @@ The owner approved a staging-only account milestone on 22 November 2026. The lin
 
 The implementation supports optional Google/Apple OAuth and per-user progress across PhaseUp, Acronyms, EW and Soldier Study. It uses the existing Supabase staging project and the existing Astro/Cloudflare Pages pipeline. It adds no project, Worker, paid service or OAuth client.
 
-Production and unrelated preview builds emit a small guest-only module. The account implementation is bundled only for the explicitly approved staging branch or a local test opt-in. The browser also checks its exact allowed origin and staging project. Public configuration contains only a publishable key; no service or provider secret is used by the client.
+Production and unrelated preview builds default to the guest-only module. Staging uses the existing approved branch or the local test opt-in. A separately approved Cloudflare production opt-in can enable the pilot. The browser also checks its exact allowed origin and staging project. Public configuration contains only a publishable key; no service or provider secret is used by the client.
 
 ## Progress behavior
 
@@ -46,13 +46,20 @@ Run the existing `npm run verify` and normal browser suite for guest regression 
 
 For local development, the existing predev hook creates an ignored `public/study/account.js`. For deployment, the bundle is generated into `dist/study/account.js` after Astro builds. SDK version is pinned in the package and lockfile.
 
-## Release integration and owner decisions
+## Production pilot preparation
 
-Merge the approved EW curriculum first and Soldier Study second, using merge commits to preserve the tested ancestry. A push to the production branch can deploy through Cloudflare. Validate the resulting guest curriculum before considering the accounts branch.
+Production guest study includes the four curricula and the footer credits. This branch preserves those routes and their browser storage formats. The production account bundle defaults to guest-only. The test opt-in for staging is independent of the production flag.
 
-The account branch keeps the approved staging build and exact staging origin. Decide separately whether to merge the dormant account code with its guest-only production output or hold the branch until live acceptance is complete. Production sign-in requires approval and verification of the production project and dedicated API exposure, Google OAuth audience and exact callback, signup policy, and a production enablement change to the existing staging-only build gate. Confirm the intended session/storage security posture and release privacy disclosures before enabling sign-in. Apple remains a separate decision pending the existing resource inventory.
+- Review and approve existing pilot identities, the browser session and pending-cache posture, and disposable test progress. No accounts are enrolled by the migration.
+- Separately apply `supabase/production-migrations/20261122224309_army_study_production_pilot.sql` to `portfolio-production` only after approval. The checked-in staging migrations stay in their existing directory and must not be pushed to production. The production SQL creates the private tables and one invoker view in a single transaction. It does not configure exposure.
+- Record the existing exposed schema list and extra search path in the authenticated dashboard. Verify the view, grants, owner and membership checks before appending only `army_study_api`. Preserve `public`, the extra search path and all unrelated settings. Keep `army_study_private` unexposed.
+- Confirm that the existing Google client has registered `https://kgbdfvyhgycnxyqatali.supabase.co/auth/v1/callback`. Read back production Auth redirects and add only `https://jacobroutzong.dev/study/account/` if missing and approved. Preserve the current Site URL, provider, audience, other redirects, disabled signups and disabled Apple.
+- Enable `STUDY_ACCOUNTS_PRODUCTION_PILOT=1` plus the verified existing `STUDY_ACCOUNTS_PRODUCTION_PUBLISHABLE_KEY` only in the Cloudflare production environment after approval. The build requires the Cloudflare `main` branch and the browser requires the exact site origin. The build and browser only enable Google for production. Do not put the key in a commit or copy the staging value.
+- Roll back by removing the production opt-in and redeploying the guest-only bundle. If access must stop immediately, revoke membership or remove only `army_study_api` from API exposure. Remove the Army Study Auth redirect only if it was added by this rollout and needs removal. Preserve the private progress rows, reset revisions, Auth users and unrelated settings.
 
-The current live record establishes Google sign-in, session restoration, sign-out and the staged database isolation probe. The hosted end-to-end sync checklist remains open. Use authorized staging identities on two browser contexts to verify cross-device save and retrieval, explicit guest import, stale conflicts, reset retention, and account switching. The two-user check requires a second eligible identity. The intercepted Soldier Study browser case verifies the new page wiring, independent of that live checklist.
+The hosted staging checks require two isolated browser contexts, each independently signed in with the same authorized Google identity. Use an area with disposable progress. Establish A’s guest baseline, explicitly import and save, and verify clean B retrieval and reload. Save conflicting changes from the same revision, resolve explicitly, reset and verify the stale device cannot restore the old snapshot. Confirm A’s sign-out restores guest progress while B’s separate session remains usable. Live switching between identities is a separate check.
+
+Retain the prior evidence for Google sign-in, session restoration and sign-out, and the staged database isolation probe. Only mark the hosted sync sequence verified when both real contexts complete it.
 
 ## Stop conditions
 

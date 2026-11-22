@@ -30,6 +30,29 @@ test('account configuration is disabled on production and unrelated preview buil
   }
 });
 
+test('production pilot requires the Cloudflare main build, an explicit opt-in and a separate publishable key', () => {
+  const publishableKey = 'sb_publishable_' + 'b'.repeat(32);
+  const production = { CF_PAGES: '1', CF_PAGES_BRANCH: 'main', STUDY_ACCOUNTS_PRODUCTION_PILOT: '1', STUDY_ACCOUNTS_PRODUCTION_PUBLISHABLE_KEY: publishableKey };
+  assert.deepEqual(resolveStudyAccountConfig(config, production), {
+    enabled: true,
+    url: 'https://kgbdfvyhgycnxyqatali.supabase.co',
+    publishableKey,
+    providers: { google: true, apple: false },
+    allowedOrigins: ['https://jacobroutzong.dev'],
+  });
+  for (const patch of [
+    { CF_PAGES: undefined },
+    { CF_PAGES_BRANCH: 'unrelated-preview' },
+    { STUDY_ACCOUNTS_PRODUCTION_PILOT: '0' },
+    { STUDY_ACCOUNTS_PRODUCTION_PUBLISHABLE_KEY: undefined },
+    { STUDY_ACCOUNTS_PRODUCTION_PUBLISHABLE_KEY: config.publishableKey },
+    { STUDY_ACCOUNTS_PRODUCTION_PUBLISHABLE_KEY: 'not-a-publishable-key' },
+  ]) {
+    assert.equal(resolveStudyAccountConfig(config, { ...production, ...patch }).enabled, false);
+  }
+  assert.equal(resolveStudyAccountConfig(config, { ...production, CF_PAGES_BRANCH: STUDY_STAGING_BRANCH }).url, STUDY_STAGING_URL);
+});
+
 test('accounts enable only for the approved staging branch or explicit local test build', () => {
   for (const env of [{ CF_PAGES_BRANCH: STUDY_STAGING_BRANCH }, { STUDY_ACCOUNTS_STAGING: '1' }]) {
     assert.deepEqual(resolveStudyAccountConfig(config, env), config);

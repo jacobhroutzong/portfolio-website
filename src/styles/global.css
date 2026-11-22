@@ -26,3 +26,7 @@ h2 { font-family:Georgia,serif; font-weight:400; font-size:33px; letter-spacing:
 .button { border-radius:30px; padding:12px 20px; }
 .button.primary { background:var(--text); color:var(--bg); }
 @media(max-width:760px) { h2 { font-size:27px; } .brand-name { display:block; font-size:16px; } }
+
+/* Contact remains on its dedicated route, with a discreet footer credits link. */
+.site-footer a.footer-contact { color:var(--muted); font-size:inherit; text-decoration:underline; text-underline-offset:3px; }
+.site-footer a.footer-contact:hover,.site-footer a.footer-contact[aria-current="page"] { color:var(--accent); }

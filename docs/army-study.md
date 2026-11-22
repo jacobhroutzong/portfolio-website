@@ -2,7 +2,7 @@
 
 ## Released scope
 
-The study hub at `/study/` groups PhaseUp and Army Acronyms under phase preparation and Army foundations. Soldier Study covers general Army knowledge and skills. EW Study remains a separate resource for continued professional learning beyond AIT.
+The study hub at `/study/` links to PhaseUp 17E, Soldier Study, and EW Study. Army Acronyms is available from the PhaseUp overview.
 
 - `/study/17e/`: the existing PhaseUp study station. Its 117 Phase VI card objects are unchanged. Three general AGSU definition/preparation cards were removed (`extra42`, `extra43`, `phasevi-focus-08`), and the AGSU inspection-requirement policy card is categorized under PL15. All 16 AGSU placement/measurement questions remain. The bank now contains 508 cards.
 - `/study/17e/acronyms/`: 36 sourced terms, searchable reference, recall practice and review ratings. The prior `/study/acronyms/` path redirects here. The acronym page belongs to PhaseUp, while retaining its own study progress.
@@ -37,7 +37,7 @@ The eight courses map 92 substantive units. All 92 now link to conceptual instru
 ### Edition and access limits
 
 - ATP 3-12.3: APD lists Change 2 dated 22 August 2025. The inspected current-record download carried the Change 1 title and transmittal. This course explicitly uses Change 1 dated 18 September 2024. Change 2 text and its coverage are unresolved.
-- **JP 3-85.** Two Army articles cite a March 2026 revision, including one that gives 17 March. The cited JDEIS reading path redirected to a logout page. The course uses the verified 22 May 2020 text. Its official PDF and historical third-party mirror had access errors during this pass, while indexed public text corroborated the checked passages. The revision’s contents and text remain unverified.
+- **JP 3-85.** Two Army articles cite a March 2026 revision, including one that gives 17 March. The cited JDEIS reading path redirected to a logout page. The course uses the verified 22 May 2020 text. The former Joint Staff PDF returned 404 in the dated link review. The verified 148-page third-party reading copy now serves the 2020 citations. The revision’s contents and text remain unverified.
 - **ATP 3-01.81.** The Army Publishing Directorate PDF confirms the 23 May 2025 edition, 106 physical PDF pages, and the printed locations of the checked Appendix A passages.
 - **ATP 7-100.1 and ATP 7-100.3.** The Army Publishing Directorate PDFs confirm the existing Change 1 editions, with 280 and 252 physical PDF pages respectively. The passages used for the new appendix connections were checked in the PDFs. Organizational examples represent the dated U.S. Army training models.
 - Official publication servers sometimes rejected direct retrieval during review. Catalog records, text excerpts and reading copies are distinguished in the source registry; a catalog link is never described as an inspected full text.
@@ -58,7 +58,11 @@ The subsequent EW objective pass reviewed the Army, Joint and spectrum, and C-UA
 
 This is a dated content release. On 22 November 2026, the owner requested two external review tasks: a weekly coverage review on Monday mornings in America/New_York, and a publication-edition check every three months starting 22 February 2027. These tasks can prepare bounded draft corrections; they do not merge or deploy unattended. There is no scheduled research process in the site's runtime. Future edits address a named missing topic, verified source change or demonstrated broken link, update the relevant source record, and rerun affected checks.
 
-### Reference access review — 22 November 2026
+### Reference access
+
+The [dated source-link and objective-confidence baseline](army-study-source-baseline.md) records the full deduplicated inventory, evidence, dispositions and the next action for each unresolved URL. The counts below describe the earlier review.
+
+### Earlier reference access review — 22 November 2026
 
 The initial inventory contains 31 distinct external reference URLs. Nine were reachable directly or verified through independent web retrieval; one current PDF exceeded the research tool's extraction size limit; one URL returned a confirmed 404; and 20 could not be conclusively verified because of network or access failures. A failed automated request is not automatically a dead link.
 

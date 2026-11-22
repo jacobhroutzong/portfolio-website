@@ -137,7 +137,7 @@ The unit tables identify linked teaching and any remaining disposition. Each evi
 
 ### JP 3-85 — Joint Electromagnetic Spectrum Operations
 
-22 May 2020. [Official source record](https://www.jcs.mil/Portals/36/Documents/Doctrine/pubs/jp3_85.pdf) · [Third-party 2020 reading copy](https://files.trex-arms.com/pdf/joint/legacy/jp/jp_3-85_undated.pdf)
+22 May 2020. The issuer URL returned 404 in the dated source review. [Third-party 2020 reading copy](https://files.trex-arms.com/pdf/joint/legacy/jp/jp_3-85_undated.pdf)
 
 | Unit ID | Printed locator | Lesson IDs | Remaining disposition and scope |
 | --- | --- | --- | --- |

@@ -16,7 +16,13 @@ test('study navigation and acronym recall preserve separate saved progress', asy
     localStorage.setItem(phaseKey, sentinel);
     localStorage.setItem(ewKey, sentinel);
   }, { phaseKey, ewKey, sentinel });
-  await page.getByRole('navigation', { name: 'Study tools' }).getByRole('link', { name: 'Army Acronyms' }).click();
+  const nav = page.getByRole('navigation', { name: 'Study tools' });
+  await expect(nav.getByRole('link')).toHaveText(['Study home', 'EW Study', 'Soldier Study', 'PhaseUp 17E']);
+  await expect(page.locator('article.destination h3 a')).toHaveText(['EW Study', 'Soldier Study', 'PhaseUp 17E']);
+  await nav.getByRole('link', { name: 'PhaseUp 17E', exact: true }).click();
+  await expect(page).toHaveURL(/\/study\/17e\/$/);
+  await expect(page.locator('.study-areas').getByRole('link', { name: 'Army Acronyms', exact: true })).toHaveCount(0);
+  await page.getByRole('link', { name: 'Study Army acronyms' }).click();
   await expect(page).toHaveURL(/\/study\/17e\/acronyms\//);
   await expect(page.locator('#study-content')).toBeVisible();
   expect(await page.evaluate(key => localStorage.getItem(key), acronymKey)).toBeNull();
@@ -225,4 +231,40 @@ test('Soldier Study shares navigation, recall and coverage while keeping guest p
   expect(await page.evaluate(keys => [localStorage.getItem('soldier-study.progress.v1'), ...keys.map(key => localStorage.getItem(key))], otherKeys))
     .toEqual([null, '{"sentinel":true}', '{"sentinel":true}', '{"sentinel":true}']);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+});
+
+
+test('contact lives on its own route and study corrections remain accessible', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('[data-contact-form]')).toHaveCount(0);
+  await expect(page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Contact' })).toHaveCount(0);
+  const contact = page.getByRole('contentinfo').getByRole('link', { name: 'Contact', exact: true });
+  await expect(contact).toHaveAttribute('href', '/connect/');
+  await contact.click();
+  await expect(page).toHaveURL(/\/connect\/$/);
+  await expect(page.locator('[data-contact-form]')).toHaveCount(1);
+  await page.goto('/study/');
+  await expect(page.getByRole('heading', { name: 'Help keep Army Study current' })).toHaveCount(0);
+  await expect(page.getByRole('navigation', { name: 'Study tools' }).getByRole('link', { name: /Contact/ })).toHaveCount(0);
+  await page.locator('.study-footer').getByRole('link', { name: 'Contact / report a correction' }).click();
+  await expect(page).toHaveURL(/\/connect\/\?topic=army-study/);
+  await expect(page.getByRole('heading', { name: 'Report a study correction' })).toBeVisible();
+});
+
+test('PhaseUp treats an imported weak-point counter as data in guest mode', async ({ page }) => {
+  const { cards } = JSON.parse(readFileSync(new URL('../../public/study/17e/cards.json', import.meta.url), 'utf8'));
+  const card = cards[0];
+  await page.goto('/study/17e/');
+  await expect(page.locator('#status')).toContainText('cards ready');
+  await page.getByRole('button', { name: /Save \/ transfer/ }).click();
+  await page.locator('#paste').fill(JSON.stringify({
+    records: { [card.id]: { attempts: 1, correct: 0, misses: '<b>unexpected counter</b>', last: 'missed' } },
+    events: [],
+    exams: [],
+  }));
+  await page.getByRole('button', { name: 'Restore / merge', exact: true }).click();
+  await page.getByRole('button', { name: /Weak points/ }).click();
+  await expect(page.locator('#weakContent')).toContainText(card.q);
+  await expect(page.locator('#weakContent')).toContainText('0 misses');
+  await expect(page.locator('#weakContent b')).toHaveCount(0);
 });

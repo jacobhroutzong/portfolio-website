@@ -6,6 +6,9 @@ const root = dirname(dirname(fileURLToPath(import.meta.url)));
 export const STUDY_STAGING_BRANCH = 'feature/study-accounts-staging';
 export const STUDY_STAGING_URL = 'https://grpwacfkhwwifnjantdn.supabase.co';
 
+const STUDY_PRODUCTION_URL = 'https://kgbdfvyhgycnxyqatali.supabase.co';
+const STUDY_PRODUCTION_ORIGIN = 'https://jacobroutzong.dev';
+
 const disabledConfig = () => ({
   enabled: false,
   url: '',
@@ -14,9 +17,22 @@ const disabledConfig = () => ({
   allowedOrigins: [],
 });
 
-/** Restrict the account bundle to the explicitly approved staging build. */
+/** Restrict account bundles to the approved deployment and its matching project. */
 export function resolveStudyAccountConfig(config, env = process.env) {
   const cloudBuild = Boolean(env.CF_PAGES || env.CF_PAGES_BRANCH || env.CF_PAGES_URL);
+  if (env.CF_PAGES === '1' && env.CF_PAGES_BRANCH === 'main' && env.STUDY_ACCOUNTS_PRODUCTION_PILOT === '1') {
+    const publishableKey = env.STUDY_ACCOUNTS_PRODUCTION_PUBLISHABLE_KEY;
+    if (!/^sb_publishable_[A-Za-z0-9_-]{20,}$/.test(publishableKey ?? '') || publishableKey === config?.publishableKey) {
+      return disabledConfig();
+    }
+    return {
+      enabled: true,
+      url: STUDY_PRODUCTION_URL,
+      publishableKey,
+      providers: { google: true, apple: false },
+      allowedOrigins: [STUDY_PRODUCTION_ORIGIN],
+    };
+  }
   const approvedBuild = env.CF_PAGES_BRANCH === STUDY_STAGING_BRANCH ||
     (!cloudBuild && env.STUDY_ACCOUNTS_STAGING === '1');
   if (!approvedBuild || config?.enabled !== true) return disabledConfig();
@@ -52,7 +68,8 @@ export function resolveStudyAccountConfig(config, env = process.env) {
 }
 
 export async function buildStudyAccount({ publicOutput = false, env = process.env } = {}) {
-  const config = resolveStudyAccountConfig(JSON.parse(await readFile(join(root, 'src/config/study-accounts.json'), 'utf8')), env);
+  const buildEnv = publicOutput ? { ...env, STUDY_ACCOUNTS_PRODUCTION_PILOT: '0' } : env;
+  const config = resolveStudyAccountConfig(JSON.parse(await readFile(join(root, 'src/config/study-accounts.json'), 'utf8')), buildEnv);
   const outDir = join(root, publicOutput ? 'public/study' : 'dist/study');
   if (!config.enabled) {
     await mkdir(outDir, { recursive: true });
@@ -83,7 +100,7 @@ export async function handleStudyAccountCallback() {
       },
     },
   });
-  console.log('Study account bundle: staging enabled.');
+  console.log(config.url === STUDY_PRODUCTION_URL ? 'Study account bundle: production pilot enabled.' : 'Study account bundle: staging enabled.');
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

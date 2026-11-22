@@ -27,6 +27,22 @@ test('staging account configuration stays off on production and unknown origins'
   assert.equal(resolveStudyAccountConfig({ ...config, url: 'https://example-project.supabase.co/anything' }, config.allowedOrigins[0]), null);
 });
 
+test('the production bundle enables only Google on the canonical origin', () => {
+  const canonical = 'https://jacobroutzong.dev';
+  const production = {
+    ...config,
+    url: 'https://kgbdfvyhgycnxyqatali.supabase.co',
+    providers: { google: true, apple: true },
+    allowedOrigins: [canonical, 'https://portfolio-site-bs9.pages.dev', 'https://study-preview.example.test'],
+  };
+  assert.deepEqual(resolveStudyAccountConfig(production, canonical), {
+    url: production.url,
+    publishableKey: config.publishableKey,
+    providers: { google: true, apple: false },
+  });
+  for (const origin of production.allowedOrigins.slice(1)) assert.equal(resolveStudyAccountConfig(production, origin), null);
+});
+
 test('OAuth return paths preserve study lesson links and reject external or arbitrary destinations', () => {
   assert.equal(safeStudyReturnPath('/study/ew/?course=fm312&lesson=fm312-environment#lesson-reader'), '/study/ew/?course=fm312&lesson=fm312-environment#lesson-reader');
   assert.equal(safeStudyReturnPath('/study/17e/acronyms/'), '/study/17e/acronyms/');

@@ -6,6 +6,8 @@ const AUTH_STORAGE_KEY = 'army-study.auth.v1';
 const RETURN_STORAGE_KEY = 'army-study.auth.return.v1';
 const CALLBACK_PATH = '/study/account/';
 const STAGING_SERVICE = 'https://grpwacfkhwwifnjantdn.supabase.co';
+const PRODUCTION_SERVICE = 'https://kgbdfvyhgycnxyqatali.supabase.co';
+const PRODUCTION_ORIGIN = 'https://jacobroutzong.dev';
 const STUDY_PATHS = new Set(['/study/', '/study/17e/', '/study/17e/acronyms/', '/study/ew/', '/study/soldier/']);
 const PRODUCTION_HOSTS = new Set(['jacobroutzong.dev', 'www.jacobroutzong.dev', 'portfolio-site-bs9.pages.dev']);
 let client;
@@ -15,8 +17,12 @@ export function resolveStudyAccountConfig(raw, origin) {
   try {
     const site = new URL(origin);
     const service = new URL(raw.url);
-    if (PRODUCTION_HOSTS.has(site.hostname) || service.protocol !== 'https:' || service.pathname !== '/' || service.search || service.hash || service.username || service.password) return null;
-    if (service.origin !== STAGING_SERVICE || typeof raw.publishableKey !== 'string' || !raw.publishableKey.startsWith('sb_publishable_')) return null;
+    if (service.protocol !== 'https:' || service.pathname !== '/' || service.search || service.hash || service.username || service.password) return null;
+    if (typeof raw.publishableKey !== 'string' || !raw.publishableKey.startsWith('sb_publishable_')) return null;
+    if (service.origin === PRODUCTION_SERVICE && origin === PRODUCTION_ORIGIN) {
+      return { url: PRODUCTION_SERVICE, publishableKey: raw.publishableKey, providers: { google: true, apple: false } };
+    }
+    if (service.origin !== STAGING_SERVICE || PRODUCTION_HOSTS.has(site.hostname)) return null;
     return {
       url: service.origin,
       publishableKey: raw.publishableKey,
@@ -172,7 +178,9 @@ function mountPanel(container, config, actions) {
   container.setAttribute('aria-labelledby', 'study-account-title');
   const heading = node('h2', 'Save your study progress');
   heading.id = 'study-account-title';
-  const description = node('p', 'Study as a guest, or sign in to save your progress across devices.', 'study-account-description');
+  const description = node('p', config.url === PRODUCTION_SERVICE
+    ? 'Study as a guest, or sign in with an approved Google account to join the progress sync pilot.'
+    : 'Study as a guest, or sign in to save your progress across devices.', 'study-account-description');
   const identity = node('p', '', 'study-account-identity');
   const status = node('p', '', 'study-account-status');
   status.setAttribute('role', 'status');

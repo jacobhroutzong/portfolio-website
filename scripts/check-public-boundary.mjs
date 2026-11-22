@@ -19,6 +19,7 @@ const privatePath = /(?:^|\/)(?:\.wrangler|migrations|downloads|node_modules)(?:
 const repositorySchemaExceptions = new Set([
   'supabase/migrations/20261122184222_army_study_progress.sql',
   'supabase/migrations/20261122200421_army_study_progress_api.sql',
+  'supabase/production-migrations/20261122224309_army_study_production_pilot.sql',
 ]);
 const privateSource = /^(?:src\/lib\/(?:equityscout|ascent|decision-|tunera)|src\/pages\/(?:apps\/|ascent\/|projects\/decision-intelligence-engine\/workbench)|functions\/api\/(?:equityscout|tunera|crucible)|tests\/(?:scout|ascent|tunera|fixtures\/))|^public\/(?:equityscout|ascent|downloads|apps\/(?:equityscout|lintel|leverline|crucible))(?:\/|$)/i;
 const generated = /^media\/generated\/(.+)-([1-9]\d{0,3})\.webp$/;
