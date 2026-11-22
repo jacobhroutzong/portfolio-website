@@ -152,11 +152,13 @@ test('historical Recursa Studio retains its two navigable research areas', async
   await expect(page).toHaveURL(/\/projects\/recursa\/$/);
 });
 
-test('Axiom Studio is featured and Q-SPECTRA remains an independent case study', async ({ page }) => {
+test('Axiom Studio is listed and Q-SPECTRA remains an independent case study', async ({ page }) => {
   const optimization = '/labs/scientific-systems/axiom-studio/';
   const quantum = '/projects/q-spectra/';
   for (const listing of ['/', '/projects/']) {
     await page.goto(listing);
+    const research = page.getByRole('region', { name: 'Research + Fun Projects' });
+    await research.getByRole('button', { name: /Show \d+ more projects/ }).click();
     const selected = page.locator('article.selected-card');
     const axiom = selected.filter({ has: page.getByRole('heading', { name: 'Axiom', exact: true }) });
     await expect(axiom).toHaveCount(1);
