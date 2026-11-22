@@ -43,6 +43,23 @@ test('Apex and Decision are startups and all displayed project titles are one wo
   }
 });
 
+test('Marqyra appears once in Businesses + Startups and links to the owner-only workspace', async ({ page }) => {
+  const path = '/projects/marqyra/';
+  for (const route of ['/', '/projects/']) {
+    await page.goto(route);
+    const listing = route === '/' ? page.locator('#projects') : page.getByRole('main');
+    const card = listing.getByRole('link', { name: 'Explore Marqyra →' });
+    await expect(listing.locator('a[href="' + path + '"]')).toHaveCount(1);
+    await expect(listing.getByRole('region', { name: 'Businesses + Startups' }).getByRole('link', { name: 'Explore Marqyra →' })).toHaveCount(1);
+    await card.click();
+    await expect(page).toHaveURL(path);
+    await expect(page.getByRole('heading', { name: 'Marqyra', level: 1 })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Open Marqyra (owner-only)' }))
+      .toHaveAttribute('href', 'https://marqyra.jacobroutzong.dev/');
+    await expect(page.locator('main iframe, main a[href*="github.com/jacobhroutzong/marqyra"]')).toHaveCount(0);
+  }
+});
+
 test('Muster has one Research + Fun Projects card and a public app link', async ({ page }) => {
   const path = '/projects/muster/';
   for (const route of ['/', '/projects/']) {
