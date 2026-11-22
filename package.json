@@ -22,6 +22,7 @@
     "astro": "7.3.8",
     "katex": "^0.19.1",
     "tailwindcss": "^4.1.0",
+    "three": "0.187.0",
     "zod": "^4.0.0"
   },
   "devDependencies": {

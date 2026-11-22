@@ -1,5 +1,7 @@
 import { expect, test } from '@playwright/test';
 
+test.use({ launchOptions: { args: ['--enable-unsafe-swiftshader'] } });
+
 test('Fieldsense editorial lab keeps the original paper distinct from the recorded replay', async ({ page }) => {
   await page.goto('/projects/fieldsense/lab/');
   await expect(page.locator('#fieldsense-app')).toHaveAttribute('data-ready', 'true');
@@ -65,4 +67,70 @@ test('field selection and daily water cues work with a keyboard and reduced moti
   await expect(watering.locator('.fs-pipe-flow')).toHaveCSS('opacity', '1');
   await expect(watering.locator('.fs-spray')).not.toHaveCSS('opacity', '0');
   await expect(watering.locator('.fs-spray path')).toHaveCSS('animation-name', 'none');
+});
+
+test.describe('3D farm', () => {
+
+  test('late scene initialization uses the current record, keyboard focus and schematic section', async ({page}) => {
+    let finishImport!: () => void;
+    const gate = new Promise<void>(resolve => { finishImport = resolve; });
+    await page.route(/fieldsense-scene[^/]*\.js/, async route => { await gate; await route.continue(); });
+    await page.emulateMedia({reducedMotion:'reduce'});
+    await page.goto('/projects/fieldsense/lab/', {waitUntil:'domcontentloaded'});
+    await page.locator('#fs-day').fill('2');
+    const east=page.getByRole('button', {name:/East Acre/});
+    await east.focus();
+    await page.keyboard.press('Enter');
+    finishImport();
+    const viewport=page.locator('#fs-viewport');
+    await expect(viewport).toHaveAttribute('data-renderer','3d');
+    await east.press('Space');
+    await expect(viewport).toHaveAttribute('data-view','field');
+    await page.getByRole('button',{name:'Show soil cutaway'}).press('Enter');
+    await expect(page.locator('.fs-soil-key strong')).toHaveText('13.88 mm');
+    await expect(page.locator('#fs-moisture-value')).toHaveText('13.88 mm');
+    await page.locator('#fs-prev').click();
+    await expect(page.locator('.fs-soil-key strong')).toHaveText('12.94 mm');
+    await page.locator('#fs-scenario').selectOption('strict_limit');
+    await expect(page.locator('#fs-infeasible')).toBeVisible();
+    await expect(page.locator('.fs-soil-key')).toBeHidden();
+    await expect(page.locator('.fs-watering,.fs-raining')).toHaveCount(0);
+    await page.locator('#fs-scenario').selectOption('dry_spell');
+    await expect(viewport).toHaveAttribute('data-view','overview');
+    await expect(page.locator('#fs-next')).toBeEnabled();
+  });
+
+  test('losing the GPU returns to the current SVG replay', async ({page}) => {
+    await page.goto('/projects/fieldsense/lab/');
+    const viewport=page.locator('#fs-viewport[data-renderer="3d"]');
+    await expect(viewport).toBeVisible();
+    await page.locator('[data-policy="rule"]').click();
+    await page.locator('#fs-day').fill('6');
+    await viewport.locator('canvas').evaluate(canvas => {
+      const gl=(canvas as HTMLCanvasElement).getContext('webgl2')!;
+      gl.getExtension('WEBGL_lose_context')!.loseContext();
+    });
+    await expect(page.locator('#fs-farm')).toBeVisible();
+    await expect(page.locator('.fs-camera')).toBeHidden();
+    await expect(page.locator('#fs-day')).toHaveValue('6');
+    await expect(page.locator('[data-policy="rule"]')).toHaveAttribute('aria-pressed','true');
+    await page.locator('#fs-next').click();
+    await expect(page.locator('#fs-rule-water')).toContainText('945');
+  });
+
+  test('WebGL initialization failure leaves the field picker and replay available', async ({page}) => {
+    await page.addInitScript(() => {
+      const original=HTMLCanvasElement.prototype.getContext;
+      Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
+        value: function(type: string, ...args: unknown[]) {
+          return type === 'webgl2' ? null : Reflect.apply(original,this,[type,...args]);
+        }
+      });
+    });
+    await page.goto('/projects/fieldsense/lab/');
+    await page.getByRole('button',{name:/South Plot/}).click();
+    await expect(page.locator('#fs-field-name')).toHaveText('South Plot');
+    await expect(page.locator('#fs-farm')).toBeVisible();
+    await expect(page.locator('.fs-camera')).toBeHidden();
+  });
 });
