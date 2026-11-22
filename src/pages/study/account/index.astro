@@ -1,0 +1,29 @@
+---
+// The browser bundle is emitted by the existing build after Astro renders this route.
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow,noarchive" />
+    <meta name="referrer" content="no-referrer" />
+    <title>Study account | Army Study</title>
+    <link rel="stylesheet" href="/study/study.css" />
+    <link rel="stylesheet" href="/study/account.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="hero">
+        <p class="eyebrow">Army Study</p>
+        <h1>Returning to your study session</h1>
+      </header>
+      <p id="study-account-callback-status" class="notice" role="status">Completing sign-in…</p>
+      <p><a href="/study/">Back to Army Study</a></p>
+    </main>
+    <script is:inline type="module">
+      import { handleStudyAccountCallback } from '/study/account.js';
+      handleStudyAccountCallback();
+    </script>
+  </body>
+</html>

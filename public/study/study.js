@@ -2,6 +2,23 @@ const page = document.body.dataset.study;
 const byId = id => document.getElementById(id);
 const list = value => Array.isArray(value) ? value : [];
 const plural = (count, word) => count === 1 ? word : word + "s";
+let accountConnection;
+let accountConnectionStarted = false;
+
+async function optionalAccount(area, guestKey) {
+  if (accountConnectionStarted) return accountConnection;
+  accountConnectionStarted = true;
+  try {
+    const { connectStudyAccount } = await import("/study/account.js");
+    accountConnection = await connectStudyAccount({ area, guestKey });
+  } catch {
+    const notice = document.createElement("p");
+    notice.className = "notice";
+    notice.textContent = "Account sync is unavailable. You can continue as a guest with progress saved in this browser.";
+    byId("study-account")?.append(notice);
+  }
+  return accountConnection;
+}
 
 function element(tag, text, className) {
   const node = document.createElement(tag);
@@ -645,11 +662,49 @@ async function loadStudy() {
     }
     const sources = new Map(list(data.sources).map(source => [source.id, source]));
     const key = acronyms ? "army-acronyms.progress.v1" : "ew-study.progress.v1";
-    const progress = createProgress(key);
+    const account = await optionalAccount(acronyms ? "acronyms" : "ew", key);
+    let localChange = false;
+    function mutateAccount(change) {
+      localChange = true;
+      try { account.mutate(change); } finally { localChange = false; }
+    }
+    const progress = account ? {
+      rating: id => account.get().ratings[id],
+      completed: id => account.get().completed[id] === true,
+      rate: (id, rating) => mutateAccount(state => { state.ratings[id] = rating; }),
+      complete: (id, value) => mutateAccount(state => {
+        if (value) state.completed[id] = true;
+        else delete state.completed[id];
+      }),
+      reset() {
+        localChange = true;
+        try { account.reset(); } finally { localChange = false; }
+      },
+    } : createProgress(key);
     const refresh = acronyms ? initAcronyms(data, sources, progress) : initEW(data, sources, progress);
+    if (account) {
+      let previous = JSON.stringify(account.get());
+      account.subscribe(state => {
+        const current = JSON.stringify(state.data);
+        if (current !== previous && !localChange) refresh();
+        previous = current;
+        for (const id of ["complete-lesson", "review-again", "got-it", "reset-progress"]) {
+          const control = byId(id);
+          if (control) control.disabled = state.status === "loading";
+        }
+        byId("progress-location").textContent = state.userId
+          ? "This page uses your account progress. Check the sync status above before leaving."
+          : "Your study progress is saved in this browser.";
+        const intro = byId("course-progress-explanation");
+        if (intro) intro.textContent = state.userId
+          ? "Start with the foundations, then work through a publication at your own pace. Your account keeps your completed lessons and recall ratings."
+          : "Start with the foundations, then work through a publication at your own pace. Your completed lessons and recall ratings stay in this browser.";
+      });
+    }
     byId("reset-progress").onclick = () => {
       const name = acronyms ? "acronym" : "EW";
-      if (!window.confirm(`Reset your ${name} study progress in this browser?`)) return;
+      const destination = account?.snapshot().userId ? "for this account across devices" : "in this browser";
+      if (!window.confirm(`Reset your ${name} study progress ${destination}?`)) return;
       progress.reset();
       refresh();
     };

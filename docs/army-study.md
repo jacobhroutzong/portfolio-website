@@ -89,17 +89,17 @@ Public files are individually listed in the existing publication manifests. The 
 
 Study pages offer a **Report a correction** action using the existing portfolio contact form and configured inbox. The report supplies study-page context and prompts for the current information, suggested correction, unit or school, effective date and supporting reference. Reports are submissions for owner review; they do not automatically alter the curriculum. Existing consent, validation, activation-pending and delivery-failure behavior remain in use. A provider-accepted submission is distinct from confirmed inbox delivery.
 
-## Planned next milestone — not implemented
+## Curriculum and account milestones
 
-### Soldier Study
+### Soldier Study — planned, not implemented
 
 Add `/study/soldier/` beside EW Study using the existing course reader and a separate `soldier-study.progress.v1` key. The proposed initial courses are Soldier Foundations, Working With Small Units, Field Health and Sanitation, and Casualty Response Foundations. Keep the existing acronym route and reference set shared across areas. Map relevant source sections or task IDs to teaching, partial teaching, source reading, practical training, out-of-scope rationale or an explicit verification gap.
 
 The initial source candidates are ATP 3-21.8 (11 January 2024, C1 23 June 2025), ATP 4-25.12 (30 April 2014, C2 8 August 2025) and ATP 4-02.11 (23 March 2026, superseding TC 4-02.1), with current JTS all-service-member training references. STP 21-1-SMCT (20 November 2025) and TC 3-25.26 (15 November 2013) have public catalog verification but their inspected download paths require Army authentication. Current full-text coverage is not established for those two references. Source bodies and precise inventories must be checked before authoring new courses.
 
-### Optional accounts and saved progress
+### Optional accounts and saved progress — staging implementation
 
-The owner requested Google and Sign in with Apple through Supabase. Reuse verified existing resources after a separate, reviewed authentication plan; no provider configuration, database schema or signup policy has changed in this patch.
+The owner approved a staging-only account implementation on 22 November 2026. The browser client, progress adapters, versioned saves and additive staging table are implemented on the account branch. Shared provider/signup settings and production remain unchanged. See [staging behavior, verification and remaining provider prerequisites](army-study-accounts-staging.md).
 
 - Keep guest study available. Offer an explicit import of existing browser progress into a signed-in account.
 - Preserve the separate PhaseUp `records/events/exams` and course `ratings/completed` formats with dedicated adapters. Preserve stable content IDs.
@@ -110,3 +110,5 @@ The owner requested Google and Sign in with Apple through Supabase. Reuse verifi
 - Bundle the client through the existing build. Preserve the public-file boundary; any versioned schema migration requires a narrowly reviewed repository allowance, not removal of the boundary checks.
 
 Acceptance requires two-user isolation, cross-device save/retrieve, safe guest import, offline retry and conflict handling, account switching/sign-out isolation, durable reset behavior, both configured provider flows, and regression checks for existing study progress and exams. Use GPT-6.2 Sol High for this coupled authentication/progress milestone; Medium is sufficient for isolated editorial or link corrections. Release approval follows a working, verified staging result.
+
+See the [dated curriculum-depth assessment](army-study-coverage-assessment.md) for the distinction between current conceptual coverage, the initial curriculum milestone and recurring maintenance.

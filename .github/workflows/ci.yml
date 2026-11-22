@@ -22,3 +22,9 @@ jobs:
       - run: npm run verify
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
+      - name: Verify staging account flows with intercepted HTTP
+        env:
+          STUDY_ACCOUNTS_STAGING: '1'
+        run: |
+          node scripts/build-study-account.mjs
+          npx playwright test tests/e2e/study-accounts.spec.ts
