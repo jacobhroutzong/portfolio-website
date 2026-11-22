@@ -5,7 +5,7 @@
 .study-areas{display:flex;flex-wrap:wrap;gap:8px 14px;margin:0 8px 22px}.study-areas a{color:var(--teal);font-size:14px;line-height:1.5;text-underline-offset:3px}.study-areas a:focus-visible{outline:2px solid var(--teal);outline-offset:4px}
 </style></head>
 <body><div class="layout"><aside class="nav"><div class="brand"><span>VI+</span> PhaseUp</div><div class="study-areas" aria-label="Other study areas"><a href="/study/">Study hub</a><a href="/study/soldier/">Soldier Study</a><a href="/study/ew/">EW Study</a><a href="/connect/?topic=army-study&amp;source=%2Fstudy%2F17e%2F#contact-title">Report a correction</a></div><nav><button class="active" data-view="home">◈ Overview</button><button data-view="review">▤ Flashcards</button><button data-view="exam">✎ Practice exam</button><button data-view="weak">↻ Weak points</button><button data-view="reference">≡ Reference</button><button data-view="audit">✓ PL15 checklist</button><button data-view="sync">⇄ Save / transfer</button></nav><div class="hint">Unlisted study page. Autosaves on this computer only.<br><br>School browsers may clear data. Export your progress after each session.</div></aside>
-<main><section id="study-account"></section><header class="top"><div><div class="eyebrow">17E / Phase V → VI / VI+</div><h1>Prepare for your next phase.</h1><p>Core 20 · Phase VI / VI+ preparation · WTBD · SHARP/EO · PL15</p></div><span class="tag" id="status">Loading question bank…</span></header>
+<main><header class="top"><div><div class="eyebrow">17E / Phase V → VI / VI+</div><h1>Prepare for your next phase.</h1><p>Core 20 · Phase VI / VI+ preparation · WTBD · SHARP/EO · PL15</p></div><span class="tag" id="status">Loading question bank…</span><div id="study-account"></div></header>
 <section class="view active" id="home">
 <h2>Choose your phase-up goal</h2>
 <p>Study for the next AIT milestone using the appropriate Policy Letter 15 requirements, local phase-up knowledge, and practice questions. Pick a track to begin—no account required.</p>
@@ -64,7 +64,7 @@ try{
  account=await connectStudyAccount({area:"phaseup",guestKey:KEY,initial:progress});
  if(account)progress=account.get();
 }catch{
- const notice=document.createElement("p");notice.className="notice";notice.textContent="Account sync is unavailable. You can continue as a guest with progress saved in this browser.";$("study-account").append(notice);
+ const notice=document.createElement("p");notice.className="study-account-fallback";notice.setAttribute("role","status");notice.textContent="Account sync unavailable";$("study-account").append(notice);
 }
 function notify(s){const t=$("toast");t.textContent=s;t.style.display="block";clearTimeout(window._tt);window._tt=setTimeout(()=>t.style.display="none",3000)}
 function view(id){document.querySelectorAll(".view").forEach(n=>n.classList.toggle("active",n.id===id));document.querySelectorAll(".nav button").forEach(n=>n.classList.toggle("active",n.dataset.view===id));if(id==="home"){stats();renderWTBD();}if(id==="weak")weakList();if(id==="reference")renderGlossary();if(id==="audit")renderAudit();if(id==="review"&&!current)next();window.scrollTo(0,0)}

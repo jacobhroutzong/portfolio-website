@@ -101,12 +101,65 @@ async function mockProgressService(page: Page) {
   };
 }
 
+async function openAccount(page: Page) {
+  await page.getByRole('button', { name: 'Account', exact: true }).click();
+  await expect(page.getByRole('dialog', { name: 'Study account' })).toBeVisible();
+}
+
+test('the same compact, keyboard-accessible sign-in control appears on all study pages', async ({ page }) => {
+  await mockProgressService(page);
+  for (const path of ['/study/', '/study/ew/', '/study/soldier/', '/study/17e/', '/study/17e/acronyms/']) {
+    await page.goto(path);
+    const trigger = page.getByRole('button', { name: 'Sign in', exact: true });
+    const menu = page.locator('#study-account-menu');
+    await expect(trigger).toBeVisible();
+    await expect(menu).toBeHidden();
+    const bounds = await trigger.boundingBox();
+    expect(bounds?.width).toBeGreaterThanOrEqual(44);
+    expect(bounds?.height).toBeGreaterThanOrEqual(44);
+    expect(await trigger.evaluate(element => Boolean(element.closest('header')))).toBe(true);
+    await trigger.focus();
+    await page.keyboard.press('Enter');
+    await expect(menu).toBeVisible();
+    await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+    await expect(menu.getByRole('button', { name: 'Continue with Google', exact: true })).toBeVisible();
+    await expect(menu.getByText('Apple · Coming soon', { exact: true })).toBeVisible();
+    await expect(menu.getByRole('button', { name: /Apple/ })).toHaveCount(0);
+    await expect.poll(() => menu.locator('img:visible').evaluateAll(images =>
+      images.filter(img => img instanceof HTMLImageElement && img.complete && img.naturalWidth > 0).length
+    )).toBe(2);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await page.keyboard.press('Escape');
+    await expect(menu).toBeHidden();
+    await expect(trigger).toBeFocused();
+  }
+});
+
+test('the homepage account menu offers area links without reading or importing progress', async ({ page }) => {
+  await seed(page, { [ewKey]: { ratings: {}, completed: { 'ew-fundamentals': true } } });
+  const server = await mockProgressService(page);
+  const progressRequests: string[] = [];
+  page.on('request', request => {
+    if (request.url().includes('/rest/v1/army_study_progress')) progressRequests.push(request.method());
+  });
+  await page.goto('/study/');
+  await openAccount(page);
+  const menu = page.getByRole('dialog', { name: 'Study account' });
+  await expect(menu).toContainText('learner-a@example.invalid');
+  await expect(menu.getByRole('link', { name: 'EW Study', exact: true })).toHaveAttribute('href', '/study/ew/');
+  await expect(menu.getByRole('button', { name: 'Import this browser’s progress', exact: true })).toHaveCount(0);
+  await expect(menu.getByRole('button', { name: 'Sign out', exact: true })).toBeVisible();
+  expect(progressRequests).toHaveLength(0);
+  expect(server.writes).toHaveLength(0);
+});
+
 test('EW account progress loads, imports guest progress explicitly and saves without changing the guest copy', async ({ page }) => {
   const guest = { ratings: {}, completed: { 'spectrum-management': true } };
   await seed(page, { [ewKey]: guest });
   const server = await mockProgressService(page);
   server.put('ew', { revision: 2, payload: { ratings: {}, completed: { 'ew-fundamentals': true } }, reset: false });
   await page.goto('/study/ew/');
+  await openAccount(page);
   await expect(page.locator('#study-account')).toContainText('learner-a@example.invalid');
   await expect(page.locator('#lesson-progress')).toContainText('1 of 92 lessons complete');
   await expect(page.getByRole('button', { name: 'Mark lesson incomplete', exact: true })).toBeVisible();
@@ -134,6 +187,9 @@ test('acronym account changes detect a remote reset and require an explicit conf
   server.put('acronyms', { revision: 2, payload: { ratings: {}, completed: {} }, reset: true });
   await page.getByRole('button', { name: 'Reveal answer', exact: true }).click();
   await page.getByRole('button', { name: 'Review again', exact: true }).click();
+  await expect(page.locator('#study-account-menu')).toBeHidden();
+  await expect(page.locator('#study-account-indicator')).toHaveText('Resolve sync conflict');
+  await openAccount(page);
   await expect(page.locator('.study-account-conflict')).toContainText('was reset on another device');
   expect(server.writes).toHaveLength(0);
   page.once('dialog', dialog => dialog.accept());
@@ -157,6 +213,7 @@ test('PhaseUp imports are idempotent and signing out restores the separate guest
   await seed(page, { [phaseKey]: guest });
   const server = await mockProgressService(page);
   await page.goto('/study/17e/');
+  await openAccount(page);
   await expect(page.locator('#study-account')).toContainText('learner-a@example.invalid');
   await expect(page.locator('#statSeen')).toHaveText('0');
   for (let attempt = 0; attempt < 2; attempt++) {
@@ -169,6 +226,7 @@ test('PhaseUp imports are idempotent and signing out restores the separate guest
   expect(server.get('phaseup')?.payload.events).toHaveLength(1);
   expect(server.get('phaseup')?.payload.exams).toHaveLength(1);
   await page.getByRole('button', { name: 'Sign out', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Sign in', exact: true })).toBeFocused();
   await expect(page.locator('#study-account')).toContainText('Guest progress is saved in this browser.');
   await expect(page.locator('#study-account')).not.toContainText('learner-a@example.invalid');
   await expect(page.locator('#statSeen')).toHaveText('1');
@@ -187,12 +245,15 @@ test('a pending account A save cannot replace account B progress after sign-out 
   await page.getByRole('button', { name: 'Mark lesson complete', exact: true }).click();
   await expect.poll(() => server.writes.length).toBe(1);
   await expect(page.locator('.study-account-status')).toHaveText('Saving your progress…');
+  await expect(page.locator('#study-account-indicator')).toHaveText('Saving…');
+  await openAccount(page);
   page.once('dialog', dialog => dialog.accept());
   await page.getByRole('button', { name: 'Sign out', exact: true }).click();
   await expect(page.locator('#study-account')).not.toContainText('learner-a@example.invalid');
   await page.evaluate(({ key, value }) => localStorage.setItem(key, JSON.stringify(value)), { key: authKey, value: session(userB) });
   server.releaseWrite();
   await page.reload();
+  await openAccount(page);
   await expect(page.locator('#study-account')).toContainText('learner-b@example.invalid');
   await expect(page.locator('#lesson-progress')).toContainText('1 of 92 lessons complete');
   await expect(page.getByRole('button', { name: 'Mark lesson complete', exact: true })).toBeVisible();
@@ -212,6 +273,7 @@ test('Soldier Study imports and saves in its reserved account area and restores 
   const server = await mockProgressService(page);
   server.put('soldier', { revision: 2, payload: { ratings: {}, completed: { [second.id]: true } }, reset: false });
   await page.goto('/study/soldier/');
+  await openAccount(page);
   await expect(page.locator('#study-account')).toContainText('learner-a@example.invalid');
   await expect(page.locator('#lesson-progress')).toHaveText(`1 of ${lessons.length} lessons complete`);
   expect(server.writes).toHaveLength(0);
@@ -226,6 +288,7 @@ test('Soldier Study imports and saves in its reserved account area and restores 
     ratings: {}, completed: { [first.id]: true, [second.id]: true, [third.id]: true },
   });
   expect(server.writes.every(write => write.area === 'soldier')).toBeTruthy();
+  await openAccount(page);
   await page.getByRole('button', { name: 'Sign out', exact: true }).click();
   await expect(page.locator('#progress-location')).toContainText('saved in this browser');
   await expect(page.locator('#lesson-progress')).toHaveText(`1 of ${lessons.length} lessons complete`);

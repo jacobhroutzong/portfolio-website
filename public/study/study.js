@@ -13,8 +13,9 @@ async function optionalAccount(area, guestKey) {
     accountConnection = await connectStudyAccount({ area, guestKey });
   } catch {
     const notice = document.createElement("p");
-    notice.className = "notice";
-    notice.textContent = "Account sync is unavailable. You can continue as a guest with progress saved in this browser.";
+    notice.className = "study-account-fallback";
+    notice.setAttribute("role", "status");
+    notice.textContent = "Account sync unavailable";
     byId("study-account")?.append(notice);
   }
   return accountConnection;
@@ -721,10 +722,6 @@ async function loadStudy() {
         byId("progress-location").textContent = state.userId
           ? "This page uses your account progress. Check the sync status above before leaving."
           : "Your study progress is saved in this browser.";
-        const intro = byId("course-progress-explanation");
-        if (intro) intro.textContent = state.userId
-          ? "Start with the foundations, then work through a publication at your own pace. Your account keeps your completed lessons and recall ratings."
-          : "Start with the foundations, then work through a publication at your own pace. Your completed lessons and recall ratings stay in this browser.";
       });
     }
     byId("reset-progress").onclick = () => {
@@ -751,4 +748,6 @@ async function loadStudy() {
 if (page) {
   byId("retry").addEventListener("click", loadStudy);
   loadStudy();
+} else if (byId('study-account')) {
+  void optionalAccount();
 }

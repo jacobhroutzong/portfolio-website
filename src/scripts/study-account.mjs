@@ -173,39 +173,131 @@ function statusText(state) {
   return 'Guest progress is saved in this browser.';
 }
 
-function mountPanel(container, config, actions) {
+function providerIcon(provider) {
+  const icon = node('img', '', 'study-account-provider-icon');
+  icon.src = provider === 'google' ? '/study/account-google.png' : '/study/account-apple.svg';
+  icon.alt = '';
+  icon.width = 18;
+  icon.height = 18;
+  return icon;
+}
+
+function mountMenu(container, config, actions, hasArea) {
   container.classList.add('study-account');
-  container.setAttribute('aria-labelledby', 'study-account-title');
-  const heading = node('h2', 'Save your study progress');
-  heading.id = 'study-account-title';
-  const description = node('p', config.url === PRODUCTION_SERVICE
-    ? 'Study as a guest, or sign in with an approved Google account to join the progress sync pilot.'
-    : 'Study as a guest, or sign in to save your progress across devices.', 'study-account-description');
-  const identity = node('p', '', 'study-account-identity');
-  const status = node('p', '', 'study-account-status');
-  status.setAttribute('role', 'status');
-  status.setAttribute('aria-live', 'polite');
-  status.setAttribute('aria-atomic', 'true');
+  const trigger = node('button', 'Sign in', 'study-account-trigger');
+  trigger.type = 'button';
+  trigger.setAttribute('aria-controls', 'study-account-menu');
+  trigger.setAttribute('aria-expanded', 'false');
+  trigger.setAttribute('aria-describedby', 'study-account-indicator');
+  const indicator = node('p', '', 'study-account-indicator');
+  indicator.id = 'study-account-indicator';
+  indicator.setAttribute('role', 'status');
+  indicator.hidden = true;
   const error = node('p', '', 'study-account-error');
   error.setAttribute('role', 'alert');
   error.hidden = true;
+
+  const menu = node('div', '', 'study-account-menu');
+  menu.id = 'study-account-menu';
+  menu.setAttribute('role', 'dialog');
+  menu.setAttribute('aria-labelledby', 'study-account-title');
+  menu.tabIndex = -1;
+  const nativePopover = typeof menu.showPopover === 'function';
+  const isOpen = () => nativePopover ? menu.matches(':popover-open') : !menu.hidden;
+  function positionMenu() {
+    const bounds = trigger.getBoundingClientRect();
+    menu.style.setProperty('--account-top', Math.ceil(bounds.bottom + 8) + 'px');
+    menu.style.setProperty('--account-right', Math.max(12, Math.round(document.documentElement.clientWidth - bounds.right)) + 'px');
+  }
+  function closeMenu() {
+    if (!isOpen()) return;
+    if (nativePopover) menu.hidePopover();
+    else {
+      menu.hidden = true;
+      trigger.setAttribute('aria-expanded', 'false');
+    }
+    trigger.focus();
+  }
+  if (nativePopover) {
+    menu.setAttribute('popover', 'auto');
+    menu.setAttribute('autofocus', '');
+    trigger.setAttribute('popovertarget', menu.id);
+    menu.addEventListener('beforetoggle', event => {
+      const open = event.newState === 'open';
+      trigger.setAttribute('aria-expanded', String(open));
+      if (open) positionMenu();
+    });
+  } else {
+    menu.hidden = true;
+    trigger.addEventListener('click', () => {
+      if (isOpen()) { closeMenu(); return; }
+      positionMenu();
+      menu.hidden = false;
+      trigger.setAttribute('aria-expanded', 'true');
+      menu.focus();
+    });
+    container.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && isOpen()) {
+        event.preventDefault();
+        closeMenu();
+      }
+    });
+  }
+  const reposition = () => { if (isOpen()) positionMenu(); };
+  window.addEventListener('resize', reposition);
+  window.addEventListener('scroll', reposition, { passive: true });
+
+  const heading = node('h2', 'Sign in');
+  heading.id = 'study-account-title';
+  const close = button('Close account menu', closeMenu);
+  close.classList.add('study-account-close');
+  close.setAttribute('aria-label', 'Close account menu');
+  close.textContent = '×';
+  const menuHeader = node('div', '', 'study-account-menu-header');
+  menuHeader.append(heading, close);
+  const identity = node('p', '', 'study-account-identity');
+  const description = node('p', config.url === PRODUCTION_SERVICE
+    ? 'Google sign-in is available to approved pilot accounts.'
+    : 'Sign in to sync study progress.', 'study-account-description');
+  const status = node('p', '', 'study-account-status');
+  status.setAttribute('role', 'status');
   const storageWarning = node('p', '', 'study-account-storage-warning');
-  storageWarning.hidden = true;
+
   const signInActions = node('div', '', 'study-account-actions');
   const google = button('Continue with Google', () => actions.signIn('google'));
-  const apple = button('Continue with Apple', () => actions.signIn('apple'));
+  google.classList.add('study-account-google');
+  google.prepend(providerIcon('google'));
   google.hidden = !config.providers.google;
+  const apple = button('Continue with Apple', () => actions.signIn('apple'));
+  apple.classList.add('study-account-apple');
+  apple.prepend(providerIcon('apple'));
   apple.hidden = !config.providers.apple;
-  signInActions.append(google, apple);
-  const unavailable = node('p', 'Account sign-in is not available here yet. You can keep studying as a guest.', 'study-account-description');
-  unavailable.hidden = config.providers.google || config.providers.apple;
+  const appleUnavailable = node('p', '', 'study-account-provider-unavailable');
+  appleUnavailable.append(providerIcon('apple'), node('span', 'Apple · Coming soon'));
+  appleUnavailable.hidden = config.providers.apple;
+  signInActions.append(google, apple, appleUnavailable);
+
   const accountActions = node('div', '', 'study-account-actions');
   const importButton = button('Import this browser’s progress', actions.importGuest);
   const retry = button('Retry sync', actions.retry);
   const signOut = button('Sign out', actions.signOut);
   signOut.classList.add('study-account-secondary');
   accountActions.append(importButton, retry, signOut);
-  const importNote = node('p', 'Only import guest progress that belongs to you. This computer may have been used by someone else.', 'study-account-description');
+  const homeLinks = node('ul', '', 'study-account-area-links');
+  if (!hasArea) {
+    for (const [label, path] of [
+      ['EW Study', '/study/ew/'],
+      ['Soldier Study', '/study/soldier/'],
+      ['PhaseUp 17E', '/study/17e/'],
+      ['Army Acronyms', '/study/17e/acronyms/'],
+    ]) {
+      const item = node('li');
+      const link = node('a', label);
+      link.href = path;
+      item.append(link);
+      homeLinks.append(item);
+    }
+  }
   const conflict = node('div', '', 'study-account-conflict');
   const conflictText = node('p');
   const conflictActions = node('div', '', 'study-account-actions');
@@ -214,39 +306,54 @@ function mountPanel(container, config, actions) {
   local.classList.add('study-account-secondary');
   conflictActions.append(remote, local);
   conflict.append(conflictText, conflictActions);
-  container.replaceChildren(heading, description, identity, signInActions, unavailable, status, error, storageWarning, accountActions, importNote, conflict);
+  menu.append(menuHeader, identity, description, status, storageWarning, signInActions, homeLinks, conflict, accountActions);
+  container.replaceChildren(trigger, indicator, error, menu);
+
+  let wasSignedIn = false;
   return {
     error(message) {
       error.textContent = message || '';
       error.hidden = !message;
     },
     render(state, email, busy) {
+      const focused = document.activeElement;
       const signedIn = Boolean(state.userId);
       const loading = state.status === 'loading';
-      heading.textContent = signedIn ? 'Your study account' : 'Save your study progress';
-      description.hidden = signedIn;
+      if (wasSignedIn && !signedIn) closeMenu();
+      wasSignedIn = signedIn;
+      trigger.textContent = signedIn ? 'Account' : 'Sign in';
+      heading.textContent = signedIn ? 'Study account' : 'Sign in';
       identity.hidden = !signedIn;
       identity.textContent = signedIn ? (email ? `Signed in as ${email}` : 'Signed in') : '';
+      description.hidden = signedIn;
       signInActions.hidden = signedIn;
-      unavailable.hidden = signedIn || config.providers.google || config.providers.apple;
-      status.textContent = statusText(state);
+      status.textContent = signedIn && !hasArea ? 'Choose a study area to view or manage its progress.' : statusText(state);
+      const syncNotice = { saving: 'Saving…', offline: 'Progress not synced', conflict: 'Resolve sync conflict', error: 'Sync needs attention' }[state.status];
+      indicator.textContent = syncNotice || (state.error ? 'Progress needs attention' : '');
+      indicator.hidden = !indicator.textContent;
       storageWarning.textContent = state.error || '';
       storageWarning.hidden = !state.error;
       accountActions.hidden = !signedIn;
-      importButton.hidden = !state.hasGuest;
-      importNote.hidden = !signedIn || !state.hasGuest;
-      retry.hidden = !['offline', 'error'].includes(state.status);
+      homeLinks.hidden = !signedIn || hasArea;
+      importButton.hidden = !hasArea || !state.hasGuest;
+      retry.hidden = !hasArea || !['offline', 'error'].includes(state.status);
       conflict.hidden = state.status !== 'conflict';
       conflictText.textContent = state.conflict?.reset
         ? 'This account’s progress was reset on another device. Using the saved version keeps that reset. Replacing it restores this device’s progress to your account.'
         : 'Using the saved version replaces this device’s unsynced changes. Replacing the saved version keeps this device’s progress for your other devices.';
       for (const action of [google, apple, importButton, retry, remote, local]) action.disabled = Boolean(busy || loading);
       signOut.disabled = Boolean(busy);
+      if (isOpen() && menu.contains(focused) && focused.closest('[hidden], button:disabled')) menu.focus({ preventScroll: true });
+    },
+    destroy() {
+      window.removeEventListener('resize', reposition);
+      window.removeEventListener('scroll', reposition);
+      container.replaceChildren();
     },
   };
 }
 
-export async function connectStudyAccount({ area, guestKey, initial, onChange }) {
+export async function connectStudyAccount({ area, guestKey, initial, onChange } = {}) {
   const config = configuration();
   const container = document.getElementById('study-account');
   if (!config || !container) return null;
@@ -260,12 +367,13 @@ export async function connectStudyAccount({ area, guestKey, initial, onChange })
   const activeRequests = new Set();
   let storage;
   try { storage = localStorage; } catch { storage = undefined; }
-  const store = createStudyStore({ area, guestKey, initial, storage, transport: createProgressTransport(supabase, () => currentUserId, activeRequests) });
+  const store = area ? createStudyStore({ area, guestKey, initial, storage, transport: createProgressTransport(supabase, () => currentUserId, activeRequests) }) : null;
+  const snapshot = () => store?.snapshot() ?? { userId: currentUserId };
   function abortRequests() {
     for (const request of activeRequests) request.abort();
     activeRequests.clear();
   }
-  function render() { if (!destroyed) panel.render(store.snapshot(), email, busy); }
+  function render() { if (!destroyed) panel.render(snapshot(), email, busy); }
   async function action(work) {
     if (busy || destroyed) return;
     busy = true;
@@ -283,10 +391,10 @@ export async function connectStudyAccount({ area, guestKey, initial, onChange })
     epoch += 1;
     currentUserId = id;
     abortRequests();
-    await store.setUser(id);
+    await store?.setUser(id);
     render();
   }
-  const panel = mountPanel(container, config, {
+  const panel = mountMenu(container, config, {
     signIn(provider) {
       return action(async () => {
         if (!config.providers[provider]) return;
@@ -318,14 +426,14 @@ export async function connectStudyAccount({ area, guestKey, initial, onChange })
     },
     signOut() {
       return action(async () => {
-        const state = store.snapshot();
+        const state = snapshot();
         if (['saving', 'offline', 'conflict', 'error'].includes(state.status) && !confirm('Some progress is not synced. Sign out now? It will stay in this browser’s account cache for your next sign-in.')) return;
         epoch += 1;
         forceGuest = true;
         currentUserId = null;
         email = '';
         abortRequests();
-        await store.setUser(null);
+        await store?.setUser(null);
         const { error } = await supabase.auth.signOut({ scope: 'local' });
         if (error) {
           await supabase.auth.stopAutoRefresh();
@@ -340,11 +448,12 @@ export async function connectStudyAccount({ area, guestKey, initial, onChange })
         }
       });
     },
-  });
-  const unsubscribeStore = store.subscribe(state => {
+  }, Boolean(store));
+  const unsubscribeStore = store?.subscribe(state => {
     render();
     if (onChange) onChange(state.data, state);
   });
+  if (!store) render();
   const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
     queueMicrotask(() => { void setSession(session).catch(() => panel.error('Your account could not be loaded. Please retry.')); });
   });
@@ -356,7 +465,7 @@ export async function connectStudyAccount({ area, guestKey, initial, onChange })
   } catch {
     panel.error('Sign-in status could not be checked. You can keep studying as a guest.');
   }
-  const online = () => { if (store.snapshot().status === 'offline') void store.retry(); };
+  const online = () => { if (store?.snapshot().status === 'offline') void store.retry(); };
   const storageChanged = event => {
     if (event.key === AUTH_STORAGE_KEY && event.newValue === null) {
       forceGuest = true;
@@ -370,11 +479,12 @@ export async function connectStudyAccount({ area, guestKey, initial, onChange })
     destroy() {
       destroyed = true;
       abortRequests();
-      unsubscribeStore();
+      unsubscribeStore?.();
+      panel.destroy();
       authListener.subscription.unsubscribe();
       window.removeEventListener('online', online);
       window.removeEventListener('storage', storageChanged);
-      store.destroy();
+      store?.destroy();
     },
   };
 }
