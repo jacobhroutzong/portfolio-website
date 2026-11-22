@@ -20,7 +20,7 @@ const date = (value: string | null) => value ? new Date(value).toLocaleDateStrin
 ---
 <Base title="About me" description="Jacob Routzong’s work in AI, data, and engineering. Explore recent repositories, interactive projects, and public profiles."><div class="container personal-home">
 <section id="about" class="introduction"><div class="eyebrow">ABOUT ME</div><h1>{profile.name}</h1><p class="lead">I’m building projects in AI, data, and engineering, with a focus on turning ideas in code into applications you can explore.</p><p>This site brings that work together. My recent repositories show what I’m working on, while the Work section collects projects with their own walkthroughs and interactive pages.</p><div class="intro-links">{socialLinks.map(link => <a href={link.url} target="_blank" rel="noopener noreferrer">{link.label} ↗</a>)}<a href="/projects/">Explore my work →</a></div></section>
-<nav class="home-index" aria-label="On this page"><span>ON THIS PAGE</span><a href="#projects">My work ↓</a><a href="#repositories">Repositories ↓</a><a href="/connect/">Contact ↗</a></nav>
+<nav class="home-index" aria-label="On this page"><span>ON THIS PAGE</span><a href="#projects">My work ↓</a><a href="#repositories">Repositories ↓</a></nav>
 <section id="projects" class="home-section">
   <div class="section-heading">
     <div><div class="eyebrow">FROM THE PORTFOLIO</div><h2>My work.</h2></div>

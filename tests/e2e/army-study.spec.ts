@@ -17,7 +17,7 @@ test('study navigation and acronym recall preserve separate saved progress', asy
     localStorage.setItem(ewKey, sentinel);
   }, { phaseKey, ewKey, sentinel });
   const nav = page.getByRole('navigation', { name: 'Study tools' });
-  await expect(nav.getByRole('link')).toHaveText(['Study home', 'EW Study', 'Soldier Study', 'PhaseUp 17E', 'Contact / corrections']);
+  await expect(nav.getByRole('link')).toHaveText(['Study home', 'EW Study', 'Soldier Study', 'PhaseUp 17E']);
   await expect(page.locator('article.destination h3 a')).toHaveText(['EW Study', 'Soldier Study', 'PhaseUp 17E']);
   await nav.getByRole('link', { name: 'PhaseUp 17E', exact: true }).click();
   await expect(page).toHaveURL(/\/study\/17e\/$/);
@@ -237,17 +237,16 @@ test('Soldier Study shares navigation, recall and coverage while keeping guest p
 test('contact lives on its own route and study corrections remain accessible', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('[data-contact-form]')).toHaveCount(0);
-  await expect(page.getByRole('navigation', { name: 'On this page' }).getByRole('link', { name: 'Contact' })).toHaveAttribute('href', '/connect/');
-  const menuToggle = page.getByRole('button', { name: 'Toggle navigation' });
-  if (await menuToggle.isVisible()) await menuToggle.click();
-  const contact = page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Contact' });
-  await expect(contact).toHaveClass(/nav-contact-compact/);
+  await expect(page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Contact' })).toHaveCount(0);
+  const contact = page.getByRole('contentinfo').getByRole('link', { name: 'Contact', exact: true });
+  await expect(contact).toHaveAttribute('href', '/connect/');
   await contact.click();
   await expect(page).toHaveURL(/\/connect\/$/);
   await expect(page.locator('[data-contact-form]')).toHaveCount(1);
   await page.goto('/study/');
   await expect(page.getByRole('heading', { name: 'Help keep Army Study current' })).toHaveCount(0);
-  await page.getByRole('navigation', { name: 'Study tools' }).getByRole('link', { name: 'Contact / corrections' }).click();
+  await expect(page.getByRole('navigation', { name: 'Study tools' }).getByRole('link', { name: /Contact/ })).toHaveCount(0);
+  await page.locator('.study-footer').getByRole('link', { name: 'Contact / report a correction' }).click();
   await expect(page).toHaveURL(/\/connect\/\?topic=army-study/);
   await expect(page.getByRole('heading', { name: 'Report a study correction' })).toBeVisible();
 });
