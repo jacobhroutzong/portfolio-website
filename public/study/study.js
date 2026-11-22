@@ -439,7 +439,7 @@ function initEW(data, sources, progress) {
     addText(card, "p", item.description);
     addText(card, "p", item.verifiedEdition || item.edition, "meta");
     const status = element("p", null, "meta course-card-progress");
-    card.append(status, lessonLink(courseLessons.get(item.id)[0], `Open ${item.code || "foundations"}`));
+    card.append(status, lessonLink(courseLessons.get(item.id)[0], item.kind === "orientation" ? "Start foundations" : `Open ${item.code}`));
     courseCards.set(item.id, { element: card, progress: status });
     catalog.append(card);
   }
