@@ -17,7 +17,7 @@ videos: []
 
 A yield forecast is useful, but it is not a farm plan. The more interesting problem is what happens next: how to divide scarce water, fertilizer, equipment and labor across fields, then decide how much to irrigate when tomorrow's rain is uncertain.
 
-Fieldsense traces that chain. It began as a Georgia Tech ISYE 6501 course project in **2025** and was rebuilt in **November 2026** as a local, executable Python demonstration. [**Explore the animated field replay →**](https://fieldsense.jacobroutzong.dev/)
+Fieldsense traces that chain. It began as a Georgia Tech ISYE 6501 course project in **2025** and was rebuilt in **November 2026** as a local, executable Python demonstration. [**Open the animated Fieldsense lab**](https://fieldsense.jacobroutzong.dev/)
 
 ## From the original paper
 
