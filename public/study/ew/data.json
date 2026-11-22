@@ -35,13 +35,12 @@
     {
       "id": "jp-3-85",
       "title": "JP 3-85 — Joint Electromagnetic Spectrum Operations",
-      "url": "https://www.jcs.mil/Portals/36/Documents/Doctrine/pubs/jp3_85.pdf",
-      "readingUrl": "https://files.trex-arms.com/pdf/joint/legacy/jp/jp_3-85_undated.pdf",
-      "readingNote": "Verified 148-page public mirror of the 22 May 2020 Joint Staff publication.",
+      "url": "https://files.trex-arms.com/pdf/joint/legacy/jp/jp_3-85_undated.pdf",
       "edition": "22 May 2020",
       "locator": "Chapters I–IV and Appendices A–H and J",
-      "access": "Joint Staff PDF with a verified public mirror",
-      "note": "The course follows the 22 May 2020 text. Two U.S. Army publications cite a March 2026 revision. Its public text and outline could not be verified."
+      "access": "Verified third-party reading copy of the Joint Staff publication",
+      "note": "The course follows the 22 May 2020 text. Two U.S. Army publications cite a March 2026 revision. Its public text and outline could not be verified.",
+      "linkNote": "The former Joint Staff 2020 PDF returned 404. This 148-page third-party copy matches the 22 May 2020 edition. The cited March 2026 revision remains unverified."
     },
     {
       "id": "atp-3-01-81",
@@ -7000,13 +6999,12 @@
       "id": "jp-3-85",
       "title": "Joint Electromagnetic Spectrum Operations",
       "edition": "22 May 2020",
-      "url": "https://www.jcs.mil/Portals/36/Documents/Doctrine/pubs/jp3_85.pdf",
-      "access": "Joint Staff PDF with a verified public mirror",
+      "url": "https://files.trex-arms.com/pdf/joint/legacy/jp/jp_3-85_undated.pdf",
+      "access": "Verified third-party reading copy of the Joint Staff publication",
       "note": "The course follows the 22 May 2020 text. Two U.S. Army publications cite a March 2026 revision. Its public text and outline could not be verified.",
       "locator": "Chapters I–IV and Appendices A–H and J",
       "code": "JP 3-85",
-      "readingUrl": "https://files.trex-arms.com/pdf/joint/legacy/jp/jp_3-85_undated.pdf",
-      "readingNote": "Verified 148-page public mirror of the 22 May 2020 Joint Staff publication."
+      "linkNote": "The former Joint Staff 2020 PDF returned 404. This 148-page third-party copy matches the 22 May 2020 edition. The cited March 2026 revision remains unverified."
     },
     {
       "id": "atp-3-01-81",
