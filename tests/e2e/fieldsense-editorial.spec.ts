@@ -52,7 +52,7 @@ test('Fieldsense case study quotes the original paper without claiming field dep
   await expect(page.getByRole('heading', { name: 'Reading the parameters' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'How the original proposal was intended to save money' })).toBeVisible();
   await expect(page.getByText(/Cheaper than Tableau, saves 650\$ a month/)).toBeVisible();
-  await expect(page.getByText(/unverified Fieldsense measurements/)).toBeVisible();
+  await expect(page.getByText(/not independently verified Fieldsense measurements/)).toBeVisible();
   await expect(page.getByRole('link', { name: 'Live demo' })).toHaveAttribute('href', 'https://fieldsense.jacobroutzong.dev/');
 });
 
