@@ -27,8 +27,6 @@ h2 { font-family:Georgia,serif; font-weight:400; font-size:33px; letter-spacing:
 .button.primary { background:var(--text); color:var(--bg); }
 @media(max-width:760px) { h2 { font-size:27px; } .brand-name { display:block; font-size:16px; } }
 
-/* Dedicated contact route: compact header action, accessible in the mobile menu. */
-#navigation > a.nav-contact-compact { display:inline-flex; align-items:center; justify-content:center; padding:6px 11px; min-height:34px; border:1px solid var(--border-strong); border-radius:999px; background:var(--bg-elevated); font-size:11px; line-height:1.25; }
-#navigation > a.nav-contact-compact:hover { border-color:var(--accent); color:var(--accent); }
-#navigation > a.nav-contact-compact[aria-current="page"] { background:var(--accent-deep); color:var(--accent); box-shadow:none; }
-@media(max-width:760px) { #navigation > a.nav-contact-compact { align-self:flex-start; min-height:44px; padding:11px 14px; font-size:12px; } }
+/* Contact remains on its dedicated route, with a discreet footer credits link. */
+.site-footer a.footer-contact { color:var(--muted); font-size:inherit; text-decoration:underline; text-underline-offset:3px; }
+.site-footer a.footer-contact:hover,.site-footer a.footer-contact[aria-current="page"] { color:var(--accent); }
