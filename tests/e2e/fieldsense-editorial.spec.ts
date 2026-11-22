@@ -17,6 +17,9 @@ test('Fieldsense editorial lab keeps the original paper distinct from the record
   await expect(page.getByText(/MDP scores are estimated future rewards/)).toBeVisible();
   await page.getByText('What do the resource parameters mean?').click();
   await expect(page.getByText(/One of three illustrative resource-intensity choices/)).toBeVisible();
+  await expect(page.locator('.fs-water-balance-example')).toContainText('7 + 5 + 6 − 5.06 = 12.94 mm');
+  await expect(page.locator('.fs-economics')).toContainText('300 m³');
+  await expect(page.locator('.fs-economics-quote')).toContainText('This system was set up on water savings');
   await expect(page.locator('.fs-origin-paper blockquote'))
     .toContainText('The data input to the system is crucial');
   await expect(page.locator('link[href="/media/fieldsense/fieldsense-editorial.css"]')).toHaveCount(1);
@@ -47,6 +50,9 @@ test('Fieldsense case study quotes the original paper without claiming field dep
   await expect(page.getByText(/Weather data; temperature, rainfall, and humidity/)).toBeVisible();
   await expect(page.getByText(/Crop data; crop type, seed variety, planting date/)).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Reading the parameters' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'How the original proposal was intended to save money' })).toBeVisible();
+  await expect(page.getByText(/Cheaper than Tableau, saves 650\$ a month/)).toBeVisible();
+  await expect(page.getByText(/not independently verified Fieldsense measurements/)).toBeVisible();
   await expect(page.getByRole('link', { name: 'Live demo' })).toHaveAttribute('href', 'https://fieldsense.jacobroutzong.dev/');
 });
 
