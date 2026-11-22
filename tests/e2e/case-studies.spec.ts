@@ -43,6 +43,23 @@ test('Apex and Decision are startups and all displayed project titles are one wo
   }
 });
 
+test('Marqyra appears once in Businesses + Startups and links to the owner-only workspace', async ({ page }) => {
+  const path = '/projects/marqyra/';
+  for (const route of ['/', '/projects/']) {
+    await page.goto(route);
+    const listing = route === '/' ? page.locator('#projects') : page.getByRole('main');
+    const card = listing.getByRole('link', { name: 'Explore Marqyra →' });
+    await expect(listing.locator('a[href="' + path + '"]')).toHaveCount(1);
+    await expect(listing.getByRole('region', { name: 'Businesses + Startups' }).getByRole('link', { name: 'Explore Marqyra →' })).toHaveCount(1);
+    await card.click();
+    await expect(page).toHaveURL(path);
+    await expect(page.getByRole('heading', { name: 'Marqyra', level: 1 })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Open Marqyra (owner-only)' }))
+      .toHaveAttribute('href', 'https://marqyra.jacobroutzong.dev/');
+    await expect(page.locator('main iframe, main a[href*="github.com/jacobhroutzong/marqyra"]')).toHaveCount(0);
+  }
+});
+
 test('Muster has one Research + Fun Projects card and a public app link', async ({ page }) => {
   const path = '/projects/muster/';
   for (const route of ['/', '/projects/']) {
@@ -135,11 +152,13 @@ test('historical Recursa Studio retains its two navigable research areas', async
   await expect(page).toHaveURL(/\/projects\/recursa\/$/);
 });
 
-test('Axiom Studio is featured and Q-SPECTRA remains an independent case study', async ({ page }) => {
+test('Axiom Studio is listed and Q-SPECTRA remains an independent case study', async ({ page }) => {
   const optimization = '/labs/scientific-systems/axiom-studio/';
   const quantum = '/projects/q-spectra/';
   for (const listing of ['/', '/projects/']) {
     await page.goto(listing);
+    const research = page.getByRole('region', { name: 'Research + Fun Projects' });
+    await research.getByRole('button', { name: /Show \d+ more projects/ }).click();
     const selected = page.locator('article.selected-card');
     const axiom = selected.filter({ has: page.getByRole('heading', { name: 'Axiom', exact: true }) });
     await expect(axiom).toHaveCount(1);
