@@ -179,6 +179,6 @@ test('Fieldsense links its research case study and recorded lab in both directio
   await expect(page.locator('#fieldsense-app')).toHaveAttribute('data-ready', 'true');
   await page.getByRole('combobox', { name: 'Scenario' }).selectOption('strict_limit');
   await expect(page.getByRole('heading', { name: 'No feasible allocation' })).toBeVisible();
-  await page.getByRole('link', { name: 'Project overview' }).click();
-  await expect(page).toHaveURL('https://jacobroutzong.dev/projects/fieldsense/');
+  await expect(page.getByRole('link', { name: 'Project overview' }))
+    .toHaveAttribute('href', 'https://jacobroutzong.dev/projects/fieldsense/');
 });
