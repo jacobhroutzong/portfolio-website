@@ -21,13 +21,21 @@ Fieldsense traces that chain. It began as a Georgia Tech ISYE 6501 course projec
 
 ## From the original paper
 
-The proposal named three analytics methods, not three unrelated dashboards. In *Part 2 (Models Defining)*, I wrote:
+<div class="fs-paper-passage">
+  <p>The proposal gave the allocator a whole-farm decision. It would choose a bundle for each field while sharing a limited pool of resources.</p>
+  <figure>
+    <blockquote>“To best allocate resources, we will implement Mixed-Integer Linear Programming, a model well suited for allocation problems.”</blockquote>
+    <figcaption><cite>ISYE 6501 · Part 2, Models Defining · 2025</cite></figcaption>
+  </figure>
+</div>
 
-> “To best allocate resources, we will implement Mixed-Integer Linear Programming, a model well suited for allocation problems.”
-
-The same section describes the irrigation component:
-
-> “We will use Markov Chain Decision Process to prescribe optimal irrigation actions (when/where and how much to water) using probabilistic models of weather and soil states.”
+<div class="fs-paper-passage">
+  <p>The irrigation model addressed a different timescale. Each field would use its assigned water over a week of uncertain weather.</p>
+  <figure>
+    <blockquote>“We will use Markov Chain Decision Process to prescribe optimal irrigation actions (when/where and how much to water) using probabilistic models of weather and soil states.”</blockquote>
+    <figcaption><cite>ISYE 6501 · Part 2, Models Defining · 2025</cite></figcaption>
+  </figure>
+</div>
 
 These are **verbatim excerpts from the original 2025 submission**. They describe intended methods, not independently verified agricultural deployments. The original report also discussed sensors and a larger AWS/Snowflake stack; those integrations are not part of the current working demonstration.
 

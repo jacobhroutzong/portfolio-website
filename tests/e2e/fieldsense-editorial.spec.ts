@@ -34,3 +34,22 @@ test('Fieldsense case study quotes the original paper without claiming field dep
   await expect(page.getByText(/verbatim excerpts from the original 2025 submission/i)).toBeVisible();
   await expect(page.getByRole('link', { name: 'Live demo' })).toHaveAttribute('href', 'https://fieldsense.jacobroutzong.dev/');
 });
+
+test('field selection and daily water cues work with a keyboard and reduced motion', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/projects/fieldsense/lab/');
+  const picker = page.getByRole('group', { name: 'Inspect a field' });
+  await picker.getByRole('button', { name: /North Meadow/ }).focus();
+  await page.keyboard.press('Tab');
+  await page.keyboard.press('Enter');
+  await expect(page.locator('#fs-field-name')).toHaveText('East Acre');
+  await expect(picker.getByRole('button', { name: /East Acre/ })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('#fs-play')).toBeDisabled();
+  await page.locator('#fs-day').focus();
+  await page.keyboard.press('End');
+  await expect(page.locator('#fs-day-chip')).toHaveText('Day 7 / 7');
+  const watering = page.locator('#fs-zone-0.fs-watering');
+  await expect(watering.locator('.fs-pipe-flow')).toHaveCSS('opacity', '1');
+  await expect(watering.locator('.fs-spray')).not.toHaveCSS('opacity', '0');
+  await expect(watering.locator('.fs-spray path')).toHaveCSS('animation-name', 'none');
+});

@@ -45,52 +45,94 @@
   const points = corners => corners.map(p => p.map(n => n.toFixed(1)).join(',')).join(' ');
   const rect = (u, v, w, h, z = 0) => [iso(u, v, z), iso(u + w, v, z), iso(u + w, v + h, z), iso(u, v + h, z)];
   const shapes = [{ u: 10, v: 13, w: 73, h: 70 }, { u: 106, v: 13, w: 73, h: 151 }, { u: 10, v: 104, w: 73, h: 71 }];
-  const labelPositions = [{ x: 325, y: 34, cx: 435, cy: 138 }, { x: 626, y: 316, cx: 668, cy: 285 }, { x: 58, y: 341, cx: 227, cy: 284 }];
+  // The parcel plan and the replay share the same three schematic field footprints.
+  const labelPositions = [
+    { x: 180, y: 12, end: [350, 71] }, { x: 640, y: 356, end: [660, 356] },
+    { x: 19, y: 363, end: [170, 363] }
+  ];
 
   function crops(s, index) {
-    let out = '';
-    const colors = ['#d5cb78', '#bdd485', '#a9d293'];
-    for (let u = s.u + 8; u < s.u + s.w - 5; u += 11) {
-      out += `<path d="${rect(u - 3, s.v + 5, 5, s.h - 10).map((p, i) => `${i ? 'L' : 'M'}${p.join(' ')}`).join(' ')}Z" fill="#132f2290"/>`;
-      for (let v = s.v + 9; v < s.v + s.h - 5; v += 12) {
-        const p = iso(u, v, 4);
-        const height = index === 1 ? 13 : index === 0 ? 10 : 7;
-        out += `<g transform="translate(${p.join(' ')})" stroke="${colors[index]}" stroke-width="1.5" fill="none"><path d="M0 1V-${height}M0 -3Q-5 -10 -6 -5M0 -5Q5 -12 6 -7"/>${index === 0 ? '<path d="M0 -8l-3 -3M0 -10l3 -3"/>' : ''}</g>`;
+    const symbols = ['wheat', 'corn', 'soy'];
+    let rows = '';
+    for (let u = s.u + 8; u < s.u + s.w - 4; u += 9) {
+      const start = iso(u, s.v + 4, 4), end = iso(u, s.v + s.h - 4, 4);
+      rows += `<path d="M${start}L${end}" stroke="#293d2b" stroke-width="3" opacity=".7"/>`;
+      for (let v = s.v + 8; v < s.v + s.h - 4; v += 10) {
+        const [x, y] = iso(u, v, 4);
+        rows += `<use href="#fs-${symbols[index]}" x="${x}" y="${y}"/>`;
       }
     }
-    return out;
+    return rows;
+  }
+
+  function terrainFace(top, edge, fill) {
+    const a = top[edge], b = top[2];
+    const band = (depth, thickness, color) =>
+      `<polygon fill="${color}" points="${points([[a[0], a[1]+depth], [b[0], b[1]+depth], [b[0], b[1]+depth+thickness], [a[0], a[1]+depth+thickness]])}"/>`;
+    return band(0, 29, fill) + band(0, 4, '#657653') + band(8, 2, '#92785c') + band(16, 3, '#82664d');
   }
 
   function drawFarm() {
     const r = result();
     if (!r.feasible) return;
     const terrain = rect(0, 0, 192, 192);
-    const bottom = terrain.map(([x, y]) => [x, y + 23]);
-    let svg = `<title id="fs-farm-title">Three-field irrigation replay</title><desc id="fs-farm-desc">Schematic farm, not to scale. The field inspector gives the selected day’s irrigation, rain, soil-water storage and remaining allocation.</desc><defs><linearGradient id="fs-ground" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#55734a"/><stop offset="1" stop-color="#2b4c35"/></linearGradient><linearGradient id="fs-tank" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#63949b"/><stop offset=".5" stop-color="#a6d1cd"/><stop offset="1" stop-color="#436d78"/></linearGradient><radialGradient id="fs-map-glow"><stop stop-color="#557944" stop-opacity=".24"/><stop offset="1" stop-color="#557944" stop-opacity="0"/></radialGradient></defs><ellipse cx="432" cy="280" rx="385" ry="220" fill="url(#fs-map-glow)"/><ellipse cx="438" cy="356" rx="310" ry="91" fill="#071a14" opacity=".35"/><path d="M${terrain[3].join(' ')} L${terrain[2].join(' ')} L${bottom[2].join(' ')} L${bottom[3].join(' ')}Z" fill="#66543b"/><path d="M${terrain[1].join(' ')} L${terrain[2].join(' ')} L${bottom[2].join(' ')} L${bottom[1].join(' ')}Z" fill="#4b4530"/><polygon points="${points(terrain)}" fill="url(#fs-ground)" stroke="#7c9361" stroke-width="1.2"/><polygon points="${points(rect(88, 0, 12, 192))}" fill="#a69b76" opacity=".9"/><polygon points="${points(rect(0, 85, 97, 12))}" fill="#a69b76" opacity=".9"/><path d="M${iso(94, 1).join(' ')}L${iso(94, 190).join(' ')}M${iso(0,91).join(' ')}L${iso(94,91).join(' ')}" stroke="#c9bf99" stroke-width="1" stroke-dasharray="2 8" opacity=".65"/>`;
-
+    const defs = `<defs>
+      <linearGradient id="fs-ground" x2="1" y2="1" gradientUnits="objectBoundingBox"><stop stop-color="#899474"/><stop offset="1" stop-color="#50644f"/></linearGradient>
+      <linearGradient id="fs-tank"><stop stop-color="#375f60"/><stop offset=".33" stop-color="#a4c4b1"/><stop offset=".65" stop-color="#719492"/><stop offset="1" stop-color="#365955"/></linearGradient>
+      <pattern id="fs-loam" width="13" height="9" patternUnits="userSpaceOnUse"><path d="m1 2 3 1m4 4 2-1" stroke="#e4d5ae" opacity=".34" stroke-width=".9"/></pattern>
+      <g id="fs-wheat" fill="#d3b770" stroke="#f2dc94" stroke-width=".8"><path d="M0 0 1-10M1-6-2-9M1-8 4-11"/><path d="m1-6-3-2-1-3 3 2zm0-2 4-5-1 4z"/></g>
+      <g id="fs-corn" fill="#95b281" stroke="#c3ce8b" stroke-width=".8"><path d="M0 0V-12M0-3Q-7-5-6-10Q-1-9 0-3ZM0-5Q2-13 7-12Q6-7 0-5Z"/></g>
+      <g id="fs-soy" fill="#a9c6a0" stroke="#314c38" stroke-width=".75"><path d="M0 0v-6"/><ellipse cx="-2.4" cy="-4" rx="3.6" ry="2"/><ellipse cx="2.3" cy="-6" rx="3" ry="2.4"/></g>
+    </defs>`;
+    let svg = `<title id="fs-farm-title">Three-field irrigation replay</title>
+      <desc id="fs-farm-desc">The schematic shows the three plots and their water supply. The field inspector reports irrigation, rain, soil-water storage and remaining allocation.</desc>
+      ${defs}<ellipse cx="432" cy="367" rx="306" ry="83" fill="#051812" opacity=".55"/>
+      ${terrainFace(terrain, 3, '#705c46')}${terrainFace(terrain, 1, '#584d3f')}
+      <polygon points="${points(terrain)}" fill="url(#fs-ground)" stroke="#bbc39a"/>
+      <polygon points="${points(terrain)}" fill="url(#fs-loam)"/>
+      <polygon points="${points(rect(88, 0, 12, 192))}" fill="#baad8d"/>
+      <polygon points="${points(rect(0, 85, 97, 12))}" fill="#baad8d"/>`;
+    let labels = '';
     shapes.forEach((s, index) => {
       const f = r.allocations[index];
-      const top = rect(s.u, s.v, s.w, s.h, 3);
-      const lower = top.map(([x, y]) => [x, y + 5]);
-      svg += `<g id="fs-zone-${index}" class="fs-zone${state.field === index ? ' fs-selected' : ''}"><polygon points="${points([top[1], top[2], lower[2], lower[1]])}" fill="#3f4a2b"/><polygon points="${points([top[3], top[2], lower[2], lower[3]])}" fill="#53603b"/><polygon id="fs-soil-${index}" class="fs-field-shape" data-field="${index}" points="${points(top)}" fill="${['#556b37','#486b3b','#527644'][index]}" stroke="#9ca77a" stroke-width="1.2"/><g class="fs-crop-rows">${crops(s, index)}</g><polygon class="fs-selection-ring" points="${points(rect(s.u - 2, s.v - 2, s.w + 4, s.h + 4, 4))}"/>`;
       const center = iso(s.u + s.w / 2, s.v + s.h / 2, 4);
-      const origin = iso(94, 174, 6);
-      const cross = iso(94, s.v + s.h / 2, 5);
-      const pipe = `M${origin.join(' ')}L${cross.join(' ')}L${center.join(' ')}`;
-      svg += `<path class="fs-pipe" d="${pipe}"/><path class="fs-pipe-flow" d="${pipe}"/><g transform="translate(${center.join(' ')})"><ellipse rx="8" ry="4" fill="#17342b"/><path d="M0 0v-14m-5 0h10" stroke="#c5d4b8" stroke-width="3"/><g class="fs-spray" stroke="#bce9e3" stroke-width="1.7" fill="none"><path d="M0 -14Q-31 -65 -60 -7M0 -14Q31 -65 60 -7M0 -14Q-13 -58 -29 -17M0 -14Q13 -58 29 -17" stroke-dasharray="2 4"/><ellipse rx="61" ry="25" cy="-2" fill="#a0d1d1" opacity=".12" stroke="none"/></g></g>`;
+      const pipe = `M${iso(102,183,6)}L${iso(94,183,6)}L${iso(94,s.v+s.h/2,5)}L${center}`;
+      // Chamfer the turning space at each corner and keep the whole plot selectable.
+      const footprint = [[4,0],[s.w-4,0],[s.w,4],[s.w,s.h-4],[s.w-4,s.h],[4,s.h],[0,s.h-4],[0,4]];
+      const outline = points(footprint.map(([u,v]) => iso(s.u+u,s.v+v,3)));
+      const rain = Array.from({ length: 16 }, (_, j) => {
+        const [x, y] = iso(s.u+12+(j%4)*14, s.v+12+Math.floor(j/4)*(s.h-24)/4, 17);
+        return `<path class="fs-rain-drop" d="M${x} ${y-18}v11" style="animation-delay:-${j%7*.13}s"/>`;
+      }).join('');
+      svg += `<g id="fs-zone-${index}" data-field="${index}" class="fs-zone">
+        <polygon points="${outline}" transform="translate(0 4)" fill="#314334"/>
+        <polygon id="fs-soil-${index}" class="fs-field-shape" points="${outline}" stroke="#a4ad84"/>
+        <polygon points="${outline}" fill="url(#fs-loam)"/>
+        <g class="fs-crop-rows">${crops(s, index)}</g>
+        <polygon class="fs-selection-ring" points="${outline}"/>
+        <g pointer-events="none"><path class="fs-pipe" d="${pipe}"/><path class="fs-pipe-flow" d="${pipe}"/>
+        <g transform="translate(${center})"><ellipse rx="8" ry="4" fill="#15392f"/>
+          <path d="M0 0v-13m-5 0h10" fill="none" stroke="#dde2c6" stroke-width="3"/>
+          <g class="fs-spray" fill="none" stroke="#b5eee1" stroke-width="1.7">
+            <ellipse rx="45" ry="15" fill="#b1ecd9" opacity=".18" stroke="none"/>
+            <path d="M0-13Q-22-44-44-1M0-13Q22-44 44-1M0-13Q-11-34-22-8M0-13Q11-34 22-8" stroke-dasharray="3 3"/>
+          </g>
+        </g><g class="fs-rain-mark" stroke="#b3dfff" stroke-linecap="round">${rain}</g></g>
+      </g>`;
       const p = labelPositions[index];
-      svg += `<path class="fs-label-leader" d="M${p.cx} ${p.cy}L${p.x + 93} ${p.y + 35}"/><g transform="translate(${p.x} ${p.y})" pointer-events="none"><rect class="fs-label-bg" width="218" height="72" rx="7"/><text class="fs-map-name" x="13" y="23">${escape(f.name)}</text><text class="fs-map-info" x="13" y="45">${escape(f.crop)} · ${fmt(f.area_ha,1)} ha</text><text class="fs-map-action" id="fs-map-action-${index}" x="13" y="63"></text></g>`;
-      let rain = '';
-      for (let j = 0; j < 16; j++) {
-        const x = center[0] - 52 + (j % 6) * 20;
-        const y = center[1] - 80 + Math.floor(j / 6) * 20;
-        rain += `<path class="fs-rain-drop" d="M${x} ${y}l-4 11" style="animation-delay:-${(j % 7) * .13}s"/>`;
-      }
-      svg += `<g class="fs-rain-mark" stroke="#9ad2ef" stroke-width="2" stroke-linecap="round">${rain}</g></g>`;
+      labels += `<g class="fs-plot-note" pointer-events="none">
+        <path class="fs-label-leader" d="M${center}L${p.end}"/>
+        <g transform="translate(${p.x} ${p.y})"><rect class="fs-label-bg" width="202" height="65" rx="2"/>
+          <text class="fs-map-name" x="10" y="20">${escape(f.name)}</text>
+          <text class="fs-map-info" x="10" y="39">${escape(f.crop)} · ${fmt(f.area_ha,1)} ha</text>
+          <text class="fs-map-action" id="fs-map-action-${index}" x="10" y="56"></text>
+        </g></g>
+        <g class="fs-plot-initial" data-field="${index}" transform="translate(${iso(s.u+13,s.v+10,8)})">
+          <circle r="19"/><text y="8" text-anchor="middle">${escape(f.name[0])}</text></g>`;
     });
     const tank = iso(122, 183, 8);
-    svg += `<g transform="translate(${tank.join(' ')})"><ellipse rx="36" ry="17" cy="14" fill="#193a29"/><path d="M-26 -17v32a26 12 0 0 0 52 0v-32Z" fill="url(#fs-tank)" stroke="#aac7b5"/><ellipse rx="26" ry="12" cy="-17" fill="#c1d2b5" stroke="#a7c5ae"/><ellipse rx="20" ry="8" cy="-17" fill="#284e49"/><rect x="-3" y="-13" width="7" height="27" rx="2" fill="#203e34"/><rect id="fs-tank-level" class="fs-water-level" x="-2" y="-12" width="5" height="25" rx="1"/><path d="M-26 14h-18" stroke="#a6c9be" stroke-width="5"/><text x="40" y="13" fill="#e2ebcd" font-size="13">Allocated water</text><text id="fs-tank-label" x="40" y="31" fill="#c3d6b3" font-family="monospace" font-size="14"></text></g>`;
-    $('fs-farm').innerHTML = svg;
+    svg += `<g transform="translate(${tank.join(' ')})"><ellipse rx="36" ry="17" cy="14" fill="#193a29"/><path d="M-26 -17v32a26 12 0 0 0 52 0v-32Z" fill="url(#fs-tank)" stroke="#aac7b5"/><ellipse rx="26" ry="12" cy="-17" fill="#c1d2b5" stroke="#a7c5ae"/><ellipse rx="20" ry="8" cy="-17" fill="#284e49"/><rect x="-3" y="-13" width="7" height="27" rx="2" fill="#203e34"/><rect id="fs-tank-level" class="fs-water-level" x="-2" y="-12" width="5" height="25" rx="1"/><path d="M-26 14h-18" stroke="#a6c9be" stroke-width="5"/></g>`;
+    $('fs-farm').innerHTML = svg + labels;
   }
 
   function renderModelContext() {
@@ -224,7 +266,7 @@
     ticks.forEach(day=>{content+=`<text x="${x(day)}" y="${height-19}" text-anchor="middle">${day}</text>`;});
     content+=`<text class="fs-chart-unit" x="4" y="13">m³</text><text class="fs-chart-unit" x="${width-margin.right}" y="${height-2}" text-anchor="end">Day</text>`;
     const path=values=>values.slice(0,state.day+1).map((v,i)=>`${i?'L':'M'}${x(i)} ${y(v)}`).join(' ');
-    content+=`<path class="fs-plot-rule" d="${path(rule)}"/><path class="fs-plot-mdp" d="${path(mdp)}"/><line class="fs-chart-cursor" x1="${x(state.day)}" x2="${x(state.day)}" y1="${margin.top}" y2="${height-margin.bottom}"/><circle cx="${x(state.day)}" cy="${y(rule[state.day])}" r="4" fill="#9a612f"/><circle cx="${x(state.day)}" cy="${y(mdp[state.day])}" r="4" fill="#37563c"/>`;
+    content+=`<path class="fs-plot-mdp" d="${path(mdp)}"/><path class="fs-plot-rule" d="${path(rule)}"/><line class="fs-chart-cursor" x1="${x(state.day)}" x2="${x(state.day)}" y1="${margin.top}" y2="${height-margin.bottom}"/><circle cx="${x(state.day)}" cy="${y(rule[state.day])}" r="6" class="fs-rule-point"/><circle cx="${x(state.day)}" cy="${y(mdp[state.day])}" r="3" class="fs-mdp-point"/>`;
     svg.innerHTML=content;
   }
 
