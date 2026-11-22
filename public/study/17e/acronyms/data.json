@@ -743,7 +743,7 @@
     {
       "id": "medevac-atp",
       "title": "ATP 4-02.2, Medical Evacuation",
-      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/56A63282-F1E1-488B-8817-C9E44E3FF4F2-1408535571708/atp4_02x2.pdf",
+      "url": "https://armypubs.army.mil/epubs/DR_pubs/DR_a/pdf/web/ARN17834_ATP%204-02x2%20FINAL%20WEB.pdf",
       "edition": "12 July 2019",
       "locator": "Appendix C, Table C-1"
     },
@@ -755,7 +755,7 @@
       "locator": "Chapters 1, 2, 6 and 7",
       "catalogUrl": "https://armypubs.army.mil/ProductMaps/PubForm/Details.aspx?PUB_ID=1032023",
       "catalogLabel": "Current Ranger Handbook catalog record",
-      "linkNote": "These citations use the 26 April 2017 reading edition. APD lists a 19 September 2025 edition; its relevant passages still need reconciliation. If the older reading link does not open, consult the current catalog and check the edition."
+      "linkNote": "These citations use the 26 April 2017 edition. The older Army reading URL could not be reached. APD provides the 19 September 2025 edition, whose cited passages still need reconciliation."
     },
     {
       "id": "infantry",
@@ -769,7 +769,8 @@
       "title": "GTA 07-71-001, Combat Skills for Small Unit Leaders",
       "url": "https://api.army.mil/e2/c/downloads/2023/01/31/c0ff0df4/gta-07-71-001-combat-skills-for-small-unit-leaders-apr-18-public.pdf",
       "edition": "April 2018",
-      "locator": "ACE Report"
+      "locator": "ACE Report",
+      "linkNote": "Army indexed text supports the ACE citation. The directly retrieved PDF displayed placeholder imprint fields. The Army bibliography identifies GTA 07-71-001 as April 2018."
     },
     {
       "id": "pace-army",
@@ -802,9 +803,10 @@
     {
       "id": "ew-joint",
       "title": "JP 3-85, Joint Electromagnetic Spectrum Operations",
-      "url": "https://www.jcs.mil/Portals/36/Documents/Doctrine/pubs/jp3_85.pdf",
+      "url": "https://files.trex-arms.com/pdf/joint/legacy/jp/jp_3-85_undated.pdf",
       "edition": "22 May 2020",
-      "locator": "Chapter I and glossary"
+      "locator": "Chapter I and glossary",
+      "linkNote": "Verified third-party copy of the 22 May 2020 Joint Staff publication. The former Joint Staff PDF returned 404."
     },
     {
       "id": "sports-replacement",
@@ -816,7 +818,7 @@
       "id": "c-uas-atp",
       "title": "ATP 3-01.81 — Counter-Unmanned Aircraft System (C-UAS) Operations",
       "edition": "23 May 2025",
-      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/B6A1625F-6975-4367-82C8-E67E901218C7-1753193840461/ATP3_01x81.pdf",
+      "url": "https://armypubs.army.mil/epubs/DR_pubs/DR_a/ARN43877-ATP_3-01.81-000-WEB-1.pdf",
       "locator": "Title and introduction"
     }
   ],

@@ -13,7 +13,14 @@ function sourceRegistry(data) {
     assert.ok(nonempty(source.title));
     const url = new URL(source.url);
     assert.equal(url.protocol, 'https:');
-    assert.ok(url.hostname.endsWith('.mil'), `expected official source: ${source.url}`);
+    const isJp385ReadingCopy = ['jp-3-85', 'ew-joint'].includes(source.id)
+      && url.href === 'https://files.trex-arms.com/pdf/joint/legacy/jp/jp_3-85_undated.pdf';
+    if (isJp385ReadingCopy) {
+      assert.equal(source.edition, '22 May 2020');
+      assert.match(source.linkNote, /third-party/i);
+    } else {
+      assert.ok(url.hostname.endsWith('.mil'), `expected official source: ${source.url}`);
+    }
   }
   return ids;
 }
