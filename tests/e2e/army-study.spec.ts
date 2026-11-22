@@ -16,14 +16,19 @@ test('study navigation and acronym recall preserve separate saved progress', asy
   expect(await page.evaluate(key => localStorage.getItem(key), acronymKey)).toBeNull();
 
   await page.getByLabel('Search the reference').fill('MARCH');
+  await page.getByLabel('Category', { exact: true }).selectOption('Casualty care');
   await expect(page.locator('#reference-results details')).toHaveCount(1);
   await page.locator('#reference-results summary').click();
   await expect(page.locator('#reference-results')).toContainText('Hypothermia/Head injury');
   await expect(page.locator('#reference-results a').first()).toHaveAttribute('href', /^https:\/\/.+\.mil\//);
   await page.getByLabel('Search the reference').fill('DART');
+  await page.getByLabel('Category', { exact: true }).selectOption('');
   await expect(page.locator('#reference-results details')).toHaveCount(0);
   await expect(page.locator('#reference-notices')).toContainText('DART');
 
+  for (let attempts = 0; attempts < 36 && !(await page.locator('#card-prompt').innerText()).includes('nine-line MEDEVAC'); attempts++) {
+    await page.getByRole('button', { name: 'Skip card', exact: true }).click();
+  }
   await expect(page.locator('#card-prompt')).toContainText('nine-line MEDEVAC');
   await expect(page.locator('#card-answer')).toBeEmpty();
   await expect(page.locator('#card-ratings')).toBeHidden();
