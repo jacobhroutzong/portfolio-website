@@ -15,8 +15,11 @@ const credentialRules = [
 ];
 const mapDirective = /(?:\/\/[#@]|\/\*[#@])\s*sourceMappingURL\s*=/i;
 const privatePath = /(?:^|\/)(?:\.wrangler|migrations|downloads|node_modules)(?:\/|$)|(?:^|\/)\.env(?:\.|$)|^(?:equityscout|ascent|apps\/(?:equityscout|lintel|leverline|crucible))(?:\/|$)|\.(?:zip|tar|gz|sql|db|sqlite3?|pem|pfx|jsonl|map|parquet|xlsx?|docx?|bak)$/i;
-// This reviewed schema may be versioned in GitHub, but never published as an asset.
-const repositorySchemaExceptions = new Set(['supabase/migrations/20261122184222_army_study_progress.sql']);
+// These reviewed migrations may be versioned in GitHub, but never published as assets.
+const repositorySchemaExceptions = new Set([
+  'supabase/migrations/20261122184222_army_study_progress.sql',
+  'supabase/migrations/20261122200421_army_study_progress_api.sql',
+]);
 const privateSource = /^(?:src\/lib\/(?:equityscout|ascent|decision-|tunera)|src\/pages\/(?:apps\/|ascent\/|projects\/decision-intelligence-engine\/workbench)|functions\/api\/(?:equityscout|tunera|crucible)|tests\/(?:scout|ascent|tunera|fixtures\/))|^public\/(?:equityscout|ascent|downloads|apps\/(?:equityscout|lintel|leverline|crucible))(?:\/|$)/i;
 const generated = /^media\/generated\/(.+)-([1-9]\d{0,3})\.webp$/;
 const astroBundle = /^_astro\/[\w./@()-]+\.(?:js|css|woff2?|ttf|svg|png|webp)$/;

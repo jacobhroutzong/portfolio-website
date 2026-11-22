@@ -100,6 +100,7 @@ function failure(code, message) {
 }
 
 export function createProgressTransport(supabase, currentUser, activeRequests = new Set()) {
+  const progress = supabase.schema('army_study_api');
   async function request(userId, operation) {
     if (!userId || currentUser() !== userId) throw failure('CANCELLED', 'The study account changed.');
     const controller = new AbortController();
@@ -117,7 +118,7 @@ export function createProgressTransport(supabase, currentUser, activeRequests = 
   return {
     read(area, userId) {
       return request(userId, async signal => {
-        const { data, error } = await supabase.from('army_study_progress')
+        const { data, error } = await progress.from('army_study_progress')
           .select('revision,payload,reset').eq('user_id', userId).eq('area', area).abortSignal(signal).maybeSingle();
         if (error) throw failure(error.code || 'READ_FAILED', 'Account progress could not be loaded.');
         return data;
@@ -127,9 +128,9 @@ export function createProgressTransport(supabase, currentUser, activeRequests = 
       return request(userId, async signal => {
         let query;
         if (expectedRevision === 0) {
-          query = supabase.from('army_study_progress').insert({ user_id: userId, area, revision: 1, payload, reset });
+          query = progress.from('army_study_progress').insert({ user_id: userId, area, revision: 1, payload, reset });
         } else {
-          query = supabase.from('army_study_progress').update({ revision: expectedRevision + 1, payload, reset })
+          query = progress.from('army_study_progress').update({ revision: expectedRevision + 1, payload, reset })
             .eq('user_id', userId).eq('area', area).eq('revision', expectedRevision);
         }
         const { data, error } = await query.select('revision,payload,reset').abortSignal(signal).maybeSingle();

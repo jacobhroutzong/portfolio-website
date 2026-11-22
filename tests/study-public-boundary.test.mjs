@@ -5,7 +5,7 @@ import { copyFile, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promi
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 
-const approvedSchema = 'supabase/migrations/20261122184222_army_study_progress.sql';
+const approvedSchema = 'supabase/migrations/20261122200421_army_study_progress_api.sql';
 const checker = new URL('../scripts/check-public-boundary.mjs', import.meta.url);
 
 async function fixture(t, files) {
@@ -32,7 +32,7 @@ function check(root, mode) {
   return spawnSync(process.execPath, ['scripts/check-public-boundary.mjs', mode], { cwd: root, encoding: 'utf8' });
 }
 
-test('repository permits only the individually reviewed study migration', async t => {
+test('repository permits an individually reviewed study migration', async t => {
   const root = await fixture(t, { [approvedSchema]: '-- Public schema, no credentials.\n' });
   assert.equal(check(root, 'repository').status, 0);
 

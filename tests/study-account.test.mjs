@@ -46,7 +46,18 @@ function fakeClient(result) {
     abortSignal(signal) { calls.push(['signal', signal]); return this; },
     maybeSingle() { return typeof result === 'function' ? result() : Promise.resolve(result); },
   };
-  return { calls, from(table) { calls.push(['from', table]); return query; } };
+  return {
+    calls,
+    schema(name) {
+      calls.push(['schema', name]);
+      return {
+        from(table) {
+          calls.push(['from', table]);
+          return query;
+        },
+      };
+    },
+  };
 }
 
 test('transport scopes every query to the expected account and uses revision-checked updates', async () => {
@@ -54,6 +65,8 @@ test('transport scopes every query to the expected account and uses revision-che
   const client = fakeClient({ data: row, error: null });
   const transport = createProgressTransport(client, () => 'user-a');
   await transport.read('ew', 'user-a');
+  assert.deepEqual(client.calls[0], ['schema', 'army_study_api']);
+  assert.deepEqual(client.calls[1], ['from', 'army_study_progress']);
   assert.ok(client.calls.some(call => call[0] === 'eq' && call[1] === 'user_id' && call[2] === 'user-a'));
   assert.ok(client.calls.some(call => call[0] === 'eq' && call[1] === 'area' && call[2] === 'ew'));
   client.calls.length = 0;
@@ -83,7 +96,7 @@ test('transport refuses a foreign account before issuing a request and discards 
   const activeRequests = new Set();
   const transport = createProgressTransport(client, () => user, activeRequests);
   await assert.rejects(transport.read('ew', 'user-b'), { code: 'CANCELLED' });
-  assert.equal(client.calls.length, 0);
+  assert.deepEqual(client.calls, [['schema', 'army_study_api']]);
   const request = transport.read('ew', 'user-a');
   assert.equal(activeRequests.size, 1);
   user = 'user-b';

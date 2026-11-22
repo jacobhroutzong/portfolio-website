@@ -22,9 +22,13 @@ Production and unrelated preview builds emit a small guest-only module. The acco
 
 `supabase/migrations/20261122184222_army_study_progress.sql` is an additive migration applied to staging only. It creates `public.army_study_progress`, keyed by `(user_id, area)`, with owner-scoped SELECT/INSERT/UPDATE policies and a revision guard. Anonymous access is revoked. Clients cannot change ownership or area, skip revisions, or delete the row used to preserve a reset revision. The table limits payload shape and size.
 
-The exact migration may be versioned in this repository but is forbidden in `public/` and built output. All other existing private-path and credential rules remain. The migration does not alter shared Auth settings or existing application tables.
+The follow-up migration adds `army_study_api.army_study_progress` as an updatable security-invoker view. It exposes only the five columns the progress transport uses. The authenticated role receives view reads and inserts and may update only revision, payload and reset. The existing base table, RLS, revision guard and foreign key enforce the same rules through the view. Both reviewed migrations are versioned in this repository and excluded from `public/` and built output.
 
-The transactional probe in `scripts/verify-study-progress-rls.mjs` passed against staging. It verified owned writes, two-user isolation, anonymous denial, ownership reassignment denial, stale-save rejection, revision enforcement, reset retention and client-delete denial. It rolled back its two synthetic users and progress rows. Subsequent inspection found no remaining probe users. The security-advisor result had no new Army Study finding.
+For staging, set the Data API exposed schema to `army_study_api` and clear the extra search path. Apply those two settings in a single PostgREST configuration update. The dedicated schema contains only the progress view. The shared Auth configuration and unrelated database objects require no changes. The browser transport explicitly selects this schema on its existing Supabase client.
+
+To roll back, first restore the disabled API configuration (`db_schema` empty, `db_extra_search_path` set to `public, extensions`). Verify the effective disabled state, then revert the branch transport. A compensating migration can drop the view and dedicated schema with `RESTRICT`. All progress rows stay in the base table.
+
+The original transactional probe in `scripts/verify-study-progress-rls.mjs` passed against the staging base table. The probe now exercises the API view before exposure. It verified owned writes, two-user isolation, anonymous denial, ownership reassignment denial, stale-save rejection, revision enforcement, reset retention and client-delete denial. It rolled back its two synthetic users and progress rows. Subsequent inspection found no remaining probe users. The security-advisor result had no new Army Study finding.
 
 ## Provider prerequisites and remaining acceptance
 
@@ -34,7 +38,7 @@ Google uses the existing Marqyra staging OAuth web client. Google returns to `ht
 
 The Google project is in testing mode, and the staging Supabase project has one existing Google-linked user. Use an existing authorized user for live sign-in and cross-device testing. Full account-switch acceptance requires two existing staging users with eligible Google identities.
 
-The browser suite intercepts all Supabase HTTP and uses synthetic session fixtures. Live Google callback, session, and sync checks require an eligible Google browser session. Apple remains gated on verification of an existing Apple Developer team, a primary App ID with Sign in with Apple, a matching Services ID, and usable signing configuration. The Apple Developer resource inventory is behind sign-in, and staging Supabase has no Apple client ID or secret configured.
+The browser suite intercepts all Supabase HTTP and uses synthetic session fixtures. Live Google sign-in, session restoration and sign-out passed on the staging preview. Hosted sync acceptance uses an eligible Google browser session and disposable study progress. Apple remains gated on verification of an existing Apple Developer team, a primary App ID with Sign in with Apple, a matching Services ID, and usable signing configuration. The Apple Developer resource inventory is behind sign-in, and staging Supabase has no Apple client ID or secret configured.
 
 ## Verification commands
 

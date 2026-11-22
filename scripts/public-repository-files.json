@@ -297,6 +297,7 @@
   "src/styles/global.css",
   "src/styles/scientific-systems.css",
   "supabase/migrations/20261122184222_army_study_progress.sql",
+  "supabase/migrations/20261122200421_army_study_progress_api.sql",
   "tests/army-study.test.mjs",
   "tests/causarium.test.mjs",
   "tests/challenges.test.mjs",

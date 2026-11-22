@@ -60,7 +60,13 @@ async function mockProgressService(page: Page) {
     if (url.pathname !== '/rest/v1/army_study_progress') {
       await json(route, { message: 'Unexpected mocked service request.' }, 500); return;
     }
-    const token = (await request.allHeaders()).authorization?.replace(/^Bearer /, '') || '';
+    const headers = await request.allHeaders();
+    const profileHeader = method === 'GET' ? 'accept-profile' : 'content-profile';
+    if (headers[profileHeader] !== 'army_study_api') {
+      await json(route, { message: 'Expected the Army Study API schema profile.' }, 406);
+      return;
+    }
+    const token = headers.authorization?.replace(/^Bearer /, '') || '';
     let tokenUser = '';
     try { tokenUser = JSON.parse(Buffer.from(token.split('.')[1], 'base64url').toString()).sub; } catch { /* denied below */ }
     const body = method === 'GET' ? {} : request.postDataJSON() as Payload;
