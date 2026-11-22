@@ -720,10 +720,12 @@
   "sources": [
     {
       "id": "jts-nursing",
-      "title": "JTS Clinical Practice Guideline: Nursing Interventions in Prolonged Casualty Care",
-      "url": "https://jts.health.mil/assets/docs/cpgs/Nursing_Interventions_PCC_08_July_2025_ID70.pdf",
+      "title": "JTS Clinical Practice Guideline: Nursing Interventions, Wound Care, and Splint Management in Prolonged Casualty Care",
+      "url": "https://jts.health.mil/assets/docs/cpgs/Nursing_Interventions_PCC_08_July_2025_ID70_v1.1.pdf",
       "edition": "8 July 2025",
-      "locator": "MARCH-PAWS assessment"
+      "locator": "Assessment and Documentation, printed page 6; MARCH-PAWS terminology",
+      "catalogUrl": "https://jts.health.mil/index.cfm/CPGs/cpgs",
+      "catalogLabel": "JTS guidelines index"
     },
     {
       "id": "jts-1380",
@@ -750,7 +752,10 @@
       "title": "TC 3-21.76, Ranger Handbook",
       "url": "https://www.moore.army.mil/infantry/artb/4th-RTBn/content/pdf/TC%203-21.76%20Ranger%20Handbook.pdf",
       "edition": "26 April 2017",
-      "locator": "Chapters 1, 2, 6 and 7"
+      "locator": "Chapters 1, 2, 6 and 7",
+      "catalogUrl": "https://armypubs.army.mil/ProductMaps/PubForm/Details.aspx?PUB_ID=1032023",
+      "catalogLabel": "Current Ranger Handbook catalog record",
+      "linkNote": "These citations use the 26 April 2017 reading edition. APD lists a 19 September 2025 edition; its relevant passages still need reconciliation. If the older reading link does not open, consult the current catalog and check the edition."
     },
     {
       "id": "infantry",

@@ -2,7 +2,7 @@
 import { profile } from '../config/profile';
 ---
 <section class="contact-box" aria-labelledby="contact-title">
-  <div class="contact-copy"><div class="eyebrow">CONTACT ME</div><h2 id="contact-title">What are you working on?</h2><p>Have a project, opportunity, or question? Send me a message here.</p><a class="text-link" href={`mailto:${profile.email}`}>{profile.email} ↗</a><p class="contact-privacy">Your name, email, and message are sent through <a href="https://formsubmit.co/" target="_blank" rel="noopener noreferrer">FormSubmit</a> to my inbox. Please leave out sensitive personal or property records.</p></div>
+  <div class="contact-copy"><div class="eyebrow">CONTACT ME</div><h2 id="contact-title">What are you working on?</h2><p data-contact-intro>Have a project, opportunity, or question? Send me a message here.</p><a class="text-link" href={`mailto:${profile.email}`}>{profile.email} ↗</a><p class="contact-privacy">Your name, email, and message are sent through <a href="https://formsubmit.co/" target="_blank" rel="noopener noreferrer">FormSubmit</a> to my inbox. Please leave out sensitive personal or property records.</p></div>
   <form data-contact-form data-recipient={profile.email} action={`https://formsubmit.co/${profile.email}`} method="POST">
     <input type="hidden" name="_subject" value="Portfolio contact — Jacob Routzong" />
     <input type="hidden" name="_template" value="table" />
@@ -16,8 +16,18 @@ import { profile } from '../config/profile';
   </form>
 </section>
 <script>
-  import { submitContact } from '../lib/contact.mjs';
+  import { getStudyCorrectionDraft, submitContact } from '../lib/contact.mjs';
   document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach(form => {
+    const message = form.querySelector<HTMLTextAreaElement>('[name="message"]');
+    const draft = getStudyCorrectionDraft(window.location.search, message?.value || '');
+    if (draft !== null && message) {
+      message.value = draft;
+      const section = form.closest('section');
+      const heading = section?.querySelector('#contact-title');
+      const intro = section?.querySelector('[data-contact-intro]');
+      if (heading) heading.textContent = 'Report a study correction';
+      if (intro) intro.textContent = 'Tell me what needs updating and include a supporting reference. For local information, include the unit or school and effective date. I review suggestions before changing the study material.';
+    }
     form.addEventListener('submit', async event => {
       event.preventDefault();
       if (form.dataset.sending === 'true' || !form.reportValidity()) return;
