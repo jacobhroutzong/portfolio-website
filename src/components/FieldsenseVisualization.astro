@@ -1,0 +1,60 @@
+<div class="fs-app" id="fieldsense-app">
+  <a class="fs-skip" href="#fs-explore">Skip to the visualization</a>
+  <header class="fs-header">
+    <a class="fs-brand" href="#fieldsense-app" aria-label="Fieldsense home"><span class="fs-brand-mark" aria-hidden="true">✳</span>Fieldsense<span class="fs-brand-descriptor">Decision lab</span></a>
+    <nav aria-label="Fieldsense"><a href="#fs-method">How it works</a><a href="https://jacobroutzong.dev/projects/">Portfolio</a></nav>
+  </header>
+
+  <div class="fs-main">
+    <section class="fs-intro" aria-labelledby="fs-title">
+      <div><p class="fs-eyebrow">Georgia Tech · ISYE 6501</p><h1 id="fs-title">A week in the field.<br><em>Every decision connected.</em></h1></div>
+      <div class="fs-intro-copy"><p>Predict the harvest. Share limited resources. Decide when to water. Explore how three models work together across a simulated farm.</p><span class="fs-evidence-label">Recorded model runs · synthetic data</span></div>
+    </section>
+
+    <section class="fs-pipeline" aria-label="Three connected models">
+      <button type="button" class="fs-model-card" data-model="predict" aria-pressed="false"><span class="fs-model-label">Random Forest</span><span class="fs-model-title">Predict</span><span class="fs-model-value" id="fs-predict-value">Loading</span><span class="fs-model-unit">area-weighted yield potential</span></button>
+      <span class="fs-connector" aria-hidden="true"><span></span></span>
+      <button type="button" class="fs-model-card" data-model="allocate" aria-pressed="false"><span class="fs-model-label">Mixed-integer optimization</span><span class="fs-model-title">Allocate</span><span class="fs-model-value" id="fs-allocate-value">Loading</span><span class="fs-model-unit">water assigned across three fields</span></button>
+      <span class="fs-connector" aria-hidden="true"><span></span></span>
+      <button type="button" class="fs-model-card fs-active" data-model="irrigate" aria-pressed="true"><span class="fs-model-label">Markov decision process</span><span class="fs-model-title">Irrigate</span><span class="fs-model-value" id="fs-irrigate-value">7 days</span><span class="fs-model-unit">decisions within each field’s cap</span></button>
+    </section>
+    <p class="fs-model-context" id="fs-model-context">The controller weighs expected crop-water deficits against irrigation use over the remaining days.</p>
+
+    <section class="fs-explore" id="fs-explore" aria-labelledby="fs-explore-title">
+      <div class="fs-section-head"><div><p class="fs-eyebrow">Explore the simulation</p><h2 id="fs-explore-title">Same farm. Different decisions.</h2></div><label class="fs-scenario-label" for="fs-scenario">Scenario<select id="fs-scenario"><option value="balanced">Balanced season</option><option value="dry_spell">Dry spell</option><option value="strict_limit">Strict constraints</option></select></label></div>
+      <div class="fs-scenario-description"><p id="fs-scenario-description">Loading the recorded model results…</p><span id="fs-seed">Weather seed 41</span></div>
+      <div class="fs-infeasible" id="fs-infeasible" role="status" hidden><h3>No feasible allocation</h3><p id="fs-infeasible-reason"></p><p id="fs-infeasible-detail"></p><p>Irrigation stops here. The models do not silently relax the resource limits.</p></div>
+
+      <div class="fs-lab" id="fs-lab">
+        <div class="fs-field-board">
+          <div class="fs-board-top"><div><span class="fs-overline">Synthetic farm</span><h3>Three fields. One water budget.</h3></div><span class="fs-day-chip" id="fs-day-chip">Day 1 / 7</span></div>
+          <div class="fs-policy-switch" role="group" aria-label="Policy shown in the farm view"><button type="button" data-policy="mdp" class="fs-active" aria-pressed="true">MDP policy</button><button type="button" data-policy="rule" aria-pressed="false">Threshold rule</button></div>
+          <div class="fs-map-wrap"><svg id="fs-farm" class="fs-farm" viewBox="0 0 860 530" role="img" aria-labelledby="fs-farm-title fs-farm-desc"><title id="fs-farm-title">Three-field irrigation replay</title><desc id="fs-farm-desc">Select a field using the buttons below the farm. The inspector reports all animated water and soil values.</desc></svg><span class="fs-map-caption">Schematic · not to scale · no live sensors</span></div>
+          <div class="fs-field-picker" role="group" aria-label="Inspect a field"><button type="button" data-field="0" class="fs-active" aria-pressed="true">North Meadow<span>Wheat · 1.8 ha</span></button><button type="button" data-field="1" aria-pressed="false">East Acre<span>Corn · 2.1 ha</span></button><button type="button" data-field="2" aria-pressed="false">South Plot<span>Soybean · 1.5 ha</span></button></div>
+          <div class="fs-playback"><button type="button" class="fs-play" id="fs-play" aria-label="Play the seven-day replay">Play week</button><button type="button" class="fs-step" id="fs-prev" aria-label="Previous day">‹</button><label class="fs-scrubber" for="fs-day"><span>Day <strong id="fs-day-label">1</strong> of 7</span><input type="range" id="fs-day" min="1" max="7" value="1" step="1" aria-label="Replay day"></label><button type="button" class="fs-step" id="fs-next" aria-label="Next day">›</button><label class="fs-speed" for="fs-speed">Speed<select id="fs-speed"><option value="1800">1×</option><option value="900">2×</option><option value="450">4×</option></select></label></div>
+          <p class="fs-motion-note" id="fs-motion-note" hidden>Reduced motion is on. Use the day controls to explore without animation.</p>
+        </div>
+
+        <aside class="fs-inspector" aria-labelledby="fs-field-name">
+          <div class="fs-inspector-heading"><p class="fs-eyebrow">Field inspector</p><h3 id="fs-field-name">North Meadow</h3><p id="fs-field-subtitle">Wheat · 1.8 ha</p></div>
+          <div class="fs-action"><span id="fs-action-label">Today’s irrigation</span><strong id="fs-action-value">0 <small>mm</small></strong><span id="fs-action-volume"></span></div>
+          <div class="fs-moisture-header"><span>Soil-water storage</span><strong id="fs-moisture-value"></strong></div><div class="fs-moisture-track" aria-hidden="true"><span id="fs-moisture-fill"></span></div><div class="fs-track-labels"><span>0 mm</span><span>40 mm model limit</span></div>
+          <dl class="fs-state-grid"><div><dt>Starting water</dt><dd id="fs-start"></dd></div><div><dt>Realized rain</dt><dd id="fs-rain"></dd></div><div><dt>Crop demand</dt><dd id="fs-demand"></dd></div><div><dt>Unmet today</dt><dd id="fs-unmet"></dd></div><div><dt>Week allocation</dt><dd id="fs-cap"></dd></div><div><dt>Water remaining</dt><dd id="fs-remaining"></dd></div></dl>
+          <div class="fs-decision"><h4 id="fs-decision-title">Why this action?</h4><p id="fs-decision-copy"></p><div class="fs-action-scores" id="fs-action-scores"></div><p class="fs-score-note" id="fs-score-note">Expected seven-day scores; higher is preferred.</p></div>
+        </aside>
+      </div>
+      <p class="fs-sr-only" id="fs-announcement" aria-live="polite" aria-atomic="true"></p>
+    </section>
+
+    <section class="fs-outcomes" id="fs-outcomes" aria-labelledby="fs-outcomes-title">
+      <div class="fs-section-head"><div><p class="fs-eyebrow">Compare the trade-off</p><h2 id="fs-outcomes-title">Water used is only half the story.</h2></div><span class="fs-through-day" id="fs-through-day">Through day 1</span></div>
+      <div class="fs-outcomes-grid"><div class="fs-chart-panel"><div class="fs-chart-head"><h3>Cumulative irrigation</h3><div class="fs-legend"><span><i class="fs-mdp-line"></i>MDP</span><span><i class="fs-rule-line"></i>Rule</span></div></div><svg id="fs-water-chart" role="img" aria-labelledby="fs-chart-title fs-chart-desc"><title id="fs-chart-title">Cumulative irrigation by policy</title><desc id="fs-chart-desc"></desc></svg><p>Both policies receive the same weather path and starting conditions.</p></div><div class="fs-compare-panel"><table><caption class="fs-sr-only">Water used and area-weighted unmet demand through the selected day</caption><thead><tr><th scope="col">Policy</th><th scope="col">Water used</th><th scope="col">Unmet demand</th></tr></thead><tbody><tr><th scope="row"><i class="fs-mdp-line"></i>MDP</th><td id="fs-mdp-water"></td><td id="fs-mdp-unmet"></td></tr><tr><th scope="row"><i class="fs-rule-line"></i>Rule</th><td id="fs-rule-water"></td><td id="fs-rule-unmet"></td></tr></tbody></table><p class="fs-tradeoff" id="fs-tradeoff"></p><p class="fs-small">Unmet demand is converted to m³ using each field’s area. Less irrigation can come with more crop-water deficit.</p></div></div>
+    </section>
+
+    <section class="fs-resources" aria-labelledby="fs-resources-title"><div class="fs-section-head"><div><p class="fs-eyebrow">Shared resource limits</p><h2 id="fs-resources-title">Allocation before irrigation.</h2></div><span class="fs-allocation-note" id="fs-allocation-note">Assigned / available</span></div><div class="fs-resource-grid" id="fs-resource-grid"></div><div class="fs-allocation-table-wrap"><table class="fs-allocation-table"><caption>Model predictions and optimized bundles</caption><thead><tr><th scope="col">Field</th><th scope="col">Predicted yield</th><th scope="col">Bundle</th><th scope="col">Water cap</th><th scope="col">Scored harvest*</th></tr></thead><tbody id="fs-allocation-body"></tbody></table></div><p class="fs-small">*The optimization score is predicted yield × field area × an illustrative bundle factor. It is not a measured harvest or an output of the irrigation simulation.</p></section>
+
+    <section class="fs-method" id="fs-method" aria-labelledby="fs-method-title"><div><p class="fs-eyebrow">About this experiment</p><h2 id="fs-method-title">A real model pipeline.<br>An illustrative farm.</h2><p>Built from a Georgia Tech ISYE 6501 course proposal. This exhibit replays results generated by the Python application; the browser does not train models or run the optimizer.</p><p>The model uses synthetic seasons, three discrete resource bundles, and a simplified seven-day water balance. It does not connect to sensors or control equipment.</p></div><div class="fs-method-detail"><h3>Reproducible by design</h3><dl><div><dt>Training / held-out records</dt><dd id="fs-records"></dd></div><div><dt>Random Forest MAE</dt><dd id="fs-mae"></dd></div><div><dt>Training-mean baseline MAE</dt><dd id="fs-baseline"></dd></div><div><dt>Water conversion</dt><dd>1 mm × 1 ha = 10 m³</dd></div><div><dt>Model / weather seeds</dt><dd id="fs-seeds"></dd></div></dl><details><summary>Model assumptions and replay data</summary><p>Yield evaluation holds out the latest two of twelve fictional seasons. The controller considers 0, 5, and 10 mm actions, 0 or 6 mm of rain, and a 5 mm soil-state grid. The rule irrigates 5 mm when starting soil-water storage is below 10 mm and its budget permits.</p><p>Rain is sampled after the daily action. Policy comparisons use the same per-field draws. Crop demand is an illustrative temperature-based estimate; no measured farm performance is claimed.</p><button type="button" class="fs-download" id="fs-download">Download this scenario’s data</button></details></div></section>
+  </div>
+  <footer class="fs-footer"><span>Fieldsense · Jacob Routzong</span><span>Synthetic research demonstrator · no live hardware</span></footer>
+  <noscript><p class="fs-noscript">This interactive replay needs JavaScript. The page explains the model pipeline above; enable JavaScript to explore the recorded scenarios.</p></noscript>
+</div>

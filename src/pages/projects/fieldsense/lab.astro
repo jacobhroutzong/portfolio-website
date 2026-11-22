@@ -1,0 +1,16 @@
+---
+import Base from '../../../layouts/Base.astro';
+import FieldsenseVisualization from '../../../components/FieldsenseVisualization.astro';
+---
+
+<Base
+  title="Fieldsense"
+  description="Explore how crop-yield predictions, constrained resource allocation, and irrigation decisions interact in a reproducible seven-day agricultural simulation."
+  noindex={true}
+>
+  <link rel="stylesheet" href="/media/fieldsense/fieldsense.css" />
+  <FieldsenseVisualization />
+  <script is:inline src="/media/fieldsense/scenarios.js" defer></script>
+  <script is:inline src="/media/fieldsense/fieldsense.js" defer></script>
+</Base>
+
