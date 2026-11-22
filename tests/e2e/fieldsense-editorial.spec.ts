@@ -6,6 +6,15 @@ test('Fieldsense editorial lab keeps the original paper distinct from the record
   await expect(page.getByRole('heading', { name: /When, where, and how much/i })).toBeVisible();
   await expect(page.locator('.fs-intro-quote blockquote'))
     .toContainText('We will use Markov Chain Decision Process to prescribe optimal irrigation actions');
+  await expect(page.getByText(/forecast inputs, not live sensor feeds/i)).toHaveCount(0);
+  await expect(page.locator('.fs-research-footnote blockquote')).toContainText([
+    'To forecast crop yield',
+    'Resource Availability; Water, fertilizer, labor, equipment',
+  ]);
+  await page.getByText('What do the field parameters mean?').click();
+  await expect(page.getByText(/MDP scores are estimated future rewards/)).toBeVisible();
+  await page.getByText('What do the resource parameters mean?').click();
+  await expect(page.getByText(/One of three illustrative resource-intensity choices/)).toBeVisible();
   await expect(page.locator('.fs-origin-paper blockquote'))
     .toContainText('The data input to the system is crucial');
   await expect(page.locator('link[href="/media/fieldsense/fieldsense-editorial.css"]')).toHaveCount(1);
@@ -33,6 +42,9 @@ test('Fieldsense case study quotes the original paper without claiming field dep
   await expect(page.getByRole('heading', { name: 'Fieldsense', exact: true })).toBeVisible();
   await expect(page.getByText(/To best allocate resources, we will implement Mixed-Integer Linear Programming/)).toBeVisible();
   await expect(page.getByText(/verbatim excerpts from the original 2025 submission/i)).toBeVisible();
+  await expect(page.getByText(/Weather data; temperature, rainfall, and humidity/)).toBeVisible();
+  await expect(page.getByText(/Crop data; crop type, seed variety, planting date/)).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Reading the parameters' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Live demo' })).toHaveAttribute('href', 'https://fieldsense.jacobroutzong.dev/');
 });
 
