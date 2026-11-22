@@ -432,6 +432,15 @@
   to { transform: translateY(5px); opacity: 1; }
 }
 @media (max-width: 900px) {
+  .fs-header nav {
+    display: flex;
+    position: static;
+    width: auto;
+    flex-direction: row;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
   .fs-intro-margin { grid-template-columns: 1fr 1fr; align-items: center; }
   .fs-pipeline { grid-template-columns: minmax(0,1fr) 5rem minmax(0,1fr) 5rem minmax(0,1fr); }
   .fs-pipeline .fs-model-card { grid-template-columns: 1fr; }

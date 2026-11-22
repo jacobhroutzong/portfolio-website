@@ -23,6 +23,7 @@ test('Fieldsense editorial remains readable at narrow widths', async ({ page }) 
   await page.goto('/projects/fieldsense/lab/');
   await expect(page.locator('#fieldsense-app')).toHaveAttribute('data-ready', 'true');
   await expect(page.locator('.fs-intro-quote')).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Project overview' })).toBeVisible();
   const overflow = await page.locator('#fieldsense-app').evaluate(root => root.scrollWidth > root.clientWidth + 1);
   expect(overflow).toBe(false);
 });
