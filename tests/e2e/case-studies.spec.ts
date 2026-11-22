@@ -43,7 +43,7 @@ test('Apex and Decision are startups and all displayed project titles are one wo
   }
 });
 
-test('Muster has one startup card and a case study linking to the public app', async ({ page }) => {
+test('Muster has one Research + Fun Projects card and a public app link', async ({ page }) => {
   const path = '/projects/muster/';
   for (const route of ['/', '/projects/']) {
     await page.goto(route);
@@ -51,7 +51,8 @@ test('Muster has one startup card and a case study linking to the public app', a
       has: page.getByRole('heading', { name: 'Muster', exact: true }),
     });
     await expect(page.locator(`a[href="${path}"]`)).toHaveCount(1);
-    await expect(page.getByRole('region', { name: 'Businesses + Startups' }).locator(card)).toHaveCount(1);
+    await expect(page.getByRole('region', { name: 'Research + Fun Projects' }).locator(card)).toHaveCount(1);
+    await expect(page.getByRole('region', { name: 'Businesses + Startups' }).locator(card)).toHaveCount(0);
     await expect(card).toContainText('A public research workspace');
     await card.getByRole('link', { name: 'Explore Muster →' }).click();
     await expect(page).toHaveURL(path);
