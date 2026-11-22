@@ -1,3 +1,7 @@
+---
+import FieldsenseParcelPlate from './FieldsenseParcelPlate.astro';
+---
+
 <div class="fs-app" id="fieldsense-app">
   <a class="fs-skip" href="#fs-explore">Skip to the visualization</a>
   <header class="fs-header">
@@ -14,20 +18,23 @@
         </div>
         <div class="fs-intro-actions"><a class="fs-start" href="#fs-explore">Explore the field replay <span aria-hidden="true">↗</span></a><span class="fs-version">FIELDSENSE 1.1 · RECORDED SYNTHETIC RUNS</span></div>
       </div>
-      <aside class="fs-intro-quote" aria-label="Excerpt from the original 2025 course paper">
-        <span class="fs-document-index">ORIGINAL COURSE PAPER / PART 2</span>
-        <blockquote>We will use Markov Chain Decision Process to prescribe optimal irrigation actions (when/where and how much to water) using probabilistic models of weather and soil states.</blockquote>
-        <cite class="fs-paper-citation">Verbatim from the ISYE 6501 submission · 2025 · Proposed design, not a verified field deployment</cite>
-      </aside>
+      <div class="fs-intro-margin">
+        <FieldsenseParcelPlate />
+        <aside class="fs-intro-quote" aria-label="Excerpt from the original 2025 course paper">
+          <span class="fs-document-index">ORIGINAL COURSE PAPER / PART 2</span>
+          <blockquote>We will use Markov Chain Decision Process to prescribe optimal irrigation actions (when/where and how much to water) using probabilistic models of weather and soil states.</blockquote>
+          <cite class="fs-paper-citation">Verbatim from the ISYE 6501 submission · 2025 · Proposed design, not a verified field deployment</cite>
+        </aside>
+      </div>
     </section>
 
     <div class="fs-arc" aria-label="Fieldsense project timeline"><span><b>2025</b> Course proposal</span><i aria-hidden="true"></i><span><b>2026</b> Tested Python pipeline</span><i aria-hidden="true"></i><span><b>Today</b> Browser replay</span></div>
 
     <section class="fs-pipeline" aria-label="Three connected models">
       <button type="button" class="fs-model-card" data-model="predict" aria-pressed="false"><span class="fs-model-index">01 / ESTIMATE</span><span class="fs-model-label">Random Forest</span><span class="fs-model-title">Predict</span><span class="fs-model-value" id="fs-predict-value">Loading</span><span class="fs-model-unit">area-weighted yield potential</span></button>
-      <span class="fs-connector" aria-hidden="true"><span></span></span>
+      <span class="fs-handoff">Predicted yield</span>
       <button type="button" class="fs-model-card" data-model="allocate" aria-pressed="false"><span class="fs-model-index">02 / OPTIMIZE</span><span class="fs-model-label">Mixed-integer optimization</span><span class="fs-model-title">Allocate</span><span class="fs-model-value" id="fs-allocate-value">Loading</span><span class="fs-model-unit">water assigned across three fields</span></button>
-      <span class="fs-connector" aria-hidden="true"><span></span></span>
+      <span class="fs-handoff">Field water cap</span>
       <button type="button" class="fs-model-card fs-active" data-model="irrigate" aria-pressed="true"><span class="fs-model-index">03 / PLAN</span><span class="fs-model-label">Markov decision process</span><span class="fs-model-title">Irrigate</span><span class="fs-model-value" id="fs-irrigate-value">7 days</span><span class="fs-model-unit">decisions within each field’s cap</span></button>
     </section>
     <p class="fs-model-context" id="fs-model-context">The controller weighs expected crop-water deficits against irrigation use over the remaining days.</p>
@@ -39,10 +46,10 @@
 
       <div class="fs-lab" id="fs-lab">
         <div class="fs-field-board">
-          <div class="fs-board-top"><div><span class="fs-overline">CONTROL ATLAS / SYNTHETIC FIELD STUDY</span><h3>One farm. Three decisions at a time.</h3></div><span class="fs-day-chip" id="fs-day-chip">Day 1 / 7</span></div>
+          <div class="fs-board-top"><div><span class="fs-overline">SEVEN-DAY REPLAY</span><h3>The irrigation plots</h3></div><span class="fs-day-chip" id="fs-day-chip">Day 1 / 7</span></div>
           <div class="fs-policy-switch" role="group" aria-label="Policy shown in the farm view"><button type="button" data-policy="mdp" class="fs-active" aria-pressed="true">MDP policy</button><button type="button" data-policy="rule" aria-pressed="false">Threshold rule</button></div>
-          <div class="fs-board-caption"><span><i aria-hidden="true"></i> Irrigation pulses follow the chosen policy</span><span><i class="fs-rain-key" aria-hidden="true"></i> Rainfall is shared across both policies</span></div>
-          <div class="fs-map-wrap"><svg id="fs-farm" class="fs-farm" viewBox="0 0 860 530" role="img" aria-labelledby="fs-farm-title fs-farm-desc"><title id="fs-farm-title">Three-field irrigation replay</title><desc id="fs-farm-desc">Select a field using the buttons below the farm. The inspector reports all animated water and soil values.</desc></svg><span class="fs-map-caption">Schematic · not to scale · no live sensors</span></div>
+          <div class="fs-board-caption"><span><i aria-hidden="true"></i> Irrigation · pipe and spray</span><span><i class="fs-rain-key" aria-hidden="true"></i> Rain · shared weather path</span></div>
+          <div class="fs-map-wrap"><svg preserveAspectRatio="xMidYMid meet" id="fs-farm" class="fs-farm" viewBox="0 0 860 530" role="img" aria-labelledby="fs-farm-title fs-farm-desc"><title id="fs-farm-title">Three-field irrigation replay</title><desc id="fs-farm-desc">Select a field using the buttons below the farm. The inspector reports all animated water and soil values.</desc></svg><div class="fs-map-caption"><span>Allocated water · <strong id="fs-tank-label"></strong></span><span>Schematic · no live sensors</span></div></div>
           <div class="fs-field-picker" role="group" aria-label="Inspect a field"><button type="button" data-field="0" class="fs-active" aria-pressed="true">North Meadow<span>Wheat · 1.8 ha</span></button><button type="button" data-field="1" aria-pressed="false">East Acre<span>Corn · 2.1 ha</span></button><button type="button" data-field="2" aria-pressed="false">South Plot<span>Soybean · 1.5 ha</span></button></div>
           <div class="fs-playback"><button type="button" class="fs-play" id="fs-play" aria-label="Play the seven-day replay">Play week</button><button type="button" class="fs-step" id="fs-prev" aria-label="Previous day">‹</button><label class="fs-scrubber" for="fs-day"><span>Day <strong id="fs-day-label">1</strong> of 7</span><input type="range" id="fs-day" min="1" max="7" value="1" step="1" aria-label="Replay day"></label><button type="button" class="fs-step" id="fs-next" aria-label="Next day">›</button><label class="fs-speed" for="fs-speed">Speed<select id="fs-speed"><option value="1800">1×</option><option value="900">2×</option><option value="450">4×</option></select></label></div>
           <p class="fs-motion-note" id="fs-motion-note" hidden>Reduced motion is on. Use the day controls to explore without animation.</p>
@@ -61,7 +68,7 @@
 
     <section class="fs-outcomes" id="fs-outcomes" aria-labelledby="fs-outcomes-title">
       <div class="fs-section-head"><div><p class="fs-eyebrow">POLICY AUDIT / 02</p><h2 id="fs-outcomes-title">Water use, with the deficit left in view.</h2></div><span class="fs-through-day" id="fs-through-day">Through day 1</span></div>
-      <div class="fs-outcomes-grid"><div class="fs-chart-panel"><div class="fs-chart-head"><h3>Cumulative irrigation</h3><div class="fs-legend"><span><i class="fs-mdp-line"></i>MDP</span><span><i class="fs-rule-line"></i>Rule</span></div></div><svg id="fs-water-chart" role="img" aria-labelledby="fs-chart-title fs-chart-desc"><title id="fs-chart-title">Cumulative irrigation by policy</title><desc id="fs-chart-desc"></desc></svg><p>Both policies receive the same weather path and starting conditions.</p></div><div class="fs-compare-panel"><table><caption class="fs-sr-only">Water used and area-weighted unmet demand through the selected day</caption><thead><tr><th scope="col">Policy</th><th scope="col">Water used</th><th scope="col">Unmet demand</th></tr></thead><tbody><tr><th scope="row"><i class="fs-mdp-line"></i>MDP</th><td id="fs-mdp-water"></td><td id="fs-mdp-unmet"></td></tr><tr><th scope="row"><i class="fs-rule-line"></i>Rule</th><td id="fs-rule-water"></td><td id="fs-rule-unmet"></td></tr></tbody></table><p class="fs-tradeoff" id="fs-tradeoff"></p><p class="fs-small">Unmet demand is converted to m³ using each field’s area. Less irrigation can come with more crop-water deficit.</p></div></div>
+      <div class="fs-outcomes-grid"><div class="fs-chart-panel"><div class="fs-chart-head"><h3>Cumulative irrigation</h3><div class="fs-legend"><span><i class="fs-mdp-line"></i>MDP</span><span><i class="fs-rule-line"></i>Rule</span></div></div><svg id="fs-water-chart" role="img" aria-labelledby="fs-chart-title fs-chart-desc"><title id="fs-chart-title">Cumulative irrigation by policy</title><desc id="fs-chart-desc"></desc></svg><p>Both policies receive the same weather path and starting conditions.</p></div><div class="fs-compare-panel"><h3>Water and unmet demand</h3><table><caption class="fs-sr-only">Water used and area-weighted unmet demand through the selected day</caption><thead><tr><th scope="col">Policy</th><th scope="col">Water used</th><th scope="col">Unmet demand</th></tr></thead><tbody><tr><th scope="row"><i class="fs-mdp-line"></i>MDP</th><td id="fs-mdp-water"></td><td id="fs-mdp-unmet"></td></tr><tr><th scope="row"><i class="fs-rule-line"></i>Rule</th><td id="fs-rule-water"></td><td id="fs-rule-unmet"></td></tr></tbody></table><p class="fs-tradeoff" id="fs-tradeoff"></p><p class="fs-small">Unmet demand is converted to m³ using each field’s area. Less irrigation can come with more crop-water deficit.</p></div></div>
     </section>
 
     <section class="fs-resources" aria-labelledby="fs-resources-title"><div class="fs-section-head"><div><p class="fs-eyebrow">BUDGET LEDGER / 03</p><h2 id="fs-resources-title">The limits are part of the model.</h2></div><span class="fs-allocation-note" id="fs-allocation-note">Assigned / available</span></div><div class="fs-resource-grid" id="fs-resource-grid"></div><div class="fs-allocation-table-wrap"><table class="fs-allocation-table"><caption>Model predictions and optimized bundles</caption><thead><tr><th scope="col">Field</th><th scope="col">Predicted yield</th><th scope="col">Bundle</th><th scope="col">Water cap</th><th scope="col">Scored harvest*</th></tr></thead><tbody id="fs-allocation-body"></tbody></table></div><p class="fs-small">*The optimization score is predicted yield × field area × an illustrative bundle factor. It is not a measured harvest or an output of the irrigation simulation.</p></section>

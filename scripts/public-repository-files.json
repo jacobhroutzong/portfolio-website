@@ -207,6 +207,7 @@
   "scripts/sync-activity.mjs",
   "scripts/sync-challenges.mjs",
   "src/components/ContactForm.astro",
+  "src/components/FieldsenseParcelPlate.astro",
   "src/components/FieldsenseVisualization.astro",
   "src/components/Icon.astro",
   "src/components/PortfolioImage.astro",

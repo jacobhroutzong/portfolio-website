@@ -1,0 +1,37 @@
+---
+const parcels = [
+  { x: 10, y: 13, width: 73, height: 70, fill: '#b6be73' },
+  { x: 106, y: 13, width: 73, height: 151, fill: '#87ad87' },
+  { x: 10, y: 104, width: 73, height: 71, fill: '#adc49a' },
+];
+---
+<figure class="fs-parcel-plate">
+  <svg viewBox="0 0 450 232" role="img" aria-label="North Meadow and South Plot sit west of the long East Acre parcel. A shared supply line branches to all three." focusable="false">
+    <defs>
+      <pattern id="fs-survey-grid" width="19" height="19" patternUnits="userSpaceOnUse">
+        <path d="M0 19V0H19" fill="none" stroke="#a1bf9e" opacity=".19" stroke-width=".7" />
+      </pattern>
+      <pattern id="fs-survey-furrow" width="6" height="6" patternUnits="userSpaceOnUse">
+        <path d="M2 0V6" stroke="#244b39" stroke-width="1.4" />
+      </pattern>
+    </defs>
+    <rect width="450" height="232" fill="url(#fs-survey-grid)" />
+    <g transform="matrix(.92 .28 -.62 .68 184 13)">
+      {[5, 14, 25].map(pad => <rect x={-pad} y={-pad} width={192+pad*2} height={192+pad*2} rx={pad} fill="none" stroke="#a1bf9e" opacity=".32" />)}
+      <rect width="192" height="192" rx="4" fill="#365a46" stroke="#bdd0b4" />
+      {parcels.map(({ x, y, width, height, fill }) => <g>
+        <rect {x} {y} {width} {height} rx="4" {fill} />
+        <rect {x} {y} {width} {height} rx="4" fill="url(#fs-survey-furrow)" />
+      </g>)}
+      <path d="M94 180V42H50M94 90H140M94 142H49" fill="none" stroke="#ddedcb" stroke-width="1.5" />
+    </g>
+    <g fill="none" stroke="#c4d6bd" stroke-width=".8">
+      <path d="M48 53H126L169 63M315 99L348 65H407M110 144H67L43 161" />
+    </g>
+    <g fill="#e4ecd5" font-family="ui-monospace,Consolas,monospace" font-size="12">
+      <text x="18" y="45">North Meadow</text><text x="342" y="56">East Acre</text>
+      <text x="14" y="179">South Plot</text>
+    </g>
+  </svg>
+  <figcaption><span>Parcel plan</span><span>Schematic · three fields</span></figcaption>
+</figure>
