@@ -1,13 +1,13 @@
 ---
 title: Muster
-summary: "A private workspace for researching Army and Air National Guard Active Guard Reserve announcements."
+summary: "A public workspace for researching Army and Air National Guard Active Guard Reserve announcements."
 category: Business & Operations Systems
-technologies: [JavaScript, CSS, Cloudflare Workers, Cloudflare Access]
+technologies: [JavaScript, CSS, Cloudflare Workers]
 draft: false
 status: Completed
 ---
 
-[Open the protected Muster app](https://muster.jacobroutzong.dev/) · The application requires owner authorization through Cloudflare Access.
+[Open Muster](https://muster.jacobroutzong.dev/) · No sign-in required.
 
 ## Finding relevant announcements
 
@@ -19,6 +19,6 @@ The snapshot contains **313 AGR announcement records from 33 states**, with **12
 
 Each record keeps the source links, posted or opening date, closing date, and research check date distinct. Missing dates and uncertain status remain visible, and the workspace distinguishes AGR announcements from other categories of Guard employment such as ADOS and technician positions.
 
-## Private workspace
+## Browser-local workspace
 
-The app serves the reviewed snapshot as a static page. Bookmarks stay in the browser, and the workspace supports filtered CSV exports and importing or restoring a reviewed snapshot.
+The app serves the reviewed snapshot as a static page. Bookmarks and imported snapshots stay in the browser. The workspace supports filtered CSV exports and restoring the original snapshot.

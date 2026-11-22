@@ -43,7 +43,7 @@ test('Apex and Decision are startups and all displayed project titles are one wo
   }
 });
 
-test('Muster has one startup card and a public case study with a protected app link', async ({ page }) => {
+test('Muster has one startup card and a case study linking to the public app', async ({ page }) => {
   const path = '/projects/muster/';
   for (const route of ['/', '/projects/']) {
     await page.goto(route);
@@ -52,12 +52,14 @@ test('Muster has one startup card and a public case study with a protected app l
     });
     await expect(page.locator(`a[href="${path}"]`)).toHaveCount(1);
     await expect(page.getByRole('region', { name: 'Businesses + Startups' }).locator(card)).toHaveCount(1);
+    await expect(card).toContainText('A public research workspace');
     await card.getByRole('link', { name: 'Explore Muster →' }).click();
     await expect(page).toHaveURL(path);
     await expect(page.getByRole('heading', { name: 'Muster', level: 1 })).toBeVisible();
   }
-  await expect(page.getByRole('link', { name: 'Open the protected Muster app' }))
+  await expect(page.getByRole('link', { name: 'Open Muster', exact: true }))
     .toHaveAttribute('href', 'https://muster.jacobroutzong.dev/');
+  await expect(page.getByText('No sign-in required.', { exact: false })).toBeVisible();
   await expect(page.locator('iframe, #muster-data')).toHaveCount(0);
 });
 
