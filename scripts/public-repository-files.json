@@ -193,6 +193,8 @@
   "public/study/ew/data.json",
   "public/study/ew/index.html",
   "public/study/index.html",
+  "public/study/soldier/data.json",
+  "public/study/soldier/index.html",
   "public/study/study.css",
   "public/study/study.js",
   "scripts/check-links.mjs",
