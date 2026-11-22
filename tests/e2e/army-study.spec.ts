@@ -16,7 +16,13 @@ test('study navigation and acronym recall preserve separate saved progress', asy
     localStorage.setItem(phaseKey, sentinel);
     localStorage.setItem(ewKey, sentinel);
   }, { phaseKey, ewKey, sentinel });
-  await page.getByRole('navigation', { name: 'Study tools' }).getByRole('link', { name: 'Army Acronyms' }).click();
+  const nav = page.getByRole('navigation', { name: 'Study tools' });
+  await expect(nav.getByRole('link')).toHaveText(['Study home', 'PhaseUp 17E', 'Soldier Study', 'EW Study']);
+  await expect(page.locator('article.destination h3 a')).toHaveText(['PhaseUp 17E', 'Soldier Study', 'EW Study']);
+  await nav.getByRole('link', { name: 'PhaseUp 17E', exact: true }).click();
+  await expect(page).toHaveURL(/\/study\/17e\/$/);
+  await expect(page.locator('.study-areas').getByRole('link', { name: 'Army Acronyms', exact: true })).toHaveCount(0);
+  await page.getByRole('link', { name: 'Study Army acronyms' }).click();
   await expect(page).toHaveURL(/\/study\/17e\/acronyms\//);
   await expect(page.locator('#study-content')).toBeVisible();
   expect(await page.evaluate(key => localStorage.getItem(key), acronymKey)).toBeNull();

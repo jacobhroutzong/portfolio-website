@@ -2,7 +2,7 @@
 
 ## Released scope
 
-The study hub at `/study/` groups PhaseUp and Army Acronyms under phase preparation and Army foundations. Soldier Study covers general Army knowledge and skills. EW Study remains a separate resource for continued professional learning beyond AIT.
+The study hub at `/study/` links to PhaseUp 17E, Soldier Study, and EW Study. Army Acronyms is available from the PhaseUp overview.
 
 - `/study/17e/`: the existing PhaseUp study station. Its 117 Phase VI card objects are unchanged. Three general AGSU definition/preparation cards were removed (`extra42`, `extra43`, `phasevi-focus-08`), and the AGSU inspection-requirement policy card is categorized under PL15. All 16 AGSU placement/measurement questions remain. The bank now contains 508 cards.
 - `/study/17e/acronyms/`: 36 sourced terms, searchable reference, recall practice and review ratings. The prior `/study/acronyms/` path redirects here. The acronym page belongs to PhaseUp, while retaining its own study progress.
