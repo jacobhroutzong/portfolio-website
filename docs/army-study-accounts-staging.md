@@ -28,11 +28,13 @@ The transactional probe in `scripts/verify-study-progress-rls.mjs` passed agains
 
 ## Provider prerequisites and remaining acceptance
 
-The staging public Auth settings were read on 22 November 2026: Google enabled, Apple disabled, anonymous users disabled and public signups disabled. Those settings remain unchanged.
+The Cloudflare branch preview uses `https://feature-study-accounts-stagi.portfolio-site-bs9.pages.dev`. Use that branch URL for account testing. The only hosted study origin enabled is this branch alias. Its exact Supabase redirect allowlist entry is `https://feature-study-accounts-stagi.portfolio-site-bs9.pages.dev/study/account/`.
 
-The exact study callback is `/study/account/` on the approved staging preview origin. It must be added to the existing Supabase redirect allowlist without replacing the shared site URL, removing other callbacks or enabling public signup. Provider buttons remain disabled until their configuration is verified. Apple developer resources have not been established; no membership purchase or credential creation is authorized by this milestone.
+Google uses the existing Marqyra staging OAuth web client. Google returns to `https://grpwacfkhwwifnjantdn.supabase.co/auth/v1/callback`; Supabase then returns to the study callback. The shared site URL, existing Marqyra callback, Google audience, and signup restrictions were preserved. Google is enabled in the staging study UI. Apple and public signups remain disabled in Supabase.
 
-Node tests and mocked browser tests are distinct from live provider acceptance. The browser suite intercepts all Supabase HTTP and uses synthetic session fixtures; it does not prove Google consent, Apple consent or provider callback configuration. Real provider flows, hosted cross-device sign-in and the required Apple setup remain acceptance gates. Production Auth and production data have not been changed.
+The Google project is in testing mode, and the staging Supabase project has one existing Google-linked user. Use an existing authorized user for live sign-in and cross-device testing. Full account-switch acceptance requires two existing staging users with eligible Google identities.
+
+The browser suite intercepts all Supabase HTTP and uses synthetic session fixtures. Live Google callback, session, and sync checks require an eligible Google browser session. Apple remains gated on verification of an existing Apple Developer team, a primary App ID with Sign in with Apple, a matching Services ID, and usable signing configuration. The Apple Developer resource inventory is behind sign-in, and staging Supabase has no Apple client ID or secret configured.
 
 ## Verification commands
 
