@@ -108,7 +108,7 @@ export const selectedProjects = [
     "title": "Muster",
     "group": "business",
     "eyebrow": "WEB APPLICATION / DATA ENGINEERING",
-    "description": "A private research workspace for comparing Army and Air National Guard AGR announcements and checking their official sources.",
+    "description": "A public research workspace for comparing Army and Air National Guard AGR announcements and checking their official sources.",
     "href": "/projects/muster/",
     "linkLabel": "Explore Muster →"
   }
