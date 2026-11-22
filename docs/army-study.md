@@ -6,7 +6,7 @@ The study hub at `/study/` groups PhaseUp and Army Acronyms under phase preparat
 
 - `/study/17e/`: the existing PhaseUp study station. Its 117 Phase VI card objects are unchanged. Three general AGSU definition/preparation cards were removed (`extra42`, `extra43`, `phasevi-focus-08`), and the AGSU inspection-requirement policy card is categorized under PL15. All 16 AGSU placement/measurement questions remain. The bank now contains 508 cards.
 - `/study/17e/acronyms/`: 36 sourced terms, searchable reference, recall practice and review ratings. The prior `/study/acronyms/` path redirects here. The acronym page belongs to PhaseUp, while retaining its own study progress.
-- `/study/ew/`: nine courses, 92 original lessons and 276 answered recall/application questions. Five introductory lessons lead into eight publication courses.
+- `/study/ew/`: nine courses, 92 original lessons and 291 answered recall/application questions. Five introductory lessons lead into eight publication courses.
 - `/study/soldier/`: four general Soldier courses, 16 lessons, and 39 answered scenario questions.
 
 The additions use static HTML, CSS, JavaScript and JSON in the existing Astro/Cloudflare Pages deployment. They add no service, account, dependency or database. Study pages retain noindex metadata; portfolio navigation is unchanged.
@@ -23,23 +23,23 @@ The inventory follows the table of contents of each verified reading edition. Ch
 
 | Publication | Verified reading edition | Chapters + appendices | Lessons | Questions |
 | --- | --- | ---: | ---: | ---: |
-| FM 3-12 | 17 September 2025 | 5 + 9 | 18 | 54 |
-| ATP 3-12.3 | 30 January 2023, Change 1 dated 18 September 2024 | 6 + 4 | 10 | 30 |
-| ATP 3-12.4 | 9 January 2023 | 4 + 1 | 7 | 21 |
-| JP 3-85 | 22 May 2020 | 4 + 9 | 15 | 45 |
-| ATP 6-02.70 | 16 September 2025 | 3 + 5 | 11 | 33 |
-| ATP 3-01.81 | 23 May 2025 | 7 + 1 | 8 | 24 |
-| ATP 7-100.1 | 29 February 2024, Change 1 dated 23 April 2024 | 7 + 11 | 9 | 27 |
-| ATP 7-100.3 | 9 August 2021, Change 1 dated 24 November 2021 | 9 + 7 | 9 | 27 |
+| FM 3-12 | 17 September 2025 | 5 + 9 | 18 | 56 |
+| ATP 3-12.3 | 30 January 2023, Change 1 dated 18 September 2024 | 6 + 4 | 10 | 32 |
+| ATP 3-12.4 | 9 January 2023 | 4 + 1 | 7 | 22 |
+| JP 3-85 | 22 May 2020 | 4 + 9 | 15 | 47 |
+| ATP 6-02.70 | 16 September 2025 | 3 + 5 | 11 | 35 |
+| ATP 3-01.81 | 23 May 2025 | 7 + 1 | 8 | 25 |
+| ATP 7-100.1 | 29 February 2024, Change 1 dated 23 April 2024 | 7 + 11 | 9 | 30 |
+| ATP 7-100.3 | 9 August 2021, Change 1 dated 24 November 2021 | 9 + 7 | 9 | 29 |
 
-The eight courses map 92 substantive units: 41 have lesson-and-source-reading coverage and 51 have guided source reading. Of the 92 units, 81 link to at least one conceptual lesson; the remaining 11 carry specific reading objectives and source locators. This is a broad conceptual curriculum and a traceable reading plan. Full subsection, figure, equipment-operation and procedural coverage is not claimed.
+The eight courses map 92 substantive units. All 92 now link to conceptual instruction, including the 11 units previously supported only by source reading. The interface keeps 41 lesson-plus-reading and 51 guided-reading badges. The [objective ledger](army-study-coverage-assessment.md) distinguishes 248 taught objectives from additional reading, supervised practical work, exclusions and edition blockers.
 
 ### Edition and access limits
 
 - ATP 3-12.3: APD lists Change 2 dated 22 August 2025. The inspected current-record download carried the Change 1 title and transmittal. This course explicitly uses Change 1 dated 18 September 2024. Change 2 text and its coverage are unresolved.
-- JP 3-85: two official Army articles cite a March 2026 revision, including one giving 17 March 2026. Public text and contents for that revision were not verified. This course follows the verified 22 May 2020 text; the source registry retains the Joint Staff URL and provides a checked public reading mirror.
-- ATP 3-01.81: the official indexed cover, contents and lesson-supporting text were checked. Its physical PDF page count was not established and remains null.
-- ATP 7-100.1 and ATP 7-100.3: the official indexed text verifies the editions, tables of contents and conceptual lesson references. Not every appendix body or subordinate heading was exposed. These remain guided reading where appropriate. The courses describe dated U.S. Army training models and do not claim to represent current force inventories.
+- **JP 3-85.** Two Army articles cite a March 2026 revision, including one that gives 17 March. The cited JDEIS reading path redirected to a logout page. The course uses the verified 22 May 2020 text. Its official PDF and historical third-party mirror had access errors during this pass, while indexed public text corroborated the checked passages. The revision’s contents and text remain unverified.
+- **ATP 3-01.81.** The Army Publishing Directorate PDF confirms the 23 May 2025 edition, 106 physical PDF pages, and the printed locations of the checked Appendix A passages.
+- **ATP 7-100.1 and ATP 7-100.3.** The Army Publishing Directorate PDFs confirm the existing Change 1 editions, with 280 and 252 physical PDF pages respectively. The passages used for the new appendix connections were checked in the PDFs. Organizational examples represent the dated U.S. Army training models.
 - Official publication servers sometimes rejected direct retrieval during review. Catalog records, text excerpts and reading copies are distinguished in the source registry; a catalog link is never described as an inspected full text.
 
 ## Bounded content review
@@ -53,6 +53,8 @@ Review completed 22 November 2026:
 5. Validate source IDs, lesson/course/question identities, unit counts, mapping integrity and the learner-facing interface. Review high-risk distinctions such as EA versus EP, evidence versus attribution, doctrine date, and UTC date rollover.
 
 `public/study/ew/data.json` is the curriculum and coverage source of truth. Its `coverageReview` records the per-group review passes, unresolved limitations and primary-source evidence. Stable lesson and question IDs preserve existing ratings when wording changes. The table of contents and checked reading edition determine the scope; the interface never presents chapter mapping as a percentage of manual mastery.
+
+The subsequent EW objective pass reviewed the Army, Joint and spectrum, and C-UAS and threat publication groups. It expanded 13 existing lessons, added 15 application questions, and checked source-backed answers and the scope of additional reading. The objective ledger records the passage and question evidence and the two edition-specific resume points.
 
 This is a dated content release. On 22 November 2026, the owner requested two external review tasks: a weekly coverage review on Monday mornings in America/New_York, and a publication-edition check every three months starting 22 February 2027. These tasks can prepare bounded draft corrections; they do not merge or deploy unattended. There is no scheduled research process in the site's runtime. Future edits address a named missing topic, verified source change or demonstrated broken link, update the relevant source record, and rerun affected checks.
 
@@ -85,7 +87,7 @@ Study pages write progress only after a learner action. Reset requires confirmat
 
 Run `npm run verify` and `npm run test:e2e`. Content checks validate the source registry, stable identities, every manual's expected chapter/appendix count, lesson mappings, reading dispositions and preserved AGSU/Phase VI constraints. Browser tests cover search, reveal, course/lesson/all recall scopes, previous/next boundaries, direct links, browser history, coverage links, persistence, legacy progress, reset isolation, retry and blocked storage on desktop and mobile.
 
-Public files are individually listed in the existing publication manifests. The existing GitHub PR and Cloudflare release process deploys the site. Production publication of the earlier PhaseUp, Acronyms, and EW release was approved. Soldier Study is in draft review.
+The publication manifests list the public files. EW coverage and Soldier Study are prepared for separate owner-approved releases through the existing GitHub and Cloudflare pipeline. Release EW first, then Soldier Study. The account PR is a separate staging decision.
 
 ## Correction reports
 
