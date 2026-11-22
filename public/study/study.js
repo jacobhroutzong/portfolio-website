@@ -284,36 +284,112 @@ function initAcronyms(data, sources, progress) {
 }
 
 function initEW(data, sources, progress) {
+  const courseSelect = byId("course-select");
   const lessonSelect = byId("lesson-select");
   const lessonTitle = byId("lesson-title");
   const lessonContent = byId("lesson-content");
-  const lessonProgress = byId("lesson-progress");
   const complete = byId("complete-lesson");
   const scope = byId("practice-scope");
-  let lesson = data.lessons[0];
-  const lessonCards = new Map();
-  for (const item of data.lessons) {
-    lessonSelect.add(new Option(item.title, item.id));
-    lessonCards.set(item.id, list(item.questions).map(question => ({
-      id: `${item.id}:${question.id ?? question.prompt}`,
-      context: item.title,
-      prompt: question.prompt,
-      answer: question.answer,
-      sourceIds: item.sourceIds,
-    })));
-  }
+  const coverageSelect = byId("coverage-course");
+  const courseMap = new Map(data.courses.map(item => [item.id, item]));
+  const lessonMap = new Map(data.lessons.map(item => [item.id, item]));
+  const courseLessons = new Map(data.courses.map(item => [item.id, data.lessons.filter(part => part.courseId === item.id)]));
+  const courseCards = new Map();
+  const lessonCards = new Map(data.lessons.map(item => [item.id, list(item.questions).map(question => ({
+    id: `${item.id}:${question.id ?? question.prompt}`,
+    context: [courseMap.get(item.courseId).title, item.title].join(" · "),
+    prompt: question.prompt,
+    answer: question.answer,
+    sourceIds: item.sourceIds,
+    sourceLocator: item.sourceLocator,
+  }))]));
   const allCards = [...lessonCards.values()].flat();
+  function lessonFromAddress() {
+    const query = new URLSearchParams(location.search);
+    const requested = lessonMap.get(query.get("lesson"));
+    const selected = courseMap.get(query.get("course")) ?? data.courses[0];
+    return requested ?? courseLessons.get(selected.id)[0];
+  }
+  let lesson = lessonFromAddress();
+  let course = courseMap.get(lesson.courseId);
+  const manuals = data.courses.filter(item => item.kind !== "orientation");
 
+  function editionBadge(item) {
+    const labels = {
+      "verified-edition": ["Reading edition checked", ""],
+      "prior-edition": ["Earlier reading edition", "reading"],
+      "catalog-only": ["Current text unverified", "pending"],
+    };
+    const [text, style] = labels[item.sourceStatus] ?? ["Start here", ""];
+    return element("span", text, `badge ${style}`.trim());
+  }
+  function addCourseContext(parent, item) {
+    parent.replaceChildren();
+    addText(parent, "p", item.description);
+    addText(parent, "p", item.verifiedEdition ? `Reading edition: ${item.verifiedEdition}` : item.edition, "meta");
+    if (item.note) addText(parent, "p", item.note, "notice");
+    for (const note of list(item.limitations)) addText(parent, "p", note, "notice");
+    if (item.sourceId) addSources(parent, [item.sourceId], sources);
+    const source = sources.get(item.sourceId);
+    if (source?.readingUrl) parent.append(link(source.readingNote || "Alternate public reading copy", source.readingUrl));
+  }
+  function lessonLink(item, text = item.title) {
+    const anchor = element("a", text);
+    anchor.href = `?course=${encodeURIComponent(item.courseId)}&lesson=${encodeURIComponent(item.id)}#lesson-reader`;
+    anchor.addEventListener("click", event => {
+      if (event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      selectLesson(item.id, true);
+    });
+    return anchor;
+  }
+  function updateAddress() {
+    const address = new URL(location.href);
+    address.searchParams.set("course", course.id);
+    address.searchParams.set("lesson", lesson.id);
+    address.hash = "lesson-reader";
+    history.replaceState(null, "", address);
+  }
   function renderCompletion() {
     const completed = data.lessons.filter(item => progress.completed(item.id)).length;
-    lessonProgress.textContent = `${completed} of ${data.lessons.length} lessons complete`;
+    byId("lesson-progress").textContent = `${completed} of ${data.lessons.length} lessons complete`;
+    for (const item of data.courses) {
+      const items = courseLessons.get(item.id);
+      const count = items.filter(part => progress.completed(part.id)).length;
+      const card = courseCards.get(item.id);
+      card.progress.textContent = `${count} of ${items.length} lessons complete`;
+      card.element.setAttribute("aria-current", String(course.id === item.id));
+    }
+    const selected = courseLessons.get(course.id);
+    const count = selected.filter(item => progress.completed(item.id)).length;
+    byId("course-progress").textContent = `${count} of ${selected.length} complete in this course`;
+    for (const option of lessonSelect.options) {
+      const item = lessonMap.get(option.value);
+      option.textContent = item.title + (progress.completed(item.id) ? " · Complete" : "");
+    }
     const done = progress.completed(lesson.id);
     complete.textContent = done ? "Mark lesson incomplete" : "Mark lesson complete";
   }
   function renderLesson() {
+    const items = courseLessons.get(course.id);
+    const position = items.indexOf(lesson);
+    const words = list(lesson.sections).map(section => section.text).join(" ").split(/\s+/).length;
+    byId("lesson-position").textContent = [
+      `Lesson ${position + 1} of ${items.length}`,
+      `${Math.max(1, Math.ceil(words / 200))} min read`,
+      lesson.level,
+    ].filter(Boolean).join(" · ");
     lessonTitle.textContent = lesson.title;
     lessonContent.replaceChildren();
     addText(lessonContent, "p", lesson.summary, "lesson-summary");
+    if (list(lesson.objectives).length) {
+      const objectives = element("div", null, "lesson-objectives");
+      objectives.append(element("h4", "After this lesson"));
+      const items = element("ul");
+      for (const objective of lesson.objectives) items.append(element("li", objective));
+      objectives.append(items);
+      lessonContent.append(objectives);
+    }
     for (const section of list(lesson.sections)) {
       addText(lessonContent, "h4", section.heading);
       addText(lessonContent, "p", section.text);
@@ -322,22 +398,73 @@ function initEW(data, sources, progress) {
       addText(lessonContent, "h4", "Key terms");
       addText(lessonContent, "p", lesson.terms.join(" · "));
     }
+    addText(lessonContent, "p", lesson.sourceLocator ? `Source reading: ${lesson.sourceLocator}` : "", "meta");
     addSources(lessonContent, lesson.sourceIds, sources);
+    byId("previous-lesson").disabled = position === 0;
+    byId("next-lesson").disabled = position === items.length - 1;
     renderCompletion();
   }
+  function renderCourse() {
+    courseSelect.value = course.id;
+    lessonSelect.replaceChildren();
+    for (const item of courseLessons.get(course.id)) lessonSelect.add(new Option(item.title, item.id));
+    lessonSelect.value = lesson.id;
+    addCourseContext(byId("course-context"), course);
+    byId("course-map-link").hidden = course.kind === "orientation";
+  }
+  function selectLesson(id, focus = false, writeAddress = true) {
+    const next = lessonMap.get(id);
+    if (!next) return;
+    lesson = next;
+    course = courseMap.get(lesson.courseId);
+    renderCourse();
+    renderLesson();
+    renderPractice();
+    if (writeAddress) updateAddress();
+    if (focus) {
+      lessonTitle.focus({ preventScroll: true });
+      byId("lesson-reader").scrollIntoView({ block: "start" });
+    }
+  }
+
+  const catalog = byId("course-list");
+  for (const item of data.courses) {
+    courseSelect.add(new Option(item.title, item.id));
+    const card = element("article", null, "panel course-card");
+    card.dataset.course = item.id;
+    addText(card, "p", item.code || "Foundations", "eyebrow");
+    const title = element("h3");
+    title.append(lessonLink(courseLessons.get(item.id)[0], item.title));
+    card.append(title, editionBadge(item));
+    addText(card, "p", item.description);
+    addText(card, "p", item.verifiedEdition || item.edition, "meta");
+    const status = element("p", null, "meta course-card-progress");
+    card.append(status, lessonLink(courseLessons.get(item.id)[0], `Open ${item.code || "foundations"}`));
+    courseCards.set(item.id, { element: card, progress: status });
+    catalog.append(card);
+  }
+  byId("curriculum-stats").textContent = `${manuals.length} publication courses + foundations · ${data.lessons.length} lessons · ${allCards.length} recall questions`;
+
   const renderPractice = initPractice(
-    () => scope.value === "all" ? allCards : lessonCards.get(lesson.id),
+    () => scope.value === "all" ? allCards : scope.value === "course"
+      ? courseLessons.get(course.id).flatMap(item => lessonCards.get(item.id))
+      : lessonCards.get(lesson.id),
     progress,
     (answer, card) => {
       addText(answer, "p", card.answer);
+      addText(answer, "p", card.sourceLocator ? `Source reading: ${card.sourceLocator}` : "", "meta");
       addSources(answer, card.sourceIds, sources);
     },
   );
-  lessonSelect.addEventListener("change", () => {
-    lesson = data.lessons.find(item => item.id === lessonSelect.value);
-    renderLesson();
-    renderPractice();
-  });
+  courseSelect.addEventListener("change", () => selectLesson(courseLessons.get(courseSelect.value)[0].id));
+  lessonSelect.addEventListener("change", () => selectLesson(lessonSelect.value));
+  for (const [id, direction] of [["previous-lesson", -1], ["next-lesson", 1]]) {
+    byId(id).addEventListener("click", () => {
+      const items = courseLessons.get(course.id);
+      const next = items[items.indexOf(lesson) + direction];
+      if (next) selectLesson(next.id, true);
+    });
+  }
   scope.addEventListener("change", () => renderPractice());
   byId("practice-lesson").addEventListener("click", () => {
     scope.value = "selected";
@@ -349,7 +476,107 @@ function initEW(data, sources, progress) {
     progress.complete(lesson.id, !progress.completed(lesson.id));
     renderCompletion();
   });
+  renderCourse();
   renderLesson();
+  window.addEventListener("popstate", () => {
+    const selected = lessonFromAddress();
+    if (selected.id !== lesson.id) selectLesson(selected.id, false, false);
+  });
+
+  const normalize = text => text.toLowerCase().normalize("NFKD").replace(/\p{M}/gu, "");
+  const index = data.lessons.map(item => ({
+    lesson: item,
+    text: normalize([item.title, item.summary, courseMap.get(item.courseId).title,
+      ...list(item.objectives), ...list(item.terms),
+      ...list(item.sections).flatMap(section => [section.heading, section.text])].join(" ")),
+  }));
+  let matches = [];
+  let visible = 0;
+  function appendMatches() {
+    for (const { lesson: item } of matches.slice(visible, visible + 20)) {
+      const row = element("li");
+      row.append(lessonLink(item));
+      addText(row, "span", courseMap.get(item.courseId).title, "meta");
+      byId("topic-matches").append(row);
+    }
+    visible = Math.min(visible + 20, matches.length);
+    byId("topic-count").textContent = matches.length
+      ? `Showing ${visible} of ${matches.length} matching ${plural(matches.length, "lesson")}`
+      : "No lessons match this search. Try a broader term.";
+    byId("more-topics").hidden = visible >= matches.length;
+  }
+  byId("topic-search").addEventListener("input", event => {
+    const words = normalize(event.target.value.trim()).split(/\s+/).filter(Boolean);
+    byId("topic-results").hidden = !words.length;
+    byId("topic-matches").replaceChildren();
+    visible = 0;
+    matches = words.length ? index.filter(item => words.every(word => item.text.includes(word))) : [];
+    appendMatches();
+  });
+  byId("more-topics").addEventListener("click", () => {
+    const firstNew = visible;
+    appendMatches();
+    byId("topic-matches").children[firstNew]?.querySelector("a").focus();
+  });
+
+  const coverageLabels = {
+    lesson: ["Lesson + source reading", ""],
+    "guided-reading": ["Guided source reading", "reading"],
+    unverified: ["Awaiting verification", "pending"],
+  };
+  for (const item of manuals) coverageSelect.add(new Option(item.title, item.id));
+  function renderCoverage() {
+    const selected = courseMap.get(coverageSelect.value);
+    const units = list(selected.units);
+    addCourseContext(byId("coverage-context"), selected);
+    const taught = units.filter(unit => unit.status === "lesson").length;
+    const guided = units.filter(unit => unit.status === "guided-reading").length;
+    const unverified = units.filter(unit => unit.status === "unverified").length;
+    byId("coverage-summary").textContent = `${units.length} chapters and appendices mapped · ${taught} with lessons · ${guided} guided reading · ${unverified} awaiting verification`;
+    const container = byId("coverage-units");
+    container.replaceChildren();
+    for (const unit of units) {
+      const details = element("details", null, "reference-entry coverage-unit");
+      const summary = element("summary");
+      summary.append(element("span", [unit.label, unit.title].filter(Boolean).join(" — "), "reference-term"));
+      const [label, style] = coverageLabels[unit.status] ?? coverageLabels.unverified;
+      summary.append(element("span", label, `badge ${style}`.trim()));
+      const body = element("div", null, "reference-detail");
+      addText(body, "p", unit.locator, "meta");
+      if (list(unit.topics).length) {
+        addText(body, "h4", "Topics to account for");
+        const topics = element("ul");
+        for (const topic of unit.topics) topics.append(element("li", topic));
+        body.append(topics);
+      }
+      addText(body, "p", unit.note);
+      addText(body, "p", unit.readingObjective ? `Reading objective: ${unit.readingObjective}` : "");
+      if (list(unit.lessonIds).length) {
+        addText(body, "h4", "Study on this site");
+        const lessons = element("ul");
+        for (const id of unit.lessonIds) {
+          const item = lessonMap.get(id);
+          if (!item) continue;
+          const row = element("li");
+          row.append(lessonLink(item));
+          lessons.append(row);
+        }
+        body.append(lessons);
+      }
+      const source = sources.get(selected.sourceId);
+      if (source) body.append(link("Open the source reading", source.url));
+      details.append(summary, body);
+      container.append(details);
+    }
+  }
+  coverageSelect.value = course.kind === "orientation" ? manuals[0].id : course.id;
+  coverageSelect.addEventListener("change", renderCoverage);
+  byId("course-map-link").addEventListener("click", () => {
+    coverageSelect.value = course.id;
+    renderCoverage();
+    byId("coverage-heading").focus({ preventScroll: true });
+  });
+  renderCoverage();
 
   const publications = byId("publication-list");
   for (const publication of list(data.publications)) {
@@ -358,6 +585,16 @@ function initEW(data, sources, progress) {
     addText(item, "p", [publication.edition, publication.access].filter(Boolean).join(" · "), "meta");
     addText(item, "p", publication.note);
     if (publication.url) item.append(link(`Open ${publication.code || publication.title}`, publication.url));
+    if (publication.readingUrl) {
+      const alternate = element("p");
+      alternate.append(link(publication.readingNote || "Alternate public reading copy", publication.readingUrl));
+      item.append(alternate);
+    }
+    if (publication.catalogUrl) {
+      const catalog = element("p");
+      catalog.append(link("Official catalog record", publication.catalogUrl));
+      item.append(catalog);
+    }
     addSources(item, publication.sourceIds, sources);
     publications.append(item);
   }
@@ -381,6 +618,12 @@ async function loadStudy() {
     if (!response.ok) throw new Error("Could not fetch study material");
     const data = await response.json();
     if (!list(acronyms ? data?.entries : data?.lessons).length) throw new Error("Study material is empty");
+    if (!acronyms) {
+      const courses = list(data.courses);
+      const ids = new Set(courses.map(item => item.id));
+      if (!courses.length || courses.some(item => !data.lessons.some(lesson => lesson.courseId === item.id))
+        || data.lessons.some(lesson => !ids.has(lesson.courseId))) throw new Error("Course content is incomplete");
+    }
     const sources = new Map(list(data.sources).map(source => [source.id, source]));
     const key = acronyms ? "army-acronyms.progress.v1" : "ew-study.progress.v1";
     const progress = createProgress(key);
