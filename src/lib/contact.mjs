@@ -1,3 +1,17 @@
+export function getStudyCorrectionDraft(search, currentMessage = '') {
+  const params = new URLSearchParams(search);
+  if (params.get('topic') !== 'army-study') return null;
+  if (currentMessage) return currentMessage;
+  const candidate = params.get('source') || '';
+  const source = candidate.length <= 200 && /^\/study\/[a-z0-9/_-]*$/i.test(candidate) ? candidate : '/study/';
+  return [
+    'Army Study correction', '', `Page: ${source}`,
+    'Category (chain of command, local policy, study content, or broken link):',
+    'Current information:', 'Suggested correction:',
+    'Unit / school (if relevant):', 'Effective date:', 'Supporting reference:',
+  ].join('\n');
+}
+
 export function validateContact(input) {
   const fields = {};
   for (const key of ['name', 'email', 'message']) fields[key] = String(input[key] || '').trim();

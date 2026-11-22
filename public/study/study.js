@@ -34,7 +34,22 @@ function link(text, url) {
   return element("span", text);
 }
 
-function addSources(parent, ids, sources) {
+function addSourceAlternatives(parent, source) {
+  const seen = new Set([source.url]);
+  for (const [url, label] of [
+    [source.catalogUrl, source.catalogLabel || "Official catalog record"],
+    [source.readingUrl, source.readingNote || "Alternate public reading copy"],
+  ]) {
+    if (!url || seen.has(url)) continue;
+    seen.add(url);
+    const row = element("p");
+    row.append(link(label, url));
+    parent.append(row);
+  }
+  addText(parent, "p", source.linkNote, "meta");
+}
+
+function addSources(parent, ids, sources, includeAlternatives = true) {
   const citations = [...new Set(list(ids))].map(id => sources.get(id)).filter(Boolean);
   if (!citations.length) return;
   const section = element("div", null, "sources meta");
@@ -43,6 +58,7 @@ function addSources(parent, ids, sources) {
   for (const source of citations) {
     const item = element("li");
     item.append(link(sourceLabel(source), source.url));
+    if (includeAlternatives) addSourceAlternatives(item, source);
     items.append(item);
   }
   parent.append(section);
@@ -564,7 +580,10 @@ function initEW(data, sources, progress) {
         body.append(lessons);
       }
       const source = sources.get(selected.sourceId);
-      if (source) body.append(link("Open the source reading", source.url));
+      if (source) {
+        body.append(link("Open the source reading", source.url));
+        addSourceAlternatives(body, source);
+      }
       details.append(summary, body);
       container.append(details);
     }
@@ -595,7 +614,7 @@ function initEW(data, sources, progress) {
       catalog.append(link("Official catalog record", publication.catalogUrl));
       item.append(catalog);
     }
-    addSources(item, publication.sourceIds, sources);
+    addSources(item, publication.sourceIds, sources, false);
     publications.append(item);
   }
   if (!publications.hasChildNodes()) addText(publications, "p", "No publications are available.");
