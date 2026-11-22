@@ -31,13 +31,12 @@ const active = (href: string) => path.startsWith(href) ? 'page' : undefined;
       <nav id="navigation" aria-label="Main navigation">
         <a href="/projects/" aria-current={active('/projects/')}>Work</a>
         <a href="/links/" aria-current={active('/links/')}>Links</a>
-        <a class="nav-contact-compact" href="/connect/" aria-current={active('/connect/')}>Contact</a>
         <a href="/" aria-current={path === '/' ? 'page' : undefined}>About me</a>
       </nav>
       <button id="theme-toggle" class="icon-button" aria-label="Switch color theme" title="Switch color theme"><Icon name="sun" size={19} /></button>
     </div></header>
     <main id="main"><slot /></main>
-    <footer class="site-footer container"><div><a class="footer-brand" href="/">{profile.initials}<span>.</span></a><p>Thoughtful experiments. Deliberate engineering.</p></div><div class="footer-right"><div class="social-row">{socialLinks.map(s => <a href={s.url} aria-label={s.label} target="_blank" rel="noopener noreferrer"><Icon name={s.key} size={18} /></a>)}</div><span>© {new Date().getFullYear()} {profile.name} · Built with Astro</span></div></footer>
+    <footer class="site-footer container"><div><a class="footer-brand" href="/">{profile.initials}<span>.</span></a><p>Thoughtful experiments. Deliberate engineering.</p></div><div class="footer-right"><div class="social-row">{socialLinks.map(s => <a href={s.url} aria-label={s.label} target="_blank" rel="noopener noreferrer"><Icon name={s.key} size={18} /></a>)}</div><span>© {new Date().getFullYear()} {profile.name} · Built with Astro · <a class="footer-contact" href="/connect/" aria-current={active('/connect/')}>Contact</a></span></div></footer>
     <script>
       const button = document.querySelector<HTMLButtonElement>('#mobile-toggle');
       const navigation = document.querySelector<HTMLElement>('#navigation');
