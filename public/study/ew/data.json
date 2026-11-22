@@ -1,0 +1,440 @@
+{
+  "sources": [
+    {
+      "id": "fm-3-12",
+      "title": "FM 3-12 — Cyberspace and Electromagnetic Warfare Operations",
+      "edition": "17 September 2025",
+      "url": "https://armypubs.army.mil/ProductMaps/PubForm/Details.aspx?PUB_ID=1031926",
+      "access": "Official catalog record",
+      "note": "Army-level framework. This link opens the official catalog record and its publisher download link.",
+      "locator": "Edition record"
+    },
+    {
+      "id": "atp-3-12-3",
+      "title": "ATP 3-12.3 — Electromagnetic Warfare Techniques",
+      "edition": "30 January 2023, Change 2 dated 22 August 2025",
+      "url": "https://armypubs.army.mil/ProductMaps/PubForm/Details.aspx?PUB_ID=1026337",
+      "access": "Official catalog record",
+      "note": "Army techniques reference. The catalog lists Change 1 (18 September 2024) and Change 2 (22 August 2025); check the change sheet in your copy.",
+      "locator": "Edition and changes record"
+    },
+    {
+      "id": "atp-3-12-4",
+      "title": "ATP 3-12.4 — Electromagnetic Warfare Platoon",
+      "edition": "9 January 2023",
+      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/6BBD3057-2A18-4A0C-BEBA-5D825D0E88CF-1673296215065/atp3_12x4.pdf",
+      "access": "Public Army PDF",
+      "note": "APD lists this edition as active. Start with the preface for its audience and purpose.",
+      "locator": "Preface"
+    },
+    {
+      "id": "jp-3-85",
+      "title": "JP 3-85 — Joint Electromagnetic Spectrum Operations",
+      "edition": "22 May 2020",
+      "url": "https://www.jcs.mil/Portals/36/Documents/Doctrine/pubs/jp3_85.pdf",
+      "access": "Public Joint Staff PDF",
+      "note": "This is the edition available on the Joint Staff's public site. Use the Executive Summary, Chapters I and II, and glossary for the introductory reading.",
+      "locator": "Executive Summary; chapters I–II; appendix A; glossary"
+    },
+    {
+      "id": "atp-3-01-81",
+      "title": "ATP 3-01.81 — Counter-Unmanned Aircraft System (C-UAS) Operations",
+      "edition": "23 May 2025",
+      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/B6A1625F-6975-4367-82C8-E67E901218C7-1753193840461/ATP3_01x81.pdf",
+      "access": "Public Army PDF",
+      "note": "APD lists this edition as active. Its cover identifies the 11 August 2023 edition as superseded. Optional mission-specific reference.",
+      "locator": "Cover and publication information"
+    },
+    {
+      "id": "atp-6-02-70",
+      "title": "ATP 6-02.70 — Techniques for Spectrum Management Operations",
+      "edition": "16 September 2025",
+      "url": "https://armypubs.army.mil/ProductMaps/PubForm/ATP.aspx",
+      "access": "Official catalog listing",
+      "note": "Army spectrum-management reference. Search this official catalog page for ATP 6-02.70 and follow its record to the publisher download.",
+      "locator": "Cover and publication information"
+    },
+    {
+      "id": "atp-7-100-1",
+      "title": "ATP 7-100.1 — Russian Tactics",
+      "edition": "29 February 2024, Change 1 dated 23 April 2024",
+      "url": "https://oe.t2com.army.mil/site-content/OEE/Russia%20Landing%20Zone/Russian%20Tactics-ATP_7-100.1-Feb2024.pdf",
+      "access": "Public Army PDF",
+      "note": "Supplemental operational-environment reading. This public copy includes the 23 April 2024 Change 1 transmittal.",
+      "locator": "Cover and publication information"
+    },
+    {
+      "id": "atp-7-100-3",
+      "title": "ATP 7-100.3 — Chinese Tactics",
+      "edition": "9 August 2021, Change 1 dated 24 November 2021",
+      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/53492E53-AE5F-44CC-9174-9130FC8BAE09-1628600858692/atp7_100x3wc1.pdf",
+      "access": "Public Army PDF",
+      "note": "APD lists the edition with Change 1 as active. Optional operational environment context.",
+      "locator": "Cover and publication information"
+    },
+    {
+      "id": "army-25e",
+      "title": "Army Communicator — Enabling Freedom of Maneuver in the EMOE: Modernizing the 25E",
+      "edition": "1 September 2025",
+      "url": "https://www.lineofdeparture.army.mil/Journals/Army-Communicator/Archive/Summer-2025/Enabling-Freedom-of-Maneuver/",
+      "access": "Public Army professional article",
+      "note": "Read the section titled Collaboration Is Combat Power for the Army spectrum manager's staff relationships.",
+      "locator": "Collaboration Is Combat Power"
+    },
+    {
+      "id": "cjcs-3320-01d",
+      "title": "CJCSM 3320.01D — Joint Electromagnetic Spectrum Operations",
+      "edition": "24 January 2025",
+      "url": "https://www.jcs.mil/Portals/36/Documents/Library/Manuals/CJCSM%203320.01D.pdf",
+      "access": "Public Joint Staff PDF",
+      "note": "The opening Purpose and Summary of Changes explain how the manual complements JP 3-85.",
+      "locator": "Purpose and Summary of Changes"
+    }
+  ],
+  "lessons": [
+    {
+      "id": "ew-fundamentals",
+      "title": "The spectrum and the three divisions of EW",
+      "summary": "Explain what the electromagnetic spectrum is and classify an activity by its purpose.",
+      "sections": [
+        {
+          "heading": "Why the spectrum matters",
+          "text": "The electromagnetic spectrum covers the full range of electromagnetic radiation. Radios, radars, and satellite navigation all depend on portions of it. The electromagnetic operational environment describes the electromagnetic conditions and activity relevant to an operation. Those conditions can affect whether systems work as intended."
+        },
+        {
+          "heading": "Classify the activity by its purpose",
+          "text": "Electromagnetic warfare uses electromagnetic or directed energy to control use of the spectrum or affect an adversary. Electromagnetic attack (EA) acts against adversary capability. Electromagnetic protection (EP) protects friendly people, facilities, and equipment from harmful effects of spectrum use. Electromagnetic support (ES) detects or identifies emissions to inform decisions. More than one division can contribute to the same mission."
+        },
+        {
+          "heading": "Read the doctrine",
+          "text": "Read the JP 3-85 Executive Summary and Chapter I overview. Look up EA, EP, ES, and EW in glossary Part II."
+        }
+      ],
+      "terms": [
+        "EMS — electromagnetic spectrum",
+        "EW — electromagnetic warfare",
+        "EA — electromagnetic attack",
+        "EP — electromagnetic protection",
+        "ES — electromagnetic support"
+      ],
+      "questions": [
+        {
+          "prompt": "Which three divisions make up EW?",
+          "answer": "Electromagnetic attack, electromagnetic protection, and electromagnetic support.",
+          "id": "q1"
+        },
+        {
+          "prompt": "An exercise team identifies an unexpected emission so staff can understand the environment. Which division matches that purpose?",
+          "answer": "Electromagnetic support.",
+          "id": "q2"
+        },
+        {
+          "prompt": "A unit protects friendly equipment from harmful electromagnetic effects. Which division fits?",
+          "answer": "Electromagnetic protection.",
+          "id": "q3"
+        }
+      ],
+      "sourceIds": [
+        "jp-3-85"
+      ]
+    },
+    {
+      "id": "spectrum-management",
+      "title": "Spectrum management and interference",
+      "summary": "Explain why organizations coordinate spectrum use and distinguish an observation from a cause.",
+      "sections": [
+        {
+          "heading": "Coordinate a shared resource",
+          "text": "Different users can need the same or overlapping parts of the spectrum. Spectrum management brings together planning, engineering, and administrative work so users can meet requirements under applicable rules. Frequency assignments and coordination help compatible users operate alongside each other."
+        },
+        {
+          "heading": "Describe the symptom first",
+          "text": "Interference can arise from friendly systems, civilian activity, or other electromagnetic conditions. A brief failure during an exercise establishes a symptom. Staff can compare observations, check for conflicts, and record what remains unknown before drawing a conclusion about the cause."
+        },
+        {
+          "heading": "Read the doctrine",
+          "text": "Read the introductory paragraphs of JP 3-85 Appendix A. Use the Army Communicator article's Collaboration Is Combat Power section to connect the concept to the Army spectrum manager role."
+        }
+      ],
+      "terms": [
+        "Spectrum management — planning and coordination of spectrum use",
+        "Frequency assignment — authorized use of a frequency under specified conditions",
+        "EMI — electromagnetic interference that degrades system performance",
+        "Deconfliction — coordination to prevent incompatible activities from interfering with one another",
+        "EMOE — electromagnetic operational environment"
+      ],
+      "questions": [
+        {
+          "prompt": "Two exercise teams request overlapping spectrum use. What staff function can assess the conflict?",
+          "answer": "Spectrum management.",
+          "id": "q1"
+        },
+        {
+          "prompt": "What can you conclude from an unexplained interruption alone?",
+          "answer": "An interruption occurred. Its cause still needs evidence.",
+          "id": "q2"
+        },
+        {
+          "prompt": "Why coordinate spectrum requirements early?",
+          "answer": "Early coordination gives staff time to identify conflicts and reconcile requirements before they affect other users.",
+          "id": "q3"
+        }
+      ],
+      "sourceIds": [
+        "jp-3-85",
+        "atp-6-02-70",
+        "army-25e"
+      ]
+    },
+    {
+      "id": "army-integration",
+      "title": "How Army staff and EW units work together",
+      "summary": "Identify what commanders, coordinating staffs, spectrum managers, and EW units contribute.",
+      "sections": [
+        {
+          "heading": "Who contributes what",
+          "text": "Commanders establish objectives and priorities. Staff integrate inputs from operations, intelligence, signal, and other functions into a common understanding. The spectrum manager helps reconcile spectrum requirements. EW personnel contribute expertise about electromagnetic conditions and EW capabilities relevant to the mission."
+        },
+        {
+          "heading": "How the pieces fit",
+          "text": "Cyberspace electromagnetic activities (CEMA) provide an Army context for coordinating related work across the staff. The public Army Communicator overview describes spectrum managers collaborating with EW, cyber, intelligence, and operations staff. The ATP 3-12.4 preface identifies platoon leaders and platoon sergeants as its primary audience."
+        },
+        {
+          "heading": "Read the doctrine",
+          "text": "Start with the ATP 3-12.4 preface for the publication's audience. Read Collaboration Is Combat Power for staff coordination, then use the FM 3-12 catalog entry to identify the current Army baseline."
+        }
+      ],
+      "terms": [
+        "CEMA — cyberspace electromagnetic activities",
+        "25E — Army electromagnetic spectrum manager military occupational specialty",
+        "EW platoon — Army unit organized for electromagnetic warfare duties",
+        "Staff integration — coordination of inputs from different staff functions around common objectives"
+      ],
+      "questions": [
+        {
+          "prompt": "Who establishes the unit's objectives and priorities?",
+          "answer": "The commander.",
+          "id": "q1"
+        },
+        {
+          "prompt": "Who helps reconcile spectrum-use requirements across staff functions?",
+          "answer": "The spectrum manager, working with stakeholders across the staff.",
+          "id": "q2"
+        },
+        {
+          "prompt": "Who is the primary audience for ATP 3-12.4?",
+          "answer": "EW platoon leaders and platoon sergeants.",
+          "id": "q3"
+        }
+      ],
+      "sourceIds": [
+        "fm-3-12",
+        "atp-3-12-4",
+        "army-25e"
+      ]
+    },
+    {
+      "id": "joint-coordination",
+      "title": "How joint forces coordinate spectrum use",
+      "summary": "Explain the relationship among the joint force commander, service components, and the joint electromagnetic spectrum operations cell.",
+      "sections": [
+        {
+          "heading": "A shared operating environment",
+          "text": "A joint force's components operate in a shared electromagnetic environment. Joint electromagnetic spectrum operations (JEMSO) bring together electromagnetic warfare and spectrum management so the force can prioritize, synchronize, and deconflict activities in support of joint objectives."
+        },
+        {
+          "heading": "Coordinate across components",
+          "text": "Service components bring their requirements and subject-matter expertise. The joint electromagnetic spectrum operations cell (JEMSOC) helps coordinate activities for the joint force commander. Its work can include aligning requirements across components and addressing conflicts with partners."
+        },
+        {
+          "heading": "Read the doctrine",
+          "text": "Read the JP 3-85 Executive Summary and Chapter II introduction. Compare the responsibilities discussed there with the opening Purpose and Summary of Changes in CJCSM 3320.01D."
+        }
+      ],
+      "terms": [
+        "JEMSO — joint electromagnetic spectrum operations",
+        "JEMSOC — joint electromagnetic spectrum operations cell",
+        "JFC — joint force commander",
+        "Service component — a service's organization participating in a joint force"
+      ],
+      "questions": [
+        {
+          "prompt": "What two areas does JEMSO bring together?",
+          "answer": "Electromagnetic warfare and spectrum management.",
+          "id": "q1"
+        },
+        {
+          "prompt": "What does the JEMSOC help the joint force commander do?",
+          "answer": "Coordinate and integrate joint electromagnetic spectrum operations.",
+          "id": "q2"
+        },
+        {
+          "prompt": "Two service components have conflicting spectrum requirements in a tabletop exercise. Why surface that conflict at joint level?",
+          "answer": "Joint coordination can reconcile conflicting demands across components and align them with the joint force commander's priorities.",
+          "id": "q3"
+        }
+      ],
+      "sourceIds": [
+        "jp-3-85",
+        "cjcs-3320-01d"
+      ]
+    },
+    {
+      "id": "reading-route",
+      "title": "Find and read the right publication",
+      "summary": "Choose a doctrine source for a question and verify its title, date, and changes.",
+      "sections": [
+        {
+          "heading": "Start with a question",
+          "text": "For Army-level framing, find FM 3-12 in the Army Publishing Directorate (APD) record. Use the JP 3-85 Executive Summary and glossary for joint terminology. Use ATP 3-12.4's preface for the EW platoon audience and the ATP 6-02.70 catalog record for the Army spectrum management reference."
+        },
+        {
+          "heading": "Verify the edition",
+          "text": "Check the publication number, title, basic edition date, and listed changes. A change sheet can carry a newer date than the cover. For example, APD lists ATP 3-12.3 with a January 2023 basic edition and two subsequent changes. Verify the APD record if a saved copy and the official listing differ."
+        },
+        {
+          "heading": "Choose supplemental context",
+          "text": "ATP 3-01.81 provides context for counter-unmanned aircraft system operations. ATP 7-100.1 and ATP 7-100.3 provide separate operational environment references for Russian and Chinese ground forces. Use the covers and prefaces to identify each publication's scope before continuing."
+        }
+      ],
+      "terms": [
+        "FM — field manual",
+        "ATP — Army techniques publication",
+        "JP — joint publication",
+        "Basic edition — original issue date of the listed edition",
+        "Change — an issued update to a publication"
+      ],
+      "questions": [
+        {
+          "prompt": "Which source provides the joint terminology and coordination framework?",
+          "answer": "JP 3-85, starting with its Executive Summary and glossary.",
+          "id": "q1"
+        },
+        {
+          "prompt": "Which source describes the EW platoon and names its primary audience?",
+          "answer": "ATP 3-12.4, starting with its preface.",
+          "id": "q2"
+        },
+        {
+          "prompt": "A downloaded ATP has the correct title but only shows Change 1. What do you check?",
+          "answer": "Check the official APD record for the basic edition and any later changes. ATP 3-12.3 currently lists Change 2.",
+          "id": "q3"
+        }
+      ],
+      "sourceIds": [
+        "fm-3-12",
+        "jp-3-85",
+        "atp-3-12-3",
+        "atp-3-12-4",
+        "atp-6-02-70",
+        "atp-3-01-81",
+        "atp-7-100-1",
+        "atp-7-100-3"
+      ]
+    }
+  ],
+  "schemaVersion": 1,
+  "updated": "2026-11-22",
+  "publications": [
+    {
+      "id": "fm-3-12",
+      "title": "Cyberspace and Electromagnetic Warfare Operations",
+      "edition": "17 September 2025",
+      "url": "https://armypubs.army.mil/ProductMaps/PubForm/Details.aspx?PUB_ID=1031926",
+      "access": "Official catalog record",
+      "note": "Army-level framework. This link opens the official catalog record and its publisher download link.",
+      "locator": "Edition record",
+      "code": "FM 3-12"
+    },
+    {
+      "id": "atp-3-12-3",
+      "title": "Electromagnetic Warfare Techniques",
+      "edition": "30 January 2023, Change 2 dated 22 August 2025",
+      "url": "https://armypubs.army.mil/ProductMaps/PubForm/Details.aspx?PUB_ID=1026337",
+      "access": "Official catalog record",
+      "note": "Army techniques reference. The catalog lists Change 1 (18 September 2024) and Change 2 (22 August 2025); check the change sheet in your copy.",
+      "locator": "Edition and changes record",
+      "code": "ATP 3-12.3"
+    },
+    {
+      "id": "atp-3-12-4",
+      "title": "Electromagnetic Warfare Platoon",
+      "edition": "9 January 2023",
+      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/6BBD3057-2A18-4A0C-BEBA-5D825D0E88CF-1673296215065/atp3_12x4.pdf",
+      "access": "Public Army PDF",
+      "note": "APD lists this edition as active. Start with the preface for its audience and purpose.",
+      "locator": "Preface",
+      "code": "ATP 3-12.4"
+    },
+    {
+      "id": "jp-3-85",
+      "title": "Joint Electromagnetic Spectrum Operations",
+      "edition": "22 May 2020",
+      "url": "https://www.jcs.mil/Portals/36/Documents/Doctrine/pubs/jp3_85.pdf",
+      "access": "Public Joint Staff PDF",
+      "note": "This is the edition available on the Joint Staff's public site. Use the Executive Summary, Chapters I and II, and glossary for the introductory reading.",
+      "locator": "Executive Summary; chapters I–II; appendix A; glossary",
+      "code": "JP 3-85"
+    },
+    {
+      "id": "atp-3-01-81",
+      "title": "Counter-Unmanned Aircraft System (C-UAS) Operations",
+      "edition": "23 May 2025",
+      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/B6A1625F-6975-4367-82C8-E67E901218C7-1753193840461/ATP3_01x81.pdf",
+      "access": "Public Army PDF",
+      "note": "APD lists this edition as active. Its cover identifies the 11 August 2023 edition as superseded. Optional mission-specific reference.",
+      "locator": "Cover and publication information",
+      "code": "ATP 3-01.81"
+    },
+    {
+      "id": "atp-6-02-70",
+      "title": "Techniques for Spectrum Management Operations",
+      "edition": "16 September 2025",
+      "url": "https://armypubs.army.mil/ProductMaps/PubForm/ATP.aspx",
+      "access": "Official catalog listing",
+      "note": "Army spectrum-management reference. Search this official catalog page for ATP 6-02.70 and follow its record to the publisher download.",
+      "locator": "Cover and publication information",
+      "code": "ATP 6-02.70"
+    },
+    {
+      "id": "atp-7-100-1",
+      "title": "Russian Tactics",
+      "edition": "29 February 2024, Change 1 dated 23 April 2024",
+      "url": "https://oe.t2com.army.mil/site-content/OEE/Russia%20Landing%20Zone/Russian%20Tactics-ATP_7-100.1-Feb2024.pdf",
+      "access": "Public Army PDF",
+      "note": "Supplemental operational-environment reading. This public copy includes the 23 April 2024 Change 1 transmittal.",
+      "locator": "Cover and publication information",
+      "code": "ATP 7-100.1"
+    },
+    {
+      "id": "atp-7-100-3",
+      "title": "Chinese Tactics",
+      "edition": "9 August 2021, Change 1 dated 24 November 2021",
+      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/53492E53-AE5F-44CC-9174-9130FC8BAE09-1628600858692/atp7_100x3wc1.pdf",
+      "access": "Public Army PDF",
+      "note": "APD lists the edition with Change 1 as active. Optional operational environment context.",
+      "locator": "Cover and publication information",
+      "code": "ATP 7-100.3"
+    },
+    {
+      "id": "army-25e",
+      "title": "Enabling Freedom of Maneuver in the EMOE: Modernizing the 25E",
+      "edition": "1 September 2025",
+      "url": "https://www.lineofdeparture.army.mil/Journals/Army-Communicator/Archive/Summer-2025/Enabling-Freedom-of-Maneuver/",
+      "access": "Public Army professional article",
+      "note": "Read the section titled Collaboration Is Combat Power for the Army spectrum manager's staff relationships.",
+      "locator": "Collaboration Is Combat Power",
+      "code": "Army Communicator"
+    },
+    {
+      "id": "cjcs-3320-01d",
+      "title": "Joint Electromagnetic Spectrum Operations",
+      "edition": "24 January 2025",
+      "url": "https://www.jcs.mil/Portals/36/Documents/Library/Manuals/CJCSM%203320.01D.pdf",
+      "access": "Public Joint Staff PDF",
+      "note": "The opening Purpose and Summary of Changes explain how the manual complements JP 3-85.",
+      "locator": "Purpose and Summary of Changes",
+      "code": "CJCSM 3320.01D"
+    }
+  ]
+}

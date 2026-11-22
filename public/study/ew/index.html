@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="theme-color" content="#08131f">
+  <title>EW Study | Army Study</title>
+  <link rel="stylesheet" href="/study/study.css">
+  <script type="module" src="/study/study.js"></script>
+</head>
+<body data-study="ew">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="/study/">Army Study</a>
+      <nav class="site-nav" aria-label="Study tools">
+        <a href="/study/">Study home</a>
+        <a href="/study/acronyms/">Army Acronyms</a>
+        <a href="/study/ew/" aria-current="page">EW Study</a>
+        <a href="/study/17e/">PhaseUp 17E</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main" class="shell" tabindex="-1">
+    <header class="hero">
+      <h1>EW Study</h1>
+      <p>Build your electromagnetic warfare vocabulary and read short lessons grounded in public Army and joint sources.</p>
+      <nav class="jump-nav" aria-label="On this page">
+        <a href="#lessons">Lessons</a>
+        <a href="#practice">Recall practice</a>
+        <a href="#publications">Publications</a>
+      </nav>
+    </header>
+    <p id="load-status" class="notice" role="status">Loading EW lessons and publications…</p>
+    <button id="retry" class="secondary" type="button" hidden>Retry loading</button>
+    <p id="storage-status" class="notice" role="status" hidden></p>
+    <noscript><p class="notice">Enable JavaScript to load the lessons and publications.</p></noscript>
+    <div id="study-content" hidden>
+      <section id="lessons" aria-labelledby="lessons-heading">
+        <h2 id="lessons-heading" tabindex="-1">Lessons</h2>
+        <div class="filter-row">
+          <div class="field search-field">
+            <label for="lesson-select">Choose a lesson</label>
+            <select id="lesson-select"></select>
+          </div>
+          <p id="lesson-progress" class="meta" role="status"></p>
+        </div>
+        <article id="lesson-reader" class="panel lesson-reader" aria-labelledby="lesson-title">
+          <h3 id="lesson-title"></h3>
+          <div id="lesson-content"></div>
+          <div class="actions">
+            <button type="button" id="complete-lesson">Mark lesson complete</button>
+            <a href="#practice" id="practice-lesson">Practice this lesson</a>
+          </div>
+        </article>
+      </section>
+      <section id="practice" aria-labelledby="practice-heading">
+        <h2 id="practice-heading" tabindex="-1">Recall practice</h2>
+        <p class="section-intro">Answer from memory, then reveal the explanation and rate your recall.</p>
+        <div class="filter-row">
+          <div class="field">
+            <label for="practice-scope">Lesson scope</label>
+            <select id="practice-scope">
+              <option value="selected">Selected lesson</option>
+              <option value="all">All lessons</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="practice-filter">Practice cards</label>
+            <select id="practice-filter">
+              <option value="all">All cards</option>
+              <option value="review">Review again only</option>
+            </select>
+          </div>
+          <p id="practice-summary" class="meta" role="status"></p>
+        </div>
+        <p id="card-empty" class="notice" role="status" hidden></p>
+        <article id="recall-card" class="panel recall-card" aria-labelledby="card-prompt" hidden>
+          <p id="card-context" class="meta"></p>
+          <h3 id="card-prompt" tabindex="-1"></h3>
+          <div id="card-answer" class="card-answer" tabindex="-1" hidden></div>
+          <div class="actions">
+            <button type="button" id="reveal-answer" aria-controls="card-answer" aria-expanded="false">Reveal answer</button>
+            <div id="card-ratings" class="actions" hidden>
+              <button type="button" id="review-again" class="secondary">Review again</button>
+              <button type="button" id="got-it">Got it</button>
+            </div>
+            <button type="button" id="skip-card" class="secondary">Skip card</button>
+          </div>
+        </article>
+      </section>
+      <section id="publications" aria-labelledby="publications-heading">
+        <h2 id="publications-heading">Publications</h2>
+        <div id="publication-list" class="reference-list"></div>
+      </section>
+      <footer class="study-footer">
+        <p id="updated" class="meta" hidden></p>
+        <p>Your lesson completion and recall ratings are saved in this browser.</p>
+        <button type="button" id="reset-progress" class="secondary">Reset EW progress</button>
+      </footer>
+    </div>
+  </main>
+</body>
+</html>

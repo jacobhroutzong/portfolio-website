@@ -1,0 +1,836 @@
+{
+  "entries": [
+    {
+      "id": "march",
+      "term": "MARCH",
+      "expansion": "Massive hemorrhage, Airway, Respiration, Circulation, Hypothermia/Head injury",
+      "category": "Casualty care",
+      "meaning": "A mnemonic for remembering casualty assessment priorities.",
+      "components": [
+        {
+          "letter": "M",
+          "meaning": "Massive hemorrhage"
+        },
+        {
+          "letter": "A",
+          "meaning": "Airway"
+        },
+        {
+          "letter": "R",
+          "meaning": "Respiration"
+        },
+        {
+          "letter": "C",
+          "meaning": "Circulation"
+        },
+        {
+          "letter": "H",
+          "meaning": "Hypothermia/Head injury"
+        }
+      ],
+      "note": "The Joint Trauma System guideline groups hypothermia and head injury under H.",
+      "sourceIds": [
+        "jts-nursing"
+      ]
+    },
+    {
+      "id": "tccc",
+      "term": "TCCC",
+      "expansion": "Tactical Combat Casualty Care",
+      "category": "Casualty care",
+      "meaning": "The military framework for point-of-injury trauma care and related training.",
+      "sourceIds": [
+        "jts-1380"
+      ]
+    },
+    {
+      "id": "nine-line-medevac",
+      "term": "9-Line MEDEVAC",
+      "expansion": "Nine-line medical evacuation request",
+      "category": "Casualty care",
+      "meaning": "A standardized request that communicates essential information to arrange a medical evacuation.",
+      "note": "The nine-line request and MIST serve different purposes. MIST summarizes clinical information for a casualty handoff.",
+      "sourceIds": [
+        "medevac-atp",
+        "jts-transport"
+      ],
+      "prompt": "What information is included in a nine-line MEDEVAC request?",
+      "components": [
+        {
+          "letter": "1",
+          "meaning": "Location of pickup site"
+        },
+        {
+          "letter": "2",
+          "meaning": "Radio frequency, call sign, and suffix"
+        },
+        {
+          "letter": "3",
+          "meaning": "Number of patients by evacuation precedence"
+        },
+        {
+          "letter": "4",
+          "meaning": "Special equipment required"
+        },
+        {
+          "letter": "5",
+          "meaning": "Number of patients by type"
+        },
+        {
+          "letter": "6",
+          "meaning": "Pickup-site security (wartime) or number and type of wound, injury, or illness (peacetime)"
+        },
+        {
+          "letter": "7",
+          "meaning": "Method of marking the pickup site"
+        },
+        {
+          "letter": "8",
+          "meaning": "Patient nationality and status"
+        },
+        {
+          "letter": "9",
+          "meaning": "Chemical, biological, radiological, and nuclear (CBRN) contamination, when applicable (wartime), or terrain description (peacetime)"
+        }
+      ]
+    },
+    {
+      "id": "mist",
+      "term": "MIST",
+      "expansion": "Mechanism of injury, Injuries, Signs and symptoms, Treatments",
+      "category": "Casualty care",
+      "meaning": "A concise format for documenting or handing off casualty information.",
+      "components": [
+        {
+          "letter": "M",
+          "meaning": "Mechanism of injury"
+        },
+        {
+          "letter": "I",
+          "meaning": "Injuries"
+        },
+        {
+          "letter": "S",
+          "meaning": "Signs and symptoms"
+        },
+        {
+          "letter": "T",
+          "meaning": "Treatments"
+        }
+      ],
+      "sourceIds": [
+        "jts-1380",
+        "jts-transport"
+      ]
+    },
+    {
+      "id": "lace",
+      "term": "LACE",
+      "expansion": "Liquids, Ammunition, Casualties, Equipment",
+      "category": "Reports",
+      "meaning": "A small-unit status report covering supplies, personnel casualties and equipment.",
+      "components": [
+        {
+          "letter": "L",
+          "meaning": "Liquids"
+        },
+        {
+          "letter": "A",
+          "meaning": "Ammunition"
+        },
+        {
+          "letter": "C",
+          "meaning": "Casualties"
+        },
+        {
+          "letter": "E",
+          "meaning": "Equipment"
+        }
+      ],
+      "sourceIds": [
+        "ranger"
+      ],
+      "note": "LACE adds liquids to the ACE status report; use the reporting format specified by the unit."
+    },
+    {
+      "id": "ace",
+      "term": "ACE report",
+      "expansion": "Ammunition, Casualties, Equipment",
+      "category": "Reports",
+      "meaning": "A small-unit status report used during reorganization.",
+      "components": [
+        {
+          "letter": "A",
+          "meaning": "Ammunition"
+        },
+        {
+          "letter": "C",
+          "meaning": "Casualties"
+        },
+        {
+          "letter": "E",
+          "meaning": "Equipment"
+        }
+      ],
+      "note": "ACE has other meanings in the Army. This entry is for the status report.",
+      "sourceIds": [
+        "skills"
+      ]
+    },
+    {
+      "id": "salute",
+      "term": "SALUTE",
+      "expansion": "Size, Activity, Location, Unit, Time, Equipment",
+      "category": "Reports",
+      "meaning": "A mnemonic for organizing observations in a spot report.",
+      "components": [
+        {
+          "letter": "S",
+          "meaning": "Size"
+        },
+        {
+          "letter": "A",
+          "meaning": "Activity"
+        },
+        {
+          "letter": "L",
+          "meaning": "Location"
+        },
+        {
+          "letter": "U",
+          "meaning": "Unit"
+        },
+        {
+          "letter": "T",
+          "meaning": "Time"
+        },
+        {
+          "letter": "E",
+          "meaning": "Equipment"
+        }
+      ],
+      "sourceIds": [
+        "infantry"
+      ]
+    },
+    {
+      "id": "gotwa",
+      "term": "GOTWA",
+      "expansion": "Going, Others, Time, What, Actions",
+      "category": "Planning",
+      "meaning": "A memory aid for a five-point contingency brief when a leader or element separates from the main body.",
+      "components": [
+        {
+          "letter": "G",
+          "meaning": "Where the leader is going"
+        },
+        {
+          "letter": "O",
+          "meaning": "Who else is going"
+        },
+        {
+          "letter": "T",
+          "meaning": "Expected time away"
+        },
+        {
+          "letter": "W",
+          "meaning": "What to do if the leader does not return on time"
+        },
+        {
+          "letter": "A",
+          "meaning": "Actions to consider if contact occurs during the separation"
+        }
+      ],
+      "sourceIds": [
+        "ranger"
+      ]
+    },
+    {
+      "id": "mett-tc",
+      "term": "METT-TC(I)",
+      "expansion": "Mission, Enemy, Terrain and weather, Troops and support available, Time available, Civil considerations, and Informational considerations",
+      "category": "Planning",
+      "meaning": "Mission variables used to organize analysis during Army planning.",
+      "components": [
+        {
+          "letter": "M",
+          "meaning": "Mission"
+        },
+        {
+          "letter": "E",
+          "meaning": "Enemy"
+        },
+        {
+          "letter": "T",
+          "meaning": "Terrain and weather"
+        },
+        {
+          "letter": "T",
+          "meaning": "Troops and support available"
+        },
+        {
+          "letter": "T",
+          "meaning": "Time available"
+        },
+        {
+          "letter": "C",
+          "meaning": "Civil considerations"
+        },
+        {
+          "letter": "(I)",
+          "meaning": "Informational considerations"
+        }
+      ],
+      "note": "METT-TC is the familiar short form. The parenthetical I identifies informational considerations integrated across the other variables.",
+      "sourceIds": [
+        "infantry"
+      ]
+    },
+    {
+      "id": "oakoc",
+      "term": "OAKOC",
+      "expansion": "Observation and fields of fire, Avenues of approach, Key terrain, Obstacles, Cover and concealment",
+      "category": "Planning",
+      "meaning": "A memory aid for the five military aspects of terrain.",
+      "components": [
+        {
+          "letter": "O",
+          "meaning": "Observation and fields of fire"
+        },
+        {
+          "letter": "A",
+          "meaning": "Avenues of approach"
+        },
+        {
+          "letter": "K",
+          "meaning": "Key terrain"
+        },
+        {
+          "letter": "O",
+          "meaning": "Obstacles"
+        },
+        {
+          "letter": "C",
+          "meaning": "Cover and concealment"
+        }
+      ],
+      "sourceIds": [
+        "infantry"
+      ]
+    },
+    {
+      "id": "slls",
+      "term": "SLLS",
+      "expansion": "Stop, Look, Listen, Smell",
+      "category": "Planning",
+      "meaning": "A memory aid for pausing and observing the surroundings.",
+      "components": [
+        {
+          "letter": "S",
+          "meaning": "Stop"
+        },
+        {
+          "letter": "L",
+          "meaning": "Look"
+        },
+        {
+          "letter": "L",
+          "meaning": "Listen"
+        },
+        {
+          "letter": "S",
+          "meaning": "Smell"
+        }
+      ],
+      "sourceIds": [
+        "ranger"
+      ]
+    },
+    {
+      "id": "tlps",
+      "term": "TLPs",
+      "expansion": "Troop leading procedures",
+      "category": "Planning",
+      "meaning": "The planning and preparation process used by small-unit leaders.",
+      "note": "TLP is the conventional abbreviation. Leaders can adjust the sequence of later steps to the situation. Supervision and refinement occur throughout.",
+      "sourceIds": [
+        "infantry"
+      ],
+      "prompt": "What are the eight troop leading procedures?",
+      "components": [
+        {
+          "letter": "1",
+          "meaning": "Receive the mission"
+        },
+        {
+          "letter": "2",
+          "meaning": "Issue a warning order"
+        },
+        {
+          "letter": "3",
+          "meaning": "Make a tentative plan"
+        },
+        {
+          "letter": "4",
+          "meaning": "Initiate movement"
+        },
+        {
+          "letter": "5",
+          "meaning": "Conduct reconnaissance"
+        },
+        {
+          "letter": "6",
+          "meaning": "Complete the plan"
+        },
+        {
+          "letter": "7",
+          "meaning": "Issue the operation order"
+        },
+        {
+          "letter": "8",
+          "meaning": "Supervise and refine"
+        }
+      ]
+    },
+    {
+      "id": "opord",
+      "term": "OPORD",
+      "expansion": "Operation order",
+      "category": "Planning",
+      "meaning": "An order that communicates a mission and how the unit is organized to carry it out.",
+      "note": "Its five paragraphs are summarized by the SMESC mnemonic.",
+      "sourceIds": [
+        "infantry",
+        "ranger"
+      ]
+    },
+    {
+      "id": "smesc",
+      "term": "SMESC",
+      "expansion": "Situation, Mission, Execution, Sustainment, Command and Signal",
+      "category": "Planning",
+      "meaning": "A memory aid for the five paragraphs of an Army operation order.",
+      "components": [
+        {
+          "letter": "S",
+          "meaning": "Situation"
+        },
+        {
+          "letter": "M",
+          "meaning": "Mission"
+        },
+        {
+          "letter": "E",
+          "meaning": "Execution"
+        },
+        {
+          "letter": "S",
+          "meaning": "Sustainment"
+        },
+        {
+          "letter": "C",
+          "meaning": "Command and Signal"
+        }
+      ],
+      "note": "Paragraph 4 is Sustainment in the cited Army format. Older teaching materials may use Service Support.",
+      "sourceIds": [
+        "infantry",
+        "ranger"
+      ]
+    },
+    {
+      "id": "pace",
+      "term": "PACE",
+      "expansion": "Primary, Alternate, Contingency, Emergency",
+      "category": "Communications",
+      "meaning": "A planning framework for designating communication options in order of preference.",
+      "components": [
+        {
+          "letter": "P",
+          "meaning": "Primary"
+        },
+        {
+          "letter": "A",
+          "meaning": "Alternate"
+        },
+        {
+          "letter": "C",
+          "meaning": "Contingency"
+        },
+        {
+          "letter": "E",
+          "meaning": "Emergency"
+        }
+      ],
+      "sourceIds": [
+        "pace-army"
+      ]
+    },
+    {
+      "id": "five-cs",
+      "term": "5 Cs",
+      "expansion": "Confirm, Clear, Cordon, Check, Control",
+      "category": "Safety",
+      "meaning": "A memory aid used in explosive-ordnance awareness training.",
+      "note": "ATP 4-32.2 (March 2024) uses this sequence for explosive ordnance. Other training references use a variant with Call. Learn the version named by your instructor or unit reference.",
+      "sourceIds": [
+        "eo"
+      ],
+      "prompt": "What are the 5 Cs in ATP 4-32.2 explosive-ordnance guidance?"
+    },
+    {
+      "id": "ldrship",
+      "term": "LDRSHIP",
+      "expansion": "Loyalty, Duty, Respect, Selfless Service, Honor, Integrity, Personal Courage",
+      "category": "Army profession",
+      "meaning": "A memory aid for the seven Army Values.",
+      "components": [
+        {
+          "letter": "L",
+          "meaning": "Loyalty"
+        },
+        {
+          "letter": "D",
+          "meaning": "Duty"
+        },
+        {
+          "letter": "R",
+          "meaning": "Respect"
+        },
+        {
+          "letter": "S",
+          "meaning": "Selfless Service"
+        },
+        {
+          "letter": "H",
+          "meaning": "Honor"
+        },
+        {
+          "letter": "I",
+          "meaning": "Integrity"
+        },
+        {
+          "letter": "P",
+          "meaning": "Personal Courage"
+        }
+      ],
+      "sourceIds": [
+        "tradoc"
+      ]
+    },
+    {
+      "id": "warnord",
+      "term": "WARNORD / WARNO",
+      "expansion": "Warning order",
+      "category": "Planning",
+      "meaning": "A preliminary notice that gives a unit time to begin preparing for an upcoming mission.",
+      "sourceIds": [
+        "infantry"
+      ],
+      "note": "WARNORD is the abbreviation in the cited Army publication; WARNO is also commonly used."
+    },
+    {
+      "id": "fragord",
+      "term": "FRAGORD / FRAGO",
+      "expansion": "Fragmentary order",
+      "category": "Planning",
+      "meaning": "An abbreviated order that updates an existing order.",
+      "sourceIds": [
+        "infantry"
+      ],
+      "note": "FRAGORD is the abbreviation in the cited Army publication; FRAGO is also commonly used."
+    },
+    {
+      "id": "sop",
+      "term": "SOP",
+      "expansion": "Standard operating procedure",
+      "category": "Army profession",
+      "meaning": "A unit reference for recurring tasks or processes.",
+      "sourceIds": [
+        "infantry"
+      ]
+    },
+    {
+      "id": "ew",
+      "term": "EW",
+      "expansion": "Electromagnetic warfare",
+      "category": "Electromagnetic warfare",
+      "meaning": "The military discipline concerned with controlling and using the electromagnetic spectrum.",
+      "note": "Older references often use electronic warfare.",
+      "sourceIds": [
+        "ew-atp"
+      ]
+    },
+    {
+      "id": "ems",
+      "term": "EMS",
+      "expansion": "Electromagnetic spectrum",
+      "category": "Electromagnetic warfare",
+      "meaning": "The full range of electromagnetic frequencies, including the radio frequencies used by communications and sensors.",
+      "sourceIds": [
+        "ew-atp",
+        "ew-joint"
+      ]
+    },
+    {
+      "id": "ea",
+      "term": "EA",
+      "expansion": "Electromagnetic attack",
+      "category": "Electromagnetic warfare",
+      "meaning": "The division of EW concerned with using electromagnetic energy or related capabilities to affect adversary systems.",
+      "sourceIds": [
+        "ew-atp",
+        "ew-joint"
+      ]
+    },
+    {
+      "id": "ep",
+      "term": "EP",
+      "expansion": "Electromagnetic protection",
+      "category": "Electromagnetic warfare",
+      "meaning": "The division of EW concerned with preserving friendly forces’ ability to use spectrum-dependent systems.",
+      "sourceIds": [
+        "ew-atp",
+        "ew-joint"
+      ]
+    },
+    {
+      "id": "es",
+      "term": "ES",
+      "expansion": "Electromagnetic support",
+      "category": "Electromagnetic warfare",
+      "meaning": "The division of EW concerned with understanding emissions in the electromagnetic environment.",
+      "sourceIds": [
+        "ew-atp",
+        "ew-joint"
+      ]
+    },
+    {
+      "id": "cema",
+      "term": "CEMA",
+      "expansion": "Cyberspace electromagnetic activities",
+      "category": "Electromagnetic warfare",
+      "meaning": "The Army activities that integrate cyberspace operations and EW into unit planning and operations.",
+      "sourceIds": [
+        "ew-atp"
+      ]
+    },
+    {
+      "id": "cewo",
+      "term": "CEWO",
+      "expansion": "Cyber electromagnetic warfare officer",
+      "category": "Electromagnetic warfare",
+      "meaning": "An Army staff role that advises on and coordinates cyberspace and electromagnetic warfare matters.",
+      "sourceIds": [
+        "ew-atp"
+      ]
+    },
+    {
+      "id": "emcon",
+      "term": "EMCON",
+      "expansion": "Emission control",
+      "category": "Electromagnetic warfare",
+      "meaning": "Management of emissions by equipment that transmits electromagnetic energy.",
+      "sourceIds": [
+        "ew-atp"
+      ]
+    },
+    {
+      "id": "jemso",
+      "term": "JEMSO",
+      "expansion": "Joint electromagnetic spectrum operations",
+      "category": "Electromagnetic warfare",
+      "meaning": "The joint-force framework for coordinating activity in the electromagnetic spectrum.",
+      "sourceIds": [
+        "ew-joint"
+      ]
+    },
+    {
+      "id": "emi",
+      "term": "EMI",
+      "expansion": "Electromagnetic interference",
+      "category": "Electromagnetic warfare",
+      "meaning": "An electromagnetic disturbance that disrupts or degrades how equipment performs.",
+      "sourceIds": [
+        "ew-joint"
+      ]
+    },
+    {
+      "id": "mdmp",
+      "term": "MDMP",
+      "expansion": "Military decision-making process",
+      "category": "Planning",
+      "meaning": "An iterative Army method for understanding a mission, developing courses of action, and preparing a plan or order.",
+      "sourceIds": [
+        "ew-atp"
+      ]
+    },
+    {
+      "id": "sigint",
+      "term": "SIGINT",
+      "expansion": "Signals intelligence",
+      "category": "Electromagnetic warfare",
+      "meaning": "Intelligence derived from intercepted signals.",
+      "sourceIds": [
+        "ew-atp",
+        "ew-joint"
+      ]
+    },
+    {
+      "id": "df",
+      "term": "DF",
+      "expansion": "Direction finding",
+      "category": "Electromagnetic warfare",
+      "meaning": "Determining the direction from which a signal arrives.",
+      "sourceIds": [
+        "ew-atp"
+      ]
+    },
+    {
+      "id": "emoe",
+      "term": "EMOE",
+      "expansion": "Electromagnetic operational environment",
+      "category": "Electromagnetic warfare",
+      "meaning": "The electromagnetic conditions and activity relevant to an operation.",
+      "sourceIds": [
+        "ew-joint"
+      ]
+    },
+    {
+      "id": "jemsoc",
+      "term": "JEMSOC",
+      "expansion": "Joint electromagnetic spectrum operations cell",
+      "category": "Electromagnetic warfare",
+      "meaning": "The staff organization that helps coordinate spectrum operations across a joint force.",
+      "sourceIds": [
+        "ew-joint"
+      ]
+    },
+    {
+      "id": "c-uas",
+      "term": "C-UAS",
+      "expansion": "Counter-unmanned aircraft system",
+      "category": "Electromagnetic warfare",
+      "meaning": "In C-UAS operations, activities addressing threats from unmanned aircraft systems.",
+      "sourceIds": [
+        "c-uas-atp"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "jts-nursing",
+      "title": "JTS Clinical Practice Guideline: Nursing Interventions in Prolonged Casualty Care",
+      "url": "https://jts.health.mil/assets/docs/cpgs/Nursing_Interventions_PCC_08_July_2025_ID70.pdf",
+      "edition": "8 July 2025",
+      "locator": "MARCH-PAWS assessment"
+    },
+    {
+      "id": "jts-1380",
+      "title": "JTS Instructions for DD Form 1380, Tactical Combat Casualty Care Card",
+      "url": "https://jts.health.mil/assets/docs/forms/DD_form_1380_TCCC_Card_Instructions.pdf",
+      "edition": "21 July 2025",
+      "locator": "§1, Background and Purpose"
+    },
+    {
+      "id": "jts-transport",
+      "title": "JTS Interfacility Transport of Patients Between Medical Treatment Facilities",
+      "url": "https://jts.health.mil/assets/docs/cpgs/Interfacility_Transport_CoERCCC_OPG.pdf",
+      "locator": "Evacuation Requests"
+    },
+    {
+      "id": "medevac-atp",
+      "title": "ATP 4-02.2, Medical Evacuation",
+      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/56A63282-F1E1-488B-8817-C9E44E3FF4F2-1408535571708/atp4_02x2.pdf",
+      "edition": "12 July 2019",
+      "locator": "Appendix C, Table C-1"
+    },
+    {
+      "id": "ranger",
+      "title": "TC 3-21.76, Ranger Handbook",
+      "url": "https://www.moore.army.mil/infantry/artb/4th-RTBn/content/pdf/TC%203-21.76%20Ranger%20Handbook.pdf",
+      "edition": "26 April 2017",
+      "locator": "Chapters 1, 2, 6 and 7"
+    },
+    {
+      "id": "infantry",
+      "title": "ATP 3-21.8, Infantry Rifle Platoon and Squad",
+      "url": "https://home.army.mil/benning/8117/7919/3106/20260316_ATP_3-21.8.pdf",
+      "edition": "11 January 2024, including Change 1",
+      "locator": "Chapters 1 and 2"
+    },
+    {
+      "id": "skills",
+      "title": "GTA 07-71-001, Combat Skills for Small Unit Leaders",
+      "url": "https://api.army.mil/e2/c/downloads/2023/01/31/c0ff0df4/gta-07-71-001-combat-skills-for-small-unit-leaders-apr-18-public.pdf",
+      "edition": "April 2018",
+      "locator": "ACE Report"
+    },
+    {
+      "id": "pace-army",
+      "title": "U.S. Army: Industry Insight, Communications Skills",
+      "url": "https://www.army.mil/article/242238/industry_insight_communications_skills",
+      "edition": "2021",
+      "locator": "PACE communications framework"
+    },
+    {
+      "id": "eo",
+      "title": "ATP 4-32.2, Multi-Service Tactics, Techniques, and Procedures for Explosive Ordnance",
+      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/00BE2651-A8F9-48B8-A054-7C5669DAAE13-1437417660365/ATP4_32x2.pdf",
+      "locator": "Immediate Action, 5-Cs mnemonic",
+      "edition": "March 2024"
+    },
+    {
+      "id": "tradoc",
+      "title": "TRADOC Pamphlet 600-4, The Soldier’s Blue Book",
+      "url": "https://adminpubs.tradoc.army.mil/pamphlets/TP600-4.pdf",
+      "edition": "26 August 2025",
+      "locator": "§2-5, Army Values"
+    },
+    {
+      "id": "ew-atp",
+      "title": "ATP 3-12.3, Electromagnetic Warfare Techniques",
+      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/A5810F76-50E4-4AA4-B431-244226D166BC-1563302579515/ATP3_12x3wc1.pdf",
+      "edition": "January 2023, including Change 1",
+      "locator": "Chapter 1 and glossary; this linked reading copy includes Change 1. Check the current APD record in EW Study for later changes."
+    },
+    {
+      "id": "ew-joint",
+      "title": "JP 3-85, Joint Electromagnetic Spectrum Operations",
+      "url": "https://www.jcs.mil/Portals/36/Documents/Doctrine/pubs/jp3_85.pdf",
+      "edition": "22 May 2020",
+      "locator": "Chapter I and glossary"
+    },
+    {
+      "id": "sports-replacement",
+      "title": "U.S. Army Maneuver Center of Excellence: MCoE Publishes TC 3-22.9, Rifle and Carbine",
+      "url": "https://www.army.mil/article/168953/mcoe_publishes_tc_3_22_9_rifle_and_carbine",
+      "edition": "1 June 2016"
+    },
+    {
+      "id": "c-uas-atp",
+      "title": "ATP 3-01.81 — Counter-Unmanned Aircraft System (C-UAS) Operations",
+      "edition": "23 May 2025",
+      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/B6A1625F-6975-4367-82C8-E67E901218C7-1753193840461/ATP3_01x81.pdf",
+      "locator": "Title and introduction"
+    }
+  ],
+  "notices": [
+    {
+      "term": "DART",
+      "title": "Context needed",
+      "text": "The two supplied EW expansions could not be verified in the sources used here. DART is kept out of recall practice until a specific publication or unit reference establishes the intended meaning.",
+      "sourceIds": []
+    },
+    {
+      "term": "SPORTS",
+      "title": "Legacy training term",
+      "text": "SPORTS belongs to older rifle-training material. TC 3-22.9 superseded the 2008 marksmanship field manual in 2016. It is not included as a current recall drill here; use the current training circular and instructor guidance.",
+      "sourceIds": [
+        "sports-replacement"
+      ]
+    }
+  ],
+  "schemaVersion": 1,
+  "updated": "2026-11-22"
+}
