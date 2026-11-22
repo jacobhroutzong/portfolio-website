@@ -113,3 +113,50 @@ test('AGSU study keeps placement questions and removes general definition cards'
   for (const card of placements) assert.match(card.q, /^(Where|How far|How are|In which direction)/);
   for (const id of ['extra42', 'extra43', 'phasevi-focus-08']) assert.ok(!data.cards.some(card => card.id === id));
 });
+
+test('Soldier Study maps every lesson objective and preserves source provenance', async () => {
+  const data = await read('soldier');
+  const sources = sourceRegistry(data);
+  const courses = new Map(data.courses.map(course => [course.id, course]));
+  assert.deepEqual([...courses.keys()], ['foundations', 'small-units', 'field-health', 'casualty-response']);
+  assert.equal(courses.size, data.courses.length);
+  const lessons = new Map(data.lessons.map(lesson => [lesson.id, lesson]));
+  assert.equal(lessons.size, data.lessons.length);
+  const units = data.courses.flatMap(course => course.units);
+  assert.equal(new Set(units.map(unit => unit.id)).size, units.length);
+  const dispositions = new Set(['taught', 'partial', 'assigned-reading', 'practical', 'excluded', 'unverified']);
+  assert.deepEqual(new Set(units.map(unit => unit.status)), dispositions);
+
+  for (const course of courses.values()) {
+    for (const unit of course.units) {
+      citations(unit, sources);
+      assert.ok(nonempty(unit.title) && nonempty(unit.locator) && nonempty(unit.note), unit.id);
+      if (unit.status === 'assigned-reading') assert.ok(nonempty(unit.readingObjective), unit.id);
+      for (const id of unit.lessonIds ?? []) assert.equal(lessons.get(id)?.courseId, course.id, id);
+      if (unit.status === 'taught') {
+        assert.ok(unit.lessonIds?.length && unit.lessonIds.some(id => lessons.get(id)?.objectives.includes(unit.title)), unit.id);
+      }
+    }
+  }
+
+  for (const lesson of lessons.values()) {
+    const course = courses.get(lesson.courseId);
+    assert.ok(course, lesson.id);
+    citations(lesson, sources);
+    assert.ok(nonempty(lesson.sourceLocator) && lesson.sections.every(section => nonempty(section.heading) && nonempty(section.text)), lesson.id);
+    for (const objective of lesson.objectives) {
+      assert.ok(course.units.some(unit => unit.status === 'taught' && unit.title === objective && unit.lessonIds.includes(lesson.id)), lesson.id);
+    }
+    assert.ok(lesson.questions.length > 0);
+    assert.equal(new Set(lesson.questions.map(question => question.id)).size, lesson.questions.length);
+    for (const question of lesson.questions) {
+      assert.ok(nonempty(question.id) && nonempty(question.prompt) && nonempty(question.answer), lesson.id);
+    }
+  }
+  assert.match(data.publications.find(entry => entry.id === 'atp-casualty').readingNote, /Third-party/);
+  for (const sourceId of ['stp-common', 'tc-landnav']) {
+    assert.match(data.publications.find(entry => entry.id === sourceId).access, /requires Army authentication/);
+    assert.ok(units.some(unit => unit.status === 'unverified' && unit.sourceIds.includes(sourceId)));
+  }
+  assert.match(lessons.get('casualty-card-and-mist').questions[0].answer, /mechanism.*injuries.*signs and symptoms.*treatments/);
+});

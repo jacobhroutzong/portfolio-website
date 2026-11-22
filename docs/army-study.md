@@ -2,11 +2,12 @@
 
 ## Released scope
 
-The study hub at `/study/` groups PhaseUp and Army Acronyms under phase preparation and Army foundations. EW Study is a separate resource for continued professional learning beyond AIT.
+The study hub at `/study/` groups PhaseUp and Army Acronyms under phase preparation and Army foundations. Soldier Study covers general Army knowledge and skills. EW Study remains a separate resource for continued professional learning beyond AIT.
 
 - `/study/17e/`: the existing PhaseUp study station. Its 117 Phase VI card objects are unchanged. Three general AGSU definition/preparation cards were removed (`extra42`, `extra43`, `phasevi-focus-08`), and the AGSU inspection-requirement policy card is categorized under PL15. All 16 AGSU placement/measurement questions remain. The bank now contains 508 cards.
 - `/study/17e/acronyms/`: 36 sourced terms, searchable reference, recall practice and review ratings. The prior `/study/acronyms/` path redirects here. The acronym page belongs to PhaseUp, while retaining its own study progress.
 - `/study/ew/`: nine courses, 92 original lessons and 276 answered recall/application questions. Five introductory lessons lead into eight publication courses.
+- `/study/soldier/`: four general Soldier courses, 16 lessons, and 32 answered scenario questions.
 
 The additions use static HTML, CSS, JavaScript and JSON in the existing Astro/Cloudflare Pages deployment. They add no service, account, dependency or database. Study pages retain noindex metadata; portfolio navigation is unchanged.
 
@@ -75,6 +76,7 @@ The reference distinguishes wartime and peacetime nine-line MEDEVAC fields, labe
 | --- | --- |
 | Army Acronyms within PhaseUp | `army-acronyms.progress.v1` |
 | EW Study | `ew-study.progress.v1` |
+| Soldier Study | `soldier-study.progress.v1` |
 | Existing PhaseUp | `phaseup17e.progress.v1` |
 
 Study pages write progress only after a learner action. Reset requires confirmation and removes only the current area's key. Storage failures leave study usable for the session. Progress stays local to the browser. The five existing EW lesson IDs, their question IDs, and both new-area storage keys remain stable across the expansion and acronym route move.
@@ -83,7 +85,7 @@ Study pages write progress only after a learner action. Reset requires confirmat
 
 Run `npm run verify` and `npm run test:e2e`. Content checks validate the source registry, stable identities, every manual's expected chapter/appendix count, lesson mappings, reading dispositions and preserved AGSU/Phase VI constraints. Browser tests cover search, reveal, course/lesson/all recall scopes, previous/next boundaries, direct links, browser history, coverage links, persistence, legacy progress, reset isolation, retry and blocked storage on desktop and mobile.
 
-Public files are individually listed in the existing publication manifests. The existing GitHub PR and Cloudflare release process deploys the site. Production publication of this change was explicitly approved by the user in the active session.
+Public files are individually listed in the existing publication manifests. The existing GitHub PR and Cloudflare release process deploys the site. Production publication of the earlier PhaseUp, Acronyms, and EW release was approved. Soldier Study is in draft review.
 
 ## Correction reports
 
@@ -93,9 +95,24 @@ Study pages offer a **Report a correction** action using the existing portfolio 
 
 ### Soldier Study
 
-Add `/study/soldier/` beside EW Study using the existing course reader and a separate `soldier-study.progress.v1` key. The proposed initial courses are Soldier Foundations, Working With Small Units, Field Health and Sanitation, and Casualty Response Foundations. Keep the existing acronym route and reference set shared across areas. Map relevant source sections or task IDs to teaching, partial teaching, source reading, practical training, out-of-scope rationale or an explicit verification gap.
+The curriculum at `public/study/soldier/data.json` reuses the study course reader, search, recall cards, and completion controls. Its guest snapshot uses `{ ratings, completed }` with stable lesson and question IDs, under `soldier-study.progress.v1`. The reserved account area is `soldier`.
 
-The initial source candidates are ATP 3-21.8 (11 January 2024, C1 23 June 2025), ATP 4-25.12 (30 April 2014, C2 8 August 2025) and ATP 4-02.11 (23 March 2026, superseding TC 4-02.1), with current JTS all-service-member training references. STP 21-1-SMCT (20 November 2025) and TC 3-25.26 (15 November 2013) have public catalog verification but their inspected download paths require Army authentication. Current full-text coverage is not established for those two references. Source bodies and precise inventories must be checked before authoring new courses.
+| Course | Learning objectives |
+| --- | --- |
+| Soldier Foundations | Apply Army Values, read a task standard, interpret map marginal information, and assess terrain-association evidence. |
+| Working With Small Units | Distinguish platoon, squad, and team responsibilities, give a complete handoff, rehearse a supervised event, and follow up an after-action review. |
+| Field Health and Sanitation | Report failures in preventive controls, distinguish potable from palatable water, identify food and waste contamination pathways, and recognize changes in heat and cold exposure. |
+| Casualty Response Foundations | Distinguish training tiers and phases of care, report urgent observations, document a handoff using MIST and DD Form 1380, and understand continuity of care during transfer. |
+
+The 33 mapped objectives include 16 taught, two partially taught, three assigned reading, six practical training, three excluded with reasons, and three blocked pending verification. The public Army CAR report dated 10 December 2024 supports task `071-COM-1012` and references `071-COM-1000`. These IDs are attributed to the CAR report. Practical entries require observed performance in authorized training.
+
+**Source and edition review, 22 November 2026**
+
+- [ATP 3-21.8](https://armypubs.army.mil/ProductMaps/PubForm/Details.aspx?PUB_ID=1028215), 11 January 2024, Change 1 dated 23 June 2025. Inspected the Army-hosted reading copy and chapter 1 role locators.
+- [ATP 4-25.12](https://armypubs.army.mil/ProductMaps/PubForm/Details.aspx?PUB_ID=104111), 30 April 2014, Change 2 dated 8 August 2025. Checked the APD record, combined PDF, change sheet and passages used for field health.
+- [ATP 4-02.11](https://www.army.mil/article-amp/291504), 23 March 2026. Confirmed the MEDCoE release, supersession of TC 4-02.1 and the official PDF's relevant locators. The [Field Manual Vault](https://www.trex-arms.com/field-manual-vault) helped locate candidate copies. Its casualty-response PDF is labeled as a third-party reading copy.
+- [JTS TCCC Guidelines](https://jts.health.mil/index.cfm/CPGs/cpgs), listed 1 May 2026. Checked the linked text for care phases, communication and documentation, plus the JTS Tier 1 designation and DD Form 1380 instructions. The current Deployed Medicine instructor package and complete evaluation sheets remain unverified.
+- [STP 21-1-SMCT](https://armypubs.army.mil/ProductMaps/PubForm/Details.aspx?PUB_ID=1032188), 20 November 2025, and [TC 3-25.26](https://armypubs.army.mil/ProductMaps/PubForm/Details.aspx?PUB_ID=103749), 15 November 2013. Checked both APD records. The official text links require Army authentication, so current text and full task and chapter mappings remain blocked. The lessons cite independent public Army material for the concepts they teach.
 
 ### Optional accounts and saved progress
 

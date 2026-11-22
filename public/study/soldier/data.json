@@ -1,0 +1,1405 @@
+{
+  "updated": "2026-11-22",
+  "courses": [
+    {
+      "id": "foundations",
+      "title": "Soldier Foundations",
+      "description": "Apply Army Values, read a training standard, and interpret the evidence on a topographic map.",
+      "units": [
+        {
+          "id": "army-values-in-practice-objective",
+          "title": "Explain how duty, respect, integrity, and personal courage apply when a teammate asks you to overlook a discrepancy.",
+          "status": "taught",
+          "locator": "Army Values, Loyalty, Duty, Respect, Integrity, and Personal Courage.",
+          "sourceIds": [
+            "army-values"
+          ],
+          "note": "The linked lesson and questions teach this conceptual outcome.",
+          "lessonIds": [
+            "army-values-in-practice"
+          ]
+        },
+        {
+          "id": "read-a-task-standard-objective",
+          "title": "Distinguish a task's conditions, standard, and performance measures and use them to interpret an observed result.",
+          "status": "taught",
+          "locator": "ADP 7-0, chapter 4, evaluation and assessment. CAR task 071-COM-1012, Conditions, Standards, and Evaluation Guidance.",
+          "sourceIds": [
+            "adp-training",
+            "car-terrain"
+          ],
+          "note": "The linked lesson and questions teach this conceptual outcome.",
+          "lessonIds": [
+            "read-a-task-standard"
+          ]
+        },
+        {
+          "id": "read-the-map-margin-objective",
+          "title": "Interpret a map’s scale and contour interval and explain why the legend and edition matter.",
+          "status": "taught",
+          "locator": "CAR report 071-COM-1012, supporting task 071-COM-1000 (marginal information and symbols), and Army range-control training map, scale and contour notation.",
+          "sourceIds": [
+            "car-terrain",
+            "army-map"
+          ],
+          "note": "The linked lesson and questions teach this conceptual outcome.",
+          "lessonIds": [
+            "read-the-map-margin"
+          ],
+          "taskIds": [
+            "071-COM-1000"
+          ]
+        },
+        {
+          "id": "terrain-association-objective",
+          "title": "Explain why independently matching multiple terrain features supports map orientation better than a single similar feature.",
+          "status": "taught",
+          "locator": "CAR task 071-COM-1012, purpose and task standard. Army NCO Academy coverage of supervised map reading and land navigation.",
+          "sourceIds": [
+            "car-terrain",
+            "army-landnav"
+          ],
+          "note": "The linked lesson and questions teach this conceptual outcome.",
+          "lessonIds": [
+            "terrain-association"
+          ],
+          "taskIds": [
+            "071-COM-1012"
+          ]
+        },
+        {
+          "id": "map-marginal-information-task",
+          "title": "Identify marginal information on a map",
+          "status": "partial",
+          "locator": "CAR 071-COM-1012, Supporting Individual Tasks, 071-COM-1000.",
+          "sourceIds": [
+            "car-terrain"
+          ],
+          "note": "The lesson explains selected marginal information. The full task and performance measures require the controlling task record and an actual map.",
+          "taskIds": [
+            "071-COM-1000"
+          ],
+          "lessonIds": [
+            "read-the-map-margin"
+          ]
+        },
+        {
+          "id": "map-to-ground-evaluation",
+          "title": "Orient a map to the ground on a training lane",
+          "status": "practical",
+          "locator": "CAR 071-COM-1012, Conditions, Standards, and Evaluation Guidance.",
+          "sourceIds": [
+            "car-terrain"
+          ],
+          "note": "Demonstrate the task with an evaluator on approved terrain under the task’s conditions.",
+          "taskIds": [
+            "071-COM-1012"
+          ],
+          "lessonIds": [
+            "terrain-association"
+          ]
+        },
+        {
+          "id": "current-stp-task-crosswalk",
+          "title": "Verify the 2025 common-tasks roster and standards",
+          "status": "unverified",
+          "locator": "STP 21-1-SMCT, APD record dated 20 November 2025.",
+          "sourceIds": [
+            "stp-common"
+          ],
+          "note": "The current reading link requires Army authentication. The public CAR task reports are dated independently and do not establish the current STP roster."
+        },
+        {
+          "id": "tc-navigation-sections",
+          "title": "Verify current TC map-reading and navigation sections",
+          "status": "unverified",
+          "locator": "TC 3-25.26, APD record dated 15 November 2013.",
+          "sourceIds": [
+            "tc-landnav"
+          ],
+          "note": "The official PDF requires Army authentication. The public Army task report supports the linked concepts, but chapter and subsection alignment with the TC is unresolved.",
+          "lessonIds": [
+            "read-the-map-margin",
+            "terrain-association"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "small-units",
+      "title": "Working With Small Units",
+      "description": "Understand who owns a decision, communicate changes, and learn from a rehearsal or training event.",
+      "units": [
+        {
+          "id": "platoon-and-squad-roles-objective",
+          "title": "Distinguish the platoon leader, platoon sergeant, squad leader, and team leader in an infantry platoon example.",
+          "status": "taught",
+          "locator": "ATP 3-21.8, chapter 1, section II, Duties and Responsibilities, pp. 1-7–1-12.",
+          "sourceIds": [
+            "atp-infantry"
+          ],
+          "note": "The linked lesson and questions teach this conceptual outcome.",
+          "lessonIds": [
+            "platoon-and-squad-roles"
+          ]
+        },
+        {
+          "id": "closed-loop-handoffs-objective",
+          "title": "Give an unambiguous training handoff that identifies the observed condition, its impact, and the next owner.",
+          "status": "taught",
+          "locator": "ATP 3-21.8, chapter 1, section II, Exercise of Command and Control. ADP 7-0, chapter 4, preparation, execution, and assessment.",
+          "sourceIds": [
+            "atp-infantry",
+            "adp-training"
+          ],
+          "note": "The linked lesson and questions teach this conceptual outcome.",
+          "lessonIds": [
+            "closed-loop-handoffs"
+          ]
+        },
+        {
+          "id": "rehearse-the-training-event-objective",
+          "title": "Explain what a supervised training rehearsal should test and how to handle a discovered gap.",
+          "status": "taught",
+          "locator": "ADP 7-0, chapter 4, planning and preparation. Army Training Management Directorate, TC 7-0.3 Plan an Event and TC 7-0.4 Training and Evaluation Outlines.",
+          "sourceIds": [
+            "adp-training",
+            "training-series"
+          ],
+          "note": "The linked lesson and questions teach this conceptual outcome.",
+          "lessonIds": [
+            "rehearse-the-training-event"
+          ]
+        },
+        {
+          "id": "after-action-review-objective",
+          "title": "Use evidence from a training event to identify a sustain, an improve, and a specific next action.",
+          "status": "taught",
+          "locator": "Training Management Directorate, TC 7-0.1 description. ADP 7-0, chapter 4, evaluation and assessment.",
+          "sourceIds": [
+            "training-series",
+            "adp-training"
+          ],
+          "note": "The linked lesson and questions teach this conceptual outcome.",
+          "lessonIds": [
+            "after-action-review"
+          ]
+        },
+        {
+          "id": "organization-reading",
+          "title": "Compare the headquarters and rifle squad responsibilities",
+          "status": "assigned-reading",
+          "locator": "ATP 3-21.8, chapter 1, section II, pp. 1-7–1-12.",
+          "sourceIds": [
+            "atp-infantry"
+          ],
+          "note": "The lesson profiles four roles; the assigned passage places them in the full organization.",
+          "readingObjective": "Identify one responsibility for each echelon and distinguish duties assigned to a position from duties delegated locally.",
+          "lessonIds": [
+            "platoon-and-squad-roles"
+          ]
+        },
+        {
+          "id": "observed-team-rehearsal",
+          "title": "Perform a team handoff and rehearsal in training",
+          "status": "practical",
+          "locator": "ADP 7-0, chapter 4, planning and preparation. Training Management Directorate TC 7-0.3 and TC 7-0.4 overview.",
+          "sourceIds": [
+            "adp-training",
+            "training-series"
+          ],
+          "note": "Use a supervised event with a named evaluator and a task standard. Have the evaluator observe acknowledgements and responsibility transfers.",
+          "lessonIds": [
+            "closed-loop-handoffs",
+            "rehearse-the-training-event"
+          ]
+        },
+        {
+          "id": "combat-employment",
+          "title": "Combat employment, weapons, and battle drills",
+          "status": "excluded",
+          "locator": "ATP 3-21.8, scope and chapters beyond the organization lesson.",
+          "sourceIds": [
+            "atp-infantry"
+          ],
+          "note": "The course covers general team roles and training communication. Role-specific combat execution belongs to separate authorized training."
+        }
+      ]
+    },
+    {
+      "id": "field-health",
+      "title": "Field Health and Sanitation",
+      "description": "Recognize how field sanitation protects a unit and report failures in water, food, waste, and environmental controls.",
+      "units": [
+        {
+          "id": "field-sanitation-responsibilities-objective",
+          "title": "Explain who observes, reports, advises, and owns corrective action when a field health control fails.",
+          "status": "taught",
+          "locator": "ATP 4-25.12, chapters 1–2, Unit Field Sanitation Teams and Soldier Responsibilities.",
+          "sourceIds": [
+            "atp-sanitation"
+          ],
+          "note": "The linked lesson and questions teach this conceptual outcome.",
+          "lessonIds": [
+            "field-sanitation-responsibilities"
+          ]
+        },
+        {
+          "id": "potable-water-chain-objective",
+          "title": "Distinguish potable from palatable water and identify failures in the approval, storage, and dispensing chain.",
+          "status": "taught",
+          "locator": "ATP 4-25.12, chapter 3, paragraphs 3-7 and 3-22–3-23, and section VII on water storage equipment.",
+          "sourceIds": [
+            "atp-sanitation"
+          ],
+          "note": "The linked lesson and questions teach this conceptual outcome.",
+          "lessonIds": [
+            "potable-water-chain"
+          ]
+        },
+        {
+          "id": "food-waste-and-hygiene-objective",
+          "title": "Identify where contamination could move between people, food, equipment, and waste.",
+          "status": "taught",
+          "locator": "ATP 4-25.12, chapter 4, sanitary food handling and food-handler hygiene. Chapter 5, waste classification and management.",
+          "sourceIds": [
+            "atp-sanitation"
+          ],
+          "note": "The linked lesson and questions teach this conceptual outcome.",
+          "lessonIds": [
+            "food-waste-and-hygiene"
+          ]
+        },
+        {
+          "id": "heat-and-cold-controls-objective",
+          "title": "Recognize changing exposure and identify unit prevention and escalation responsibilities.",
+          "status": "taught",
+          "locator": "ATP 4-25.12, chapters 7–8, heat risk factors, prevention tools, and cold injury factors.",
+          "sourceIds": [
+            "atp-sanitation"
+          ],
+          "note": "The linked lesson and questions teach this conceptual outcome.",
+          "lessonIds": [
+            "heat-and-cold-controls"
+          ]
+        },
+        {
+          "id": "field-water-inspection",
+          "title": "Inspect water storage and report results",
+          "status": "practical",
+          "locator": "ATP 4-25.12, chapter 3, section VII.",
+          "sourceIds": [
+            "atp-sanitation"
+          ],
+          "note": "Inspection, sampling, test equipment, and authorization decisions require training with the field sanitation team and preventive medicine staff.",
+          "lessonIds": [
+            "potable-water-chain"
+          ]
+        },
+        {
+          "id": "pest-prevention-reading",
+          "title": "Read the unit’s pest-prevention responsibilities",
+          "status": "assigned-reading",
+          "locator": "ATP 4-25.12, chapter 6, Pest Management.",
+          "sourceIds": [
+            "atp-sanitation"
+          ],
+          "note": "Use the chapter to identify personal prevention duties and specialist responsibilities.",
+          "readingObjective": "Identify an exposure pathway, a Soldier-level prevention responsibility, and a condition that should be reported to the responsible team."
+        },
+        {
+          "id": "sanitation-specialist-work",
+          "title": "Specialist treatment and pesticide application",
+          "status": "excluded",
+          "locator": "ATP 4-25.12, chapters 3 and 6, treatment and pest-management sections.",
+          "sourceIds": [
+            "atp-sanitation"
+          ],
+          "note": "Dose calculations, treatment authorization, and pesticide selection or application are specialist training outside this curriculum."
+        },
+        {
+          "id": "heat-and-cold-checks",
+          "title": "Use environmental prevention tools in the field",
+          "status": "practical",
+          "locator": "ATP 4-25.12, chapters 7–8, prevention tools and equipment controls.",
+          "sourceIds": [
+            "atp-sanitation"
+          ],
+          "note": "Practice instrument use and adapting controls under approved unit guidance. The lesson covers recognizing changing conditions.",
+          "lessonIds": [
+            "heat-and-cold-controls"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "casualty-response",
+      "title": "Casualty Response Foundations",
+      "description": "Understand first-responder roles, recognize urgent changes, and preserve information during handoff.",
+      "note": "Clinical and movement skills require supervised practice in the current role-based course. Use this reader to prepare for that training.",
+      "units": [
+        {
+          "id": "casualty-response-roles-objective",
+          "title": "Distinguish the All Service Members tier from higher tiers and explain why TCCC phases depend on context.",
+          "status": "taught",
+          "locator": "ATP 4-02.11, chapter 3, pp. 27–35. JTS role-based education and training tiers, and current TCCC Guidelines, phase headings.",
+          "sourceIds": [
+            "atp-casualty",
+            "jts-education",
+            "jts-guidelines"
+          ],
+          "note": "The linked lesson and questions teach this conceptual outcome.",
+          "lessonIds": [
+            "casualty-response-roles"
+          ]
+        },
+        {
+          "id": "recognize-and-report-urgent-changes-objective",
+          "title": "Identify observations that warrant prompt escalation and report them without making an unsupported diagnosis.",
+          "status": "taught",
+          "locator": "ATP 4-02.11, chapter 4 Overview of Massive Bleeding Control and chapter 5 Overview of Airway Control. JTS current guidelines, Tactical Field Care communications.",
+          "sourceIds": [
+            "atp-casualty",
+            "jts-guidelines"
+          ],
+          "note": "The linked lesson and questions teach this conceptual outcome.",
+          "lessonIds": [
+            "recognize-and-report-urgent-changes"
+          ]
+        },
+        {
+          "id": "casualty-card-and-mist-objective",
+          "title": "Distinguish the four MIST categories and explain how a written record complements a verbal handoff.",
+          "status": "taught",
+          "locator": "JTS DD Form 1380 instructions, background, purpose, and policy, p. 1. Current TCCC Guidelines, communications and documentation of care.",
+          "sourceIds": [
+            "dd1380",
+            "jts-guidelines"
+          ],
+          "note": "The linked lesson and questions teach this conceptual outcome.",
+          "lessonIds": [
+            "casualty-card-and-mist"
+          ]
+        },
+        {
+          "id": "evacuation-and-movement-readiness-objective",
+          "title": "Explain what continuity of care requires across a simulated casualty movement and transfer.",
+          "status": "taught",
+          "locator": "ATP 4-02.11, chapters 1–2, casualty response terminology and casualty movement. DD Form 1380 instructions, background and policy.",
+          "sourceIds": [
+            "atp-casualty",
+            "dd1380"
+          ],
+          "note": "The linked lesson and questions teach this conceptual outcome.",
+          "lessonIds": [
+            "evacuation-and-movement-readiness"
+          ]
+        },
+        {
+          "id": "asm-recognition-limit",
+          "title": "Recognize problems addressed by Tier 1 casualty skills",
+          "status": "partial",
+          "locator": "ATP 4-02.11, chapters 4–5, overviews and Tier 1 skills. JTS role-based education.",
+          "sourceIds": [
+            "atp-casualty",
+            "jts-education"
+          ],
+          "note": "Recognition and reporting are taught here. Applying the skill standard or choosing an intervention belongs to approved practical training.",
+          "lessonIds": [
+            "recognize-and-report-urgent-changes"
+          ]
+        },
+        {
+          "id": "asm-hands-on",
+          "title": "Demonstrate Tier 1 casualty care skills",
+          "status": "practical",
+          "locator": "ATP 4-02.11, chapter 3, Training, p. 31, and Tier 1 skill references. JTS curriculum route.",
+          "sourceIds": [
+            "atp-casualty",
+            "jts-education"
+          ],
+          "note": "Complete supervised All Service Members training with appropriate equipment and performance evaluation."
+        },
+        {
+          "id": "casualty-transfer-drill",
+          "title": "Coordinate casualty movement and transfer",
+          "status": "practical",
+          "locator": "ATP 4-02.11, chapter 2, Casualty Movement, p. 24.",
+          "sourceIds": [
+            "atp-casualty"
+          ],
+          "note": "Rehearse a casualty transfer with an instructor, approved equipment, and an assigned evaluation standard.",
+          "lessonIds": [
+            "evacuation-and-movement-readiness"
+          ]
+        },
+        {
+          "id": "card-assigned-reading",
+          "title": "Review what travels with the casualty",
+          "status": "assigned-reading",
+          "locator": "DD Form 1380 instructions, pages 1–3.",
+          "sourceIds": [
+            "dd1380"
+          ],
+          "note": "Use a blank training copy and invented data.",
+          "readingObjective": "Find where the card records the timing of care and what the receiving team needs to retain.",
+          "lessonIds": [
+            "casualty-card-and-mist"
+          ]
+        },
+        {
+          "id": "provider-level-interventions",
+          "title": "Provider-level treatment and clinical decisions",
+          "status": "excluded",
+          "locator": "ATP 4-02.11, chapter 3, Service Specific Skills, and current JTS Guidelines.",
+          "sourceIds": [
+            "atp-casualty",
+            "jts-guidelines"
+          ],
+          "note": "This reader serves general Soldiers. Higher-tier clinical interventions and clinical triage decisions require the appropriate qualification."
+        },
+        {
+          "id": "current-asm-package",
+          "title": "Verify the current Tier 1 instructor evaluation package",
+          "status": "unverified",
+          "locator": "JTS curriculum route and Deployed Medicine instructor resources.",
+          "sourceIds": [
+            "jts-education"
+          ],
+          "note": "The official education pathway and Tier 1 designation were verified. The current instructor resource version and complete skills-evaluation sheets were not verified."
+        }
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "id": "army-values-in-practice",
+      "courseId": "foundations",
+      "title": "Army Values in practice",
+      "summary": "Use the Army Values to make a defensible choice when speed, loyalty, or social pressure pull in different directions.",
+      "objectives": [
+        "Explain how duty, respect, integrity, and personal courage apply when a teammate asks you to overlook a discrepancy."
+      ],
+      "terms": [
+        "Army Values",
+        "integrity",
+        "duty",
+        "personal courage"
+      ],
+      "sourceIds": [
+        "army-values"
+      ],
+      "sourceLocator": "Army Values, Loyalty, Duty, Respect, Integrity, and Personal Courage.",
+      "sections": [
+        {
+          "heading": "Values guide choices",
+          "text": "The seven Army Values are Loyalty, Duty, Respect, Selfless Service, Honor, Integrity, and Personal Courage. The labels overlap in practice. An accurate report can be an act of integrity, a way to fulfill a duty, and an example of the moral courage it takes to speak up under pressure. Name the behavior and the people it affects before assigning a value to it."
+        },
+        {
+          "heading": "A discrepancy is information",
+          "text": "Suppose your teammate asks you to initial a check you did not observe so the group can finish on time. Record what was actually checked, tell the person responsible what remains open, and offer to help complete the check. Respect includes giving your teammate a chance to correct the mistake without humiliating them. Loyalty to the team includes protecting others from decisions based on a false record."
+        },
+        {
+          "heading": "What makes a decision defensible",
+          "text": "A useful explanation connects the standard, the fact you observed, and the correction you proposed. When the right reporting channel is unclear, get clarification from the responsible leader instead of changing the facts or advertising an unverified accusation."
+        }
+      ],
+      "questions": [
+        {
+          "id": "false-signoff",
+          "prompt": "A team is late. Someone asks you to mark an inspection complete before it happens. What should you record and why?",
+          "answer": "Record the incomplete status, notify the responsible leader, and help arrange the check. Integrity keeps the record accurate, and duty protects the people who rely on it."
+        },
+        {
+          "id": "respect",
+          "prompt": "A teammate notices their own reporting error before anyone acts on it. How can you help them correct it while practicing respect?",
+          "answer": "State the specific discrepancy and the real status, help correct the record through the appropriate channel, and keep the discussion about the task. Respect protects dignity and supports accountability."
+        }
+      ]
+    },
+    {
+      "id": "read-a-task-standard",
+      "courseId": "foundations",
+      "title": "Read a task standard",
+      "summary": "Translate an Army training requirement into a practice plan and a fair evaluation.",
+      "objectives": [
+        "Distinguish a task's conditions, standard, and performance measures and use them to interpret an observed result."
+      ],
+      "terms": [
+        "task",
+        "conditions",
+        "standard",
+        "performance measures",
+        "T&EO"
+      ],
+      "sourceIds": [
+        "adp-training",
+        "car-terrain"
+      ],
+      "sourceLocator": "ADP 7-0, chapter 4, evaluation and assessment. CAR task 071-COM-1012, Conditions, Standards, and Evaluation Guidance.",
+      "sections": [
+        {
+          "heading": "Three things to read",
+          "text": "A task names the action. The conditions describe the circumstances and resources under which it is evaluated. The standard defines acceptable performance. Performance measures turn that standard into observable checks. Before practicing, ask what the evaluator must see and what equipment, help, or time the conditions permit."
+        },
+        {
+          "heading": "Evidence before a rating",
+          "text": "A learner who can explain a task may still miss a required performance measure during an attempt. Record the missing measure and the context. If a station's setup gives the learner equipment unavailable under the stated conditions, describe that difference as well. Those observations are more useful for retraining than a global judgment about ability."
+        },
+        {
+          "heading": "Practice and evaluation",
+          "text": "Use the current task record and training and evaluation outline when one applies. Practice can isolate one weak step, then the unit can reassess the whole task under the required conditions. Record study activity and evaluated performance separately so leaders can tell which evidence they have."
+        }
+      ],
+      "questions": [
+        {
+          "id": "conditions-change",
+          "prompt": "An evaluator provides an electronic aid that the specified conditions exclude. The learner reaches the right answer. What can you conclude?",
+          "answer": "The attempt may show useful practice, but it does not demonstrate performance under the required conditions. Record the difference and reevaluate with the prescribed setup."
+        },
+        {
+          "id": "feedback",
+          "prompt": "Two learners miss the same performance measure for different reasons. What should an evaluation record?",
+          "answer": "Record the observable measure and what each learner actually did under the task conditions. The different causes can then guide different practice."
+        }
+      ]
+    },
+    {
+      "id": "read-the-map-margin",
+      "courseId": "foundations",
+      "title": "Read the map margin",
+      "summary": "Use map edition, legend, scale, and contour interval to decide what a map can tell you.",
+      "objectives": [
+        "Interpret a map’s scale and contour interval and explain why the legend and edition matter."
+      ],
+      "terms": [
+        "marginal information",
+        "legend",
+        "scale",
+        "contour interval"
+      ],
+      "sourceIds": [
+        "car-terrain",
+        "army-map"
+      ],
+      "sourceLocator": "CAR report 071-COM-1012, supporting task 071-COM-1000 (marginal information and symbols), and Army range-control training map, scale and contour notation.",
+      "sections": [
+        {
+          "heading": "Identify the sheet",
+          "text": "The margin identifies the map and explains how to interpret it. Check the sheet and edition before comparing two maps of the same place. The legend explains the symbols the mapmaker used. Even familiar colors can have a specific meaning on a particular product, so inspect the legend before using a symbol as evidence."
+        },
+        {
+          "heading": "Read horizontal and vertical information separately",
+          "text": "A scale of 1:50,000 means that one unit on the original map represents 50,000 of the same units on the ground. A contour interval is the elevation difference between adjacent regular contour lines. Closely spaced lines indicate a steeper slope than widely spaced lines when the scale and contour interval are the same."
+        },
+        {
+          "heading": "Know when the display changed",
+          "text": "Print scaling or zooming a screenshot can change the size of the map on paper or screen. Check a scale bar that was resized with the image, or use an original-size map for ruler measurements from its printed ratio. When terrain and map disagree, keep the discrepancy visible instead of treating an approximate match as certainty."
+        }
+      ],
+      "questions": [
+        {
+          "id": "scaled-copy",
+          "prompt": "A 1:50,000 map was shrunk to fit a printer page. What should you check before converting a ruler measurement?",
+          "answer": "Use a scale bar that shrank with the map, or an original-size copy with the printed ratio. The original ratio no longer describes the resized print at its physical size."
+        },
+        {
+          "id": "contour-pair",
+          "prompt": "On one map, two slopes cross the same number of regular contour intervals. One has lines much closer together. What changes?",
+          "answer": "Both slopes span the same elevation change. The closer contours span less horizontal distance, so that slope is steeper."
+        }
+      ]
+    },
+    {
+      "id": "terrain-association",
+      "courseId": "foundations",
+      "title": "Terrain association and uncertainty",
+      "summary": "Compare identifiable ground features with the map before deciding that you have a match.",
+      "objectives": [
+        "Explain why independently matching multiple terrain features supports map orientation better than a single similar feature."
+      ],
+      "terms": [
+        "terrain association",
+        "map orientation",
+        "terrain feature"
+      ],
+      "sourceIds": [
+        "car-terrain",
+        "army-landnav"
+      ],
+      "sourceLocator": "CAR task 071-COM-1012, purpose and task standard. Army NCO Academy coverage of supervised map reading and land navigation.",
+      "sections": [
+        {
+          "heading": "Compare relationships",
+          "text": "Terrain association uses recognizable features and how they relate to one another. A hill alone can look like many hills. A hill beside a bend in a road with a valley on one side gives several clues. A convincing match explains the shape, relative position, and orientation of the visible features together."
+        },
+        {
+          "heading": "Treat uncertainty as evidence",
+          "text": "When one prominent feature fits but the surrounding pattern does not, there may be more than one plausible location or the sheet may be out of date. Keep alternate matches open and explain which feature conflicts with your first interpretation. This reasoning is useful at a training station because the instructor can check how you reached your answer."
+        },
+        {
+          "heading": "Move the skill to a supervised lane",
+          "text": "An on-screen map exercise lets you practice interpreting evidence. The field standard requires the learner to relate a map to the actual ground under the task conditions. Practice that with the current training materials, the designated area, and the instructor’s safety and evaluation rules."
+        }
+      ],
+      "questions": [
+        {
+          "id": "single-feature",
+          "prompt": "A ridge fits the map, but the valley is on the opposite side from where you expect it. What does that tell you?",
+          "answer": "The ridge alone is weak evidence. Check the orientation and other independent features before committing to the interpretation. Report the disagreement if it remains unresolved."
+        },
+        {
+          "id": "evaluate",
+          "prompt": "A learner correctly compares two diagrams on a screen. What evidence is still needed for the map-to-ground task?",
+          "answer": "An observed attempt in the field under the current task conditions. The screen exercise demonstrates conceptual reasoning and does not supply the conditions for the field performance."
+        }
+      ]
+    },
+    {
+      "id": "platoon-and-squad-roles",
+      "courseId": "small-units",
+      "title": "Platoon, squad, and team responsibilities",
+      "summary": "Understand the roles in the infantry example and how responsibilities fit together during ordinary training.",
+      "objectives": [
+        "Distinguish the platoon leader, platoon sergeant, squad leader, and team leader in an infantry platoon example."
+      ],
+      "terms": [
+        "platoon leader",
+        "platoon sergeant",
+        "squad leader",
+        "team leader"
+      ],
+      "sourceIds": [
+        "atp-infantry"
+      ],
+      "sourceLocator": "ATP 3-21.8, chapter 1, section II, Duties and Responsibilities, pp. 1-7–1-12.",
+      "sections": [
+        {
+          "heading": "Read the organization as a set of responsibilities",
+          "text": "In the infantry example, the platoon leader is responsible for what the platoon does or fails to do. The platoon sergeant is the senior NCO, advises the platoon leader, and has important readiness and sustainment responsibilities. Their duties complement one another. Delegating an action does not erase the leader’s responsibility for the outcome."
+        },
+        {
+          "heading": "Move up and down a level",
+          "text": "The squad leader is accountable for the squad and directs its teams. Team leaders supervise their Soldiers and communicate the team’s status through the squad leader. An issue that fits the team’s authority can be corrected at that level. A shortfall that affects multiple groups needs to reach the leader who can reallocate resources or change the plan."
+        },
+        {
+          "heading": "Use the example with care",
+          "text": "The publication describes an infantry rifle formation. Other formations and temporary teams can use different positions and reporting paths. Before a training event, confirm who assigned your task, who can change it, and who must know when the status changes."
+        }
+      ],
+      "questions": [
+        {
+          "id": "equipment-shortfall",
+          "prompt": "Two teams need the same limited training equipment. Which decisions belong at team level, and which need the squad or platoon?",
+          "answer": "Team leaders verify holdings and requirements and report the shortfall. The squad leader can resolve a squad-level allocation, while a platoon-level shortfall goes to the responsible platoon leaders."
+        },
+        {
+          "id": "role-overlap",
+          "prompt": "Why should a platoon leader still know about a supply issue the platoon sergeant is handling?",
+          "answer": "The platoon sergeant can coordinate sustainment, while the platoon leader needs its effect on readiness and owns decisions about the platoon’s activity."
+        }
+      ]
+    },
+    {
+      "id": "closed-loop-handoffs",
+      "courseId": "small-units",
+      "title": "Pass information that can be acted on",
+      "summary": "Turn an observation into a clear status update and confirm that responsibility transferred.",
+      "objectives": [
+        "Give an unambiguous training handoff that identifies the observed condition, its impact, and the next owner."
+      ],
+      "terms": [
+        "handoff",
+        "read-back",
+        "status",
+        "uncertainty"
+      ],
+      "sourceIds": [
+        "atp-infantry",
+        "adp-training"
+      ],
+      "sourceLocator": "ATP 3-21.8, chapter 1, section II, Exercise of Command and Control. ADP 7-0, chapter 4, preparation, execution, and assessment.",
+      "sections": [
+        {
+          "heading": "Separate observation and conclusion",
+          "text": "Distinguish what you checked from what you inferred. 'Two kits remain unchecked' describes evidence. 'All kits are ready' draws an unsupported conclusion from it. Good reporting gives the recipient enough context to make a decision and clearly identifies what remains uncertain."
+        },
+        {
+          "heading": "Name the next owner",
+          "text": "At a training handover, state what is complete, the open item, why it matters, and who has the next action. When a detail affects someone else's work, ask the receiving person to confirm the action or repeat the critical information. Sending a message and transferring responsibility are two different events."
+        },
+        {
+          "heading": "Update when the situation changes",
+          "text": "A status becomes stale when the underlying condition changes or the recipient misses the original message. Time-stamp important observations in the unit’s usual format, correct mistakes promptly, and use the established reporting channel instead of assuming everyone saw the same message."
+        }
+      ],
+      "questions": [
+        {
+          "id": "missing-status",
+          "prompt": "A relief team hears 'equipment is good' but two kits were never checked. What should the handoff say?",
+          "answer": "Name the two unchecked kits, identify what was actually verified, explain whether the gap affects the next event, and confirm who will complete the checks."
+        },
+        {
+          "id": "ownership",
+          "prompt": "You sent a message naming a next action, but nobody acknowledges taking it. What remains unresolved?",
+          "answer": "Ownership remains unresolved. Confirm the recipient and the next action through the designated channel before treating the handoff as complete."
+        }
+      ]
+    },
+    {
+      "id": "rehearse-the-training-event",
+      "courseId": "small-units",
+      "title": "Rehearse a training event",
+      "summary": "Use a rehearsal to find gaps in roles, resources, and safety arrangements before execution.",
+      "objectives": [
+        "Explain what a supervised training rehearsal should test and how to handle a discovered gap."
+      ],
+      "terms": [
+        "rehearsal",
+        "resource check",
+        "responsibility",
+        "contingency"
+      ],
+      "sourceIds": [
+        "adp-training",
+        "training-series"
+      ],
+      "sourceLocator": "ADP 7-0, chapter 4, planning and preparation. Army Training Management Directorate, TC 7-0.3 Plan an Event and TC 7-0.4 Training and Evaluation Outlines.",
+      "sections": [
+        {
+          "heading": "Make the sequence visible",
+          "text": "A rehearsal lets participants see how their responsibilities connect. In a classroom-to-field training event, walk through where the learner reports, who sets up each station, who evaluates the standard, and who can pause the event. Ask the people doing the work to explain when they act and what they need from the preceding group."
+        },
+        {
+          "heading": "Turn gaps into changes",
+          "text": "A missing evaluator, a duplicated booking, or unclear safety authority is a planning fact. Identify an owner and a decision deadline, tell affected teams, and confirm the revision. If a required safety control is unresolved, bring the issue to the designated authority before execution."
+        },
+        {
+          "heading": "Rehearsal and evaluation have different jobs",
+          "text": "A rehearsal can reveal that the plan is unclear. An evaluation checks actual performance against the training standard. A smooth rehearsal without the right conditions or equipment does not substitute for evaluation."
+        }
+      ],
+      "questions": [
+        {
+          "id": "rehearsal-gap",
+          "prompt": "At the rehearsal, both station leaders expect someone else to perform the equipment check. What should happen before execution?",
+          "answer": "Assign one owner, confirm the condition and timing of the check, and make the change visible to both stations and the event lead."
+        },
+        {
+          "id": "standard-rehearsal",
+          "prompt": "Could a smooth rehearsal establish that every participant met the task standard?",
+          "answer": "Only if the attempt was actually evaluated under the applicable conditions and standard. Otherwise the rehearsal shows that participants practiced the sequence."
+        }
+      ]
+    },
+    {
+      "id": "after-action-review",
+      "courseId": "small-units",
+      "title": "After-action reviews that improve training",
+      "summary": "Turn a shared observation into one practical change the team can test.",
+      "objectives": [
+        "Use evidence from a training event to identify a sustain, an improve, and a specific next action."
+      ],
+      "terms": [
+        "AAR",
+        "sustain",
+        "improve",
+        "follow-up"
+      ],
+      "sourceIds": [
+        "training-series",
+        "adp-training"
+      ],
+      "sourceLocator": "Training Management Directorate, TC 7-0.1 description. ADP 7-0, chapter 4, evaluation and assessment.",
+      "sections": [
+        {
+          "heading": "Anchor the discussion",
+          "text": "An after-action review works from the intended task or standard and what participants observed. Ask what the group expected, what happened, and which conditions explain the difference. Surface observations from people at different stations rather than assuming the leader saw the whole event."
+        },
+        {
+          "heading": "Separate sustain from improve",
+          "text": "Keep what worked and name the evidence supporting it. Describe a shortfall precisely enough to change one behavior. 'Handoffs were bad' is difficult to act on. 'Two of three shifts received no status on open equipment checks' identifies a gap worth addressing."
+        },
+        {
+          "heading": "Close the loop",
+          "text": "Pick a change, an owner, and a chance to test it at the next event. Use the next evaluation to see whether the change worked. This keeps the AAR connected to the training cycle and gives the team a chance to sustain a real improvement."
+        }
+      ],
+      "questions": [
+        {
+          "id": "specific-action",
+          "prompt": "An AAR finds that two shift changes left work unassigned. Give one concrete improvement and a way to test it.",
+          "answer": "Assign the outgoing lead to name an owner for each open item and obtain acknowledgement. At the next event, sample handoffs and check whether every open item has a confirmed owner."
+        },
+        {
+          "id": "observation",
+          "prompt": "A leader remembers a clear briefing, but three participants report different start times. How should the AAR handle the difference?",
+          "answer": "Compare the intended time, what each group received, and which version was available at the point of action. Use those observations to improve how the schedule is confirmed."
+        }
+      ]
+    },
+    {
+      "id": "field-sanitation-responsibilities",
+      "courseId": "field-health",
+      "title": "Who keeps a field site healthy?",
+      "summary": "Distinguish the Soldier’s daily responsibilities from the unit field sanitation team’s role and command decisions.",
+      "objectives": [
+        "Explain who observes, reports, advises, and owns corrective action when a field health control fails."
+      ],
+      "terms": [
+        "field sanitation team",
+        "preventive medicine",
+        "force health protection"
+      ],
+      "sourceIds": [
+        "atp-sanitation"
+      ],
+      "sourceLocator": "ATP 4-25.12, chapters 1–2, Unit Field Sanitation Teams and Soldier Responsibilities.",
+      "sections": [
+        {
+          "heading": "A shared system",
+          "text": "The unit field sanitation team helps leaders identify and control preventable health threats. It contributes observation, checks, education, and advice. Leaders establish and enforce controls. Individual Soldiers make those controls work every day when they follow approved water and food practices, keep shared areas clean, and report deficiencies."
+        },
+        {
+          "heading": "Look for failures in controls",
+          "text": "Work backward from a possible exposure. An empty handwashing point affects everyone using the dining area. A leaking waste container can contaminate surfaces and attract pests. Identifying the failed control helps leadership contain the problem, assign an owner, and determine whether preventive medicine or another specialist needs to assess it."
+        },
+        {
+          "heading": "Report so someone can act",
+          "text": "Include the exact location, what changed, when you observed it, how it could affect others, and any immediate steps already taken under unit procedures. If you do not know what caused it, say so. Follow up to see whether the control was restored."
+        }
+      ],
+      "questions": [
+        {
+          "id": "missing-water",
+          "prompt": "A handwashing point outside a serving area is empty. Who can contribute to fixing the problem?",
+          "answer": "The observer reports the location and status. The responsible unit personnel restore the supply, the field sanitation team helps assess the control, and leaders make and enforce any decision about continued service."
+        },
+        {
+          "id": "report-content",
+          "prompt": "What makes 'the camp is unsanitary' less useful than a report about a specific broken control?",
+          "answer": "It does not say where the failure is, who is exposed, or what needs to change. Reporting the observed condition and its location gives leaders a corrective action they can assign and check."
+        }
+      ]
+    },
+    {
+      "id": "potable-water-chain",
+      "courseId": "field-health",
+      "title": "Potable water from source to cup",
+      "summary": "Understand how an approved water supply can become unsafe after it leaves its source.",
+      "objectives": [
+        "Distinguish potable from palatable water and identify failures in the approval, storage, and dispensing chain."
+      ],
+      "terms": [
+        "potable water",
+        "palatability",
+        "approved source",
+        "recontamination"
+      ],
+      "sourceIds": [
+        "atp-sanitation"
+      ],
+      "sourceLocator": "ATP 4-25.12, chapter 3, paragraphs 3-7 and 3-22–3-23, and section VII on water storage equipment.",
+      "sections": [
+        {
+          "heading": "Approval is evidence",
+          "text": "Potable water meets the applicable drinking-water requirements. Palatable water looks, smells, or tastes acceptable. A clear container proves little about potability, and an unpleasant taste alone does not establish the water’s status. Use the approved water supply and the unit’s designation for drinking, cooking, and other uses that require it."
+        },
+        {
+          "heading": "Protect the chain after treatment",
+          "text": "The supply passes through containers, hoses, fittings, and taps before it reaches each person. A dirty fitting or a container previously used for something else can defeat the upstream controls. Keep potable and nonpotable equipment identified and separate, and report compromised seals, unclear labels, or unverified transfers."
+        },
+        {
+          "heading": "Escalate uncertainty",
+          "text": "If a container’s status is unknown, report it and use a verified supply while the responsible personnel establish its status under unit procedures. Field sanitation checks and preventive medicine oversight belong in the approval process. Appearance or an improvised test cannot substitute for that process."
+        }
+      ],
+      "questions": [
+        {
+          "id": "unmarked-container",
+          "prompt": "Two similar containers sit beside the approved water point. One has no label and nobody can confirm its source. Which supply should you use?",
+          "answer": "Use the verified supply. Report the unidentified container and keep it out of drinking-water use until responsible personnel establish its status."
+        },
+        {
+          "id": "after-treatment",
+          "prompt": "Water came from an approved supply but passed through a hose of unknown use. Why does the original approval fail to settle the question?",
+          "answer": "Contamination can be introduced during transport or dispensing. Verify the equipment and report the questionable transfer under unit procedures."
+        }
+      ]
+    },
+    {
+      "id": "food-waste-and-hygiene",
+      "courseId": "field-health",
+      "title": "Break the food and waste exposure chain",
+      "summary": "Connect hygiene, clean equipment, protected food, and controlled waste disposal.",
+      "objectives": [
+        "Identify where contamination could move between people, food, equipment, and waste."
+      ],
+      "terms": [
+        "cross-contamination",
+        "food service",
+        "hand hygiene",
+        "waste stream"
+      ],
+      "sourceIds": [
+        "atp-sanitation"
+      ],
+      "sourceLocator": "ATP 4-25.12, chapter 4, sanitary food handling and food-handler hygiene. Chapter 5, waste classification and management.",
+      "sections": [
+        {
+          "heading": "Follow contact, not appearances",
+          "text": "Food can be exposed by dirty hands, utensils, surfaces, or storage conditions even when a serving area looks orderly. Trace what each implement touched. Separate contaminated equipment and waste handling from clean food-service work, and follow the designated hygiene and sanitation controls before returning to service."
+        },
+        {
+          "heading": "Keep waste streams distinct",
+          "text": "Waste comes in different forms and needs different handling. A full waste receptacle, a leak, or a disposal point that interferes with food or water operations deserves a specific report. Follow unit collection and disposal arrangements. Changing the site or handling method can create another exposure pathway."
+        },
+        {
+          "heading": "Contain and communicate",
+          "text": "If a possible breach affects service, tell the responsible person what was exposed, how, and for how long if known. Hold affected items for the responsible decision under local procedures. A timely, accurate report can prevent more people from sharing the exposure and help identify which other items need review."
+        }
+      ],
+      "questions": [
+        {
+          "id": "gloves",
+          "prompt": "A server handles refuse and returns to a serving table wearing the same gloves. What is the control failure?",
+          "answer": "The gloves can carry contamination from refuse to food or serving equipment. Stop the cross-contact, follow the required hand hygiene and clean-equipment controls, and report any possible exposure."
+        },
+        {
+          "id": "leak",
+          "prompt": "A waste container leaks on a path used to deliver clean supplies. Is replacing the container the only issue?",
+          "answer": "No. The leaked material may contaminate the path, equipment, or deliveries. Report the location and path of exposure so responsible personnel can restore controls and address the affected area."
+        }
+      ]
+    },
+    {
+      "id": "heat-and-cold-controls",
+      "courseId": "field-health",
+      "title": "Heat and cold are exposure problems",
+      "summary": "Understand why environmental risk changes with the task, clothing, and conditions.",
+      "objectives": [
+        "Recognize changing exposure and identify unit prevention and escalation responsibilities."
+      ],
+      "terms": [
+        "acclimatization",
+        "wet-bulb globe temperature",
+        "workload",
+        "cold and wet exposure"
+      ],
+      "sourceIds": [
+        "atp-sanitation"
+      ],
+      "sourceLocator": "ATP 4-25.12, chapters 7–8, heat risk factors, prevention tools, and cold injury factors.",
+      "sections": [
+        {
+          "heading": "Consider the person, the task, and the environment",
+          "text": "Heat risk changes with effort, heat exposure, acclimatization, and clothing or equipment that limits heat loss. A familiar air-temperature reading does not by itself describe risk during hard work. Leaders use applicable heat monitoring and unit guidance to adapt workload, rest, and access to approved drinking water."
+        },
+        {
+          "heading": "Cold exposure can persist above freezing",
+          "text": "Wet clothing, wind, long stationary periods, and contact with cold surfaces all affect heat loss. Weather alone does not show a Soldier’s exposure. Plan for dry clothing and shelter as directed and recheck conditions after a shift, rest period, or equipment change."
+        },
+        {
+          "heading": "Report changes early",
+          "text": "Tell the responsible leader when a control is missing or exposure has changed. Promptly alert qualified help for a person whose condition is worsening, especially changes in responsiveness. Describe what changed and when. Symptom recognition and reporting support qualified assessment."
+        }
+      ],
+      "questions": [
+        {
+          "id": "heat-change",
+          "prompt": "The air temperature is unchanged, but a low-effort task becomes strenuous while the group is wearing more protective clothing. What should be reconsidered?",
+          "answer": "Reassess exposure and the unit’s prevention controls. Higher effort and more restrictive clothing can increase heat stress even at the same air temperature."
+        },
+        {
+          "id": "cold-change",
+          "prompt": "A team is stationary in wind and rain at a temperature above freezing. Why should conditions be reassessed?",
+          "answer": "Wet clothing, wind, and inactivity can increase heat loss above freezing. Check whether existing clothing, shelter and monitoring controls are sufficient under unit guidance."
+        }
+      ]
+    },
+    {
+      "id": "casualty-response-roles",
+      "courseId": "casualty-response",
+      "title": "First-responder roles and TCCC phases",
+      "summary": "Learn what role-based training and the phases of care tell a nonmedical Soldier about responsibilities.",
+      "objectives": [
+        "Distinguish the All Service Members tier from higher tiers and explain why TCCC phases depend on context."
+      ],
+      "terms": [
+        "TCCC",
+        "ASM",
+        "Tier 1",
+        "care under fire",
+        "tactical field care",
+        "tactical evacuation care"
+      ],
+      "sourceIds": [
+        "atp-casualty",
+        "jts-education",
+        "jts-guidelines"
+      ],
+      "sourceLocator": "ATP 4-02.11, chapter 3, pp. 27–35. JTS role-based education and training tiers, and current TCCC Guidelines, phase headings.",
+      "sections": [
+        {
+          "heading": "Tier answers who is trained for what",
+          "text": "TCCC stands for Tactical Combat Casualty Care. All Service Members training is Tier 1. Combat Lifesaver and medical personnel receive training for different roles. A technique appearing in the complete guideline may belong to a higher tier. Current role-based instruction and local direction are the references for what you are trained and expected to do."
+        },
+        {
+          "heading": "Phase answers what context applies",
+          "text": "Care under fire or threat, tactical field care, and tactical evacuation care describe different circumstances involving safety, personnel, and available resources. The phase names help responders understand a handoff. They do not turn an urgent and changing situation into a fixed series of timed steps."
+        },
+        {
+          "heading": "Use the correct training source",
+          "text": "ATP 4-02.11 replaced the older Army first-aid circular. The Army publication and current JTS materials serve complementary purposes: one provides Army doctrine, and the other tracks current role-based TCCC guidance and education. Use your approved training program for practice and evaluation."
+        }
+      ],
+      "questions": [
+        {
+          "id": "tier-specific",
+          "prompt": "You find a technique in a provider-level guideline while studying Tier 1. Does its presence in the guideline establish that it is a Tier 1 skill?",
+          "answer": "No. Match the technique to the current All Service Members skill set and your approved training. The complete guideline addresses multiple roles."
+        },
+        {
+          "id": "context-change",
+          "prompt": "What information does a phase label carry when a casualty is handed to an evacuation team?",
+          "answer": "It gives context about the setting and available people or resources. The receiving team still needs the casualty’s current status and what has already happened."
+        }
+      ]
+    },
+    {
+      "id": "recognize-and-report-urgent-changes",
+      "courseId": "casualty-response",
+      "title": "Recognize and report urgent changes",
+      "summary": "Practice the language of observation for time-sensitive problems so trained help receives a useful report.",
+      "objectives": [
+        "Identify observations that warrant prompt escalation and report them without making an unsupported diagnosis."
+      ],
+      "terms": [
+        "severe bleeding",
+        "breathing",
+        "responsiveness",
+        "time of observation"
+      ],
+      "sourceIds": [
+        "atp-casualty",
+        "jts-guidelines"
+      ],
+      "sourceLocator": "ATP 4-02.11, chapter 4 Overview of Massive Bleeding Control and chapter 5 Overview of Airway Control. JTS current guidelines, Tactical Field Care communications.",
+      "sections": [
+        {
+          "heading": "Describe what you can observe",
+          "text": "Severe ongoing bleeding, trouble breathing, or declining responsiveness are critical observations to communicate promptly through the designated response channel. Use plain language and a time reference where possible. A reported change such as 'was answering questions and now does not respond to voice' gives trained personnel better information than an unconfirmed diagnosis."
+        },
+        {
+          "heading": "Separate what happened from what you inferred",
+          "text": "State the known event, where the casualty is, what you saw, and what has changed. Say when the mechanism or a prior action is unknown. Clear uncertainty allows the person taking over to reassess. Passing along a guess as fact makes the next assessment harder."
+        },
+        {
+          "heading": "Apply the boundary in a scenario",
+          "text": "A practice question can teach which facts belong in a report and why a change is urgent. Hands-on training is where Soldiers learn to recognize conditions under pressure and demonstrate approved interventions under instruction. This lesson covers recognition and communication."
+        }
+      ],
+      "questions": [
+        {
+          "id": "urgent-update",
+          "prompt": "A casualty who was speaking now struggles to answer and appears to have more difficulty breathing. What belongs in an immediate update?",
+          "answer": "Report the location, what changed in breathing and responsiveness, and when the change was observed. Request trained help through the designated channel and distinguish your observations from an unconfirmed cause."
+        },
+        {
+          "id": "uncertain-injury",
+          "prompt": "You did not witness the injury. Another person offers a guess about the cause. How should the cause be handed off?",
+          "answer": "Say that you did not observe the mechanism. Clearly label any secondhand account and pass along the signs, symptoms, times, and actions you actually know."
+        }
+      ]
+    },
+    {
+      "id": "casualty-card-and-mist",
+      "courseId": "casualty-response",
+      "title": "Document and hand off with MIST",
+      "summary": "Use the DD Form 1380 structure to preserve time, observations, and care information.",
+      "objectives": [
+        "Distinguish the four MIST categories and explain how a written record complements a verbal handoff."
+      ],
+      "terms": [
+        "DD Form 1380",
+        "MIST",
+        "point of injury",
+        "continuity of care"
+      ],
+      "sourceIds": [
+        "dd1380",
+        "jts-guidelines"
+      ],
+      "sourceLocator": "JTS DD Form 1380 instructions, background, purpose, and policy, p. 1. Current TCCC Guidelines, communications and documentation of care.",
+      "sections": [
+        {
+          "heading": "Put information where it helps the next responder",
+          "text": "MIST groups mechanism of injury, injuries, signs and symptoms, and treatments. Mechanism describes what happened. Injuries describe known injury locations or types. Signs and symptoms describe what responders observe or the casualty reports. Treatments record care already provided, with times when known."
+        },
+        {
+          "heading": "A record travels between people and settings",
+          "text": "DD Form 1380 is the TCCC Casualty Card for point-of-injury documentation. It helps the next team understand care already provided when the original responder is unavailable. A verbal update can emphasize what has changed and answer questions. The written record preserves details across subsequent handoffs."
+        },
+        {
+          "heading": "Keep unknowns visible",
+          "text": "Be precise about whether a time is observed, approximate, or unknown. Update the receiving team when the situation changes, and handle identifying information through approved channels. Use invented details in training exercises. These questions assess how information is grouped and communicated."
+        }
+      ],
+      "questions": [
+        {
+          "id": "mist-classify",
+          "prompt": "A fall was witnessed. The casualty reports pain, a responder notes a visible injury, and a trained responder reports care with a time. Where does each detail belong?",
+          "answer": "The fall is mechanism, the visible injury is injuries, reported pain is signs and symptoms, and care plus its time is treatments."
+        },
+        {
+          "id": "handoff-time",
+          "prompt": "A treatment is recorded on the card but its time is unknown. What should the next team hear?",
+          "answer": "Report the documented treatment and explicitly say the time is unknown. If appropriate, tell the team who provided the information so it can be verified."
+        }
+      ]
+    },
+    {
+      "id": "evacuation-and-movement-readiness",
+      "courseId": "casualty-response",
+      "title": "Casualty movement and transfer of care",
+      "summary": "Understand why moving a casualty and handing them off each require a coordinated training role.",
+      "objectives": [
+        "Explain what continuity of care requires across a simulated casualty movement and transfer."
+      ],
+      "terms": [
+        "casualty movement",
+        "receiving team",
+        "evacuation",
+        "transfer of care"
+      ],
+      "sourceIds": [
+        "atp-casualty",
+        "dd1380"
+      ],
+      "sourceLocator": "ATP 4-02.11, chapters 1–2, casualty response terminology and casualty movement. DD Form 1380 instructions, background and policy.",
+      "sections": [
+        {
+          "heading": "Movement carries responsibilities",
+          "text": "Movement changes who can see the casualty, who can hear updates, and sometimes who is responsible for care. In a training scenario, know who is directing the move, who tracks the casualty’s status, and who is receiving them. Communicate a change in condition to the person responsible for care and confirm the receiving team has the record."
+        },
+        {
+          "heading": "Keep the request and clinical handoff distinct",
+          "text": "An evacuation request coordinates movement and resources under a unit procedure. A clinical handoff communicates what the receiving team needs for continuity of care. Both can matter at the same time. Acknowledgment of a request does not establish that the receiving team has heard the casualty report or received the card."
+        },
+        {
+          "heading": "Practice under an instructor",
+          "text": "Lifting, moving, and using a litter require hands-on practice with equipment and an instructor. Discuss the reporting responsibilities before the exercise, then demonstrate the assigned role under the task standard. The coverage map records movement as practical training."
+        }
+      ],
+      "questions": [
+        {
+          "id": "record-missing",
+          "prompt": "A simulated casualty has arrived at the receiving team, but the card stayed with the outgoing group. What part of the transfer is incomplete?",
+          "answer": "The continuity record has not transferred. Notify the receiving team, communicate what is known and unknown, and arrange transfer of the record through the approved process."
+        },
+        {
+          "id": "request-distinction",
+          "prompt": "An evacuation request is acknowledged. Why does the receiving team still need a separate status handoff?",
+          "answer": "The request coordinates movement. The handoff provides the casualty’s known mechanism, injuries, latest observations and care, including changes since the request."
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "atp-infantry",
+      "code": "ATP 3-21.8",
+      "title": "Infantry Rifle Platoon and Squad",
+      "edition": "11 January 2024, Change 1 dated 23 June 2025",
+      "url": "https://home.army.mil/benning/8117/7919/3106/20260316_ATP_3-21.8.pdf",
+      "catalogUrl": "https://armypubs.army.mil/ProductMaps/PubForm/Details.aspx?PUB_ID=1028215"
+    },
+    {
+      "id": "atp-sanitation",
+      "code": "ATP 4-25.12",
+      "title": "Unit Field Sanitation Teams",
+      "edition": "30 April 2014, Change 2 dated 8 August 2025",
+      "url": "https://armypubs.army.mil/epubs/DR_pubs/DR_a/ARN44577-ATP_4-25.12-002-WEB-3.pdf",
+      "catalogUrl": "https://armypubs.army.mil/ProductMaps/PubForm/Details.aspx?PUB_ID=104111"
+    },
+    {
+      "id": "atp-casualty",
+      "code": "ATP 4-02.11",
+      "title": "Casualty Response, Tactical Combat Casualty Care, and First Aid",
+      "edition": "23 March 2026",
+      "url": "https://armypubs.army.mil/epubs/DR_pubs/DR_a/ARN46159-ATP_4-02.11-000-WEB-1.pdf",
+      "readingUrl": "https://files.trex-arms.com/pdf/army/atp/atp_4-02-11_2026-03.pdf",
+      "readingNote": "Third-party reading copy from the Field Manual Vault"
+    },
+    {
+      "id": "stp-common",
+      "code": "STP 21-1-SMCT",
+      "title": "Soldier’s Manual of Common Tasks, Warrior Skills, Level 1",
+      "edition": "20 November 2025",
+      "url": "https://armypubs.army.mil/ProductMaps/PubForm/Details.aspx?PUB_ID=1032188"
+    },
+    {
+      "id": "tc-landnav",
+      "code": "TC 3-25.26",
+      "title": "Map Reading and Land Navigation",
+      "edition": "15 November 2013",
+      "url": "https://armypubs.army.mil/ProductMaps/PubForm/Details.aspx?PUB_ID=103749"
+    },
+    {
+      "id": "jts-guidelines",
+      "code": "JTS CoTCCC",
+      "title": "Tactical Combat Casualty Care Guidelines",
+      "edition": "1 May 2026, as listed by JTS",
+      "url": "https://jts.health.mil/index.cfm/CPGs/cpgs",
+      "readingUrl": "https://books.allogy.com/web/tenant/8/books/b729b76a-1a34-4bf7-b76b-66bb2072b2a7/",
+      "readingNote": "Guidelines linked from the JTS index"
+    },
+    {
+      "id": "jts-education",
+      "code": "JTS",
+      "title": "Role-based TCCC education",
+      "edition": "JTS education and training index checked 22 November 2026",
+      "url": "https://jts.health.mil/index.cfm/education/jtet_branch",
+      "readingUrl": "https://jts.health.mil/index.cfm/committees/cotccc/curriculum",
+      "readingNote": "JTS curriculum access"
+    },
+    {
+      "id": "dd1380",
+      "code": "DD Form 1380",
+      "title": "Tactical Combat Casualty Care Card instructions",
+      "edition": "JTS-linked instructions checked 22 November 2026",
+      "url": "https://jts.health.mil/assets/docs/forms/DD_form_1380_TCCC_Card_Instructions.pdf"
+    },
+    {
+      "id": "car-terrain",
+      "code": "071-COM-1012",
+      "title": "Orient a Map to the Ground by Map-Terrain Association",
+      "edition": "10 December 2024 task report",
+      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC%2FF22923F6-9BB5-4F80-8562-4BCD79B796D9-1335960461238/report.pdf"
+    },
+    {
+      "id": "army-values",
+      "title": "The Army Values",
+      "url": "https://www.army.mil/values/index.html"
+    },
+    {
+      "id": "adp-training",
+      "title": "ADP 7-0, Training, April 2024",
+      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/22E3C7CD-EB3A-4B79-B8E3-6A90E3FD3493-1345749187718/ADP7_0.pdf"
+    },
+    {
+      "id": "training-series",
+      "title": "Army Training Management Directorate, TC 7-0 series overview",
+      "url": "https://www.army.mil/article/289968/the_training_management_directorate_underneath_the_combined_arms_command_training_completes_tc_7_0_series_1_4"
+    },
+    {
+      "id": "army-map",
+      "title": "Army range-control map example, Land Navigation Basic Course",
+      "url": "https://home.army.mil/devens/4917/5561/7527/Range_Control_08-19-25_PDF_Compressed.pdf"
+    },
+    {
+      "id": "army-landnav",
+      "title": "Army NCO Academy, Traditional Land Navigation Returns to the Basic Leader Course",
+      "url": "https://www.army.mil/article-amp/279407/traditional_land_navigation_returns_to_the_basic_leader_course"
+    },
+    {
+      "id": "medcoe-release",
+      "title": "MEDCoE publication announcement for ATP 4-02.11",
+      "url": "https://www.army.mil/article-amp/291504"
+    }
+  ],
+  "publications": [
+    {
+      "id": "atp-infantry",
+      "code": "ATP 3-21.8",
+      "title": "Infantry Rifle Platoon and Squad",
+      "edition": "11 January 2024, Change 1 dated 23 June 2025",
+      "access": "Official Army reading copy inspected",
+      "url": "https://home.army.mil/benning/8117/7919/3106/20260316_ATP_3-21.8.pdf",
+      "catalogUrl": "https://armypubs.army.mil/ProductMaps/PubForm/Details.aspx?PUB_ID=1028215",
+      "note": "Army-hosted Change 1 cover, transmittal, and chapter 1 organization and duties sections checked. The field manual vault helped identify the edition."
+    },
+    {
+      "id": "atp-sanitation",
+      "code": "ATP 4-25.12",
+      "title": "Unit Field Sanitation Teams",
+      "edition": "30 April 2014, Change 2 dated 8 August 2025",
+      "access": "APD reading copy inspected",
+      "url": "https://armypubs.army.mil/epubs/DR_pubs/DR_a/ARN44577-ATP_4-25.12-002-WEB-3.pdf",
+      "catalogUrl": "https://armypubs.army.mil/ProductMaps/PubForm/Details.aspx?PUB_ID=104111",
+      "note": "APD lists Change 2. The combined official copy includes the change sheet and the sections used here. Lessons cover reporting and basic prevention rather than certification procedures."
+    },
+    {
+      "id": "atp-casualty",
+      "code": "ATP 4-02.11",
+      "title": "Casualty Response, Tactical Combat Casualty Care, and First Aid",
+      "edition": "23 March 2026",
+      "access": "APD reading copy inspected",
+      "url": "https://armypubs.army.mil/epubs/DR_pubs/DR_a/ARN46159-ATP_4-02.11-000-WEB-1.pdf",
+      "readingUrl": "https://files.trex-arms.com/pdf/army/atp/atp_4-02-11_2026-03.pdf",
+      "readingNote": "Third-party reading copy from the Field Manual Vault",
+      "note": "The Army Medical Center of Excellence confirmed that this edition supersedes TC 4-02.1. The Army copy and vault copy were checked for the edition and chapter locators; the vault is a third-party host.",
+      "sourceIds": [
+        "medcoe-release"
+      ]
+    },
+    {
+      "id": "stp-common",
+      "code": "STP 21-1-SMCT",
+      "title": "Soldier’s Manual of Common Tasks, Warrior Skills, Level 1",
+      "edition": "20 November 2025",
+      "access": "APD catalog checked · publication requires Army authentication",
+      "url": "https://armypubs.army.mil/ProductMaps/PubForm/Details.aspx?PUB_ID=1032188",
+      "note": "The APD reading link redirects to Army sign-in. The current edition’s complete task roster, wording, and mappings were not verified."
+    },
+    {
+      "id": "tc-landnav",
+      "code": "TC 3-25.26",
+      "title": "Map Reading and Land Navigation",
+      "edition": "15 November 2013",
+      "access": "APD catalog checked · publication requires Army authentication",
+      "url": "https://armypubs.army.mil/ProductMaps/PubForm/Details.aspx?PUB_ID=103749",
+      "note": "The APD reading link redirects to Army sign-in. Map lessons use the separately public Army training references. The older FM listed in the vault is a different publication."
+    },
+    {
+      "id": "jts-guidelines",
+      "code": "JTS CoTCCC",
+      "title": "Tactical Combat Casualty Care Guidelines",
+      "edition": "1 May 2026, as listed by JTS",
+      "access": "Official index and linked guideline text inspected",
+      "url": "https://jts.health.mil/index.cfm/CPGs/cpgs",
+      "readingUrl": "https://books.allogy.com/web/tenant/8/books/b729b76a-1a34-4bf7-b76b-66bb2072b2a7/",
+      "readingNote": "Guidelines linked from the JTS index",
+      "note": "Phase headings and communications and documentation passages checked. The guidelines include multiple provider levels."
+    },
+    {
+      "id": "jts-education",
+      "code": "JTS",
+      "title": "Role-based TCCC education",
+      "edition": "JTS education and training index checked 22 November 2026",
+      "access": "Official JTS tier listing and curriculum route checked",
+      "url": "https://jts.health.mil/index.cfm/education/jtet_branch",
+      "readingUrl": "https://jts.health.mil/index.cfm/committees/cotccc/curriculum",
+      "readingNote": "JTS curriculum access",
+      "note": "JTS identifies Tier 1 as All Service Members. JTS directs instructors to Deployed Medicine. A current instructor package and all of its skill-level evaluation sheets were not verified."
+    },
+    {
+      "id": "dd1380",
+      "code": "DD Form 1380",
+      "title": "Tactical Combat Casualty Care Card instructions",
+      "edition": "JTS-linked instructions checked 22 November 2026",
+      "access": "Official JTS instructions inspected",
+      "url": "https://jts.health.mil/assets/docs/forms/DD_form_1380_TCCC_Card_Instructions.pdf",
+      "note": "Purpose, point-of-injury documentation, MIST format, and continuity-of-care policy checked."
+    },
+    {
+      "id": "car-terrain",
+      "code": "071-COM-1012",
+      "title": "Orient a Map to the Ground by Map-Terrain Association",
+      "edition": "10 December 2024 task report",
+      "access": "Public Army task report inspected",
+      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC%2FF22923F6-9BB5-4F80-8562-4BCD79B796D9-1335960461238/report.pdf",
+      "note": "Approved task report includes its conditions, standard, and supporting map-margin task 071-COM-1000. It is cited independently of the 2025 STP."
+    }
+  ]
+}
