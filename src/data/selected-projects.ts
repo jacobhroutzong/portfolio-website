@@ -106,7 +106,7 @@ export const selectedProjects = [
   },
   {
     "title": "Muster",
-    "group": "business",
+    "group": "research",
     "eyebrow": "WEB APPLICATION / DATA ENGINEERING",
     "description": "A public research workspace for comparing Army and Air National Guard AGR announcements and checking their official sources.",
     "href": "/projects/muster/",
