@@ -185,3 +185,7 @@ button:disabled { opacity: 0.4; cursor: default; }
 @media (min-width: 42.01rem) and (max-width: 58rem) {
   .course-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+/* Keep corrections accessible without occupying a homepage card. */
+.site-nav a.study-contact-link { align-self:center; padding:0.38rem 0.65rem; margin-left:0.2rem; border:1px solid var(--border); border-radius:999px; font-size:0.78rem; font-weight:600; line-height:1.5; }
+.site-nav a.study-contact-link:hover { color:var(--accent); border-color:var(--accent); }
