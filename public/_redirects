@@ -32,3 +32,7 @@
 /downloads/tunera-ai-0.3.1.zip /projects/tunera/ 302
 /downloads/tuneledger-ai-0.3.1.zip /projects/tunera/ 302
 /downloads/adaptforge-ai-0.3.1.zip /projects/tunera/ 302
+
+/study/acronyms /study/17e/acronyms/ 301
+/study/acronyms/ /study/17e/acronyms/ 301
+/study/acronyms/* /study/17e/acronyms/:splat 301

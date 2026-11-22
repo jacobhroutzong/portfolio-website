@@ -154,5 +154,12 @@
   "projects/recursa/studio/index.html",
   "scientific-engine.worker.js",
   "study/17e/cards.json",
-  "study/17e/index.html"
+  "study/17e/index.html",
+  "study/17e/acronyms/data.json",
+  "study/17e/acronyms/index.html",
+  "study/ew/data.json",
+  "study/ew/index.html",
+  "study/index.html",
+  "study/study.css",
+  "study/study.js"
 ]

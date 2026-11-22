@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="theme-color" content="#08131f">
+  <title>Army Acronyms | PhaseUp</title>
+  <link rel="stylesheet" href="/study/study.css">
+  <script type="module" src="/study/study.js"></script>
+</head>
+<body data-study="acronyms">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="/study/17e/">PhaseUp</a>
+      <nav class="site-nav" aria-label="Study tools">
+        <a href="/study/">Study home</a>
+        <a href="/study/17e/acronyms/" aria-current="page">Army Acronyms</a>
+        <a href="/study/ew/">EW Study</a>
+        <a href="/study/17e/">PhaseUp 17E</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main" class="shell" tabindex="-1">
+    <header class="hero">
+      <p class="eyebrow">PhaseUp · Army foundations</p>
+      <h1>Army Acronyms</h1>
+      <p>Build the vocabulary for phase preparation and continued Army study. Look up terms, learn their context, and practice from memory.</p>
+      <nav class="jump-nav" aria-label="On this page">
+        <a href="#reference">Reference</a>
+        <a href="#practice">Recall practice</a>
+      </nav>
+    </header>
+    <p id="load-status" class="notice" role="status">Loading the acronym reference…</p>
+    <button id="retry" class="secondary" type="button" hidden>Retry loading</button>
+    <p id="storage-status" class="notice" role="status" hidden></p>
+    <noscript><p class="notice">Enable JavaScript to load and search the acronym reference.</p></noscript>
+    <div id="study-content" hidden>
+      <section id="reference" aria-labelledby="reference-heading">
+        <h2 id="reference-heading" tabindex="-1">Reference</h2>
+        <div class="filter-row">
+          <div class="field search-field">
+            <label for="search">Search the reference</label>
+            <input type="search" id="search" placeholder="Search terms, meanings, and context">
+          </div>
+          <div class="field">
+            <label for="category">Category</label>
+            <select id="category"><option value="">All categories</option></select>
+          </div>
+        </div>
+        <p class="meta" id="reference-count" role="status"></p>
+        <div id="reference-results" class="reference-list"></div>
+        <button type="button" id="show-more" class="secondary" hidden>Show more terms</button>
+        <div id="reference-notices"></div>
+      </section>
+      <section id="practice" aria-labelledby="practice-heading">
+        <h2 id="practice-heading" tabindex="-1">Recall practice</h2>
+        <p class="section-intro">Say the expansion and meaning before revealing the answer. Your rating controls which cards appear in review.</p>
+        <div class="filter-row">
+          <div class="field">
+            <label for="practice-filter">Practice cards</label>
+            <select id="practice-filter">
+              <option value="all">All cards</option>
+              <option value="review">Review again only</option>
+            </select>
+          </div>
+          <p id="practice-summary" class="meta" role="status"></p>
+        </div>
+        <p id="card-empty" class="notice" role="status" hidden></p>
+        <article id="recall-card" class="panel recall-card" aria-labelledby="card-prompt" hidden>
+          <p id="card-context" class="meta"></p>
+          <h3 id="card-prompt" tabindex="-1"></h3>
+          <div id="card-answer" class="card-answer" tabindex="-1" hidden></div>
+          <div class="actions">
+            <button type="button" id="reveal-answer" aria-controls="card-answer" aria-expanded="false">Reveal answer</button>
+            <div id="card-ratings" class="actions" hidden>
+              <button type="button" id="review-again" class="secondary">Review again</button>
+              <button type="button" id="got-it">Got it</button>
+            </div>
+            <button type="button" id="skip-card" class="secondary">Skip card</button>
+          </div>
+        </article>
+      </section>
+      <footer class="study-footer">
+        <p id="updated" class="meta" hidden></p>
+        <p>Your recall ratings are saved in this browser.</p>
+        <button type="button" id="reset-progress" class="secondary">Reset acronym progress</button>
+      </footer>
+    </div>
+  </main>
+</body>
+</html>
