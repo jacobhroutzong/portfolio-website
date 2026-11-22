@@ -170,3 +170,59 @@ test('blocked browser storage still permits recall practice', async ({ page }) =
   await expect(page.locator('#practice-summary')).toContainText('1 marked for review');
   await expect(page.locator('#storage-status')).toContainText('could not save');
 });
+
+test('Soldier Study shares navigation, recall and coverage while keeping guest progress separate', async ({ page }) => {
+  await page.goto('/study/');
+  await page.getByRole('heading', { name: 'Soldier Study' }).getByRole('link').click();
+  await expect(page.getByRole('heading', { name: 'Soldier Study', exact: true })).toBeVisible();
+  await expect(page.locator('#curriculum-stats')).toHaveText('4 courses · 16 lessons · 39 recall questions');
+  await expect(page.getByRole('button', { name: 'Previous lesson' })).toBeDisabled();
+  await page.getByRole('button', { name: 'Next lesson' }).click();
+  await expect(page.locator('#lesson-title')).toHaveText('Read a task standard');
+  await page.getByLabel('Choose a course').selectOption('casualty-response');
+  await expect(page.locator('#lesson-title')).toHaveText('First-responder roles and TCCC phases');
+  await page.getByLabel('Choose a lesson').selectOption('casualty-card-and-mist');
+  await expect(page.locator('#lesson-content')).toContainText('L for local or Z for Zulu');
+  await expect(page.locator('#lesson-content')).toContainText('21 July 2025');
+
+  await page.getByLabel('Find a topic across all courses').fill('potable palatable');
+  await page.getByRole('link', { name: 'Potable water from source to cup', exact: true }).first().click();
+  await expect(page.locator('#lesson-title')).toBeFocused();
+  await page.getByRole('link', { name: 'Practice this lesson' }).click();
+  await expect(page.locator('#card-answer')).toBeHidden();
+  await page.getByRole('button', { name: 'Reveal answer' }).click();
+  await expect(page.locator('#card-answer')).toContainText('Use the verified supply');
+  const waterSource = page.locator('#card-answer').getByRole('link', { name: /Unit Field Sanitation Teams/ });
+  await expect(waterSource).toBeVisible();
+  await expect(waterSource).toHaveAttribute('href', /ARN44577-ATP_4-25\.12/);
+  await page.getByRole('button', { name: 'Review again', exact: true }).click();
+  await page.getByRole('button', { name: 'Mark lesson complete', exact: true }).click();
+  await page.reload();
+  await expect(page.locator('#lesson-title')).toHaveText('Potable water from source to cup');
+  await expect(page.getByRole('button', { name: 'Mark lesson incomplete', exact: true })).toBeVisible();
+  await page.getByLabel('Practice cards').selectOption('review');
+  await expect(page.locator('#practice-summary')).toContainText('1 marked for review');
+  await page.getByRole('link', { name: 'View this course’s coverage' }).click();
+  await expect(page.getByLabel('Course to inspect')).toHaveValue('field-health');
+  await page.getByLabel('Course to inspect').selectOption('foundations');
+  const mapTask = page.locator('#coverage-units summary').filter({ hasText: 'Orient a map to the ground on a training lane' });
+  await mapTask.click();
+  await expect(page.locator('#coverage-units')).toContainText('Task IDs: 071-COM-1012');
+  await expect(page.locator('#coverage-units summary').filter({ hasText: 'Verify the 2025 common-tasks roster' })).toContainText('Blocked pending verification');
+
+  const otherKeys = ['ew-study.progress.v1', 'army-acronyms.progress.v1', 'phaseup17e.progress.v1'];
+  const before = await page.evaluate(keys => {
+    for (const key of keys) localStorage.setItem(key, '{"sentinel":true}');
+    return JSON.parse(localStorage.getItem('soldier-study.progress.v1') ?? '{}');
+  }, otherKeys);
+  expect(before).toEqual({
+    ratings: { 'potable-water-chain:unmarked-container': 'review' },
+    completed: { 'potable-water-chain': true },
+  });
+  page.once('dialog', dialog => dialog.accept());
+  await page.getByRole('button', { name: 'Reset Soldier Study progress', exact: true }).click();
+  await expect(page.locator('#lesson-progress')).toHaveText('0 of 16 lessons complete');
+  expect(await page.evaluate(keys => [localStorage.getItem('soldier-study.progress.v1'), ...keys.map(key => localStorage.getItem(key))], otherKeys))
+    .toEqual([null, '{"sentinel":true}', '{"sentinel":true}', '{"sentinel":true}']);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+});

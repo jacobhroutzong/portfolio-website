@@ -1,7 +1,7 @@
 ---
 title: Muster
 summary: "A public workspace for researching Army and Air National Guard Active Guard Reserve announcements."
-category: Business & Operations Systems
+category: Data Engineering
 technologies: [JavaScript, CSS, Cloudflare Workers]
 draft: false
 status: Completed

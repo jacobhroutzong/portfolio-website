@@ -106,7 +106,7 @@ export const selectedProjects = [
   },
   {
     "title": "Muster",
-    "group": "business",
+    "group": "research",
     "eyebrow": "WEB APPLICATION / DATA ENGINEERING",
     "description": "A public research workspace for comparing Army and Air National Guard AGR announcements and checking their official sources.",
     "href": "/projects/muster/",
@@ -119,6 +119,14 @@ export const selectedProjects = [
     "description": "A Georgia Tech decision lab: forecast synthetic crop yields, allocate limited farm resources, and replay seven days of irrigation choices.",
     "href": "/projects/fieldsense/",
     "linkLabel": "Explore Fieldsense →"
+  },
+  {
+    "title": "Marqyra",
+    "group": "business",
+    "eyebrow": "WEB APPLICATION / PRODUCT MARKETING",
+    "description": "An owner-only workspace for versioning product strategy, planning campaigns, and connecting reported results to lessons.",
+    "href": "/projects/marqyra/",
+    "linkLabel": "Explore Marqyra →"
   }
 ];
 

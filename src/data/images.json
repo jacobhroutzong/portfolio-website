@@ -1,4 +1,10 @@
 {
+  "/media/fieldsense/farm-overview.webp": {
+    "width": 880,
+    "height": 568,
+    "src": "/media/generated/fieldsense/farm-overview.webp-880.webp",
+    "srcSet": "/media/generated/fieldsense/farm-overview.webp-480.webp 480w, /media/generated/fieldsense/farm-overview.webp-880.webp 880w"
+  },
   "/media/recursa-aviation.png": {
     "width": 1280,
     "height": 1677,

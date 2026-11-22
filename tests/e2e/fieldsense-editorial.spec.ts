@@ -1,11 +1,25 @@
 import { expect, test } from '@playwright/test';
 
+test.use({ launchOptions: { args: ['--enable-unsafe-swiftshader'] } });
+
 test('Fieldsense editorial lab keeps the original paper distinct from the recorded replay', async ({ page }) => {
   await page.goto('/projects/fieldsense/lab/');
   await expect(page.locator('#fieldsense-app')).toHaveAttribute('data-ready', 'true');
   await expect(page.getByRole('heading', { name: /When, where, and how much/i })).toBeVisible();
   await expect(page.locator('.fs-intro-quote blockquote'))
     .toContainText('We will use Markov Chain Decision Process to prescribe optimal irrigation actions');
+  await expect(page.getByText(/forecast inputs, not live sensor feeds/i)).toHaveCount(0);
+  await expect(page.locator('.fs-research-footnote blockquote')).toContainText([
+    'To forecast crop yield',
+    'Resource Availability; Water, fertilizer, labor, equipment',
+  ]);
+  await page.getByText('What do the field parameters mean?').click();
+  await expect(page.getByText(/MDP scores are estimated future rewards/)).toBeVisible();
+  await page.getByText('What do the resource parameters mean?').click();
+  await expect(page.getByText(/One of three illustrative resource-intensity choices/)).toBeVisible();
+  await expect(page.locator('.fs-water-balance-example')).toContainText('7 + 5 + 6 − 5.06 = 12.94 mm');
+  await expect(page.locator('.fs-economics')).toContainText('300 m³');
+  await expect(page.locator('.fs-economics-quote')).toContainText('This system was set up on water savings');
   await expect(page.locator('.fs-origin-paper blockquote'))
     .toContainText('The data input to the system is crucial');
   await expect(page.locator('link[href="/media/fieldsense/fieldsense-editorial.css"]')).toHaveCount(1);
@@ -33,6 +47,12 @@ test('Fieldsense case study quotes the original paper without claiming field dep
   await expect(page.getByRole('heading', { name: 'Fieldsense', exact: true })).toBeVisible();
   await expect(page.getByText(/To best allocate resources, we will implement Mixed-Integer Linear Programming/)).toBeVisible();
   await expect(page.getByText(/verbatim excerpts from the original 2025 submission/i)).toBeVisible();
+  await expect(page.getByText(/Weather data; temperature, rainfall, and humidity/)).toBeVisible();
+  await expect(page.getByText(/Crop data; crop type, seed variety, planting date/)).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Reading the parameters' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'How the original proposal was intended to save money' })).toBeVisible();
+  await expect(page.getByText(/Cheaper than Tableau, saves 650\$ a month/)).toBeVisible();
+  await expect(page.getByText(/not independently verified Fieldsense measurements/)).toBeVisible();
   await expect(page.getByRole('link', { name: 'Live demo' })).toHaveAttribute('href', 'https://fieldsense.jacobroutzong.dev/');
 });
 
@@ -53,4 +73,70 @@ test('field selection and daily water cues work with a keyboard and reduced moti
   await expect(watering.locator('.fs-pipe-flow')).toHaveCSS('opacity', '1');
   await expect(watering.locator('.fs-spray')).not.toHaveCSS('opacity', '0');
   await expect(watering.locator('.fs-spray path')).toHaveCSS('animation-name', 'none');
+});
+
+test.describe('3D farm', () => {
+
+  test('late scene initialization uses the current record, keyboard focus and schematic section', async ({page}) => {
+    let finishImport!: () => void;
+    const gate = new Promise<void>(resolve => { finishImport = resolve; });
+    await page.route(/fieldsense-scene[^/]*\.js/, async route => { await gate; await route.continue(); });
+    await page.emulateMedia({reducedMotion:'reduce'});
+    await page.goto('/projects/fieldsense/lab/', {waitUntil:'domcontentloaded'});
+    await page.locator('#fs-day').fill('2');
+    const east=page.getByRole('button', {name:/East Acre/});
+    await east.focus();
+    await page.keyboard.press('Enter');
+    finishImport();
+    const viewport=page.locator('#fs-viewport');
+    await expect(viewport).toHaveAttribute('data-renderer','3d');
+    await east.press('Space');
+    await expect(viewport).toHaveAttribute('data-view','field');
+    await page.getByRole('button',{name:'Show soil cutaway'}).press('Enter');
+    await expect(page.locator('.fs-soil-key strong')).toHaveText('13.88 mm');
+    await expect(page.locator('#fs-moisture-value')).toHaveText('13.88 mm');
+    await page.locator('#fs-prev').click();
+    await expect(page.locator('.fs-soil-key strong')).toHaveText('12.94 mm');
+    await page.locator('#fs-scenario').selectOption('strict_limit');
+    await expect(page.locator('#fs-infeasible')).toBeVisible();
+    await expect(page.locator('.fs-soil-key')).toBeHidden();
+    await expect(page.locator('.fs-watering,.fs-raining')).toHaveCount(0);
+    await page.locator('#fs-scenario').selectOption('dry_spell');
+    await expect(viewport).toHaveAttribute('data-view','overview');
+    await expect(page.locator('#fs-next')).toBeEnabled();
+  });
+
+  test('losing the GPU returns to the current SVG replay', async ({page}) => {
+    await page.goto('/projects/fieldsense/lab/');
+    const viewport=page.locator('#fs-viewport[data-renderer="3d"]');
+    await expect(viewport).toBeVisible();
+    await page.locator('[data-policy="rule"]').click();
+    await page.locator('#fs-day').fill('6');
+    await viewport.locator('canvas').evaluate(canvas => {
+      const gl=(canvas as HTMLCanvasElement).getContext('webgl2')!;
+      gl.getExtension('WEBGL_lose_context')!.loseContext();
+    });
+    await expect(page.locator('#fs-farm')).toBeVisible();
+    await expect(page.locator('.fs-camera')).toBeHidden();
+    await expect(page.locator('#fs-day')).toHaveValue('6');
+    await expect(page.locator('[data-policy="rule"]')).toHaveAttribute('aria-pressed','true');
+    await page.locator('#fs-next').click();
+    await expect(page.locator('#fs-rule-water')).toContainText('945');
+  });
+
+  test('WebGL initialization failure leaves the field picker and replay available', async ({page}) => {
+    await page.addInitScript(() => {
+      const original=HTMLCanvasElement.prototype.getContext;
+      Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
+        value: function(type: string, ...args: unknown[]) {
+          return type === 'webgl2' ? null : Reflect.apply(original,this,[type,...args]);
+        }
+      });
+    });
+    await page.goto('/projects/fieldsense/lab/');
+    await page.getByRole('button',{name:/South Plot/}).click();
+    await expect(page.locator('#fs-field-name')).toHaveText('South Plot');
+    await expect(page.locator('#fs-farm')).toBeVisible();
+    await expect(page.locator('.fs-camera')).toBeHidden();
+  });
 });

@@ -29,6 +29,7 @@
   "maintenance/ascent-worker-retirement.js",
   "media/causarium/evidence-v1.json",
   "media/example-architecture.svg",
+  "media/fieldsense/farm-overview.webp",
   "media/fieldsense/fieldsense-editorial.css",
   "media/fieldsense/fieldsense.css",
   "media/fieldsense/fieldsense.js",
@@ -163,6 +164,8 @@
   "study/ew/data.json",
   "study/ew/index.html",
   "study/index.html",
+  "study/soldier/data.json",
+  "study/soldier/index.html",
   "study/study.css",
   "study/study.js"
 ]

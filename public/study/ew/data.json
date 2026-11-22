@@ -24,11 +24,13 @@
     {
       "id": "atp-3-12-4",
       "title": "ATP 3-12.4 — Electromagnetic Warfare Platoon",
-      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/6BBD3057-2A18-4A0C-BEBA-5D825D0E88CF-1673296215065/atp3_12x4.pdf",
+      "url": "https://armypubs.army.mil/epubs/DR_pubs/DR_a/ARN37162-ATP_3-12.4-000-WEB-1.pdf",
       "edition": "9 January 2023",
       "locator": "Printed page numbers",
-      "access": "Public Army PDF",
-      "note": "APD lists the 9 January 2023 publication as active. The linked Army Registry PDF contains the public platoon manual. Organizational examples reflect the edition date."
+      "access": "Public Army Publishing Directorate PDF",
+      "note": "The January 2023 edition was verified in the official Army Publishing Directorate PDF. Organizational examples reflect the edition date.",
+      "readingUrl": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/6BBD3057-2A18-4A0C-BEBA-5D825D0E88CF-1673296215065/atp3_12x4.pdf",
+      "readingNote": "Alternate Army reading link. Availability depends on access to the Army host."
     },
     {
       "id": "jp-3-85",
@@ -44,11 +46,13 @@
     {
       "id": "atp-3-01-81",
       "title": "ATP 3-01.81 — Counter-Unmanned Aircraft System (C-UAS) Operations",
-      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/B6A1625F-6975-4367-82C8-E67E901218C7-1753193840461/ATP3_01x81.pdf",
+      "url": "https://armypubs.army.mil/epubs/DR_pubs/DR_a/ARN43877-ATP_3-01.81-000-WEB-1.pdf",
       "edition": "23 May 2025",
       "locator": "Contents pp. i–iii, chapters 1–7 and appendix A",
-      "access": "Public Army PDF",
-      "note": "The public edition supersedes the 11 August 2023 publication. The edition and printed locators were verified from the indexed Army PDF."
+      "access": "Public Army Publishing Directorate PDF",
+      "note": "The official, 106-page Army Publishing Directorate PDF verifies the 23 May 2025 edition. It supersedes the 11 August 2023 publication.",
+      "readingUrl": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/B6A1625F-6975-4367-82C8-E67E901218C7-1753193840461/ATP3_01x81.pdf",
+      "readingNote": "Alternate Army reading link. Availability depends on access to the Army host."
     },
     {
       "id": "atp-6-02-70",
@@ -63,20 +67,24 @@
     {
       "id": "atp-7-100-1",
       "title": "ATP 7-100.1 — Russian Tactics",
-      "url": "https://oe.t2com.army.mil/site-content/OEE/Russia%20Landing%20Zone/Russian%20Tactics-ATP_7-100.1-Feb2024.pdf",
+      "url": "https://armypubs.army.mil/epubs/DR_pubs/DR_a/ARN40737-ATP_7-100.1-001-WEB-4.pdf",
       "edition": "29 February 2024, Change 1 dated 23 April 2024",
       "locator": "Contents pp. i–v, chapters 1–7 and appendices A–K",
-      "access": "Public Army PDF",
-      "note": "The public Change 1 sheet adds a Caspian Sea Flotilla figure. Treat the U.S. Army's 2024 description and the formations it depicts as a training model for that edition."
+      "access": "Public Army Publishing Directorate PDF",
+      "note": "The official, 280-page Army Publishing Directorate PDF contains the 23 April 2024 Change 1 transmittal. Treat its organizational descriptions as a dated Army training model.",
+      "readingUrl": "https://oe.t2com.army.mil/site-content/OEE/Russia%20Landing%20Zone/Russian%20Tactics-ATP_7-100.1-Feb2024.pdf",
+      "readingNote": "Alternate Army reading link. Availability depends on access to the Army host."
     },
     {
       "id": "atp-7-100-3",
       "title": "ATP 7-100.3 — Chinese Tactics",
-      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/53492E53-AE5F-44CC-9174-9130FC8BAE09-1628600858692/atp7_100x3wc1.pdf",
+      "url": "https://armypubs.army.mil/epubs/DR_pubs/DR_a/ARN34236-ATP_7-100.3-001-WEB-3.pdf",
       "edition": "9 August 2021, Change 1 dated 24 November 2021",
       "locator": "Contents pp. i–vi, chapters 1–9 and appendices A–G",
-      "access": "Public Army PDF",
-      "note": "The public Change 1 transmittal adds an initial distribution number and replaces cover pages. The organization and capabilities in the lessons describe the Army's 2021 model."
+      "access": "Public Army Publishing Directorate PDF",
+      "note": "The official, 252-page Army Publishing Directorate PDF contains the 24 November 2021 Change 1 transmittal. It adds an initial distribution number and replaces cover pages. Treat its organizational descriptions as a dated Army training model.",
+      "readingUrl": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/53492E53-AE5F-44CC-9174-9130FC8BAE09-1628600858692/atp7_100x3wc1.pdf",
+      "readingNote": "Alternate Army reading link. Availability depends on access to the Army host."
     },
     {
       "id": "army-25e",
@@ -272,7 +280,7 @@
             "fm312-requests-authority"
           ],
           "status": "guided-reading",
-          "note": "The lesson covers the roles around a request and the decisions it requires.",
+          "note": "The lesson distinguishes forwarding, validation, provider confirmation, and applicable authority. Operational support procedures are outside the course scope.",
           "readingObjective": "Distinguish the requesting, coordinating, and approving roles in external support."
         },
         {
@@ -309,7 +317,7 @@
             "fm312-message-contracts"
           ],
           "status": "guided-reading",
-          "note": "The lesson addresses the meaning and purpose of reports across a staff.",
+          "note": "The lesson teaches message purpose, reporting scope, and what each record establishes about a change. Read the appendix to recognize the edition-specific formats.",
           "readingObjective": "Compare the audiences of observation, coordination, and reprogramming records."
         },
         {
@@ -524,10 +532,12 @@
             "Technical assumptions and quantitative models",
             "Model conditions and limits"
           ],
-          "lessonIds": [],
+          "lessonIds": [
+            "atp3123-propagation"
+          ],
           "status": "guided-reading",
-          "note": "This appendix is a technical reference.",
-          "readingObjective": "Explain how model assumptions limit the interpretation of a technical estimate."
+          "note": "The linked lesson teaches how assumptions limit an estimate. Specialized calculations are outside the conceptual objective.",
+          "readingObjective": "Explain why a result computed under one set of source and path assumptions may not apply to different conditions."
         },
         {
           "id": "atp3123-appendix-c",
@@ -539,10 +549,12 @@
             "Army, Navy, Air Force, and Marine Corps equipment categories",
             "Service responsibilities and broad capability roles"
           ],
-          "lessonIds": [],
+          "lessonIds": [
+            "atp3123-staff-roles"
+          ],
           "status": "guided-reading",
-          "note": "The equipment descriptions reflect the verified edition date.",
-          "readingObjective": "Identify which Services contribute EW capabilities and distinguish a capability description from current availability or authority."
+          "note": "The linked lesson teaches how to interpret the Service organization of a dated reference. Equipment details and operating instructions are outside the conceptual objective.",
+          "readingObjective": "Distinguish a Service capability description from confirmed availability and authority."
         },
         {
           "id": "atp3123-appendix-d",
@@ -661,10 +673,12 @@
             "Tactical movement",
             "Patrolling"
           ],
-          "lessonIds": [],
+          "lessonIds": [
+            "atp3124-rehearsals"
+          ],
           "status": "guided-reading",
-          "note": "The appendix describes tactical training for EW platoons and teams.",
-          "readingObjective": "Relate the appendix introduction to leader oversight of collective training and readiness."
+          "note": "The linked lesson explains how leaders assess collective readiness. Performance of the tactical skills requires supervised practice.",
+          "readingObjective": "Explain how individual understanding and observed collective performance support different readiness claims."
         }
       ],
       "code": "ATP 3-12.4"
@@ -736,7 +750,7 @@
             "jp385-partners"
           ],
           "status": "guided-reading",
-          "note": "Follow the planning and interoperability concepts. Mission-specific annexes and operational procedures are outside the lesson scope."
+          "note": "The lessons teach supportability, common comparison criteria, and the path from staff estimate to approved plan. Mission-specific annex preparation is outside the course scope."
         },
         {
           "id": "jp385-chapter-iv",
@@ -755,7 +769,7 @@
             "jp385-assessment"
           ],
           "status": "guided-reading",
-          "note": "Trace authority, changes to assumptions, and feedback through the coordination cycle. The lessons use an exercise and a public-service scenario."
+          "note": "The lessons show what an observation, coordination decision, and comparable assessment can establish. Read the source for the sequence and edition-specific terms."
         },
         {
           "id": "jp385-appendix-a",
@@ -806,7 +820,7 @@
             "jp385-staff-estimate"
           ],
           "status": "guided-reading",
-          "note": "Identify what belongs in an approved plan appendix and how it differs from a staff estimate. The linked scenario uses civilian event coordination."
+          "note": "The linked lessons use a training example to distinguish the approved plan appendix from a staff estimate, including what each can establish about unresolved dependencies."
         },
         {
           "id": "jp385-appendix-d",
@@ -1030,7 +1044,7 @@
             "atp60270-life-cycle"
           ],
           "status": "guided-reading",
-          "note": "Follow which records feed decisions and how issues are reported. The lesson uses a civil exercise and covers the management workflow at a conceptual level."
+          "note": "The lesson distinguishes a statement of need, guidance in the management plan, a recorded assignment, and an interference observation. Use the appendix headings to trace where each record enters the cycle."
         },
         {
           "id": "atp60270-appendix-d",
@@ -1075,7 +1089,7 @@
       "description": "Study UAS system components, staff responsibilities, spectrum coordination, airspace safety, and training assessment in the Army's C-UAS framework.",
       "edition": "23 May 2025",
       "verifiedEdition": "23 May 2025",
-      "pdfPages": null,
+      "pdfPages": 106,
       "sourceStatus": "verified-edition",
       "units": [
         {
@@ -1215,10 +1229,12 @@
             "Air defense command and control",
             "Response equipment"
           ],
-          "lessonIds": [],
+          "lessonIds": [
+            "atp30181-defense-roles"
+          ],
           "status": "guided-reading",
-          "note": "The appendix catalogs examples from the publication date. Its system descriptions separate sensing, air-picture management, and response. Equipment specifications and operation are outside the course scope.",
-          "readingObjective": "Use the opening and pp. 81–83 to identify which functions generate reports and which contribute to the shared air picture."
+          "note": "The linked lesson traces local sensing, combined awareness, and separately established identity and authority. System specifications and operation are outside the conceptual objective.",
+          "readingObjective": "Use paragraphs A-24–A-27 to identify what a shared air-picture function adds to a local report."
         }
       ],
       "code": "ATP 3-01.81"
@@ -1443,9 +1459,11 @@
             "Antitank support category",
             "Equipment reference tables"
           ],
-          "lessonIds": [],
+          "lessonIds": [
+            "atp71001-strike-as-organization"
+          ],
           "status": "guided-reading",
-          "note": "The appendix inventories one specialized support category in the historical model. Chapter 5's p. 5-26 opening gives the organizational context.",
+          "note": "The lesson pairs the opening of Appendix E with Chapter 5’s organizational discussion. Equipment performance and employment are outside the conceptual objective.",
           "readingObjective": "Distinguish the equipment family described in the appendix from the organization that provides the supporting function in Chapter 5."
         },
         {
@@ -1475,9 +1493,11 @@
             "Support roles",
             "Equipment reference"
           ],
-          "lessonIds": [],
+          "lessonIds": [
+            "atp71001-support-and-command"
+          ],
           "status": "guided-reading",
-          "note": "Engineering support helps preserve movement, infrastructure, and force protection.",
+          "note": "The lesson uses the opening on p. G-1 to distinguish the engineer specialty’s contribution from the supported formation’s broader responsibilities.",
           "readingObjective": "Use the opening on p. G-1 to distinguish responsibilities assigned to the engineer function from the supported commander's broader mission."
         },
         {
@@ -1508,9 +1528,11 @@
             "Detection and protective support",
             "Equipment reference"
           ],
-          "lessonIds": [],
+          "lessonIds": [
+            "atp71001-support-and-command"
+          ],
           "status": "guided-reading",
-          "note": "The protective framing describes specialist units and the organizations they serve. The course addresses organizational roles.",
+          "note": "The lesson uses the introduction and paragraph I-1 for protective support roles. Technical capabilities and actions are outside the conceptual objective.",
           "readingObjective": "Use the opening on p. I-1 to identify the responsibilities of the specialist units and the organizations they support."
         },
         {
@@ -1541,14 +1563,16 @@
             "Relationships to combined arms",
             "Distinct roles"
           ],
-          "lessonIds": [],
+          "lessonIds": [
+            "atp71001-support-and-command"
+          ],
           "status": "guided-reading",
-          "note": "The appendix places specialized organizations at national and strategic echelons while describing their relationship with combined arms.",
+          "note": "The lesson uses the opening on p. K-1 to distinguish receiving a specialist organization’s reporting from exercising command over it.",
           "readingObjective": "Use the opening on p. K-1 to distinguish parent authority from the organization receiving support."
         }
       ],
       "code": "ATP 7-100.1",
-      "note": "This is a dated U.S. Army training model. Organization and capability descriptions reflect the verified edition. Appendix titles and starting pages were checked, but the available text did not expose every appendix subsection. Those units remain guided source reading."
+      "note": "This is a dated U.S. Army training model. Selected appendix passages are verified in the APD edition. The course studies organizational relationships and context. Capability catalogs, procedures and current force dispositions are outside its scope."
     },
     {
       "id": "atp71003",
@@ -1752,9 +1776,11 @@
             "Group army and tactical support",
             "Integrated support functions"
           ],
-          "lessonIds": [],
+          "lessonIds": [
+            "atp71003-command-and-force-structure"
+          ],
           "status": "guided-reading",
-          "note": "The appendix describes fire support means in the context of group army and tactical structures.",
+          "note": "The lesson uses the opening paragraph to distinguish a capability category from the formation providing or receiving support.",
           "readingObjective": "Use the appendix opening to distinguish a category of equipment from the organization through which the capability supports a formation."
         },
         {
@@ -1803,9 +1829,11 @@
             "Chemical defense organizations",
             "Protection and continuity"
           ],
-          "lessonIds": [],
+          "lessonIds": [
+            "atp71003-command-and-force-structure"
+          ],
           "status": "guided-reading",
-          "note": "The appendix relates mobility, engineering, and protective functions to specialist organizations.",
+          "note": "The lesson uses the opening paragraph to distinguish specialist functional responsibilities from the formation’s role.",
           "readingObjective": "Use the appendix opening to identify engineering and protective responsibilities and the function each contributes to a supported formation."
         },
         {
@@ -1835,14 +1863,16 @@
             "Tactical and strategic roles",
             "Institutional and support relationships"
           ],
-          "lessonIds": [],
+          "lessonIds": [
+            "atp71003-command-and-force-structure"
+          ],
           "status": "guided-reading",
-          "note": "The appendix distinguishes specialized capabilities at tactical and national or strategic levels.",
+          "note": "The lesson uses the opening paragraph to distinguish a specialized capability and its institution or echelon from the unit benefiting from it.",
           "readingObjective": "Identify which organization controls a capability and which organization it supports in the appendix's institutional model."
         }
       ],
       "code": "ATP 7-100.3",
-      "note": "This is a dated U.S. Army training model. Organization and capability descriptions reflect the verified edition. Appendix titles and starting pages were checked, but the available text did not expose every appendix subsection. Those units remain guided source reading."
+      "note": "This is a dated U.S. Army training model. Selected appendix passages are verified in the APD edition. The course studies organizational relationships and context. Capability catalogs, procedures and current force dispositions are outside its scope."
     }
   ],
   "lessons": [
@@ -2721,7 +2751,8 @@
       "summary": "Explain how a support request turns a capability gap into a decision for the responsible headquarters.",
       "objectives": [
         "Distinguish a request, command approval, and applicable authority.",
-        "Explain what the requesting organization and the prospective provider contribute to the decision."
+        "Explain what the requesting organization and the prospective provider contribute to the decision.",
+        "Explain why approval to forward a request and confirmation of support need separate statuses."
       ],
       "sections": [
         {
@@ -2735,6 +2766,10 @@
         {
           "heading": "Close the loop with the requesting staff",
           "text": "The request has value only if the unit can act on the answer. A pending request leaves the planned support unresolved. A response should make the responsible organization, approved purpose, and remaining constraints clear. In an exercise, the local staff can plan for known capacity while tracking the external decision and updating the estimate when it receives confirmation."
+        },
+        {
+          "heading": "A forwarded request can still have dependencies",
+          "text": "The examples in Appendix C distinguish the requesting unit’s decision to ask for support from what happens at a coordinating headquarters or service provider. Validation can establish that a need is understood and suitable for further consideration. It does not reserve resources or settle the authority for a requested action. If a planning estimate depends on outside assistance, list the local need, who must confirm the provider decision, and what remains uncertain. That lets the staff communicate risk while the request is being reviewed."
         }
       ],
       "terms": [
@@ -2759,6 +2794,11 @@
           "id": "fm312-requests-authority-q3",
           "prompt": "What should a support decision communicate back to the unit?",
           "answer": "Who is responsible, what support was approved, and which conditions remain."
+        },
+        {
+          "id": "fm312-requests-authority-q4",
+          "prompt": "A classroom support request is validated and forwarded, and the draft plan marks the supporting service as guaranteed. What should the plan say?",
+          "answer": "The request was validated and forwarded. Availability and any applicable authorization are still unconfirmed. Record that dependence as an assumption or contingency until the responsible organization confirms the support and its conditions."
         }
       ],
       "sourceIds": [
@@ -2827,7 +2867,8 @@
       "summary": "Explain how standard message categories preserve meaning as reports move between teams.",
       "objectives": [
         "Distinguish observation reports, coordination records, and change-status messages.",
-        "Identify which confirmation supports an update from requested to implemented."
+        "Identify which confirmation supports an update from requested to implemented.",
+        "Reconcile conflicting change-status records by matching the version, reporting organization, scope, and unresolved issues."
       ],
       "sections": [
         {
@@ -2841,6 +2882,14 @@
         {
           "heading": "Keep context intact through a handoff",
           "text": "When information crosses staff and organizational boundaries, its meaning depends on source, status, and time. A new report may revise an earlier observation. A later record should make the relationship clear so the recipient knows what changed and which information still applies. Confirmation by the receiving team also helps the sender distinguish successful communication from an unanswered message."
+        },
+        {
+          "heading": "When the records disagree",
+          "text": "FM 3-12 separates a formal change request, an impact message announcing an available update, and the unit’s report of implementation. An announcement can describe who should receive an update and when it is available. It cannot establish that a particular team applied it. The unit report can establish what that team says it completed and which anomalies it observed. A follow-up verification record answers a further question about whether the changed process performs as expected."
+        },
+        {
+          "heading": "Record the smallest status the evidence supports",
+          "text": "A classroom exercise publishes a revised classification guide. Team A confirms applying revision 2 and reports that one example still displays the old label. Team B acknowledges receiving the bulletin. The coordinator can record that revision 2 is available, that Team A reports applying it with an unresolved issue, and that Team B’s implementation is unconfirmed. A general ‘complete’ entry would erase both the reporting scope and the exception. Keep the version, team, and affected example visible so a later check can resolve the discrepancy."
         }
       ],
       "terms": [
@@ -2858,19 +2907,24 @@
         },
         {
           "id": "fm312-message-contracts-q2",
-          "prompt": "What evidence supports a claim that a configuration change was applied?",
-          "answer": "An implementation record and verification of the applied state."
+          "prompt": "What would distinguish implementation of a change from verification that it works?",
+          "answer": "A unit implementation report records that the change was applied and can describe anomalies. A separate check of the resulting behavior supports a claim that the change works as expected."
         },
         {
           "id": "fm312-message-contracts-q3",
           "prompt": "Why identify which earlier record a new message updates?",
           "answer": "It helps recipients understand what changed and which earlier details still apply."
+        },
+        {
+          "id": "fm312-message-contracts-q4",
+          "prompt": "A bulletin announces revision 2 for two exercise teams. Team A reports applying it but flags a remaining error. Team B confirms receipt only. What can the coordinator mark as complete, and what needs follow-up?",
+          "answer": "Record that Team A reports applying revision 2, with the error still open. Team B’s receipt establishes delivery of the notice. Its implementation is unconfirmed, so obtain a team-specific update and verify the reported error before treating the rollout as resolved."
         }
       ],
       "sourceIds": [
         "fm-3-12"
       ],
-      "sourceLocator": "Appendix E, paras. E-2 to E-8 and Figures E-2 to E-3",
+      "sourceLocator": "Appendix E, paras. E-2 to E-8 and E-10 to E-14, Figures E-2 to E-3",
       "level": "Intermediate"
     },
     {
@@ -3147,7 +3201,8 @@
       "summary": "Identify the staff roles that integrate EW and explain why capability and permission are separate decisions.",
       "objectives": [
         "Connect EW expertise, spectrum management, and the operations staff.",
-        "Identify when a question of authority belongs with the appropriate command and legal channels."
+        "Identify when a question of authority belongs with the appropriate command and legal channels.",
+        "Distinguish a service capability description from a supported organization’s access or authority."
       ],
       "sections": [
         {
@@ -3161,6 +3216,10 @@
         {
           "heading": "Authority and accountability",
           "text": "A qualified EW team may have the personnel and means to carry out an activity. A delegation identifies which organization can exercise specified authority and the conditions that apply. The authority to conduct that activity depends on applicable law, policy, rules of engagement, and command direction. When a proposal intersects another function, such as signals intelligence, the staff involves the relevant functional and legal authorities. Recording both the decision and its conditions keeps the approval understandable when the situation or staff changes."
+        },
+        {
+          "heading": "Separate capability, access, and authority",
+          "text": "Appendix C groups capability examples by Service. Use the headings to identify the Service context and read each entry as a description from that edition. If a reference lists a Service capability, it supports a statement about what that capability was described as doing. Availability for a particular request depends on the organization providing support and the resources it can commit. Authority for its use is a separate command question. A planning note can mark an example as a potential contribution while keeping availability and authorization open."
         }
       ],
       "terms": [
@@ -3185,12 +3244,17 @@
           "id": "atp3123-staff-roles-q3",
           "prompt": "What should a lower echelon convey when asking a higher one to address interference?",
           "answer": "The observed impact, mission consequence, and the decision or support needed."
+        },
+        {
+          "id": "atp3123-staff-roles-q4",
+          "prompt": "A dated reference lists a capability under another Service. A planning note treats it as already available and approved. Which claims does the reference support, and which require other evidence?",
+          "answer": "It supports the edition-specific capability description and Service context. Confirm availability with the supporting organization and any applicable approval with the responsible authority before treating either as established."
         }
       ],
       "sourceIds": [
         "atp-3-12-3-c1"
       ],
-      "sourceLocator": "Chapter 2, pp. 2-1 to 2-8 (Change 1)",
+      "sourceLocator": "Chapter 2, pp. 2-1 to 2-8; Appendix C, service-organized capability descriptions, pp. C-1 to C-6 (Change 1)",
       "level": "Foundation"
     },
     {
@@ -3395,8 +3459,8 @@
         },
         {
           "id": "atp3123-protection-q3",
-          "prompt": "A second user reports the same symptom a minute later. What does that add?",
-          "answer": "Independent evidence about the scope and timing of the problem."
+          "prompt": "A second user reports the same symptom a minute later. What should the reviewer check before treating the report as independent evidence?",
+          "answer": "Check whether the second user made a separate observation and record what service and conditions it covers. A separately observed symptom can help establish scope and timing. A forwarded report repeats the first observation. Neither identifies the cause on its own."
         }
       ],
       "sourceIds": [
@@ -3519,7 +3583,8 @@
       "summary": "Use physical concepts to explain variation in reception and identify limits of an idealized radio model.",
       "objectives": [
         "Distinguish reflection, refraction, diffraction, and multipath.",
-        "Explain why atmospheric layers may matter for different radio bands."
+        "Explain why atmospheric layers may matter for different radio bands.",
+        "Explain which assumptions a technical estimate depends on and what kind of evidence could challenge them."
       ],
       "sections": [
         {
@@ -3533,6 +3598,10 @@
         {
           "heading": "Why atmospheric layers matter",
           "text": "The atmosphere is not uniform. Its lower layers and ionized regions can alter propagation in different ways, and the importance of a given layer depends on frequency and environmental conditions. Some signals can travel beyond a direct path, while other conditions favor local reception. Treat a propagation prediction as a statement about an assumed environment, and retain uncertainty when measurements provide only a partial picture."
+        },
+        {
+          "heading": "Read an estimate with its assumptions",
+          "text": "Appendix B illustrates how a technical result depends on the assumptions behind its model. A generic radio reception model might treat a path as clear and its environment as stable. If measurements came from inside two different buildings, the apparent precision in the model output would say little about how faithfully it represents those paths. Before using an estimate, identify which assumptions describe the actual situation, which remain unverified, and whether changing one of them could change the conclusion. The study task is to interpret the limits of a model."
         }
       ],
       "terms": [
@@ -3558,12 +3627,17 @@
           "id": "atp3123-propagation-q3",
           "prompt": "Why can the same generic path model give different results on different days?",
           "answer": "The atmospheric conditions and other environmental assumptions may differ."
+        },
+        {
+          "id": "atp3123-propagation-q4",
+          "prompt": "A classroom estimate assumes a clear radio path. The observation came from inside a building with several reflective surfaces. What can you conclude from a difference between the prediction and the observation?",
+          "answer": "The prediction and observation describe different path conditions. The discrepancy is a reason to test the clear-path assumption and compare observations from known conditions. It does not by itself identify which effect caused the difference."
         }
       ],
       "sourceIds": [
         "atp-3-12-3-c1"
       ],
-      "sourceLocator": "Appendix A, pp. A-6 to A-9 and A-18 to A-28 (Change 1)",
+      "sourceLocator": "Appendix A, pp. A-6 to A-9 and A-18 to A-28; Appendix B, introductory model context (Change 1)",
       "level": "Foundation"
     },
     {
@@ -3785,7 +3859,8 @@
       "summary": "Plan a classroom rehearsal that checks a specific EW platoon coordination task against an observable standard.",
       "objectives": [
         "Distinguish the purposes of rehearsals, pre-combat checks, and inspections.",
-        "Connect a training objective, evaluation, feedback, and retraining."
+        "Connect a training objective, evaluation, feedback, and retraining.",
+        "Explain how leaders use observed individual and collective performance to judge the scope of a readiness claim."
       ],
       "sections": [
         {
@@ -3799,6 +3874,10 @@
         {
           "heading": "Observe, review, and train again",
           "text": "The 8-step training model in the chapter provides a flexible way to plan and manage a training event. An observable objective defines what the evaluator looks for. After the event, an after-action review can identify what happened and why. If a team assigns reports correctly but omits their time reference, its follow-up practice can focus on that particular gap and verify the improvement."
+        },
+        {
+          "heading": "Match the readiness claim to the evidence",
+          "text": "Appendix A presents tactical skills for training, while Chapter 2 explains how leaders plan, supervise, and evaluate practice. A team member who correctly explains a role has demonstrated conceptual knowledge. A team that performs an observed handoff under the conditions selected for the exercise has demonstrated a collective task under those conditions. Those are different readiness claims. If the task fails when two groups exchange information, evaluate the shared handoff and retrain it even if each person can describe their own role accurately. Practical performance belongs in supervised training."
         }
       ],
       "terms": [
@@ -3823,12 +3902,17 @@
           "id": "atp3124-rehearsals-q3",
           "prompt": "What should happen after an evaluation finds a recurring error?",
           "answer": "Identify the cause, practice the affected task, then check performance again."
+        },
+        {
+          "id": "atp3124-rehearsals-q4",
+          "prompt": "Everyone can explain their part of a classroom handoff, but the receiving group missed two changes during an observed rehearsal. What should the leader conclude and evaluate next?",
+          "answer": "Individual understanding is useful evidence. The observed errors show a gap in collective execution. Evaluate how updates are sent, received, and acknowledged during supervised practice, then check whether the handoff improves."
         }
       ],
       "sourceIds": [
         "atp-3-12-4"
       ],
-      "sourceLocator": "Chapter 2, Sections III–IV, pp. 2-38 to 2-47",
+      "sourceLocator": "Chapter 2, Sections III–IV, pp. 2-38 to 2-47; Appendix A, introduction, p. A-1",
       "level": "Foundation"
     },
     {
@@ -4264,7 +4348,8 @@
       "objectives": [
         "Identify the purpose of the JEMSO staff estimate",
         "Describe how component inputs shape a joint plan",
-        "Distinguish an estimate from the JEMSO appendix"
+        "Distinguish an estimate from the JEMSO appendix",
+        "Explain how a shared constraint affects a comparison of alternatives and which information should carry into the approved plan."
       ],
       "sections": [
         {
@@ -4278,6 +4363,10 @@
         {
           "heading": "Example from a civil exercise",
           "text": "An exercise director is comparing a single site with two smaller sites. Planners identify the same dispatch and medical coordination needs in both cases. At the split sites, the teams also need to communicate across venues. If reliable cross-site communication is unconfirmed, the estimate identifies that uncertainty in the comparison. Once the director selects a plan, the published arrangement records approved responsibilities, contacts and how the parties learn of changes."
+        },
+        {
+          "heading": "Compare alternatives by the same requirement",
+          "text": "Chapter III and Appendix G connect mission analysis to a comparison of alternatives. First state the requirement that all alternatives must satisfy. Then show where the evidence differs and name which assumptions could change the recommendation. In a joint exercise, two components may both list a shared service as available because each checked it independently. Once their schedules are compared, the overlapping use becomes a joint coordination issue. The estimate should explain how the conflict affects each alternative, and the published appendix should record the selected arrangement and who is responsible for it."
         }
       ],
       "terms": [
@@ -4302,6 +4391,11 @@
           "id": "jp385-planning-3",
           "prompt": "An event alternative assumes reliable cross-site service that has not been confirmed. What belongs in the estimate?",
           "answer": "The dependency, supporting evidence, uncertainty and consequence if the assumption is wrong."
+        },
+        {
+          "id": "jp385-planning-4",
+          "prompt": "Two exercise alternatives both show a shared service as available. Only one requires both components to use it at the same time, and concurrent use is unverified. What belongs in the estimate, and what belongs in the published appendix after selection?",
+          "answer": "The estimate compares both alternatives against the same service requirement, states the unresolved concurrent-use assumption, and explains its effect on supportability. The published appendix records the selected arrangement, responsibilities and any surviving dependency that must be tracked."
         }
       ],
       "sourceIds": [
@@ -4424,7 +4518,8 @@
       "objectives": [
         "Distinguish performance and effectiveness measures",
         "Use observed results to test a planning assumption",
-        "State an actionable lesson learned"
+        "State an actionable lesson learned",
+        "Explain why a reported result needs both comparable evidence and an explicit interpretation of uncertainty."
       ],
       "sections": [
         {
@@ -4438,6 +4533,10 @@
         {
           "heading": "Make the review reusable",
           "text": "Suppose notices went out on schedule but one desk missed several routine test calls. Record the missed calls as an outcome, the completed notices as an activity, and the available evidence about receipt and device readiness. If the evidence shows one team received an outdated version, a useful lesson would specify who should confirm the current version and when the confirmation should be captured. Review the change on the next exercise."
+        },
+        {
+          "heading": "Check whether the result answers the question",
+          "text": "Chapter IV separates the assessment of actions from assessment of changes in conditions. In a training exercise, the staff records that an updated procedure was issued to all groups. Later, a summary says that fewer reports were lost. Before accepting an improvement claim, compare the same kind of reporting periods, check whether participation changed, and look for other changes in the exercise that could explain the result. If the groups used different logging methods, state that limitation and propose a comparable observation. A useful assessment gives the decision-maker both the most defensible conclusion and a way to test it."
         }
       ],
       "terms": [
@@ -4461,6 +4560,11 @@
           "id": "jp385-assessment-3",
           "prompt": "Every team received the update, but test calls still failed. What can the review conclude?",
           "answer": "Distribution was completed and the outcome fell short. Additional evidence is needed to attribute the failure."
+        },
+        {
+          "id": "jp385-assessment-4",
+          "prompt": "An exercise reports that all teams received a new process and that fewer reports were lost. Half the teams used no logs during the second exercise. Which conclusion is supported and how could the staff test effectiveness?",
+          "answer": "Distribution is evidenced as performance. The change in lost reports is inconclusive because observation coverage changed. Collect comparable logs from the same participating groups, track the number of reports sent and received, and explain remaining differences."
         }
       ],
       "sourceIds": [
@@ -5179,7 +5283,8 @@
       "objectives": [
         "Distinguish tool capability from compatibility",
         "Recognize why exchange formats need shared meanings and units",
-        "Check a harmless sample record for loss during transfer"
+        "Check a harmless sample record for loss during transfer",
+        "Identify which part of a shared record needs clarification when exchanged data parses correctly but has different meanings."
       ],
       "sections": [
         {
@@ -5193,6 +5298,10 @@
         {
           "heading": "A sample inventory transfer",
           "text": "A team shares a small fictional equipment inventory with an exercise partner. The partner’s tool accepts the file but displays local timestamps in UTC. The team compares a known record before and after export and checks how each tool represents the time. It records the field definition and conversion expectation so all participants can interpret the same information when they assemble the common planning picture."
+        },
+        {
+          "heading": "Carry uncertainty through the exchange",
+          "text": "A tool can accept a record and still change what downstream users believe. For example, a local team leaves a field blank to mean ‘the value is unknown.’ The receiving tool displays a blank as zero. Both tools may support the same exchange format, yet the result could be mistaken for a measured zero. In a sample exchange, include known, unknown and unavailable values. Verify their meanings with both users, and record which fields or conversions must be agreed before the exchange supports planning."
         }
       ],
       "terms": [
@@ -5217,6 +5326,11 @@
           "id": "atp60270-data-compatibility-3",
           "prompt": "An equipment CSV loads, and two tools now disagree on when a test occurred. What should be checked?",
           "answer": "Compare a known record across the two tools and verify timezone, field meaning and any conversion in the import."
+        },
+        {
+          "id": "atp60270-data-compatibility-4",
+          "prompt": "An inventory import accepts every entry but changes an unknown measurement to zero. What does the import establish, and what must be corrected before relying on the records?",
+          "answer": "The destination can read the file structure. It has changed the meaning of the unknown measurement. Agree on a representation for unknown values and verify a representative sample before treating the data as equivalent."
         }
       ],
       "sourceIds": [
@@ -5233,7 +5347,8 @@
       "objectives": [
         "Describe how policy, requirements, resources and assignments relate",
         "Explain why life-cycle activities sometimes overlap",
-        "Distinguish a reported symptom from a confirmed cause"
+        "Distinguish a reported symptom from a confirmed cause",
+        "Distinguish a requirement in the spectrum manager’s working summary, coordination guidance in the plan, and a recorded assignment."
       ],
       "sections": [
         {
@@ -5247,6 +5362,14 @@
         {
           "heading": "A community exercise",
           "text": "An exercise organizer gathers equipment and scheduling needs from public works, event staff and a volunteer radio group. Midway through planning, one team asks to bring a new sensor. The organizer updates the inventory, coordinates the new requirement, and records the resulting decision. After the exercise, a brief interference report distinguishes observations from possible causes. The information carries forward into the planning record for the next event."
+        },
+        {
+          "heading": "Read the records in order of what they establish",
+          "text": "Paragraph C-12 describes the requirements summary as the spectrum manager’s compilation for defining needs and informing later decisions. Paragraphs C-18 and C-19 describe the spectrum management plan as guidance for how participating groups coordinate, exchange information, and report problems. Paragraph C-20 describes making assignments as implementing that plan. When a new requirement appears, record it as a need, check whether it changes the plan’s coordination arrangements, and look for the responsible authority’s assignment before treating access as established."
+        },
+        {
+          "heading": "A late addition to an exercise",
+          "text": "A community exercise keeps an inventory of teams that need a shared communications service. An accessibility team adds a request after the plans are distributed. Its entry establishes the need. The plan tells organizers how they coordinate late changes. The authorized arrangement establishes what access the team actually receives. If the exercise director asks whether the team can rely on the service, a screenshot of the inventory answers only the first question."
         }
       ],
       "terms": [
@@ -5271,6 +5394,11 @@
           "id": "atp60270-life-cycle-3",
           "prompt": "A group adds an unlisted device after approvals were recorded. Which records may need revision?",
           "answer": "The equipment and requirements inventory, relevant coordination and authorization records, and the instructions issued to affected users."
+        },
+        {
+          "id": "atp60270-life-cycle-4",
+          "prompt": "An accessibility team is listed in the requirements summary and appears in the plan’s coordination section. Its assignment record is still pending. What can a planner tell the team?",
+          "answer": "The need and the coordination process are recorded. Actual access is still pending. The planner should keep that contingency visible and confirm the assignment with the responsible authority before telling the team to rely on it."
         }
       ],
       "sourceIds": [
@@ -5660,7 +5788,8 @@
       "objectives": [
         "Explain the purpose of passive protection.",
         "Identify what information a detection report can establish.",
-        "Distinguish identification and response authority."
+        "Distinguish identification and response authority.",
+        "Trace how a local observation becomes part of a shared air picture and identify which conclusions still require separate evidence."
       ],
       "sections": [
         {
@@ -5674,6 +5803,14 @@
         {
           "heading": "Response responsibility",
           "text": "Active defense concerns action against an air threat and carries its own decisions about authority and coordination. Reliable identification supports those decisions. A report stating that an object is present, an assessment identifying it, and an authorization for a response are three distinct statements. A useful tabletop review asks participants to identify which statement was made, by whom, and with what supporting information."
+        },
+        {
+          "heading": "A local report and a shared picture answer different questions",
+          "text": "Appendix A describes an air-picture system that combines inputs from several kinds of sensors. A sensor contributes an observation from its own coverage. The shared-picture system brings reports together for a common view. An identification assessment assigns a status using the applicable criteria, and a decision about authority belongs to the responsible organization. Each step adds something different. A shared display helps users coordinate, while an observation missing from that display may reflect delay, coverage, or a reporting gap."
+        },
+        {
+          "heading": "Preserve the time and source",
+          "text": "In a civilian event exercise, one observer records an object at 10:12. The shared display last refreshed at 10:08, and a second observer sees nothing from a different part of the venue. Enter the timed observation as a local report with identity unresolved. Check the display’s update status and keep the second observer’s location with their report. This preserves all three pieces of evidence without treating an older picture or a different viewpoint as proof that the first report was wrong."
         }
       ],
       "terms": [
@@ -5697,12 +5834,17 @@
           "id": "atp30181-defense-roles-q3",
           "prompt": "A tabletop observer records a confirmed sighting with unresolved identity. How should the exercise log describe it?",
           "answer": "Record it as detected and leave identity undetermined. Keep any response authorization in a separate decision record."
+        },
+        {
+          "id": "atp30181-defense-roles-q4",
+          "prompt": "A 10:12 local sighting is absent from a shared display last updated at 10:08. A second observer in another area saw nothing. What should the exercise log say?",
+          "answer": "Log the timed local report with its source and identity unresolved. Record the display’s earlier refresh time and the other observer’s different coverage. Seek a current shared record or a comparable observation before claiming agreement, disagreement, or identification."
         }
       ],
       "sourceIds": [
         "atp-3-01-81"
       ],
-      "sourceLocator": "Chapter 5, paras. 5-1–5-4 and 5-26–5-30 (pp. 41–42, 50–51)",
+      "sourceLocator": "Chapter 5, paras. 5-1–5-4 and 5-26–5-30 (pp. 41–42, 50–51); Appendix A, paras. A-24–A-27 (pp. 81–82)",
       "level": "Foundation"
     },
     {
@@ -6135,7 +6277,8 @@
       "objectives": [
         "Distinguish a functional organization from its supporting platforms.",
         "Identify why command, information, and sustainment all appear in the chapter.",
-        "Interpret related functions without inferring fielded availability."
+        "Interpret related functions without inferring fielded availability.",
+        "Explain what an equipment list and a separately cited organizational passage can each establish about a support function."
       ],
       "sections": [
         {
@@ -6149,6 +6292,10 @@
         {
           "heading": "Read the schematic",
           "text": "Begin with the labels and the specific responsibilities documented in the text. A connection can represent reporting, direction, or support, and those relationships have different implications. Before comparing Russian material with another doctrine, write a short description of what each source says the function accomplishes. This allows comparison even when the two publications use different names for its component organizations."
+        },
+        {
+          "heading": "Use an inventory and an organization passage together",
+          "text": "Appendix E inventories equipment in one support category. The discussion starting on page 5-26 supplies the organizational context that an inventory alone lacks. When annotating the dated model, attach each claim to the passage that can support it. An inventory can establish that the manual lists an item under a particular function. An organizational passage can establish how the model depicts that function in relation to a supported formation. A real assignment or current availability would need its own evidence."
         }
       ],
       "terms": [
@@ -6172,12 +6319,17 @@
           "id": "atp71001-strike-as-organization-q3",
           "prompt": "A diagram shows a specialist function supporting a formation. Can an analyst use this alone to confirm its present assignment?",
           "answer": "The diagram establishes how the model represents support. A present assignment requires current verification."
+        },
+        {
+          "id": "atp71001-strike-as-organization-q4",
+          "prompt": "A student uses an equipment table to label a support function as permanently assigned to every formation in a training model. How should the annotation change?",
+          "answer": "Use the table to identify the listed equipment category. Read the organizational passage for what the model says about the support relationship, and qualify the claim to the formation and edition described. The table alone does not establish permanent assignment."
         }
       ],
       "sourceIds": [
         "atp-7-100-1"
       ],
-      "sourceLocator": "Chapter 5, introduction and doctrinal application (pp. 5-1–5-4), Radio Electromagnetic Battle (p. 5-28); Appendix A, p. A-1",
+      "sourceLocator": "Chapter 5, pp. 5-1–5-4, 5-26 and 5-28; Appendix A, p. A-1; Appendix E, pp. E-1–E-2",
       "level": "Intermediate"
     },
     {
@@ -6242,7 +6394,8 @@
       "objectives": [
         "Differentiate materiel support from command-and-control support.",
         "Explain what automation changes about information movement.",
-        "Distinguish an interruption in a communications path from a loss of authority."
+        "Distinguish an interruption in a communications path from a loss of authority.",
+        "Distinguish a specialist function, its relationship to a supported formation, and authority over the supporting organization."
       ],
       "sections": [
         {
@@ -6256,6 +6409,14 @@
         {
           "heading": "Authority and channel",
           "text": "In a classroom example, a staff can lose a reporting service while its decision-making responsibilities continue. The change affects which information reaches a decision maker. It may also create uncertainty if staff treat an empty display as proof that there was nothing to report. Reviewing the difference between the role, the available information, and the supporting channel is central to understanding the model."
+        },
+        {
+          "heading": "Read the relationship behind a specialty label",
+          "text": "The 2024 model describes engineers as a specialist branch that contributes to the supported formation’s mobility and protection. Appendix I describes a distinct specialist organization that provides protective support. In each case, the specialty explains the kind of contribution the manual describes. The supported formation retains its wider responsibilities. Describe the contribution separately from who controls the specialists or which personnel are available."
+        },
+        {
+          "heading": "Receiving support and possessing authority",
+          "text": "Appendix K gives a clear example of the difference. It describes tactical formations benefiting from reporting generated by specialist organizations without controlling those organizations. A note that an organization ‘supports the formation’ can mean that it creates information or provides a service the formation uses. To describe command authority, look for a separate source statement that names the decision-maker."
         }
       ],
       "terms": [
@@ -6279,12 +6440,22 @@
           "id": "atp71001-support-and-command-q3",
           "prompt": "A classroom display becomes empty when its reporting service stops. What should the observer conclude?",
           "answer": "The display has lost its input. The record now contains a gap in awareness and cannot establish the absence of activity."
+        },
+        {
+          "id": "atp71001-support-and-command-q4",
+          "prompt": "The manual says that a specialist group supplies information used by a formation. A diagram labels that group as commanded by the formation. What does the passage support and how would you fix the diagram?",
+          "answer": "It supports a reporting or support relationship. Label that relationship and show command separately only when a source establishes it. The chapter or appendix should also establish whether the relationship is standing or described only in that example."
+        },
+        {
+          "id": "atp71001-support-and-command-q5",
+          "prompt": "An analyst groups engineering support, specialist protective support, and the supply function under a single label because all serve the same formation. What useful distinctions does the label hide?",
+          "answer": "The model describes different contributions: engineers support mobility and protection, the protective specialists have a distinct protective role, and materiel support provides resources for continued activity. Shared recipients do not establish identical duties or the same command relationship."
         }
       ],
       "sourceIds": [
         "atp-7-100-1"
       ],
-      "sourceLocator": "Chapter 2, para. 2-56; Chapter 4, para. 4-16; Appendix H, p. H-1; Appendix J, p. J-1",
+      "sourceLocator": "Chapter 2, para. 2-56; Chapter 4, para. 4-16; Appendix G, introduction (G-1); Appendix H, p. H-1; Appendix I, introduction and para. I-1 (I-1); Appendix J, p. J-1; Appendix K, introduction (K-1)",
       "level": "Intermediate"
     },
     {
@@ -6348,7 +6519,8 @@
       "objectives": [
         "Distinguish national, theater, and tactical levels.",
         "Explain the dual reporting relationship depicted in the 2021 edition.",
-        "Distinguish group army, combined arms brigade, and combined arms battalion."
+        "Distinguish group army, combined arms brigade, and combined arms battalion.",
+        "Read a capability appendix for a functional contribution, then check where the dated model places the supporting organization."
       ],
       "sections": [
         {
@@ -6362,6 +6534,14 @@
         {
           "heading": "What a diagram can establish",
           "text": "A learner can trace a hypothetical brigade up to a group army and identify a support organization at the same or a higher level. A complete interpretation should distinguish standing command from support assigned in the example and describe whether the relationship is stated or inferred from a diagram. Document the date so this reading remains tied to the historical model."
+        },
+        {
+          "heading": "Capability, formation, and responsibility",
+          "text": "Appendix B discusses fire support as a capability and inventories examples. Appendix E describes engineering and protective functions that contribute to a broader formation. Use Chapter 2 to locate the named headquarters or formation before deciding how to label either contribution. ‘Engineering’ identifies a kind of work. ‘Combined arms brigade’ identifies a formation in the model. The two labels describe different things, even when the formation receives that work."
+        },
+        {
+          "heading": "Scope organizational claims to the passage",
+          "text": "Appendix G identifies specialized organizations in more than one service or institution. A reference to a group army example does not place every specialized unit under the same authority. When comparing two entries, note the organization the source actually names, the level it describes, and what relationship is explicit. If the text names a capability but omits its assignment, leave assignment unspecified."
         }
       ],
       "terms": [
@@ -6386,12 +6566,22 @@
           "id": "atp71003-command-and-force-structure-q3",
           "prompt": "A group army specialist appears in a brigade example. What should a reader check before labeling that specialist organic to the brigade?",
           "answer": "Check the standing organization chart and the text describing support or attachment in the example."
+        },
+        {
+          "id": "atp71003-command-and-force-structure-q4",
+          "prompt": "A student sees specialist capabilities in several parts of the 2021 model and labels them all as owned by the group army. Which source checks would make the chart defensible?",
+          "answer": "Identify which institution and echelon each passage actually names. Use Chapter 2 and the relevant appendix to label explicit command and support relationships separately. Leave an assignment unspecified when the source describes only a capability."
+        },
+        {
+          "id": "atp71003-command-and-force-structure-q5",
+          "prompt": "A source note puts ‘engineering’ and ‘combined arms brigade’ in the same column as if they identify the same kind of entity. How should the note be organized?",
+          "answer": "Engineering names a function and combined arms brigade names a formation. Separate the type of contribution from the named organization, then cite the appendix and Chapter 2 for the relationship the dated model actually depicts."
         }
       ],
       "sourceIds": [
         "atp-7-100-3"
       ],
-      "sourceLocator": "Chapter 2, National and Strategic-Level Organizations (pp. 2-2–2-5) and PLAA organizations (pp. 2-6–2-8); figs. 2-1–2-3",
+      "sourceLocator": "Chapter 2, pp. 2-2–2-8, figs. 2-1–2-3; Appendix B, para. B-1; Appendix E, para. E-1; Appendix G, para. G-1",
       "level": "Intermediate"
     },
     {
@@ -6798,11 +6988,13 @@
       "id": "atp-3-12-4",
       "title": "Electromagnetic Warfare Platoon",
       "edition": "9 January 2023",
-      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/6BBD3057-2A18-4A0C-BEBA-5D825D0E88CF-1673296215065/atp3_12x4.pdf",
-      "access": "Public Army PDF",
-      "note": "APD lists the 9 January 2023 publication as active. The linked Army Registry PDF contains the public platoon manual. Organizational examples reflect the edition date.",
+      "url": "https://armypubs.army.mil/epubs/DR_pubs/DR_a/ARN37162-ATP_3-12.4-000-WEB-1.pdf",
+      "access": "Public Army Publishing Directorate PDF",
+      "note": "The January 2023 edition was verified in the official Army Publishing Directorate PDF. Organizational examples reflect the edition date.",
       "locator": "Printed page numbers",
-      "code": "ATP 3-12.4"
+      "code": "ATP 3-12.4",
+      "readingUrl": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/6BBD3057-2A18-4A0C-BEBA-5D825D0E88CF-1673296215065/atp3_12x4.pdf",
+      "readingNote": "Alternate Army reading link. Availability depends on access to the Army host."
     },
     {
       "id": "jp-3-85",
@@ -6820,11 +7012,13 @@
       "id": "atp-3-01-81",
       "title": "Counter-Unmanned Aircraft System (C-UAS) Operations",
       "edition": "23 May 2025",
-      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/B6A1625F-6975-4367-82C8-E67E901218C7-1753193840461/ATP3_01x81.pdf",
-      "access": "Public Army PDF",
-      "note": "The public edition supersedes the 11 August 2023 publication. The edition and printed locators were verified from the indexed Army PDF.",
+      "url": "https://armypubs.army.mil/epubs/DR_pubs/DR_a/ARN43877-ATP_3-01.81-000-WEB-1.pdf",
+      "access": "Public Army Publishing Directorate PDF",
+      "note": "The official, 106-page Army Publishing Directorate PDF verifies the 23 May 2025 edition. It supersedes the 11 August 2023 publication.",
       "locator": "Contents pp. i–iii, chapters 1–7 and appendix A",
-      "code": "ATP 3-01.81"
+      "code": "ATP 3-01.81",
+      "readingUrl": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/B6A1625F-6975-4367-82C8-E67E901218C7-1753193840461/ATP3_01x81.pdf",
+      "readingNote": "Alternate Army reading link. Availability depends on access to the Army host."
     },
     {
       "id": "atp-6-02-70",
@@ -6841,21 +7035,25 @@
       "id": "atp-7-100-1",
       "title": "Russian Tactics",
       "edition": "29 February 2024, Change 1 dated 23 April 2024",
-      "url": "https://oe.t2com.army.mil/site-content/OEE/Russia%20Landing%20Zone/Russian%20Tactics-ATP_7-100.1-Feb2024.pdf",
-      "access": "Public Army PDF",
-      "note": "The public Change 1 sheet adds a Caspian Sea Flotilla figure. Treat the U.S. Army's 2024 description and the formations it depicts as a training model for that edition. Read organization descriptions as part of the dated training model, and check the course map for appendix reading limits.",
+      "url": "https://armypubs.army.mil/epubs/DR_pubs/DR_a/ARN40737-ATP_7-100.1-001-WEB-4.pdf",
+      "access": "Public Army Publishing Directorate PDF",
+      "note": "The official, 280-page Army Publishing Directorate PDF contains the 23 April 2024 Change 1 transmittal. Treat its organizational descriptions as a dated Army training model.",
       "locator": "Contents pp. i–v, chapters 1–7 and appendices A–K",
-      "code": "ATP 7-100.1"
+      "code": "ATP 7-100.1",
+      "readingUrl": "https://oe.t2com.army.mil/site-content/OEE/Russia%20Landing%20Zone/Russian%20Tactics-ATP_7-100.1-Feb2024.pdf",
+      "readingNote": "Alternate Army reading link. Availability depends on access to the Army host."
     },
     {
       "id": "atp-7-100-3",
       "title": "Chinese Tactics",
       "edition": "9 August 2021, Change 1 dated 24 November 2021",
-      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/53492E53-AE5F-44CC-9174-9130FC8BAE09-1628600858692/atp7_100x3wc1.pdf",
-      "access": "Public Army PDF",
-      "note": "The public Change 1 transmittal adds an initial distribution number and replaces cover pages. The organization and capabilities in the lessons describe the Army's 2021 model. Read organization descriptions as part of the dated training model, and check the course map for appendix reading limits.",
+      "url": "https://armypubs.army.mil/epubs/DR_pubs/DR_a/ARN34236-ATP_7-100.3-001-WEB-3.pdf",
+      "access": "Public Army Publishing Directorate PDF",
+      "note": "The official, 252-page Army Publishing Directorate PDF contains the 24 November 2021 Change 1 transmittal. It adds an initial distribution number and replaces cover pages. Treat its organizational descriptions as a dated Army training model.",
       "locator": "Contents pp. i–vi, chapters 1–9 and appendices A–G",
-      "code": "ATP 7-100.3"
+      "code": "ATP 7-100.3",
+      "readingUrl": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/53492E53-AE5F-44CC-9174-9130FC8BAE09-1628600858692/atp7_100x3wc1.pdf",
+      "readingNote": "Alternate Army reading link. Availability depends on access to the Army host."
     },
     {
       "id": "army-25e",
@@ -6880,11 +7078,11 @@
   ],
   "coverageReview": {
     "date": "2026-11-22",
-    "scope": "Conceptual lessons and chapter/appendix reading map; complete subsection, figure, procedural and current-edition coverage is not claimed.",
+    "scope": "Conceptual lessons and objective ledger for eight mapped reading editions. Approved conceptual objectives are taught alongside explicit reading, training, exclusion and source-access dispositions.",
     "groups": [
       {
         "group": "Core Army",
-        "passes": 3,
+        "passes": 4,
         "unresolved": [
           "APD lists ATP 3-12.3 Change 2 dated 22 August 2025. The PDF retrieved from the official record twice carried only the Change 1 title and transmittal. Change 2 text and coverage remain unverified."
         ],
@@ -6895,12 +7093,13 @@
           "The first review reconciled the verified manual editions, publication markings, TOC unit titles, start pages, and substantive appendix headings.",
           "The second review checked the full unit list against the authored course maps, corrected printed lesson locators, and checked lesson and question references and the scope of guided reading. All 29 verified units have a mapped study treatment.",
           "A targeted third review added conceptual instruction for electromagnetic attack and FM Appendices C, D, and E. These four units retain guided-reading status for the source procedures. Each unit without a lesson has a specific study objective.",
-          "Coverage uses the printed tables of contents and appendix section introductions. Prefaces and introductions support orientation. The figure and table lists, glossaries, references, and indexes remain source aids."
+          "Coverage uses the printed tables of contents and appendix section introductions. Prefaces and introductions support orientation. The figure and table lists, glossaries, references, and indexes remain source aids.",
+          "Objective closure revisited FM 3-12 Appendix E paragraphs E-10–E-14, ATP 3-12.3 Change 1 Appendices B and C, and ATP 3-12.4 Appendix A opening. The APD Change 2 link still served the 164-page Change 1 transmittal and text."
         ]
       },
       {
         "group": "Joint and spectrum",
-        "passes": 2,
+        "passes": 3,
         "unresolved": [
           "Army publications cite a 17 March 2026 JP 3-85 revision. A publicly readable text and contents for that edition were not verified, so its chapter and appendix coverage is unresolved."
         ],
@@ -6912,16 +7111,16 @@
           "ATP 6-02.70 inventory reconciled to the September 2025 cover and contents pp. i–iii and body headings in the 100-page Army PDF. All three chapters and five substantive appendices are mapped. Preface, glossary, reference list and index are reference or administrative material.",
           "Army Publishing Directorate active edition record: https://armypubs.army.mil/ProductMaps/PubForm/Details.aspx?PUB_ID=1031936",
           "Joint and Army coordination cells are described in the organizational context of their respective source editions. The joint manual describes combatant command arrangements and the Army techniques publication describes joint task force arrangements.",
-          "Lessons, chapter links and answer explanations were checked against their cited conceptual source sections. Hypothetical examples use benign training, research, and public-service situations."
+          "Lessons, chapter links and answer explanations were checked against their cited conceptual source sections. Hypothetical examples use benign training, research, and public-service situations.",
+          "The 2026 JDEIS citation returned a logout page. The 2020 title, contents, and selected passages were corroborated with public indexed text. Availability of the existing 2020 reading links varied during verification.",
+          "Objective closure compared JP 3-85 (2020) Chapter III, Chapter IV and Appendix G passages with the existing planning and assessment lessons, and checked ATP 6-02.70 C-12 and C-18–C-20 against the official September 2025 PDF."
         ]
       },
       {
         "group": "C-UAS and threat context",
-        "passes": 2,
+        "passes": 3,
         "unresolved": [
-          "Direct PDF downloads and page rendering were unavailable during the audit. Printed locators come from the Army PDFs' indexed contents and text. The physical PDF page count is unconfirmed for ATP 3-01.81.",
-          "The online primary-source text indexes for the two tactics manuals do not expose all appendix body pages. Appendix names and starting pages were checked against the official contents. Orientations use the manuals' introductions and related chapter sections. Appendix subheading coverage is unverified.",
-          "Full procedural instruction, equipment operation, and complete subsection and figure coverage are outside these courses. The two tactics manuals are treated as dated training models."
+          "Full procedural instruction, equipment operation, and complete subsection and figure coverage are outside these courses. The two tactics manuals are treated as dated models."
         ],
         "evidence": [
           "ATP 3-01.81, 23 May 2025: official PDF cover, contents pp. i–iii, and body checked. Mapped chapters 1–7 and appendix A from the actual contents and body because the introduction's chapter and appendix count conflicts with both.",
@@ -6929,7 +7128,8 @@
           "ATP 7-100.3, 9 August 2021 with Change 1: official PDF cover, transmittal, contents pp. i–vi, and indexed chapter passages checked. Mapped chapters 1–9 and appendices A–G. T2COM reports a 252-page PDF.",
           "Prefaces, introductions, lists of figures and tables, glossaries, references, and indexes were consulted as navigation and edition evidence. They are outside the substantive unit count.",
           "Coverage status describes the unit's treatment. Guided reading includes an orientation and a reading objective. An associated lesson can teach a conceptual subset of a guided unit.",
-          "Second pass compared chapter and appendix order against the indexed contents, checked the conceptual explanations and answer keys against the located material, and checked that 42 substantive units and 26 lessons are linked. Eight units use an explicit reading objective without an associated lesson."
+          "Second pass compared chapter and appendix order against the indexed contents, checked the conceptual explanations and answer keys against the located material, and checked that 42 substantive units and 26 lessons are linked. Eight units use an explicit reading objective without an associated lesson.",
+          "Official APD files ARN43877, ARN40737, and ARN34236 supplied 106, 280, and 252 physical pages respectively. The targeted appendix passages and change sheets matched the teaching editions."
         ]
       }
     ]

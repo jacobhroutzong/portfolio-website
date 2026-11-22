@@ -1,7 +1,3 @@
----
-import FieldsenseParcelPlate from './FieldsenseParcelPlate.astro';
----
-
 <div class="fs-app" id="fieldsense-app">
   <a class="fs-skip" href="#fs-explore">Skip to the visualization</a>
   <header class="fs-header">
@@ -10,22 +6,73 @@ import FieldsenseParcelPlate from './FieldsenseParcelPlate.astro';
   </header>
 
   <div class="fs-main">
-    <section class="fs-intro" aria-labelledby="fs-title">
-      <div class="fs-intro-main">
-        <div><p class="fs-eyebrow fs-intro-index">RESEARCH NOTE 01 / GEORGIA TECH · ISYE 6501</p>
-          <h1 id="fs-title">When, where,<br><em>and how much.</em></h1>
-          <p class="fs-intro-lede">A constrained farm isn't a single prediction. It is a sequence of decisions. Move from crop-yield forecasts to shared resource limits, then follow seven days of irrigation choices.</p>
+    <section class="fs-intro fs-scene-intro" aria-labelledby="fs-title">
+      <div><p class="fs-eyebrow">Georgia Tech · ISYE 6501</p>
+        <h1 id="fs-title">When, where, <em>and how much.</em></h1></div>
+      <p>Follow two irrigation policies across three fields and seven days of recorded synthetic weather.</p>
+    </section>
+
+    <section class="fs-explore" id="fs-explore" aria-labelledby="fs-explore-title">
+      <div class="fs-section-head"><h2 id="fs-explore-title">The irrigation plots</h2><label class="fs-scenario-label" for="fs-scenario">Scenario<select id="fs-scenario"><option value="balanced">Balanced season</option><option value="dry_spell">Dry spell</option><option value="strict_limit">Strict constraints</option></select></label></div>
+      <div class="fs-infeasible" id="fs-infeasible" role="status" hidden><h3>No feasible allocation</h3><p id="fs-infeasible-reason"></p><p id="fs-infeasible-detail"></p><p>Irrigation stops here. The models do not silently relax the resource limits.</p></div>
+
+      <div class="fs-lab" id="fs-lab">
+        <div class="fs-field-board">
+          <div class="fs-scene-top"><span class="fs-day-chip" id="fs-day-chip">Day 1 / 7</span>
+          <div class="fs-policy-switch" role="group" aria-label="Policy shown in the farm view"><button type="button" data-policy="mdp" class="fs-active" aria-pressed="true">MDP policy</button><button type="button" data-policy="rule" aria-pressed="false">Threshold rule</button></div></div>
+          <div class="fs-map-wrap">
+            <div id="fs-viewport" data-renderer="svg">
+              <div class="fs-scene-host" aria-hidden="true"></div>
+              <svg preserveAspectRatio="xMidYMid meet" id="fs-farm" class="fs-farm" viewBox="0 0 860 530" role="img" aria-labelledby="fs-farm-title fs-farm-desc"><title id="fs-farm-title">Three-field irrigation replay</title><desc id="fs-farm-desc">Select a field using the buttons below the farm. The inspector reports all animated water and soil values.</desc></svg>
+            </div>
+            <p class="fs-fallback-note" role="status" hidden>Showing the parcel diagram. Choose a field to inspect its replay.</p>
+            <div class="fs-camera" hidden role="group" aria-label="Farm camera">
+              <button type="button" data-camera="overview">Farm overview</button>
+              <button type="button" data-camera="cut" aria-pressed="false">Show soil cutaway</button>
+              <button type="button" data-camera="left" aria-label="Orbit left">↶</button>
+              <button type="button" data-camera="right" aria-label="Orbit right">↷</button>
+              <button type="button" data-camera="in" aria-label="Zoom in">+</button>
+              <button type="button" data-camera="out" aria-label="Zoom out">−</button>
+              <button type="button" data-camera="touch" aria-pressed="false">Explore in 3D</button>
+            </div>
+            <p class="fs-soil-key" hidden><span></span>Schematic soil section · field-level storage · 0–40 mm <strong></strong></p>
+            <div class="fs-map-caption"><span>Allocated water · <strong id="fs-tank-label"></strong></span><span>Schematic · no live sensors</span></div></div>
+          <div class="fs-field-picker" role="group" aria-label="Inspect a field"><button type="button" data-field="0" class="fs-active" aria-pressed="true">North Meadow<span>Wheat · 1.8 ha</span></button><button type="button" data-field="1" aria-pressed="false">East Acre<span>Corn · 2.1 ha</span></button><button type="button" data-field="2" aria-pressed="false">South Plot<span>Soybean · 1.5 ha</span></button></div>
+          <div class="fs-playback"><button type="button" class="fs-play" id="fs-play" aria-label="Play the seven-day replay">Play week</button><button type="button" class="fs-step" id="fs-prev" aria-label="Previous day">‹</button><label class="fs-scrubber" for="fs-day"><span>Day <strong id="fs-day-label">1</strong> of 7</span><input type="range" id="fs-day" min="1" max="7" value="1" step="1" aria-label="Replay day"></label><button type="button" class="fs-step" id="fs-next" aria-label="Next day">›</button><label class="fs-speed" for="fs-speed">Speed<select id="fs-speed"><option value="1800">1×</option><option value="900">2×</option><option value="450">4×</option></select></label></div>
+          <div class="fs-board-caption"><span><i aria-hidden="true"></i> Irrigation · pipe and spray</span><span><i class="fs-rain-key" aria-hidden="true"></i> Rain · shared weather path</span></div>
+          <p class="fs-motion-note" id="fs-motion-note" hidden>Reduced motion is on. Use the day controls to explore without animation.</p>
         </div>
-        <div class="fs-intro-actions"><a class="fs-start" href="#fs-explore">Explore the field replay <span aria-hidden="true">↗</span></a><span class="fs-version">FIELDSENSE 1.1 · RECORDED SYNTHETIC RUNS</span></div>
-      </div>
-      <div class="fs-intro-margin">
-        <FieldsenseParcelPlate />
-        <aside class="fs-intro-quote" aria-label="Excerpt from the original 2025 course paper">
-          <span class="fs-document-index">ORIGINAL COURSE PAPER / PART 2</span>
-          <blockquote>We will use Markov Chain Decision Process to prescribe optimal irrigation actions (when/where and how much to water) using probabilistic models of weather and soil states.</blockquote>
-          <cite class="fs-paper-citation">Verbatim from the ISYE 6501 submission · 2025 · Proposed design, not a verified field deployment</cite>
+
+        <aside class="fs-inspector" aria-labelledby="fs-field-name">
+          <div class="fs-inspector-heading"><p class="fs-eyebrow">Field inspector</p><h3 id="fs-field-name">North Meadow</h3><p id="fs-field-subtitle">Wheat · 1.8 ha</p></div>
+          <div class="fs-action"><span id="fs-action-label">Today’s irrigation</span><strong id="fs-action-value">0 <small>mm</small></strong><span id="fs-action-volume"></span></div>
+          <div class="fs-moisture-header"><span>Soil-water storage</span><strong id="fs-moisture-value"></strong></div><div class="fs-moisture-track" aria-hidden="true"><span id="fs-moisture-fill"></span></div><div class="fs-track-labels"><span>0 mm</span><span>40 mm model limit</span></div>
+          <dl class="fs-state-grid"><div><dt>Starting water</dt><dd id="fs-start"></dd></div><div><dt>Realized rain</dt><dd id="fs-rain"></dd></div><div><dt>Crop demand</dt><dd id="fs-demand"></dd></div><div><dt>Unmet today</dt><dd id="fs-unmet"></dd></div><div><dt>Week allocation</dt><dd id="fs-cap"></dd></div><div><dt>Water remaining</dt><dd id="fs-remaining"></dd></div></dl>
+
+          <div class="fs-water-balance-example" aria-label="How to read a recorded water balance">
+            <p class="fs-eyebrow">READ THE FIELD / AN EXAMPLE</p>
+            <h4>Where does the soil-water number come from?</h4>
+            <p><strong>Starting water + irrigation + rain − crop demand</strong> gives the modeled ending storage, subject to the model's storage limits. If the field cannot meet demand, the shortfall appears as <strong>Unmet today</strong>.</p>
+            <p class="fs-recorded-example">Recorded East Acre example · balanced MDP · day 1: <strong>7 + 5 + 6 − 5.06 = 12.94 mm</strong>. These numbers illustrate one saved replay day, not necessarily the day currently selected.</p>
+            <p><strong>mm is depth; m³ is volume.</strong> One millimetre across one hectare equals 10 cubic metres. Rain and irrigation are separate inputs, and a zero-irrigation day can still receive rain.</p>
+          </div>
+          <details class="fs-parameter-guide">
+            <summary>What do the field parameters mean?</summary>
+            <dl>
+              <div><dt>Day, policy and speed</dt><dd>Day selects a point in the seven-day replay. MDP plans ahead under uncertain rain; the threshold rule irrigates 5 mm when starting soil water is below 10 mm and budget permits. Speed changes playback only.</dd></div>
+              <div><dt>Irrigation, mm and m³</dt><dd>Millimetres measure water depth over a field. Cubic metres measure its volume: 1 mm across 1 hectare equals 10 m³. Select another field to inspect its values.</dd></div>
+              <div><dt>Soil-water storage</dt><dd>Starting water is the modeled depth available before today's action. The storage gauge shows ending water after irrigation, realized rain and crop demand; its modeled ceiling is 40 mm.</dd></div>
+              <div><dt>Rain, demand and unmet</dt><dd>Realized rain is sampled after the action. Crop demand is an illustrative daily requirement. Unmet today is the remaining shortfall, not measured crop damage.</dd></div>
+              <div><dt>Week allocation and remaining</dt><dd>The allocator gives each field a seven-day irrigation cap. Remaining water is that cap minus irrigation used up to the selected day, shown as a depth in mm.</dd></div>
+              <div><dt>Decision scores</dt><dd>MDP scores are estimated future rewards for allowed irrigation actions, not probabilities or observed yields. Higher is preferred; ties favor less water.</dd></div>
+            </dl>
+          </details>
+          <div class="fs-decision"><h4 id="fs-decision-title">Why this action?</h4><p id="fs-decision-copy"></p><div class="fs-action-scores" id="fs-action-scores"></div><p class="fs-score-note" id="fs-score-note">Expected seven-day scores; higher is preferred.</p></div>
         </aside>
       </div>
+      <div class="fs-scenario-description"><p id="fs-scenario-description">Loading the recorded model results…</p><span id="fs-seed">Weather seed 41</span></div>
+      <p class="fs-parameter-aside">Scenario selects a recorded set of resource limits and weather assumptions. The weather seed identifies a repeatable synthetic rainfall sequence—not a forecast or a sensor reading.</p>
+      <p class="fs-sr-only" id="fs-announcement" aria-live="polite" aria-atomic="true"></p>
     </section>
 
     <div class="fs-arc" aria-label="Fieldsense project timeline"><span><b>2025</b> Course proposal</span><i aria-hidden="true"></i><span><b>2026</b> Tested Python pipeline</span><i aria-hidden="true"></i><span><b>Today</b> Browser replay</span></div>
@@ -38,40 +85,38 @@ import FieldsenseParcelPlate from './FieldsenseParcelPlate.astro';
       <button type="button" class="fs-model-card fs-active" data-model="irrigate" aria-pressed="true"><span class="fs-model-index">03 / PLAN</span><span class="fs-model-label">Markov decision process</span><span class="fs-model-title">Irrigate</span><span class="fs-model-value" id="fs-irrigate-value">7 days</span><span class="fs-model-unit">decisions within each field’s cap</span></button>
     </section>
     <p class="fs-model-context" id="fs-model-context">The controller weighs expected crop-water deficits against irrigation use over the remaining days.</p>
+    <aside class="fs-research-footnote" aria-label="Original paper excerpt about yield prediction">
+      <div><span class="fs-document-index">FROM THE 2025 PAPER / PART 2 · FORECAST INPUTS</span><blockquote>To forecast crop yield (and minimize over-allocation of resources such as fertilizer, pesticide, and water), the company will implement Random Forests that take inputs such as weather, soil, and crop data to predict crop outputs.</blockquote><cite>Verbatim · ISYE 6501, Models Defining · proposed inputs, not live sensor feeds</cite></div>
+      <p>The 2026 model uses synthetic crop, soil and weather features. Its yield estimate becomes an input to the resource allocator.</p>
+    </aside>
 
-    <section class="fs-explore" id="fs-explore" aria-labelledby="fs-explore-title">
-      <div class="fs-section-head"><div><p class="fs-eyebrow">FIELD REPLAY / 01</p><h2 id="fs-explore-title">Read the week, not just the outcome.</h2><p class="fs-section-notation">One fixed weather path · three fields · two irrigation policies</p></div><label class="fs-scenario-label" for="fs-scenario">Scenario<select id="fs-scenario"><option value="balanced">Balanced season</option><option value="dry_spell">Dry spell</option><option value="strict_limit">Strict constraints</option></select></label></div>
-      <div class="fs-scenario-description"><p id="fs-scenario-description">Loading the recorded model results…</p><span id="fs-seed">Weather seed 41</span></div>
-      <div class="fs-infeasible" id="fs-infeasible" role="status" hidden><h3>No feasible allocation</h3><p id="fs-infeasible-reason"></p><p id="fs-infeasible-detail"></p><p>Irrigation stops here. The models do not silently relax the resource limits.</p></div>
-
-      <div class="fs-lab" id="fs-lab">
-        <div class="fs-field-board">
-          <div class="fs-board-top"><div><span class="fs-overline">SEVEN-DAY REPLAY</span><h3>The irrigation plots</h3></div><span class="fs-day-chip" id="fs-day-chip">Day 1 / 7</span></div>
-          <div class="fs-policy-switch" role="group" aria-label="Policy shown in the farm view"><button type="button" data-policy="mdp" class="fs-active" aria-pressed="true">MDP policy</button><button type="button" data-policy="rule" aria-pressed="false">Threshold rule</button></div>
-          <div class="fs-board-caption"><span><i aria-hidden="true"></i> Irrigation · pipe and spray</span><span><i class="fs-rain-key" aria-hidden="true"></i> Rain · shared weather path</span></div>
-          <div class="fs-map-wrap"><svg preserveAspectRatio="xMidYMid meet" id="fs-farm" class="fs-farm" viewBox="0 0 860 530" role="img" aria-labelledby="fs-farm-title fs-farm-desc"><title id="fs-farm-title">Three-field irrigation replay</title><desc id="fs-farm-desc">Select a field using the buttons below the farm. The inspector reports all animated water and soil values.</desc></svg><div class="fs-map-caption"><span>Allocated water · <strong id="fs-tank-label"></strong></span><span>Schematic · no live sensors</span></div></div>
-          <div class="fs-field-picker" role="group" aria-label="Inspect a field"><button type="button" data-field="0" class="fs-active" aria-pressed="true">North Meadow<span>Wheat · 1.8 ha</span></button><button type="button" data-field="1" aria-pressed="false">East Acre<span>Corn · 2.1 ha</span></button><button type="button" data-field="2" aria-pressed="false">South Plot<span>Soybean · 1.5 ha</span></button></div>
-          <div class="fs-playback"><button type="button" class="fs-play" id="fs-play" aria-label="Play the seven-day replay">Play week</button><button type="button" class="fs-step" id="fs-prev" aria-label="Previous day">‹</button><label class="fs-scrubber" for="fs-day"><span>Day <strong id="fs-day-label">1</strong> of 7</span><input type="range" id="fs-day" min="1" max="7" value="1" step="1" aria-label="Replay day"></label><button type="button" class="fs-step" id="fs-next" aria-label="Next day">›</button><label class="fs-speed" for="fs-speed">Speed<select id="fs-speed"><option value="1800">1×</option><option value="900">2×</option><option value="450">4×</option></select></label></div>
-          <p class="fs-motion-note" id="fs-motion-note" hidden>Reduced motion is on. Use the day controls to explore without animation.</p>
-        </div>
-
-        <aside class="fs-inspector" aria-labelledby="fs-field-name">
-          <div class="fs-inspector-heading"><p class="fs-eyebrow">Field inspector</p><h3 id="fs-field-name">North Meadow</h3><p id="fs-field-subtitle">Wheat · 1.8 ha</p></div>
-          <div class="fs-action"><span id="fs-action-label">Today’s irrigation</span><strong id="fs-action-value">0 <small>mm</small></strong><span id="fs-action-volume"></span></div>
-          <div class="fs-moisture-header"><span>Soil-water storage</span><strong id="fs-moisture-value"></strong></div><div class="fs-moisture-track" aria-hidden="true"><span id="fs-moisture-fill"></span></div><div class="fs-track-labels"><span>0 mm</span><span>40 mm model limit</span></div>
-          <dl class="fs-state-grid"><div><dt>Starting water</dt><dd id="fs-start"></dd></div><div><dt>Realized rain</dt><dd id="fs-rain"></dd></div><div><dt>Crop demand</dt><dd id="fs-demand"></dd></div><div><dt>Unmet today</dt><dd id="fs-unmet"></dd></div><div><dt>Week allocation</dt><dd id="fs-cap"></dd></div><div><dt>Water remaining</dt><dd id="fs-remaining"></dd></div></dl>
-          <div class="fs-decision"><h4 id="fs-decision-title">Why this action?</h4><p id="fs-decision-copy"></p><div class="fs-action-scores" id="fs-action-scores"></div><p class="fs-score-note" id="fs-score-note">Expected seven-day scores; higher is preferred.</p></div>
+        <aside class="fs-intro-quote" aria-label="Excerpt from the original 2025 course paper">
+          <span class="fs-document-index">ORIGINAL COURSE PAPER / PART 2</span>
+          <blockquote>We will use Markov Chain Decision Process to prescribe optimal irrigation actions (when/where and how much to water) using probabilistic models of weather and soil states.</blockquote>
+          <cite class="fs-paper-citation">Verbatim from the ISYE 6501 submission · 2025 · Proposed design, not a verified field deployment</cite>
         </aside>
-      </div>
-      <p class="fs-sr-only" id="fs-announcement" aria-live="polite" aria-atomic="true"></p>
-    </section>
 
     <section class="fs-outcomes" id="fs-outcomes" aria-labelledby="fs-outcomes-title">
       <div class="fs-section-head"><div><p class="fs-eyebrow">POLICY AUDIT / 02</p><h2 id="fs-outcomes-title">Water use, with the deficit left in view.</h2></div><span class="fs-through-day" id="fs-through-day">Through day 1</span></div>
-      <div class="fs-outcomes-grid"><div class="fs-chart-panel"><div class="fs-chart-head"><h3>Cumulative irrigation</h3><div class="fs-legend"><span><i class="fs-mdp-line"></i>MDP</span><span><i class="fs-rule-line"></i>Rule</span></div></div><svg id="fs-water-chart" role="img" aria-labelledby="fs-chart-title fs-chart-desc"><title id="fs-chart-title">Cumulative irrigation by policy</title><desc id="fs-chart-desc"></desc></svg><p>Both policies receive the same weather path and starting conditions.</p></div><div class="fs-compare-panel"><h3>Water and unmet demand</h3><table><caption class="fs-sr-only">Water used and area-weighted unmet demand through the selected day</caption><thead><tr><th scope="col">Policy</th><th scope="col">Water used</th><th scope="col">Unmet demand</th></tr></thead><tbody><tr><th scope="row"><i class="fs-mdp-line"></i>MDP</th><td id="fs-mdp-water"></td><td id="fs-mdp-unmet"></td></tr><tr><th scope="row"><i class="fs-rule-line"></i>Rule</th><td id="fs-rule-water"></td><td id="fs-rule-unmet"></td></tr></tbody></table><p class="fs-tradeoff" id="fs-tradeoff"></p><p class="fs-small">Unmet demand is converted to m³ using each field’s area. Less irrigation can come with more crop-water deficit.</p></div></div>
+      <p class="fs-parameter-aside">Cumulative irrigation sums the water applied from day 1 through the selected day. Unmet demand is the modeled shortfall, converted from field depth into m³ and summed across field areas. Both policies share the same rainfall path.</p><div class="fs-outcomes-grid"><div class="fs-chart-panel"><div class="fs-chart-head"><h3>Cumulative irrigation</h3><div class="fs-legend"><span><i class="fs-mdp-line"></i>MDP</span><span><i class="fs-rule-line"></i>Rule</span></div></div><svg id="fs-water-chart" role="img" aria-labelledby="fs-chart-title fs-chart-desc"><title id="fs-chart-title">Cumulative irrigation by policy</title><desc id="fs-chart-desc"></desc></svg><p>Both policies receive the same weather path and starting conditions.</p></div><div class="fs-compare-panel"><h3>Water and unmet demand</h3><table><caption class="fs-sr-only">Water used and area-weighted unmet demand through the selected day</caption><thead><tr><th scope="col">Policy</th><th scope="col">Water used</th><th scope="col">Unmet demand</th></tr></thead><tbody><tr><th scope="row"><i class="fs-mdp-line"></i>MDP</th><td id="fs-mdp-water"></td><td id="fs-mdp-unmet"></td></tr><tr><th scope="row"><i class="fs-rule-line"></i>Rule</th><td id="fs-rule-water"></td><td id="fs-rule-unmet"></td></tr></tbody></table><p class="fs-tradeoff" id="fs-tradeoff"></p><p class="fs-small">Unmet demand is converted to m³ using each field’s area. Less irrigation can come with more crop-water deficit.</p>
+          <p class="fs-economic-caution">A reduction in irrigation volume is <strong>not yet a dollar saving</strong>. The replay has no measured water price, pumping cost, crop revenue, or yield response to its unmet demand. Those are required before estimating net financial benefit.</p></div></div>
     </section>
 
-    <section class="fs-resources" aria-labelledby="fs-resources-title"><div class="fs-section-head"><div><p class="fs-eyebrow">BUDGET LEDGER / 03</p><h2 id="fs-resources-title">The limits are part of the model.</h2></div><span class="fs-allocation-note" id="fs-allocation-note">Assigned / available</span></div><div class="fs-resource-grid" id="fs-resource-grid"></div><div class="fs-allocation-table-wrap"><table class="fs-allocation-table"><caption>Model predictions and optimized bundles</caption><thead><tr><th scope="col">Field</th><th scope="col">Predicted yield</th><th scope="col">Bundle</th><th scope="col">Water cap</th><th scope="col">Scored harvest*</th></tr></thead><tbody id="fs-allocation-body"></tbody></table></div><p class="fs-small">*The optimization score is predicted yield × field area × an illustrative bundle factor. It is not a measured harvest or an output of the irrigation simulation.</p></section>
+    <section class="fs-resources" aria-labelledby="fs-resources-title"><div class="fs-section-head"><div><p class="fs-eyebrow">BUDGET LEDGER / 03</p><h2 id="fs-resources-title">The limits are part of the model.</h2></div><span class="fs-allocation-note" id="fs-allocation-note">Assigned / available</span></div><div class="fs-research-footnote fs-resource-note" aria-label="Original paper excerpt about resource availability"><div><span class="fs-document-index">FROM THE 2025 PAPER / PART 3 · RESOURCE INPUTS</span><blockquote>Resource Availability; Water, fertilizer, labor, equipment</blockquote><cite>Verbatim · ISYE 6501, Input Data · proposed system requirements</cite></div><p>The 2026 allocator models these resources as fixed synthetic budgets rather than live inventory, sensor or staffing feeds.</p></div><div class="fs-resource-grid" id="fs-resource-grid"></div><div class="fs-allocation-table-wrap"><table class="fs-allocation-table"><caption>Model predictions and optimized bundles</caption><thead><tr><th scope="col">Field</th><th scope="col">Predicted yield</th><th scope="col">Bundle</th><th scope="col">Water cap</th><th scope="col">Scored harvest*</th></tr></thead><tbody id="fs-allocation-body"></tbody></table></div><p class="fs-small">*The optimization score is predicted yield × field area × an illustrative bundle factor. It is not a measured harvest or an output of the irrigation simulation. The current allocation objective is <strong>not dollar-valued</strong>.</p><details class="fs-parameter-guide fs-budget-guide"><summary>What do the resource parameters mean?</summary><dl><div><dt>Assigned / available</dt><dd>The selected bundles consume part of each shared budget: water (m³), fertilizer (kg), labor (hours) and equipment time (hours). In the infeasible scenario, the bars instead compare full-service requirements with availability.</dd></div><div><dt>Predicted yield</dt><dd>Random Forest output in tonnes per hectare (t/ha), not harvested crop.</dd></div><div><dt>Bundle</dt><dd>One of three illustrative resource-intensity choices selected for each field by the optimizer.</dd></div><div><dt>Water cap</dt><dd>That field's assigned irrigation volume over the week. The replay enforces its equivalent depth limit.</dd></div><div><dt>Scored harvest</dt><dd>An illustrative optimization objective, not an observed harvest or a prediction of irrigation-policy yield.</dd></div></dl></details></section>
+
+    <section class="fs-economics" aria-labelledby="fs-economics-title">
+      <div class="fs-section-head"><div><p class="fs-eyebrow">ECONOMIC LOGIC / 04</p><h2 id="fs-economics-title">Where could savings come from?</h2></div></div>
+      <p>In the original proposal, forecasting aimed to avoid unnecessary inputs, allocation aimed to respect scarce budgets, and irrigation scheduling aimed to reduce water usage without neglecting crop needs. These are <strong>potential savings mechanisms</strong>, not verified farm profits.</p>
+      <div class="fs-economics-grid">
+        <div><h3>Resource efficiency</h3><p>The balanced synthetic week uses 300 m³ less irrigation under the MDP than the rule, but incurs 45.72 m³ more unmet crop-water demand. Gross avoided water expense would be <strong>300 m³ × an actual cost per m³</strong>. Net savings would also require pumping costs, crop impact, and operational costs, which this demonstration does not measure.</p></div>
+        <div><h3>Software choices</h3><p>The 2025 paper proposed a lower-cost technology stack, including Metabase and a smaller FastAPI instance. It claimed software-cost reductions and an approximately $600/month stack. These are <strong>historical proposal figures without an itemized, independently verified bill</strong>, not recurring savings measured by this site.</p></div>
+      </div>
+      <aside class="fs-economics-quote" aria-label="Original paper on agricultural cost saving">
+        <span class="fs-document-index">VERBATIM / ISYE 6501 · PART 4 · 2025</span>
+        <blockquote>This system was set up on water savings but could be deployed on fertilizer savings as well, further improving the decarbonization and cost savings.</blockquote>
+        <cite>The report described a possible extension to fertilizer efficiency; the current replay does not calculate fertilizer cost savings.</cite>
+      </aside>
+    </section>
 
     <section class="fs-origin" aria-labelledby="fs-origin-title">
       <div><p class="fs-eyebrow">SOURCE NOTE / 2025 → 2026</p><h2 id="fs-origin-title">The paper proposed the system. This lab tests the logic.</h2>
@@ -83,7 +128,7 @@ import FieldsenseParcelPlate from './FieldsenseParcelPlate.astro';
       </div>
     </section>
 
-    <section class="fs-method" id="fs-method" aria-labelledby="fs-method-title"><div><p class="fs-eyebrow">METHOD / 04</p><h2 id="fs-method-title">An executable model.<br>An illustrative farm.</h2><p>Built from a Georgia Tech ISYE 6501 course proposal. This exhibit replays results generated by the Python application; the browser does not train models or run the optimizer.</p><p>The model uses synthetic seasons, three discrete resource bundles, and a simplified seven-day water balance. It does not connect to sensors or control equipment.</p></div><div class="fs-method-detail"><h3>Reproducible by design</h3><dl><div><dt>Training / held-out records</dt><dd id="fs-records"></dd></div><div><dt>Random Forest MAE</dt><dd id="fs-mae"></dd></div><div><dt>Training-mean baseline MAE</dt><dd id="fs-baseline"></dd></div><div><dt>Water conversion</dt><dd>1 mm × 1 ha = 10 m³</dd></div><div><dt>Model / weather seeds</dt><dd id="fs-seeds"></dd></div></dl><details><summary>Model assumptions and replay data</summary><p>Yield evaluation holds out the latest two of twelve fictional seasons. The controller considers 0, 5, and 10 mm actions, 0 or 6 mm of rain, and a 5 mm soil-state grid. The rule irrigates 5 mm when starting soil-water storage is below 10 mm and its budget permits.</p><p>Rain is sampled after the daily action. Policy comparisons use the same per-field draws. Crop demand is an illustrative temperature-based estimate; no measured farm performance is claimed.</p><button type="button" class="fs-download" id="fs-download">Download this scenario’s data</button></details></div></section>
+    <section class="fs-method" id="fs-method" aria-labelledby="fs-method-title"><div><p class="fs-eyebrow">METHOD / 04</p><h2 id="fs-method-title">An executable model.<br>An illustrative farm.</h2><p>Built from a Georgia Tech ISYE 6501 course proposal. This exhibit replays results generated by the Python application; the browser does not train models or run the optimizer.</p><p>The model uses synthetic seasons, three discrete resource bundles, and a simplified seven-day water balance. It does not connect to sensors or control equipment.</p></div><div class="fs-method-detail"><h3>Reproducible by design</h3><dl><div><dt>Training / held-out records</dt><dd id="fs-records"></dd></div><div><dt>Random Forest MAE</dt><dd id="fs-mae"></dd></div><div><dt>Training-mean baseline MAE</dt><dd id="fs-baseline"></dd></div><div><dt>Water conversion</dt><dd>1 mm × 1 ha = 10 m³</dd></div><div><dt>Model / weather seeds</dt><dd id="fs-seeds"></dd></div></dl><details><summary>Model assumptions and replay data</summary><p>Yield evaluation holds out the latest two of twelve fictional seasons. The controller considers 0, 5, and 10 mm actions, 0 or 6 mm of rain, and a 5 mm soil-state grid. The rule irrigates 5 mm when starting soil-water storage is below 10 mm and its budget permits.</p><p>Rain is sampled after the daily action. Policy comparisons use the same per-field draws. Crop demand is an illustrative temperature-based estimate; no measured farm performance is claimed.</p><p>MAE (mean absolute error) is the average absolute difference between forecast and held-out synthetic yield, in t/ha. The training-mean baseline predicts the same training-set mean yield for every record. Seeds reproduce generated data and weather; they are not measured environmental variables.</p><button type="button" class="fs-download" id="fs-download">Download this scenario’s data</button></details></div></section>
   </div>
   <footer class="fs-footer"><span>Fieldsense / ISYE 6501 / 2026</span><span>Recorded simulation · No equipment control</span></footer>
   <noscript><p class="fs-noscript">This interactive replay needs JavaScript. The page explains the model pipeline above; enable JavaScript to explore the recorded scenarios.</p></noscript>

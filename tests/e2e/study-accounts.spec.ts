@@ -201,3 +201,34 @@ test('a pending account A save cannot replace account B progress after sign-out 
   expect(server.writes.every(write => write.user === userA)).toBeTruthy();
   expect(await page.evaluate(key => localStorage.getItem(key), ewKey)).toBeNull();
 });
+
+test('Soldier Study imports and saves in its reserved account area and restores guest progress on sign-out', async ({ page }) => {
+  const key = 'soldier-study.progress.v1';
+  const { lessons } = JSON.parse(readFileSync(new URL('../../public/study/soldier/data.json', import.meta.url), 'utf8'));
+  const [first, second, third] = lessons;
+  const guest = { ratings: {}, completed: { [first.id]: true } };
+  const ewGuest = { ratings: {}, completed: { 'ew-fundamentals': true } };
+  await seed(page, { [key]: guest, [ewKey]: ewGuest });
+  const server = await mockProgressService(page);
+  server.put('soldier', { revision: 2, payload: { ratings: {}, completed: { [second.id]: true } }, reset: false });
+  await page.goto('/study/soldier/');
+  await expect(page.locator('#study-account')).toContainText('learner-a@example.invalid');
+  await expect(page.locator('#lesson-progress')).toHaveText(`1 of ${lessons.length} lessons complete`);
+  expect(server.writes).toHaveLength(0);
+  page.once('dialog', dialog => dialog.accept());
+  await page.getByRole('button', { name: 'Import this browser’s progress', exact: true }).click();
+  await expect(page.locator('.study-account-status')).toHaveText('Saved to your account.');
+  await page.getByLabel('Choose a course').selectOption(third.courseId);
+  await page.getByLabel('Choose a lesson').selectOption(third.id);
+  await page.getByRole('button', { name: 'Mark lesson complete', exact: true }).click();
+  await expect(page.locator('#lesson-progress')).toHaveText(`3 of ${lessons.length} lessons complete`);
+  await expect.poll(() => server.get('soldier')?.payload).toEqual({
+    ratings: {}, completed: { [first.id]: true, [second.id]: true, [third.id]: true },
+  });
+  expect(server.writes.every(write => write.area === 'soldier')).toBeTruthy();
+  await page.getByRole('button', { name: 'Sign out', exact: true }).click();
+  await expect(page.locator('#progress-location')).toContainText('saved in this browser');
+  await expect(page.locator('#lesson-progress')).toHaveText(`1 of ${lessons.length} lessons complete`);
+  expect(await page.evaluate(key => JSON.parse(localStorage.getItem(key)!), key)).toEqual(guest);
+  expect(await page.evaluate(key => JSON.parse(localStorage.getItem(key)!), ewKey)).toEqual(ewGuest);
+});

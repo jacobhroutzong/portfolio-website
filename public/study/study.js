@@ -316,7 +316,8 @@ function initAcronyms(data, sources, progress) {
   });
 }
 
-function initEW(data, sources, progress) {
+function initCourseStudy(data, sources, progress) {
+  const objectiveCoverage = page === "soldier";
   const courseSelect = byId("course-select");
   const lessonSelect = byId("lesson-select");
   const lessonTitle = byId("lesson-title");
@@ -333,8 +334,8 @@ function initEW(data, sources, progress) {
     context: [courseMap.get(item.courseId).title, item.title].join(" · "),
     prompt: question.prompt,
     answer: question.answer,
-    sourceIds: item.sourceIds,
-    sourceLocator: item.sourceLocator,
+    sourceIds: question.sourceIds ?? item.sourceIds,
+    sourceLocator: question.sourceLocator ?? item.sourceLocator,
   }))]));
   const allCards = [...lessonCards.values()].flat();
   function lessonFromAddress() {
@@ -468,15 +469,20 @@ function initEW(data, sources, progress) {
     addText(card, "p", item.code || "Foundations", "eyebrow");
     const title = element("h3");
     title.append(lessonLink(courseLessons.get(item.id)[0], item.title));
-    card.append(title, editionBadge(item));
+    card.append(title);
+    if (!objectiveCoverage) card.append(editionBadge(item));
     addText(card, "p", item.description);
     addText(card, "p", item.verifiedEdition || item.edition, "meta");
     const status = element("p", null, "meta course-card-progress");
-    card.append(status, lessonLink(courseLessons.get(item.id)[0], item.kind === "orientation" ? "Start foundations" : `Open ${item.code}`));
+    card.append(status);
+    if (!objectiveCoverage) {
+      card.append(lessonLink(courseLessons.get(item.id)[0], item.kind === "orientation" ? "Start foundations" : `Open ${item.code}`));
+    }
     courseCards.set(item.id, { element: card, progress: status });
     catalog.append(card);
   }
-  byId("curriculum-stats").textContent = `${manuals.length} publication courses + foundations · ${data.lessons.length} lessons · ${allCards.length} recall questions`;
+  const courseCount = objectiveCoverage ? `${data.courses.length} courses` : `${manuals.length} publication courses + foundations`;
+  byId("curriculum-stats").textContent = `${courseCount} · ${data.lessons.length} lessons · ${allCards.length} recall questions`;
 
   const renderPractice = initPractice(
     () => scope.value === "all" ? allCards : scope.value === "course"
@@ -555,7 +561,12 @@ function initEW(data, sources, progress) {
   const coverageLabels = {
     lesson: ["Lesson + source reading", ""],
     "guided-reading": ["Guided source reading", "reading"],
-    unverified: ["Awaiting verification", "pending"],
+    unverified: [objectiveCoverage ? "Blocked pending verification" : "Awaiting verification", "pending"],
+    taught: ["Taught", ""],
+    partial: ["Partially taught", "reading"],
+    "assigned-reading": ["Assigned reading", "reading"],
+    practical: ["Practical training", "reading"],
+    excluded: ["Excluded", "pending"],
   };
   for (const item of manuals) coverageSelect.add(new Option(item.title, item.id));
   function renderCoverage() {
@@ -565,7 +576,15 @@ function initEW(data, sources, progress) {
     const taught = units.filter(unit => unit.status === "lesson").length;
     const guided = units.filter(unit => unit.status === "guided-reading").length;
     const unverified = units.filter(unit => unit.status === "unverified").length;
-    byId("coverage-summary").textContent = `${units.length} chapters and appendices mapped · ${taught} with lessons · ${guided} guided reading · ${unverified} awaiting verification`;
+    if (objectiveCoverage) {
+      const counts = Object.entries(coverageLabels).flatMap(([status, [label]]) => {
+        const count = units.filter(unit => unit.status === status).length;
+        return count ? [`${count} ${label.toLowerCase()}`] : [];
+      });
+      byId("coverage-summary").textContent = [`${units.length} objectives mapped`, ...counts].join(" · ");
+    } else {
+      byId("coverage-summary").textContent = `${units.length} chapters and appendices mapped · ${taught} with lessons · ${guided} guided reading · ${unverified} awaiting verification`;
+    }
     const container = byId("coverage-units");
     container.replaceChildren();
     for (const unit of units) {
@@ -576,6 +595,7 @@ function initEW(data, sources, progress) {
       summary.append(element("span", label, `badge ${style}`.trim()));
       const body = element("div", null, "reference-detail");
       addText(body, "p", unit.locator, "meta");
+      if (list(unit.taskIds).length) addText(body, "p", "Task IDs: " + unit.taskIds.join(", "), "meta");
       if (list(unit.topics).length) {
         addText(body, "h4", "Topics to account for");
         const topics = element("ul");
@@ -597,7 +617,9 @@ function initEW(data, sources, progress) {
         body.append(lessons);
       }
       const source = sources.get(selected.sourceId);
-      if (source) {
+      if (objectiveCoverage) {
+        addSources(body, unit.sourceIds, sources);
+      } else if (source) {
         body.append(link("Open the source reading", source.url));
         addSourceAlternatives(body, source);
       }
@@ -645,7 +667,12 @@ async function loadStudy() {
   const status = byId("load-status");
   const retry = byId("retry");
   const acronyms = page === "acronyms";
-  const material = acronyms ? "the acronym reference" : "EW lessons and publications";
+  const areas = {
+    acronyms: { material: "the acronym reference", key: "army-acronyms.progress.v1", resetName: "acronym study" },
+    ew: { material: "EW lessons and publications", key: "ew-study.progress.v1", resetName: "EW study" },
+    soldier: { material: "Soldier Study lessons and publications", key: "soldier-study.progress.v1", resetName: "Soldier Study" },
+  };
+  const { material, key, resetName } = areas[page];
   const wasRetry = !retry.hidden;
   status.textContent = `Loading ${material}…`;
   retry.hidden = true;
@@ -661,8 +688,7 @@ async function loadStudy() {
         || data.lessons.some(lesson => !ids.has(lesson.courseId))) throw new Error("Course content is incomplete");
     }
     const sources = new Map(list(data.sources).map(source => [source.id, source]));
-    const key = acronyms ? "army-acronyms.progress.v1" : "ew-study.progress.v1";
-    const account = await optionalAccount(acronyms ? "acronyms" : "ew", key);
+    const account = await optionalAccount(page, key);
     let localChange = false;
     function mutateAccount(change) {
       localChange = true;
@@ -681,7 +707,7 @@ async function loadStudy() {
         try { account.reset(); } finally { localChange = false; }
       },
     } : createProgress(key);
-    const refresh = acronyms ? initAcronyms(data, sources, progress) : initEW(data, sources, progress);
+    const refresh = acronyms ? initAcronyms(data, sources, progress) : initCourseStudy(data, sources, progress);
     if (account) {
       let previous = JSON.stringify(account.get());
       account.subscribe(state => {
@@ -702,9 +728,8 @@ async function loadStudy() {
       });
     }
     byId("reset-progress").onclick = () => {
-      const name = acronyms ? "acronym" : "EW";
       const destination = account?.snapshot().userId ? "for this account across devices" : "in this browser";
-      if (!window.confirm(`Reset your ${name} study progress ${destination}?`)) return;
+      if (!window.confirm(`Reset your ${resetName} progress ${destination}?`)) return;
       progress.reset();
       refresh();
     };
