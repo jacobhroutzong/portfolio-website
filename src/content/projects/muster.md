@@ -7,7 +7,7 @@ draft: false
 status: Completed
 ---
 
-[Open Muster](https://muster.jacobroutzong.dev/) · No sign-in required.
+[Explore National Guard AGR jobs by state on Muster](https://muster.jacobroutzong.dev/) · No sign-in required.
 
 ## Finding relevant announcements
 

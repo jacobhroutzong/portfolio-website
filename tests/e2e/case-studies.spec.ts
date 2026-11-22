@@ -57,7 +57,7 @@ test('Muster has one startup card and a case study linking to the public app', a
     await expect(page).toHaveURL(path);
     await expect(page.getByRole('heading', { name: 'Muster', level: 1 })).toBeVisible();
   }
-  await expect(page.getByRole('link', { name: 'Open Muster', exact: true }))
+  await expect(page.getByRole('link', { name: 'Explore National Guard AGR jobs by state on Muster', exact: true }))
     .toHaveAttribute('href', 'https://muster.jacobroutzong.dev/');
   await expect(page.getByText('No sign-in required.', { exact: false })).toBeVisible();
   await expect(page.locator('iframe, #muster-data')).toHaveCount(0);
