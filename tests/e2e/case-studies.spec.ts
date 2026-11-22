@@ -171,13 +171,14 @@ test('Fieldsense links its research case study and recorded lab in both directio
     await expect(page).toHaveURL('/projects/fieldsense/');
     await expect(page.getByRole('heading', { name: 'Fieldsense', level: 1 })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Live demo' }))
-      .toHaveAttribute('href', '/projects/fieldsense/lab/');
+      .toHaveAttribute('href', 'https://fieldsense.jacobroutzong.dev/');
   }
-  await page.getByRole('link', { name: 'Open the animated Fieldsense lab' }).click();
-  await expect(page).toHaveURL('/projects/fieldsense/lab/');
+  await expect(page.getByRole('link', { name: 'Open the animated Fieldsense lab' })).toHaveAttribute('href', 'https://fieldsense.jacobroutzong.dev/');
+  // The custom hostname is provisioned in Cloudflare; local CI validates the existing lab route.
+  await page.goto('/projects/fieldsense/lab/');
   await expect(page.locator('#fieldsense-app')).toHaveAttribute('data-ready', 'true');
   await page.getByRole('combobox', { name: 'Scenario' }).selectOption('strict_limit');
   await expect(page.getByRole('heading', { name: 'No feasible allocation' })).toBeVisible();
   await page.getByRole('link', { name: 'Project overview' }).click();
-  await expect(page).toHaveURL('/projects/fieldsense/');
+  await expect(page).toHaveURL('https://jacobroutzong.dev/projects/fieldsense/');
 });

@@ -8,14 +8,14 @@ unlisted: true
 featured: false
 status: Completed
 order: 20
-demoUrl: /projects/fieldsense/lab/
+demoUrl: https://fieldsense.jacobroutzong.dev/
 screenshots: []
 videos: []
 ---
 
 ## Explore Fieldsense
 
-[**Open the animated Fieldsense lab**](/projects/fieldsense/lab/) to replay a seven-day synthetic farm scenario, choose a field, inspect irrigation decisions, and compare the Markov decision process (MDP) with a rule-based controller. The visualization is a **recorded-output exhibit**; the browser does not run the Python models or control physical equipment.
+[**Open the animated Fieldsense lab**](https://fieldsense.jacobroutzong.dev/) to replay a seven-day synthetic farm scenario, choose a field, inspect irrigation decisions, and compare the Markov decision process (MDP) with a rule-based controller. The visualization is a **recorded-output exhibit**; the browser does not run the Python models or control physical equipment.
 
 This work began as a Georgia Tech ISYE 6501 sustainable-agriculture proposal completed in 2025. The original academic paper described an envisioned system; the November 2026 implementation turns its three-model idea into a reproducible **local Python decision-support demonstration**. These are different stages of the project, not evidence that the original proposal operated on an actual farm.
 
@@ -58,4 +58,4 @@ The original 2025 paper asserted approximately **$600/month** for a proposed AWS
 
 Limitations include synthetic training and weather, a simplified soil-water balance and crop-demand model, a seven-day horizon, only three modeled fields, and no real-world agronomic or economic validation. Fieldsense is a completed educational MVP with an open research direction—not an operational irrigation product.
 
-**[Explore the animated field replay →](/projects/fieldsense/lab/)**
+**[Explore the animated field replay →](https://fieldsense.jacobroutzong.dev/)**
