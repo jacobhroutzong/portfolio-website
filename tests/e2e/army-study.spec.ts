@@ -175,12 +175,15 @@ test('Soldier Study shares navigation, recall and coverage while keeping guest p
   await page.goto('/study/');
   await page.getByRole('heading', { name: 'Soldier Study' }).getByRole('link').click();
   await expect(page.getByRole('heading', { name: 'Soldier Study', exact: true })).toBeVisible();
-  await expect(page.locator('#curriculum-stats')).toHaveText('4 courses · 16 lessons · 32 recall questions');
+  await expect(page.locator('#curriculum-stats')).toHaveText('4 courses · 16 lessons · 39 recall questions');
   await expect(page.getByRole('button', { name: 'Previous lesson' })).toBeDisabled();
   await page.getByRole('button', { name: 'Next lesson' }).click();
   await expect(page.locator('#lesson-title')).toHaveText('Read a task standard');
   await page.getByLabel('Choose a course').selectOption('casualty-response');
   await expect(page.locator('#lesson-title')).toHaveText('First-responder roles and TCCC phases');
+  await page.getByLabel('Choose a lesson').selectOption('casualty-card-and-mist');
+  await expect(page.locator('#lesson-content')).toContainText('L for local or Z for Zulu');
+  await expect(page.locator('#lesson-content')).toContainText('21 July 2025');
 
   await page.getByLabel('Find a topic across all courses').fill('potable palatable');
   await page.getByRole('link', { name: 'Potable water from source to cup', exact: true }).first().click();

@@ -125,7 +125,8 @@ test('Soldier Study maps every lesson objective and preserves source provenance'
   const units = data.courses.flatMap(course => course.units);
   assert.equal(new Set(units.map(unit => unit.id)).size, units.length);
   const dispositions = new Set(['taught', 'partial', 'assigned-reading', 'practical', 'excluded', 'unverified']);
-  assert.deepEqual(new Set(units.map(unit => unit.status)), dispositions);
+  assert.equal(units.length, 33);
+  assert.ok(units.every(unit => dispositions.has(unit.status)));
 
   for (const course of courses.values()) {
     for (const unit of course.units) {
@@ -158,5 +159,16 @@ test('Soldier Study maps every lesson objective and preserves source provenance'
     assert.match(data.publications.find(entry => entry.id === sourceId).access, /requires Army authentication/);
     assert.ok(units.some(unit => unit.status === 'unverified' && unit.sourceIds.includes(sourceId)));
   }
+  const byId = new Map(units.map(unit => [unit.id, unit]));
+  for (const id of ['organization-reading', 'pest-prevention-reading', 'card-assigned-reading']) {
+    assert.equal(byId.get(id).status, 'taught');
+    assert.equal(byId.get(id).readingObjective, undefined);
+  }
+  assert.equal(byId.get('map-marginal-information-task').status, 'partial');
+  assert.ok(byId.get('map-marginal-information-task').sourceIds.includes('car-map-margin'));
+  assert.equal(byId.get('asm-recognition-limit').status, 'partial');
+  assert.match(byId.get('current-asm-package').note, /Deployed Medicine login/);
+  assert.match(data.sources.find(source => source.id === 'car-map-margin').linkNote, /inconclusive/);
   assert.match(lessons.get('casualty-card-and-mist').questions[0].answer, /mechanism.*injuries.*signs and symptoms.*treatments/);
+  assert.match(lessons.get('casualty-card-and-mist').questions.find(question => question.id === 'separate-times').answer, /time standard.*completed card/);
 });

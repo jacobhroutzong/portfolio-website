@@ -7,7 +7,7 @@ The study hub at `/study/` groups PhaseUp and Army Acronyms under phase preparat
 - `/study/17e/`: the existing PhaseUp study station. Its 117 Phase VI card objects are unchanged. Three general AGSU definition/preparation cards were removed (`extra42`, `extra43`, `phasevi-focus-08`), and the AGSU inspection-requirement policy card is categorized under PL15. All 16 AGSU placement/measurement questions remain. The bank now contains 508 cards.
 - `/study/17e/acronyms/`: 36 sourced terms, searchable reference, recall practice and review ratings. The prior `/study/acronyms/` path redirects here. The acronym page belongs to PhaseUp, while retaining its own study progress.
 - `/study/ew/`: nine courses, 92 original lessons and 276 answered recall/application questions. Five introductory lessons lead into eight publication courses.
-- `/study/soldier/`: four general Soldier courses, 16 lessons, and 32 answered scenario questions.
+- `/study/soldier/`: four general Soldier courses, 16 lessons, and 39 answered scenario questions.
 
 The additions use static HTML, CSS, JavaScript and JSON in the existing Astro/Cloudflare Pages deployment. They add no service, account, dependency or database. Study pages retain noindex metadata; portfolio navigation is unchanged.
 
@@ -91,7 +91,7 @@ Public files are individually listed in the existing publication manifests. The 
 
 Study pages offer a **Report a correction** action using the existing portfolio contact form and configured inbox. The report supplies study-page context and prompts for the current information, suggested correction, unit or school, effective date and supporting reference. Reports are submissions for owner review; they do not automatically alter the curriculum. Existing consent, validation, activation-pending and delivery-failure behavior remain in use. A provider-accepted submission is distinct from confirmed inbox delivery.
 
-## Planned next milestone — not implemented
+## Curriculum and account milestones
 
 ### Soldier Study
 
@@ -104,7 +104,7 @@ The curriculum at `public/study/soldier/data.json` reuses the study course reade
 | Field Health and Sanitation | Report failures in preventive controls, distinguish potable from palatable water, identify food and waste contamination pathways, and recognize changes in heat and cold exposure. |
 | Casualty Response Foundations | Distinguish training tiers and phases of care, report urgent observations, document a handoff using MIST and DD Form 1380, and understand continuity of care during transfer. |
 
-The 33 mapped objectives include 16 taught, two partially taught, three assigned reading, six practical training, three excluded with reasons, and three blocked pending verification. The public Army CAR report dated 10 December 2024 supports task `071-COM-1012` and references `071-COM-1000`. These IDs are attributed to the CAR report. Practical entries require observed performance in authorized training.
+The 33 mapped objectives include 19 taught, two partially taught, six practical training, three excluded with reasons, and three blocked pending verification. The three former assigned-reading objectives now have on-site lessons and practice questions. The public Army CAR report dated 10 December 2024 supports task `071-COM-1012` and references `071-COM-1000`. These IDs are attributed to the CAR report. Practical entries require observed performance in authorized training.
 
 **Source and edition review, 22 November 2026**
 
@@ -113,6 +113,37 @@ The 33 mapped objectives include 16 taught, two partially taught, three assigned
 - [ATP 4-02.11](https://www.army.mil/article-amp/291504), 23 March 2026. Confirmed the MEDCoE release, supersession of TC 4-02.1 and the official PDF's relevant locators. The [Field Manual Vault](https://www.trex-arms.com/field-manual-vault) helped locate candidate copies. Its casualty-response PDF is labeled as a third-party reading copy.
 - [JTS TCCC Guidelines](https://jts.health.mil/index.cfm/CPGs/cpgs), listed 1 May 2026. Checked the linked text for care phases, communication and documentation, plus the JTS Tier 1 designation and DD Form 1380 instructions. The current Deployed Medicine instructor package and complete evaluation sheets remain unverified.
 - [STP 21-1-SMCT](https://armypubs.army.mil/ProductMaps/PubForm/Details.aspx?PUB_ID=1032188), 20 November 2025, and [TC 3-25.26](https://armypubs.army.mil/ProductMaps/PubForm/Details.aspx?PUB_ID=103749), 15 November 2013. Checked both APD records. The official text links require Army authentication, so current text and full task and chapter mappings remain blocked. The lessons cite independent public Army material for the concepts they teach.
+
+
+#### Objective depth and link review, 22 November 2026
+
+- **Foundations:** Added a worked evaluation record, a map-margin and symbol interpretation exercise, and a worked scale conversion. Public CAR report `071-COM-1000` is dated 30 November 2022. It identifies the map exercise’s full standard, including marginal items beyond the on-site lesson. The `071-COM-1012` task report is dated 10 December 2024. Both are cited independently of the 2025 STP.
+- **Small units:** Taught how headquarters, the rifle squad and its teams share execution, support and reporting responsibilities. Added a training equipment allocation scenario and an AAR example that distinguishes two causes of the same problem.
+- **Field health:** Taught how to match basic pest controls to the exposure pathway and distinguish Soldiers’ precautions from unit controls and specialist work. The pesticide exclusion is retained.
+- **Casualty response:** Added a timed recognition and escalation scenario, clarified the distinction between tier and phase, and taught the front and back of DD Form 1380, injury time notation, and how the completed card accompanies the casualty. The official instructions are labeled July 2025, updated 21 July 2025. Full Tier 1 assessment, intervention and movement require the applicable authorized training and supervised evaluation.
+
+All 15 original source records and their catalog or alternate links were checked. The new CAR source was checked as well. Of the **21 distinct registry URLs**, 18 returned the intended resource, and three Army RDL URLs had verified indexed text with inconclusive live access after timeouts. No registry URL was confirmed broken or a wrong document. Three upstream routes checked separately from the registry required authentication.
+
+| Source record | Primary URL | Catalog or alternate |
+| --- | --- | --- |
+| ATP 3-21.8 | Working. Army-hosted PDF, Change 1 dated 23 June 2025 | Working. APD record |
+| ATP 4-25.12 | Working. APD PDF, Change 2 dated 8 August 2025 | Working. APD record |
+| ATP 4-02.11 | Working. APD PDF dated 23 March 2026 | Working. Vault PDF with the same cover date and page count. The files differ, and the Vault copy is third-party |
+| STP 21-1-SMCT | Working. APD record dated 20 November 2025 | APD PDF leads to Army EAMS-A sign-in |
+| TC 3-25.26 | Working. APD record dated 15 November 2013 | APD PDF leads to Army EAMS-A sign-in |
+| JTS TCCC Guidelines | Working. JTS index lists 1 May 2026 | Working. Guideline text at the destination linked by JTS |
+| JTS role-based TCCC education | Working. JTS tier listing | Working. JTS curriculum page. Its instructor destination requires Deployed Medicine sign-in |
+| DD Form 1380 instructions | Working. Three-page JTS PDF, July 2025 update | |
+| CAR 071-COM-1012 | Inconclusive. Live requests timed out. Indexed Army task text checked | |
+| Army Values | Working. Official Army page | |
+| ADP 7-0 | Inconclusive. Live requests timed out. Indexed Army text dated 29 April 2024 checked | |
+| TC 7-0 series overview | Working. Army Training Management Directorate article | |
+| Army range-control training map | Working. Official Army PDF with Land Navigation Basic Course map | |
+| Army land-navigation article | Working. Official Army article on the Basic Leader Course | |
+| MEDCoE release | Working. Official Army announcement and APD download reference | |
+| CAR 071-COM-1000 | Inconclusive. Live requests timed out. Indexed Army task text dated 30 November 2022 checked | |
+
+The [Vault’s August 2003 STP](https://www.trex-arms.com/field-manual-vault/stp-21-1-smct-2003-08) and [July 2001 FM 3-25.26](https://www.trex-arms.com/field-manual-vault/fm-3-25-26-2001-07) are wrong-edition or wrong-designation candidates for these objectives. Neither was adopted. The signed-out [Deployed Medicine instructor route](https://www.deployedmedicine.com/instructors) presented the Allogy login, so the current Tier 1 package version and evaluation sheets remain unverified.
 
 ### Optional accounts and saved progress
 

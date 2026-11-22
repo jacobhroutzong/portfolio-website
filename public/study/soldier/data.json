@@ -37,8 +37,9 @@
           "id": "read-the-map-margin-objective",
           "title": "Interpret a map’s scale and contour interval and explain why the legend and edition matter.",
           "status": "taught",
-          "locator": "CAR report 071-COM-1012, supporting task 071-COM-1000 (marginal information and symbols), and Army range-control training map, scale and contour notation.",
+          "locator": "CAR task 071-COM-1000, 30 November 2022, pp. 2–4, colors, symbols, and marginal information. Range-control training map, scale and contour note.",
           "sourceIds": [
+            "car-map-margin",
             "car-terrain",
             "army-map"
           ],
@@ -71,11 +72,12 @@
           "id": "map-marginal-information-task",
           "title": "Identify marginal information on a map",
           "status": "partial",
-          "locator": "CAR 071-COM-1012, Supporting Individual Tasks, 071-COM-1000.",
+          "locator": "CAR task 071-COM-1000, 30 November 2022, Conditions, Standards, Performance Steps and Evaluation Guidance, pp. 2–4.",
           "sourceIds": [
-            "car-terrain"
+            "car-map-margin",
+            "army-map"
           ],
-          "note": "The lesson explains selected marginal information. The full task and performance measures require the controlling task record and an actual map.",
+          "note": "The lesson teaches sheet identity, symbols, horizontal and vertical references, production notes and scale. The full CAR task includes identifying the required items on a supplied map under the stated field conditions. The linked report’s annotated example supports preparation for that evaluation.",
           "taskIds": [
             "071-COM-1000"
           ],
@@ -107,7 +109,7 @@
           "sourceIds": [
             "stp-common"
           ],
-          "note": "The current reading link requires Army authentication. The public CAR task reports are dated independently and do not establish the current STP roster."
+          "note": "The 20 November 2025 APD catalog record works. Its PDF opens Army EAMS-A sign-in. The vault copy found was dated August 2003 and cannot establish the current roster. The Army CAR task reports are independently dated."
         },
         {
           "id": "tc-navigation-sections",
@@ -117,7 +119,7 @@
           "sourceIds": [
             "tc-landnav"
           ],
-          "note": "The official PDF requires Army authentication. The public Army task report supports the linked concepts, but chapter and subsection alignment with the TC is unresolved.",
+          "note": "The 15 November 2013 APD catalog record works. Its PDF opens Army EAMS-A sign-in. The vault’s FM 3-25.26 from July 2001 is a different publication. The linked concepts use public Army task reports and an Army training map.",
           "lessonIds": [
             "read-the-map-margin",
             "terrain-association"
@@ -187,14 +189,13 @@
         },
         {
           "id": "organization-reading",
-          "title": "Compare the headquarters and rifle squad responsibilities",
-          "status": "assigned-reading",
-          "locator": "ATP 3-21.8, chapter 1, section II, pp. 1-7–1-12.",
+          "title": "Compare headquarters and rifle squad responsibilities.",
+          "status": "taught",
+          "locator": "ATP 3-21.8, chapter 1, section II, headquarters and rifle squad duties, pp. 1-8–1-12.",
           "sourceIds": [
             "atp-infantry"
           ],
-          "note": "The lesson profiles four roles; the assigned passage places them in the full organization.",
-          "readingObjective": "Identify one responsibility for each echelon and distinguish duties assigned to a position from duties delegated locally.",
+          "note": "The linked lesson compares platoon-level decisions, support and communications with squad and team execution and reporting. The cited section gives the larger infantry organization example.",
           "lessonIds": [
             "platoon-and-squad-roles"
           ]
@@ -235,7 +236,7 @@
           "id": "field-sanitation-responsibilities-objective",
           "title": "Explain who observes, reports, advises, and owns corrective action when a field health control fails.",
           "status": "taught",
-          "locator": "ATP 4-25.12, chapters 1–2, Unit Field Sanitation Teams and Soldier Responsibilities.",
+          "locator": "ATP 4-25.12, chapters 1–2, Unit Field Sanitation Teams and Soldier Responsibilities, and chapter 6, Pest Management, sanitation and physical control.",
           "sourceIds": [
             "atp-sanitation"
           ],
@@ -298,14 +299,16 @@
         },
         {
           "id": "pest-prevention-reading",
-          "title": "Read the unit’s pest-prevention responsibilities",
-          "status": "assigned-reading",
-          "locator": "ATP 4-25.12, chapter 6, Pest Management.",
+          "title": "Match basic pest-prevention measures to an exposure pathway and the person responsible.",
+          "status": "taught",
+          "locator": "ATP 4-25.12, chapter 2, Soldier Responsibilities, and chapter 6, sanitation and physical control and paragraph 6-64.",
           "sourceIds": [
             "atp-sanitation"
           ],
-          "note": "Use the chapter to identify personal prevention duties and specialist responsibilities.",
-          "readingObjective": "Identify an exposure pathway, a Soldier-level prevention responsibility, and a condition that should be reported to the responsible team."
+          "note": "The lesson compares food-area sanitation, personal protection, monitoring and specialist escalation. Pesticide selection and application remain excluded.",
+          "lessonIds": [
+            "field-sanitation-responsibilities"
+          ]
         },
         {
           "id": "sanitation-specialist-work",
@@ -371,7 +374,7 @@
           "id": "casualty-card-and-mist-objective",
           "title": "Distinguish the four MIST categories and explain how a written record complements a verbal handoff.",
           "status": "taught",
-          "locator": "JTS DD Form 1380 instructions, background, purpose, and policy, p. 1. Current TCCC Guidelines, communications and documentation of care.",
+          "locator": "DD Form 1380 instructions, July 2025 update dated 21 July 2025, pp. 1–3 and Tables 1–2. JTS TCCC Guidelines, communications and documentation of care.",
           "sourceIds": [
             "dd1380",
             "jts-guidelines"
@@ -399,12 +402,12 @@
           "id": "asm-recognition-limit",
           "title": "Recognize problems addressed by Tier 1 casualty skills",
           "status": "partial",
-          "locator": "ATP 4-02.11, chapters 4–5, overviews and Tier 1 skills. JTS role-based education.",
+          "locator": "ATP 4-02.11, chapters 4–5, overviews and Tier 1 skills. JTS TCCC Guidelines, Tactical Field Care communications. JTS role-based education.",
           "sourceIds": [
             "atp-casualty",
             "jts-education"
           ],
-          "note": "Recognition and reporting are taught here. Applying the skill standard or choosing an intervention belongs to approved practical training.",
+          "note": "The linked lesson teaches recognition, timing, uncertainty and escalation for selected severe bleeding, breathing and responsiveness problems. Full Tier 1 assessment and selection or demonstration of an intervention require the authorized role-based materials, equipment and supervised evaluation.",
           "lessonIds": [
             "recognize-and-report-urgent-changes"
           ]
@@ -435,14 +438,13 @@
         },
         {
           "id": "card-assigned-reading",
-          "title": "Review what travels with the casualty",
-          "status": "assigned-reading",
-          "locator": "DD Form 1380 instructions, pages 1–3.",
+          "title": "Identify which events and times the casualty card records and what must accompany the casualty.",
+          "status": "taught",
+          "locator": "DD Form 1380 instructions, July 2025 update, pp. 1–3 and Tables 1–2.",
           "sourceIds": [
             "dd1380"
           ],
-          "note": "Use a blank training copy and invented data.",
-          "readingObjective": "Find where the card records the timing of care and what the receiving team needs to retain.",
+          "note": "The lesson teaches card fields, time context and transfer of the written record with a verbal update. Use a blank card and invented data in supervised practice.",
           "lessonIds": [
             "casualty-card-and-mist"
           ]
@@ -466,7 +468,7 @@
           "sourceIds": [
             "jts-education"
           ],
-          "note": "The official education pathway and Tier 1 designation were verified. The current instructor resource version and complete skills-evaluation sheets were not verified."
+          "note": "The JTS curriculum index works and the Tier 1 designation was verified. A signed-out browser followed the official instructor route to Deployed Medicine login. The downloadable evaluation package, version and skill sheets could not be inspected."
         }
       ]
     }
@@ -547,6 +549,10 @@
           "text": "A learner who can explain a task may still miss a required performance measure during an attempt. Record the missing measure and the context. If a station's setup gives the learner equipment unavailable under the stated conditions, describe that difference as well. Those observations are more useful for retraining than a global judgment about ability."
         },
         {
+          "heading": "Worked evaluation record",
+          "text": "On the map-to-ground task, the assigned sheet and visible terrain belong to the conditions. Correctly orienting the map relative to that terrain is the outcome. The evaluator records whether the learner met each required measure. If the lane did not provide the required view, record that condition gap and repeat under a valid setup. Keep it separate from feedback on an action the learner actually missed."
+        },
+        {
           "heading": "Practice and evaluation",
           "text": "Use the current task record and training and evaluation outline when one applies. Practice can isolate one weak step, then the unit can reassess the whole task under the required conditions. Record study activity and evaluated performance separately so leaders can tell which evidence they have."
         }
@@ -579,22 +585,39 @@
         "contour interval"
       ],
       "sourceIds": [
+        "car-map-margin",
         "car-terrain",
         "army-map"
       ],
-      "sourceLocator": "CAR report 071-COM-1012, supporting task 071-COM-1000 (marginal information and symbols), and Army range-control training map, scale and contour notation.",
+      "sourceLocator": "CAR task 071-COM-1000, 30 November 2022, pp. 2–4, colors, symbols, and marginal information. Range-control training map, scale and contour note.",
       "sections": [
         {
           "heading": "Identify the sheet",
           "text": "The margin identifies the map and explains how to interpret it. Check the sheet and edition before comparing two maps of the same place. The legend explains the symbols the mapmaker used. Even familiar colors can have a specific meaning on a particular product, so inspect the legend before using a symbol as evidence."
         },
         {
+          "heading": "Find the part of the margin that answers the question",
+          "text": "Use the sheet name, number, series and edition to identify the product, and the adjoining-sheets diagram to find the next sheet. The grid notes explain how positions are labeled. Projection and horizontal datum describe how ground positions are represented. The vertical datum concerns elevation, and the contour note gives the interval. The declination diagram identifies north references. Matching contour intervals on two sheets does not mean that their horizontal references match."
+        },
+        {
+          "heading": "Check the provenance and overview notes",
+          "text": "Map margins can also summarize the area and how the sheet was made. The elevation guide gives a broad overview of relief. The boundary index locates administrative areas, and the adjoining-sheets diagram shows map coverage instead. The control, preparation, and printing notes help explain the source and production history. A spheroid is the reference shape used in representing the earth’s surface. Check the sheet’s coordinate and production notes when combining products or when an old sheet disagrees with current ground observations."
+        },
+        {
           "heading": "Read horizontal and vertical information separately",
           "text": "A scale of 1:50,000 means that one unit on the original map represents 50,000 of the same units on the ground. A contour interval is the elevation difference between adjacent regular contour lines. Closely spaced lines indicate a steeper slope than widely spaced lines when the scale and contour interval are the same."
         },
         {
+          "heading": "Combine the legend, shape, and color",
+          "text": "The CAR report groups common conventions such as black for many built features and labels, blue for water, and green for selected vegetation. Older and red-light-readable products can use brown, red, or red-brown differently. Treat color as a clue. Confirm the symbol’s shape and the sheet’s legend before calling a blue area a pond, marsh, or another water-related feature."
+        },
+        {
           "heading": "Know when the display changed",
           "text": "Print scaling or zooming a screenshot can change the size of the map on paper or screen. Check a scale bar that was resized with the image, or use an original-size map for ruler measurements from its printed ratio. When terrain and map disagree, keep the discrepancy visible instead of treating an approximate match as certainty."
+        },
+        {
+          "heading": "Worked scale check",
+          "text": "On an original-size 1:50,000 sheet, 3.2 centimeters represents 160,000 centimeters, or 1.6 kilometers of horizontal map distance. That is a straight-line measurement between the two marks. The contour note gives a separate vertical interval. On a resized copy, use the bar scale reproduced with that copy."
         }
       ],
       "questions": [
@@ -607,6 +630,16 @@
           "id": "contour-pair",
           "prompt": "On one map, two slopes cross the same number of regular contour intervals. One has lines much closer together. What changes?",
           "answer": "Both slopes span the same elevation change. The closer contours span less horizontal distance, so that slope is steeper."
+        },
+        {
+          "id": "adjoining-sheet",
+          "prompt": "A feature continues beyond the edge of a map. A second sheet has the same contour interval but a different edition. Which information helps you choose the neighboring sheet and use it alongside the first?",
+          "answer": "Use the adjoining-sheets diagram and sheet identifiers to select the neighbor. Check the edition, grid notes and horizontal reference before comparing positions. The shared contour interval describes elevation spacing on each sheet."
+        },
+        {
+          "id": "map-identity",
+          "prompt": "A blue symbol looks similar to one you remember as a pond. Its outline and hatching differ. What evidence should settle the interpretation?",
+          "answer": "Use the legend for the specific sheet. Blue suggests a water-related feature, while the symbol’s shape and hatching distinguish what kind of feature it is."
         }
       ]
     },
@@ -661,7 +694,8 @@
       "title": "Platoon, squad, and team responsibilities",
       "summary": "Understand the roles in the infantry example and how responsibilities fit together during ordinary training.",
       "objectives": [
-        "Distinguish the platoon leader, platoon sergeant, squad leader, and team leader in an infantry platoon example."
+        "Distinguish the platoon leader, platoon sergeant, squad leader, and team leader in an infantry platoon example.",
+        "Compare headquarters and rifle squad responsibilities."
       ],
       "terms": [
         "platoon leader",
@@ -683,6 +717,10 @@
           "text": "The squad leader is accountable for the squad and directs its teams. Team leaders supervise their Soldiers and communicate the team’s status through the squad leader. An issue that fits the team’s authority can be corrected at that level. A shortfall that affects multiple groups needs to reach the leader who can reallocate resources or change the plan."
         },
         {
+          "heading": "Headquarters responsibilities and squad responsibilities",
+          "text": "The platoon headquarters combines information from squads and coordinates platoon-wide decisions and support. In the infantry example the platoon leader owns the overall task, the platoon sergeant helps maintain readiness and coordinates support, and the radiotelephone operator supports headquarters communication. A rifle squad turns its assignment into work for its teams, checks progress, and reports conditions that may affect the larger platoon. A team reports an actual count or result through its squad. The headquarters can use reports from several squads to make a resource decision. The person carrying the report does not thereby own the decision."
+        },
+        {
           "heading": "Use the example with care",
           "text": "The publication describes an infantry rifle formation. Other formations and temporary teams can use different positions and reporting paths. Before a training event, confirm who assigned your task, who can change it, and who must know when the status changes."
         }
@@ -697,6 +735,11 @@
           "id": "role-overlap",
           "prompt": "Why should a platoon leader still know about a supply issue the platoon sergeant is handling?",
           "answer": "The platoon sergeant can coordinate sustainment, while the platoon leader needs its effect on readiness and owns decisions about the platoon’s activity."
+        },
+        {
+          "id": "headquarters-decision",
+          "prompt": "During a supervised training event, two squads report missing equipment, and one spare kit is available at headquarters. What information should the teams provide, and who owns the larger allocation decision?",
+          "answer": "The teams verify and report what is missing, who is affected and when the items are needed through their squad leaders. Headquarters combines the reports. The platoon leader owns the platoon-wide decision, the platoon sergeant coordinates support, and a communicator can relay the decision without making it."
         }
       ]
     },
@@ -821,6 +864,10 @@
           "text": "Keep what worked and name the evidence supporting it. Describe a shortfall precisely enough to change one behavior. 'Handoffs were bad' is difficult to act on. 'Two of three shifts received no status on open equipment checks' identifies a gap worth addressing."
         },
         {
+          "heading": "Test the explanation against the event",
+          "text": "If a group missed a start time, first compare the published schedule, the announcement each group received and the observations from the stations. An old board suggests a version problem. A current board that nobody could check suggests an access or handoff problem. Try a fix that addresses the observed cause and decide how the next group will check the result. Record an open question if the evidence is mixed."
+        },
+        {
           "heading": "Close the loop",
           "text": "Pick a change, an owner, and a chance to test it at the next event. Use the next evaluation to see whether the change worked. This keeps the AAR connected to the training cycle and gives the team a chance to sustain a real improvement."
         }
@@ -835,6 +882,11 @@
           "id": "observation",
           "prompt": "A leader remembers a clear briefing, but three participants report different start times. How should the AAR handle the difference?",
           "answer": "Compare the intended time, what each group received, and which version was available at the point of action. Use those observations to improve how the schedule is confirmed."
+        },
+        {
+          "id": "diagnose-before-fix",
+          "prompt": "Two stations started late. One followed an old printed schedule. The other had the current schedule but no one acknowledged it at shift change. What should the AAR record and how could the team test the fixes?",
+          "answer": "Record the different causes and the observations supporting them. Remove obsolete schedules for the version problem and add acknowledgement at the handoff for the second. At the next event, check both the version in use and whether the receiving lead acknowledged it."
         }
       ]
     },
@@ -844,7 +896,8 @@
       "title": "Who keeps a field site healthy?",
       "summary": "Distinguish the Soldier’s daily responsibilities from the unit field sanitation team’s role and command decisions.",
       "objectives": [
-        "Explain who observes, reports, advises, and owns corrective action when a field health control fails."
+        "Explain who observes, reports, advises, and owns corrective action when a field health control fails.",
+        "Match basic pest-prevention measures to an exposure pathway and the person responsible."
       ],
       "terms": [
         "field sanitation team",
@@ -854,7 +907,7 @@
       "sourceIds": [
         "atp-sanitation"
       ],
-      "sourceLocator": "ATP 4-25.12, chapters 1–2, Unit Field Sanitation Teams and Soldier Responsibilities.",
+      "sourceLocator": "ATP 4-25.12, chapters 1–2, Unit Field Sanitation Teams and Soldier Responsibilities, and chapter 6, Pest Management, sanitation and physical control.",
       "sections": [
         {
           "heading": "A shared system",
@@ -867,6 +920,14 @@
         {
           "heading": "Report so someone can act",
           "text": "Include the exact location, what changed, when you observed it, how it could affect others, and any immediate steps already taken under unit procedures. If you do not know what caused it, say so. Follow up to see whether the control was restored."
+        },
+        {
+          "heading": "Choose controls that match the exposure",
+          "text": "Uncovered refuse or food residue can give flies and rodents food or shelter near a serving area. Restore basic site controls through the designated process: use covered collection, clean affected areas, and report what remains. Arthropod exposure during outdoor work calls for the personal protective measures assigned for that activity. Cleaning a food area and using personal barriers address different pathways."
+        },
+        {
+          "heading": "Separate personal prevention from specialist work",
+          "text": "Soldiers use assigned precautions and report bites, visible pest activity, or failed controls through the normal unit process. Leaders keep shared sanitation controls working. The field sanitation team checks conditions and advises leaders when the problem requires preventive medicine or specialist support. A pest sighting alone does not justify selecting or applying a pesticide."
         }
       ],
       "questions": [
@@ -879,6 +940,11 @@
           "id": "report-content",
           "prompt": "What makes 'the camp is unsanitary' less useful than a report about a specific broken control?",
           "answer": "It does not say where the failure is, who is exposed, or what needs to change. Reporting the observed condition and its location gives leaders a corrective action they can assign and check."
+        },
+        {
+          "id": "pest-pathways",
+          "prompt": "One team reports flies around an uncovered serving-area waste bin. Another reports ticks after outdoor work. Which controls apply to each report?",
+          "answer": "Restore covered collection and food-area sanitation controls for the fly problem. Follow the assigned personal protective measures for tick exposure and report it as directed. Give the field sanitation team the locations and observed failures so it can advise on further support."
         }
       ]
     },
@@ -1049,6 +1115,10 @@
           "text": "Care under fire or threat, tactical field care, and tactical evacuation care describe different circumstances involving safety, personnel, and available resources. The phase names help responders understand a handoff. They do not turn an urgent and changing situation into a fixed series of timed steps."
         },
         {
+          "heading": "Apply tier and phase as separate checks",
+          "text": "A change in the setting can change what the next team can assess or support. It does not change an individual’s training tier. The JTS-listed May 2026 guidelines point to a separate en route care resource for detailed tactical evacuation guidance. Use phase names to follow the transition and role-based materials for the responsibilities you practice."
+        },
+        {
           "heading": "Use the correct training source",
           "text": "ATP 4-02.11 replaced the older Army first-aid circular. The Army publication and current JTS materials serve complementary purposes: one provides Army doctrine, and the other tracks current role-based TCCC guidance and education. Use your approved training program for practice and evaluation."
         }
@@ -1091,8 +1161,16 @@
           "text": "Severe ongoing bleeding, trouble breathing, or declining responsiveness are critical observations to communicate promptly through the designated response channel. Use plain language and a time reference where possible. A reported change such as 'was answering questions and now does not respond to voice' gives trained personnel better information than an unconfirmed diagnosis."
         },
         {
+          "heading": "A clear report gives a trend",
+          "text": "A visible wound and changes in breathing or responsiveness convey different information. Give urgent changes promptly and include the earlier observation if known. For example, “At 1410 they answered normally. At 1415 they were harder to understand and appeared to be breathing with more effort.” State which findings you saw and which were reported by another person. An earlier reassuring observation does not cancel a later change."
+        },
+        {
           "heading": "Separate what happened from what you inferred",
           "text": "State the known event, where the casualty is, what you saw, and what has changed. Say when the mechanism or a prior action is unknown. Clear uncertainty allows the person taking over to reassess. Passing along a guess as fact makes the next assessment harder."
+        },
+        {
+          "heading": "Report a serious change when its cause is unclear",
+          "text": "Ongoing severe visible bleeding is an urgent observation. Changes in breathing or responsiveness also warrant prompt reporting when little blood is visible or you do not know the cause. The next responder needs the observations and timing to assess the casualty. Stay within your assigned role and use supervised Tier 1 training to practice the applicable assessment and care skills."
         },
         {
           "heading": "Apply the boundary in a scenario",
@@ -1109,6 +1187,11 @@
           "id": "uncertain-injury",
           "prompt": "You did not witness the injury. Another person offers a guess about the cause. How should the cause be handed off?",
           "answer": "Say that you did not observe the mechanism. Clearly label any secondhand account and pass along the signs, symptoms, times, and actions you actually know."
+        },
+        {
+          "id": "changed-since-report",
+          "prompt": "During a supervised exercise, the first report mentioned a visible injury and normal speech. Five minutes later, the casualty is harder to understand and seems to be breathing with more effort. What should you send now?",
+          "answer": "Send an immediate update with location, the new breathing and responsiveness observations, and the time and earlier baseline if known. Request trained help through the designated channel and identify anything you did not observe. The earlier report does not represent the current condition."
         }
       ]
     },
@@ -1118,7 +1201,8 @@
       "title": "Document and hand off with MIST",
       "summary": "Use the DD Form 1380 structure to preserve time, observations, and care information.",
       "objectives": [
-        "Distinguish the four MIST categories and explain how a written record complements a verbal handoff."
+        "Distinguish the four MIST categories and explain how a written record complements a verbal handoff.",
+        "Identify which events and times the casualty card records and what must accompany the casualty."
       ],
       "terms": [
         "DD Form 1380",
@@ -1130,7 +1214,7 @@
         "dd1380",
         "jts-guidelines"
       ],
-      "sourceLocator": "JTS DD Form 1380 instructions, background, purpose, and policy, p. 1. Current TCCC Guidelines, communications and documentation of care.",
+      "sourceLocator": "DD Form 1380 instructions, July 2025 update dated 21 July 2025, pp. 1–3 and Tables 1–2. JTS TCCC Guidelines, communications and documentation of care.",
       "sections": [
         {
           "heading": "Put information where it helps the next responder",
@@ -1141,8 +1225,16 @@
           "text": "DD Form 1380 is the TCCC Casualty Card for point-of-injury documentation. It helps the next team understand care already provided when the original responder is unavailable. A verbal update can emphasize what has changed and answer questions. The written record preserves details across subsequent handoffs."
         },
         {
+          "heading": "Read both sides and keep time references clear",
+          "text": "The front identifies the injury event and injury sites and has fields for information such as the type and application time of a previously applied tourniquet. It distinguishes the time of injury from later observations and care. For injury time, the instructions specify 24-hour notation with L for local or Z for Zulu. The reverse records treatment details and additional information such as notes and who provided the care. Read the field label before assigning a time to an event."
+        },
+        {
           "heading": "Keep unknowns visible",
           "text": "Be precise about whether a time is observed, approximate, or unknown. Update the receiving team when the situation changes, and handle identifying information through approved channels. Use invented details in training exercises. These questions assess how information is grouped and communicated."
+        },
+        {
+          "heading": "Follow the record to the receiving team",
+          "text": "The instructions say the completed card travels visibly attached to the casualty. Use the verbal handoff to draw attention to changes and explain unknown entries. If a note says “1400” without a reference or event, clarify whether it means injury, observation, or care and whether it is local or Zulu. If nobody can confirm it, pass the uncertainty forward."
         }
       ],
       "questions": [
@@ -1155,6 +1247,11 @@
           "id": "handoff-time",
           "prompt": "A treatment is recorded on the card but its time is unknown. What should the next team hear?",
           "answer": "Report the documented treatment and explicitly say the time is unknown. If appropriate, tell the team who provided the information so it can be verified."
+        },
+        {
+          "id": "separate-times",
+          "prompt": "A practice casualty card records the fall at 1430Z. The outgoing responder says care was provided at 1500 but does not identify the time standard. Can you calculate the time from injury to care, and what should accompany the casualty?",
+          "answer": "A reliable elapsed time requires confirming the 1500 time standard. Keep 1430Z as the documented injury time, identify the uncertain time in the verbal handoff, and send the completed card with the casualty as the written continuity record."
         }
       ]
     },
@@ -1267,7 +1364,7 @@
       "id": "dd1380",
       "code": "DD Form 1380",
       "title": "Tactical Combat Casualty Care Card instructions",
-      "edition": "JTS-linked instructions checked 22 November 2026",
+      "edition": "July 2025 instructions, updated 21 July 2025",
       "url": "https://jts.health.mil/assets/docs/forms/DD_form_1380_TCCC_Card_Instructions.pdf"
     },
     {
@@ -1275,7 +1372,8 @@
       "code": "071-COM-1012",
       "title": "Orient a Map to the Ground by Map-Terrain Association",
       "edition": "10 December 2024 task report",
-      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC%2FF22923F6-9BB5-4F80-8562-4BCD79B796D9-1335960461238/report.pdf"
+      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC%2FF22923F6-9BB5-4F80-8562-4BCD79B796D9-1335960461238/report.pdf",
+      "linkNote": "Official indexed text was inspected. Direct availability checks timed out, so current live access is inconclusive."
     },
     {
       "id": "army-values",
@@ -1285,7 +1383,8 @@
     {
       "id": "adp-training",
       "title": "ADP 7-0, Training, April 2024",
-      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/22E3C7CD-EB3A-4B79-B8E3-6A90E3FD3493-1345749187718/ADP7_0.pdf"
+      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/22E3C7CD-EB3A-4B79-B8E3-6A90E3FD3493-1345749187718/ADP7_0.pdf",
+      "linkNote": "Official indexed text was inspected. Direct availability checks timed out, so current live access is inconclusive."
     },
     {
       "id": "training-series",
@@ -1306,6 +1405,13 @@
       "id": "medcoe-release",
       "title": "MEDCoE publication announcement for ATP 4-02.11",
       "url": "https://www.army.mil/article-amp/291504"
+    },
+    {
+      "id": "car-map-margin",
+      "title": "Identify the Marginal Information and Symbols on a Military Map (071-COM-1000)",
+      "edition": "30 November 2022 Army CAR task report",
+      "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC/2EDCB9CF-4F63-4DF8-BB47-FBC499B281E6-1335955960302/report.pdf",
+      "linkNote": "Official indexed text was inspected. Direct availability checks timed out, so current live access is inconclusive."
     }
   ],
   "publications": [
@@ -1338,7 +1444,7 @@
       "url": "https://armypubs.army.mil/epubs/DR_pubs/DR_a/ARN46159-ATP_4-02.11-000-WEB-1.pdf",
       "readingUrl": "https://files.trex-arms.com/pdf/army/atp/atp_4-02-11_2026-03.pdf",
       "readingNote": "Third-party reading copy from the Field Manual Vault",
-      "note": "The Army Medical Center of Excellence confirmed that this edition supersedes TC 4-02.1. The Army copy and vault copy were checked for the edition and chapter locators; the vault is a third-party host.",
+      "note": "MEDCoE confirmed that this edition supersedes TC 4-02.1. The official PDF and the third-party Vault copy both carry the 23 March 2026 date and have 254 pages. They are distinct files. The Army copy supplies the authoritative locators.",
       "sourceIds": [
         "medcoe-release"
       ]
@@ -1381,23 +1487,23 @@
       "url": "https://jts.health.mil/index.cfm/education/jtet_branch",
       "readingUrl": "https://jts.health.mil/index.cfm/committees/cotccc/curriculum",
       "readingNote": "JTS curriculum access",
-      "note": "JTS identifies Tier 1 as All Service Members. JTS directs instructors to Deployed Medicine. A current instructor package and all of its skill-level evaluation sheets were not verified."
+      "note": "JTS identifies Tier 1 as All Service Members. Its instructor route opens Deployed Medicine login in a signed-out browser. The current package and skill-level evaluation sheets remain unverified."
     },
     {
       "id": "dd1380",
       "code": "DD Form 1380",
       "title": "Tactical Combat Casualty Care Card instructions",
-      "edition": "JTS-linked instructions checked 22 November 2026",
+      "edition": "July 2025 instructions, updated 21 July 2025",
       "access": "Official JTS instructions inspected",
       "url": "https://jts.health.mil/assets/docs/forms/DD_form_1380_TCCC_Card_Instructions.pdf",
-      "note": "Purpose, point-of-injury documentation, MIST format, and continuity-of-care policy checked."
+      "note": "Checked both sides’ instructions, the distinction between injury time and later events, and the policy that the card accompanies the casualty."
     },
     {
       "id": "car-terrain",
       "code": "071-COM-1012",
       "title": "Orient a Map to the Ground by Map-Terrain Association",
       "edition": "10 December 2024 task report",
-      "access": "Public Army task report inspected",
+      "access": "Official indexed task text inspected · live URL inconclusive",
       "url": "https://rdl.train.army.mil/catalog-ws/view/100.ATSC%2FF22923F6-9BB5-4F80-8562-4BCD79B796D9-1335960461238/report.pdf",
       "note": "Approved task report includes its conditions, standard, and supporting map-margin task 071-COM-1000. It is cited independently of the 2025 STP."
     }
