@@ -539,3 +539,46 @@
   .fs-app .fs-parameter-guide dl { grid-template-columns: 1fr; }
   [data-project="fieldsense"] .prose table { display: block; overflow-x: auto; }
 }
+
+/* The replay opens on the farm. Keep the technical and paper notes beside their models. */
+.fs-app .fs-scene-intro {display:flex;align-items:end;justify-content:space-between;gap:2rem;padding:26px 0 22px}
+.fs-scene-intro h1 {font-size:clamp(38px,4.4vw,70px);margin:.15em 0 0}
+.fs-scene-intro > p {color:var(--fs-muted);font-size:16px;max-width:32ch;line-height:1.5}
+.fs-explore .fs-section-head {flex-direction:row;align-items:center;padding:12px 0!important;margin:0;gap:10px}
+.fs-explore .fs-section-head h2 {font-size:clamp(20px,2.2vw,29px)}
+.fs-app .fs-field-board {padding:14px 16px 18px}
+.fs-scene-top {display:flex;align-items:center;justify-content:space-between;gap:8px}
+.fs-scene-top .fs-policy-switch {margin:0}
+.fs-app .fs-map-wrap {margin:10px 0 0}
+#fs-viewport {position:relative;isolation:isolate;min-width:0;background:radial-gradient(ellipse at 46% 42%,#537368 0%,#2b4c43 52%,#142f2b 100%);overflow:hidden;border:1px solid #60796b}
+#fs-viewport[data-renderer="3d"] {height:clamp(350px,48vh,540px)}
+#fs-viewport[data-renderer="3d"] #fs-farm {display:none}
+.fs-scene-host {position:absolute;inset:0;pointer-events:none;visibility:hidden}
+[data-renderer="3d"] .fs-scene-host {pointer-events:auto;visibility:visible}
+.fs-scene-host canvas {width:100%;height:100%;display:block}
+.fs-field-tag {position:absolute;transform:translate(-50%,-100%);color:#eff5dc;background:#182f29e8;border:1px solid #89a795;padding:4px 8px;font:11px/1.4 ui-monospace,Consolas,monospace;white-space:nowrap;pointer-events:none}
+.fs-field-tag::after {content:"";position:absolute;left:50%;top:100%;height:9px;border-left:1px solid #b7ceaa}
+.fs-camera {display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin:9px 0}
+.fs-camera button {min-height:36px;padding:4px 11px;color:#e1ecdb;background:#193a2f;border:1px solid #708877;border-radius:2px;font:12px ui-monospace,Consolas,monospace;cursor:pointer}
+.fs-camera button[aria-pressed="true"] {background:#d8e5bd;color:#183829}
+.fs-camera button[data-camera="touch"] {display:none}
+@media(pointer:coarse){.fs-camera button[data-camera="touch"]{display:block}.fs-camera button{min-height:44px}}
+.fs-camera[hidden],.fs-soil-key[hidden],.fs-field-tag[hidden]{display:none}
+.fs-field-board .fs-soil-key {color:#e5efde;display:flex;flex-wrap:wrap;align-items:center;gap:.5em;margin:8px 0;font:12px/1.6 ui-monospace,Consolas,monospace}
+.fs-soil-key span {width:36px;height:9px;background:linear-gradient(90deg,#e1b586,#378c9d)}
+.fs-app .fs-board-caption {margin:.6rem 0 0}
+.fs-explore .fs-scenario-description {margin-top:12px}
+.fs-main > .fs-intro-quote {margin:1.25rem 0}
+@media(max-width:700px){
+  .fs-app .fs-scene-intro {display:block;padding:14px 0}
+  .fs-scene-intro h1 {font-size:clamp(33px,6vw,46px);line-height:1.06;margin:.16em 0}
+  .fs-scene-intro > p {max-width:48ch;font-size:14px}
+  .fs-app .fs-field-board {padding:10px}
+  .fs-explore .fs-scenario-label {width:auto;display:grid;gap:2px}
+  .fs-explore .fs-scenario-label select {margin:0;min-width:0}
+  #fs-viewport[data-renderer="3d"] {height:clamp(300px,39vh,370px)}
+  .fs-camera button {padding:4px 8px}
+  .fs-field-tag {font-size:10px;padding:3px 4px}
+}
+
+@media(max-width:700px){.fs-scene-top .fs-policy-switch button{white-space:nowrap;padding:7px;font-size:10px}.fs-scene-top .fs-day-chip{white-space:nowrap}.fs-explore .fs-section-head h2{line-height:1.05}}

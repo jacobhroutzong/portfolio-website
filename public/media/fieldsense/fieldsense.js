@@ -36,6 +36,34 @@
   const state = { scenario: 'balanced', policy: 'mdp', day: 1, field: 0, model: 'irrigate', playing: false, timer: null };
   const scenario = () => data.scenarios[state.scenario];
   const result = () => scenario().result;
+  // A late-loading view reads the same selected events as the inspector.
+  const listeners = new Set();
+  function snapshot() {
+    const r = result();
+    return { scenario: state.scenario, day: state.day, policy: state.policy, field: state.field, playing: state.playing, reduced: motion.matches, feasible: r.feasible,
+      fields: r.feasible ? r.allocations.map(f => ({
+        name: f.name, crop: f.crop, event: f.simulation[state.policy].events[state.day-1]
+      })) : [] };
+  }
+  function notifyView(reason) {
+    if (listeners.size) {
+      const next = snapshot();
+      for (const listener of listeners) listener(next, reason);
+    }
+  }
+  function selectField(index) {
+    if (!result().feasible || !Number.isInteger(index) || !result().allocations[index]) return;
+    state.field = index;
+    renderDay(true, 'focus');
+  }
+  root.fieldsenseReplay = {
+    subscribe(listener) {
+      listeners.add(listener);
+      listener(snapshot(), 'initial');
+      return () => listeners.delete(listener);
+    },
+    selectField
+  };
   const stageCopy = {
     predict: 'The Random Forest maps synthetic crop, soil and seasonal weather inputs to yield potential. Its predictions become the optimizer’s harvest objective.',
     allocate: 'The optimizer chooses one resource bundle per field within shared water, fertilizer, labor and equipment limits. Each water allocation becomes a hard irrigation cap.',
@@ -180,10 +208,14 @@
     $('fs-baseline').textContent = fmt(m.baseline_mae_t_ha,4)+' t/ha';
     $('fs-seeds').textContent = m.seed + ' / ' + s.input.seed;
     renderModelContext();
-    if (r.feasible) { drawFarm(); renderDay(); }
+    if (r.feasible) { drawFarm(); renderDay(true, 'scenario'); }
+    else {
+      root.querySelectorAll('.fs-zone').forEach(zone => zone.classList.remove('fs-watering','fs-raining'));
+      notifyView('scenario');
+    }
   }
 
-  function renderDay(announce = true) {
+  function renderDay(announce = true, reason = 'day') {
     const r = result(); if (!r.feasible) return;
     const f = r.allocations[state.field];
     const e = f.simulation[state.policy].events[state.day-1];
@@ -247,6 +279,7 @@
     const deficitText = Math.abs(deficit)<.001 ? 'the same unmet demand' : `${fmt(Math.abs(deficit),2)} m³ ${deficit>0?'more':'less'} unmet demand`;
     $('fs-tradeoff').textContent = `${waterText}, with ${deficitText}${state.day===7?' over the full week':' so far'}.`;
     renderChart();
+    notifyView(reason);
     if (announce) $('fs-announcement').textContent = `Day ${state.day}. ${f.name}, ${state.policy==='mdp'?'MDP policy':'threshold rule'}: ${e.irrigation_mm} millimetres irrigation, ${e.rain_mm} millimetres rain, ${e.ending_moisture_mm} millimetres ending soil-water storage.`;
   }
 
@@ -273,6 +306,7 @@
   function stop() {
     clearTimeout(state.timer); state.timer=null;state.playing=false;
     root.classList.remove('fs-is-playing');
+    notifyView('playback');
     $('fs-play').textContent=state.day===7?'Replay week':'Play week';
     $('fs-play').setAttribute('aria-label',state.day===7?'Replay the seven-day week':'Play the seven-day replay');
   }
@@ -287,7 +321,7 @@
     if (!result().feasible || motion.matches) return;
     if (state.playing) { stop();return; }
     if (state.day===7) {state.day=1;renderDay();}
-    state.playing=true;root.classList.add('fs-is-playing');
+    state.playing=true;root.classList.add('fs-is-playing');notifyView('playback');
     $('fs-play').textContent='Pause';$('fs-play').setAttribute('aria-label','Pause the replay');tick();
   }
   function updateMotion() {if(motion.matches)stop();$('fs-motion-note').hidden=!motion.matches;$('fs-play').disabled=motion.matches||!result().feasible;}
@@ -296,7 +330,7 @@
     if (!target || !root.contains(target)) return;
     if (target.dataset.model) {state.model=target.dataset.model;renderModelContext();return;}
     if (!result().feasible) return;
-    if (target.dataset.field!==undefined) state.field=Number(target.dataset.field);
+    if (target.dataset.field!==undefined) { selectField(Number(target.dataset.field));return; }
     if (target.dataset.policy) state.policy=target.dataset.policy;
     renderDay();
   });
@@ -313,8 +347,9 @@
   });
   document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});
   window.addEventListener('pagehide',stop);
-  motion.addEventListener('change',updateMotion);
+  motion.addEventListener('change',()=>{updateMotion();notifyView('motion');});
   const resize=new ResizeObserver(()=>{if(result().feasible)renderChart();});resize.observe($('fs-water-chart').parentElement);
   renderScenario();updateMotion();
   root.dataset.ready='true';
+  root.dispatchEvent(new Event('fieldsense-ready'));
 })();

@@ -1,7 +1,3 @@
----
-import FieldsenseParcelPlate from './FieldsenseParcelPlate.astro';
----
-
 <div class="fs-app" id="fieldsense-app">
   <a class="fs-skip" href="#fs-explore">Skip to the visualization</a>
   <header class="fs-header">
@@ -10,53 +6,40 @@ import FieldsenseParcelPlate from './FieldsenseParcelPlate.astro';
   </header>
 
   <div class="fs-main">
-    <section class="fs-intro" aria-labelledby="fs-title">
-      <div class="fs-intro-main">
-        <div><p class="fs-eyebrow fs-intro-index">RESEARCH NOTE 01 / GEORGIA TECH · ISYE 6501</p>
-          <h1 id="fs-title">When, where,<br><em>and how much.</em></h1>
-          <p class="fs-intro-lede">A constrained farm isn't a single prediction. It is a sequence of decisions. Move from crop-yield forecasts to shared resource limits, then follow seven days of irrigation choices.</p>
-        </div>
-        <div class="fs-intro-actions"><a class="fs-start" href="#fs-explore">Explore the field replay <span aria-hidden="true">↗</span></a><span class="fs-version">FIELDSENSE 1.1 · RECORDED SYNTHETIC RUNS</span></div>
-      </div>
-      <div class="fs-intro-margin">
-        <FieldsenseParcelPlate />
-        <aside class="fs-intro-quote" aria-label="Excerpt from the original 2025 course paper">
-          <span class="fs-document-index">ORIGINAL COURSE PAPER / PART 2</span>
-          <blockquote>We will use Markov Chain Decision Process to prescribe optimal irrigation actions (when/where and how much to water) using probabilistic models of weather and soil states.</blockquote>
-          <cite class="fs-paper-citation">Verbatim from the ISYE 6501 submission · 2025 · Proposed design, not a verified field deployment</cite>
-        </aside>
-      </div>
+    <section class="fs-intro fs-scene-intro" aria-labelledby="fs-title">
+      <div><p class="fs-eyebrow">Georgia Tech · ISYE 6501</p>
+        <h1 id="fs-title">When, where, <em>and how much.</em></h1></div>
+      <p>Follow two irrigation policies across three fields and seven days of recorded synthetic weather.</p>
     </section>
-
-    <div class="fs-arc" aria-label="Fieldsense project timeline"><span><b>2025</b> Course proposal</span><i aria-hidden="true"></i><span><b>2026</b> Tested Python pipeline</span><i aria-hidden="true"></i><span><b>Today</b> Browser replay</span></div>
-
-    <section class="fs-pipeline" aria-label="Three connected models">
-      <button type="button" class="fs-model-card" data-model="predict" aria-pressed="false"><span class="fs-model-index">01 / ESTIMATE</span><span class="fs-model-label">Random Forest</span><span class="fs-model-title">Predict</span><span class="fs-model-value" id="fs-predict-value">Loading</span><span class="fs-model-unit">area-weighted yield potential</span></button>
-      <span class="fs-handoff">Predicted yield</span>
-      <button type="button" class="fs-model-card" data-model="allocate" aria-pressed="false"><span class="fs-model-index">02 / OPTIMIZE</span><span class="fs-model-label">Mixed-integer optimization</span><span class="fs-model-title">Allocate</span><span class="fs-model-value" id="fs-allocate-value">Loading</span><span class="fs-model-unit">water assigned across three fields</span></button>
-      <span class="fs-handoff">Field water cap</span>
-      <button type="button" class="fs-model-card fs-active" data-model="irrigate" aria-pressed="true"><span class="fs-model-index">03 / PLAN</span><span class="fs-model-label">Markov decision process</span><span class="fs-model-title">Irrigate</span><span class="fs-model-value" id="fs-irrigate-value">7 days</span><span class="fs-model-unit">decisions within each field’s cap</span></button>
-    </section>
-    <p class="fs-model-context" id="fs-model-context">The controller weighs expected crop-water deficits against irrigation use over the remaining days.</p>
-    <aside class="fs-research-footnote" aria-label="Original paper excerpt about yield prediction">
-      <div><span class="fs-document-index">FROM THE 2025 PAPER / PART 2 · FORECAST INPUTS</span><blockquote>To forecast crop yield (and minimize over-allocation of resources such as fertilizer, pesticide, and water), the company will implement Random Forests that take inputs such as weather, soil, and crop data to predict crop outputs.</blockquote><cite>Verbatim · ISYE 6501, Models Defining · proposed inputs, not live sensor feeds</cite></div>
-      <p>The 2026 model uses synthetic crop, soil and weather features. Its yield estimate becomes an input to the resource allocator.</p>
-    </aside>
 
     <section class="fs-explore" id="fs-explore" aria-labelledby="fs-explore-title">
-      <div class="fs-section-head"><div><p class="fs-eyebrow">FIELD REPLAY / 01</p><h2 id="fs-explore-title">Read the week, not just the outcome.</h2><p class="fs-section-notation">One fixed weather path · three fields · two irrigation policies</p></div><label class="fs-scenario-label" for="fs-scenario">Scenario<select id="fs-scenario"><option value="balanced">Balanced season</option><option value="dry_spell">Dry spell</option><option value="strict_limit">Strict constraints</option></select></label></div>
-      <div class="fs-scenario-description"><p id="fs-scenario-description">Loading the recorded model results…</p><span id="fs-seed">Weather seed 41</span></div>
-      <p class="fs-parameter-aside">Scenario selects a recorded set of resource limits and weather assumptions. The weather seed identifies a repeatable synthetic rainfall sequence—not a forecast or a sensor reading.</p>
+      <div class="fs-section-head"><h2 id="fs-explore-title">The irrigation plots</h2><label class="fs-scenario-label" for="fs-scenario">Scenario<select id="fs-scenario"><option value="balanced">Balanced season</option><option value="dry_spell">Dry spell</option><option value="strict_limit">Strict constraints</option></select></label></div>
       <div class="fs-infeasible" id="fs-infeasible" role="status" hidden><h3>No feasible allocation</h3><p id="fs-infeasible-reason"></p><p id="fs-infeasible-detail"></p><p>Irrigation stops here. The models do not silently relax the resource limits.</p></div>
 
       <div class="fs-lab" id="fs-lab">
         <div class="fs-field-board">
-          <div class="fs-board-top"><div><span class="fs-overline">SEVEN-DAY REPLAY</span><h3>The irrigation plots</h3></div><span class="fs-day-chip" id="fs-day-chip">Day 1 / 7</span></div>
-          <div class="fs-policy-switch" role="group" aria-label="Policy shown in the farm view"><button type="button" data-policy="mdp" class="fs-active" aria-pressed="true">MDP policy</button><button type="button" data-policy="rule" aria-pressed="false">Threshold rule</button></div>
-          <div class="fs-board-caption"><span><i aria-hidden="true"></i> Irrigation · pipe and spray</span><span><i class="fs-rain-key" aria-hidden="true"></i> Rain · shared weather path</span></div>
-          <div class="fs-map-wrap"><svg preserveAspectRatio="xMidYMid meet" id="fs-farm" class="fs-farm" viewBox="0 0 860 530" role="img" aria-labelledby="fs-farm-title fs-farm-desc"><title id="fs-farm-title">Three-field irrigation replay</title><desc id="fs-farm-desc">Select a field using the buttons below the farm. The inspector reports all animated water and soil values.</desc></svg><div class="fs-map-caption"><span>Allocated water · <strong id="fs-tank-label"></strong></span><span>Schematic · no live sensors</span></div></div>
+          <div class="fs-scene-top"><span class="fs-day-chip" id="fs-day-chip">Day 1 / 7</span>
+          <div class="fs-policy-switch" role="group" aria-label="Policy shown in the farm view"><button type="button" data-policy="mdp" class="fs-active" aria-pressed="true">MDP policy</button><button type="button" data-policy="rule" aria-pressed="false">Threshold rule</button></div></div>
+          <div class="fs-map-wrap">
+            <div id="fs-viewport" data-renderer="svg">
+              <div class="fs-scene-host" aria-hidden="true"></div>
+              <svg preserveAspectRatio="xMidYMid meet" id="fs-farm" class="fs-farm" viewBox="0 0 860 530" role="img" aria-labelledby="fs-farm-title fs-farm-desc"><title id="fs-farm-title">Three-field irrigation replay</title><desc id="fs-farm-desc">Select a field using the buttons below the farm. The inspector reports all animated water and soil values.</desc></svg>
+            </div>
+            <p class="fs-fallback-note" role="status" hidden>Showing the parcel diagram. Choose a field to inspect its replay.</p>
+            <div class="fs-camera" hidden role="group" aria-label="Farm camera">
+              <button type="button" data-camera="overview">Farm overview</button>
+              <button type="button" data-camera="cut" aria-pressed="false">Show soil cutaway</button>
+              <button type="button" data-camera="left" aria-label="Orbit left">↶</button>
+              <button type="button" data-camera="right" aria-label="Orbit right">↷</button>
+              <button type="button" data-camera="in" aria-label="Zoom in">+</button>
+              <button type="button" data-camera="out" aria-label="Zoom out">−</button>
+              <button type="button" data-camera="touch" aria-pressed="false">Explore in 3D</button>
+            </div>
+            <p class="fs-soil-key" hidden><span></span>Schematic soil section · field-level storage · 0–40 mm <strong></strong></p>
+            <div class="fs-map-caption"><span>Allocated water · <strong id="fs-tank-label"></strong></span><span>Schematic · no live sensors</span></div></div>
           <div class="fs-field-picker" role="group" aria-label="Inspect a field"><button type="button" data-field="0" class="fs-active" aria-pressed="true">North Meadow<span>Wheat · 1.8 ha</span></button><button type="button" data-field="1" aria-pressed="false">East Acre<span>Corn · 2.1 ha</span></button><button type="button" data-field="2" aria-pressed="false">South Plot<span>Soybean · 1.5 ha</span></button></div>
           <div class="fs-playback"><button type="button" class="fs-play" id="fs-play" aria-label="Play the seven-day replay">Play week</button><button type="button" class="fs-step" id="fs-prev" aria-label="Previous day">‹</button><label class="fs-scrubber" for="fs-day"><span>Day <strong id="fs-day-label">1</strong> of 7</span><input type="range" id="fs-day" min="1" max="7" value="1" step="1" aria-label="Replay day"></label><button type="button" class="fs-step" id="fs-next" aria-label="Next day">›</button><label class="fs-speed" for="fs-speed">Speed<select id="fs-speed"><option value="1800">1×</option><option value="900">2×</option><option value="450">4×</option></select></label></div>
+          <div class="fs-board-caption"><span><i aria-hidden="true"></i> Irrigation · pipe and spray</span><span><i class="fs-rain-key" aria-hidden="true"></i> Rain · shared weather path</span></div>
           <p class="fs-motion-note" id="fs-motion-note" hidden>Reduced motion is on. Use the day controls to explore without animation.</p>
         </div>
 
@@ -79,8 +62,31 @@ import FieldsenseParcelPlate from './FieldsenseParcelPlate.astro';
           <div class="fs-decision"><h4 id="fs-decision-title">Why this action?</h4><p id="fs-decision-copy"></p><div class="fs-action-scores" id="fs-action-scores"></div><p class="fs-score-note" id="fs-score-note">Expected seven-day scores; higher is preferred.</p></div>
         </aside>
       </div>
+      <div class="fs-scenario-description"><p id="fs-scenario-description">Loading the recorded model results…</p><span id="fs-seed">Weather seed 41</span></div>
+      <p class="fs-parameter-aside">Scenario selects a recorded set of resource limits and weather assumptions. The weather seed identifies a repeatable synthetic rainfall sequence—not a forecast or a sensor reading.</p>
       <p class="fs-sr-only" id="fs-announcement" aria-live="polite" aria-atomic="true"></p>
     </section>
+
+    <div class="fs-arc" aria-label="Fieldsense project timeline"><span><b>2025</b> Course proposal</span><i aria-hidden="true"></i><span><b>2026</b> Tested Python pipeline</span><i aria-hidden="true"></i><span><b>Today</b> Browser replay</span></div>
+
+    <section class="fs-pipeline" aria-label="Three connected models">
+      <button type="button" class="fs-model-card" data-model="predict" aria-pressed="false"><span class="fs-model-index">01 / ESTIMATE</span><span class="fs-model-label">Random Forest</span><span class="fs-model-title">Predict</span><span class="fs-model-value" id="fs-predict-value">Loading</span><span class="fs-model-unit">area-weighted yield potential</span></button>
+      <span class="fs-handoff">Predicted yield</span>
+      <button type="button" class="fs-model-card" data-model="allocate" aria-pressed="false"><span class="fs-model-index">02 / OPTIMIZE</span><span class="fs-model-label">Mixed-integer optimization</span><span class="fs-model-title">Allocate</span><span class="fs-model-value" id="fs-allocate-value">Loading</span><span class="fs-model-unit">water assigned across three fields</span></button>
+      <span class="fs-handoff">Field water cap</span>
+      <button type="button" class="fs-model-card fs-active" data-model="irrigate" aria-pressed="true"><span class="fs-model-index">03 / PLAN</span><span class="fs-model-label">Markov decision process</span><span class="fs-model-title">Irrigate</span><span class="fs-model-value" id="fs-irrigate-value">7 days</span><span class="fs-model-unit">decisions within each field’s cap</span></button>
+    </section>
+    <p class="fs-model-context" id="fs-model-context">The controller weighs expected crop-water deficits against irrigation use over the remaining days.</p>
+    <aside class="fs-research-footnote" aria-label="Original paper excerpt about yield prediction">
+      <div><span class="fs-document-index">FROM THE 2025 PAPER / PART 2 · FORECAST INPUTS</span><blockquote>To forecast crop yield (and minimize over-allocation of resources such as fertilizer, pesticide, and water), the company will implement Random Forests that take inputs such as weather, soil, and crop data to predict crop outputs.</blockquote><cite>Verbatim · ISYE 6501, Models Defining · proposed inputs, not live sensor feeds</cite></div>
+      <p>The 2026 model uses synthetic crop, soil and weather features. Its yield estimate becomes an input to the resource allocator.</p>
+    </aside>
+
+        <aside class="fs-intro-quote" aria-label="Excerpt from the original 2025 course paper">
+          <span class="fs-document-index">ORIGINAL COURSE PAPER / PART 2</span>
+          <blockquote>We will use Markov Chain Decision Process to prescribe optimal irrigation actions (when/where and how much to water) using probabilistic models of weather and soil states.</blockquote>
+          <cite class="fs-paper-citation">Verbatim from the ISYE 6501 submission · 2025 · Proposed design, not a verified field deployment</cite>
+        </aside>
 
     <section class="fs-outcomes" id="fs-outcomes" aria-labelledby="fs-outcomes-title">
       <div class="fs-section-head"><div><p class="fs-eyebrow">POLICY AUDIT / 02</p><h2 id="fs-outcomes-title">Water use, with the deficit left in view.</h2></div><span class="fs-through-day" id="fs-through-day">Through day 1</span></div>
