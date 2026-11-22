@@ -111,6 +111,14 @@ export const selectedProjects = [
     "description": "A private research workspace for comparing Army and Air National Guard AGR announcements and checking their official sources.",
     "href": "/projects/muster/",
     "linkLabel": "Explore Muster →"
+  },
+  {
+    "title": "Fieldsense",
+    "group": "research",
+    "eyebrow": "APPLIED ML / SUSTAINABLE AGRICULTURE",
+    "description": "A Georgia Tech decision lab: forecast synthetic crop yields, allocate limited farm resources, and replay seven days of irrigation choices.",
+    "href": "/projects/fieldsense/",
+    "linkLabel": "Explore Fieldsense →"
   }
 ];
 
