@@ -21,6 +21,10 @@
   "harness2-lab/app.js": "1507d26d2e7288782645555c9e9139d98dc4b1724a0811d86f771943873bdddc",
   "harness2-lab/charts.js": "8dc3151898bd4a795f6a9fbe6ecc73dc914b4ec27d3476d4ccdd87348ba4492c",
   "harness2-lab/styles.css": "c0499eaa9af65b61c8c942d99094ea36cc55ebf74a77e4ef0ff8670f8387aae9",
+  "media/causarium/evidence-v1.json": "232561831ace6f8c35b4fc4feda4730a3c69494e5ed6701879d836e361cfbbbd",
+  "media/fieldsense/fieldsense.css": "a1fd3d4a1a5896a1684ed7eebacbe635db606224a32048e5e3039e3445674689",
+  "media/fieldsense/fieldsense.js": "e4c71eead6baec8efaffbd180c10e986cc9cf5eb3d65ee096660c006f6fc3138",
+  "media/fieldsense/scenarios.js": "2f3ab691b94f52048c269232fa0d402f1b251b76779e4da54bbc55fa053d76c1",
   "media/scientific-systems/THIRD_PARTY_NOTICES.txt": "51e6731355b59cd32ca9fbdc7859fa8e216a7148a964caa8d13cf1be7d5856b8",
   "media/scientific-systems/lu-fixture.json": "d1e3401c6677ebda3835c9b295ea1b22b23ea04f5bb3670ed8af5186bbed7968",
   "media/scientific-systems/release.json": "1765b90df087bf1c196c87d975c4abfdf73f6afb312ae24c97742b11d2023062",
@@ -123,6 +127,5 @@
   "projects/recursa/studio/assets/task-replay/toggle-and-persist-4.png": "f07e14c6641c3bc109c5e07a2a6aa676f09c4fa5c9d41ee7513a1728f6439557",
   "projects/recursa/studio/assets/task-replay/toggle-and-persist-6.png": "46d47e869214abac592520ff39bdbc268ee029e9b40c95b0945b080ea8434c6d",
   "projects/recursa/studio/assets/task-replay/toggle-and-persist-8.png": "c4f0401fc695fd6266a0f958959643943e185df3052048aedd630f8fcc3416c9",
-  "projects/recursa/studio/index.html": "eaaf7bf92dbc8a54596f84552b8f56732d4f1869de8a4b571bb9e174fc4a8601",
-  "media/causarium/evidence-v1.json": "232561831ace6f8c35b4fc4feda4730a3c69494e5ed6701879d836e361cfbbbd"
+  "projects/recursa/studio/index.html": "eaaf7bf92dbc8a54596f84552b8f56732d4f1869de8a4b571bb9e174fc4a8601"
 }

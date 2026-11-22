@@ -158,3 +158,26 @@ test('Axiom Studio is featured and Q-SPECTRA remains an independent case study',
   await expect(page.getByRole('link', { name: 'Live demo' })).toHaveAttribute('href', 'https://qspectra.jacobroutzong.dev/');
   await expect(page.getByRole('link', { name: 'Source code' })).toHaveAttribute('href', 'https://github.com/jacobhroutzong/q-spectra-17e-workbench');
 });
+
+
+test('Fieldsense links its research case study and recorded lab in both directions', async ({ page }) => {
+  for (const route of ['/', '/projects/']) {
+    await page.goto(route);
+    const card = page.locator('article.selected-card').filter({
+      has: page.getByRole('heading', { name: 'Fieldsense', exact: true }),
+    });
+    await expect(card).toHaveCount(1);
+    await card.getByRole('link', { name: 'Explore Fieldsense →' }).click();
+    await expect(page).toHaveURL('/projects/fieldsense/');
+    await expect(page.getByRole('heading', { name: 'Fieldsense', level: 1 })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Live demo' }))
+      .toHaveAttribute('href', '/projects/fieldsense/lab/');
+  }
+  await page.getByRole('link', { name: 'Open the animated Fieldsense lab' }).click();
+  await expect(page).toHaveURL('/projects/fieldsense/lab/');
+  await expect(page.locator('#fieldsense-app')).toHaveAttribute('data-ready', 'true');
+  await page.getByRole('combobox', { name: 'Scenario' }).selectOption('strict_limit');
+  await expect(page.getByRole('heading', { name: 'No feasible allocation' })).toBeVisible();
+  await page.getByRole('link', { name: 'Project overview' }).click();
+  await expect(page).toHaveURL('/projects/fieldsense/');
+});
