@@ -37,3 +37,6 @@ service-account*.json
 .dev.vars.*
 
 /public/.wasm-tmp/
+/public/study/account.js
+
+/supabase/.temp/

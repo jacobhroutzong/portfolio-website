@@ -7,6 +7,7 @@
   <meta name="theme-color" content="#08131f">
   <title>EW Study | Army Study</title>
   <link rel="stylesheet" href="/study/study.css">
+  <link rel="stylesheet" href="/study/account.css">
   <script type="module" src="/study/study.js"></script>
 </head>
 <body data-study="ew">
@@ -21,6 +22,7 @@
         <a href="/study/ew/" aria-current="page">EW Study</a>
         <a href="/connect/?topic=army-study&amp;source=%2Fstudy%2Few%2F#contact-title">Report a correction</a>
       </nav>
+      <div id="study-account"></div>
     </div>
   </header>
   <main id="main" class="shell" tabindex="-1">
@@ -44,7 +46,7 @@
     <div id="study-content" hidden>
       <section id="courses" aria-labelledby="courses-heading">
         <h2 id="courses-heading">Choose your course</h2>
-        <p class="section-intro">Start with the foundations, then work through a publication at your own pace. Your completed lessons and recall ratings stay in this browser.</p>
+        <p class="section-intro">Start with the foundations, then work through a publication at your own pace.</p>
         <div class="field topic-search-field">
           <label for="topic-search">Find a topic across all courses</label>
           <input id="topic-search" type="search" placeholder="Try spectrum management, CEMA, or uncertainty">
@@ -147,7 +149,7 @@
       </section>
       <footer class="study-footer">
         <p id="updated" class="meta" hidden></p>
-        <p>Your lesson completion and recall ratings are saved in this browser.</p>
+        <p id="progress-location">Your lesson completion and recall ratings are saved in this browser.</p>
         <button type="button" id="reset-progress" class="secondary">Reset EW progress</button>
       </footer>
     </div>

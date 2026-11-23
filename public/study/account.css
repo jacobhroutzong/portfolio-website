@@ -1,0 +1,110 @@
+#study-account:empty { display: none; }
+
+.header-inner:has(#study-account:not(:empty)) {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+header.top:has(#study-account:not(:empty)) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: start;
+}
+#study-account {
+  justify-self: end;
+  text-align: end;
+}
+.study-account {
+  --account-text: #eff7fa;
+  --account-muted: #b4cad5;
+  --account-accent: #7de4d3;
+  --account-warning: #ffe2b9;
+  color: var(--account-text);
+  overflow-wrap: anywhere;
+}
+.study-account [hidden] { display: none !important; }
+
+.study-account-trigger,
+.study-account .study-account-button {
+  min-height: 44px;
+  min-width: 44px;
+  padding: .55rem .8rem;
+  border: 1px solid #4b8c8b;
+  border-radius: .45rem;
+  background: #1d5258;
+  color: #f4fffb;
+  font: inherit;
+  font-size: .9rem;
+  font-weight: 650;
+  line-height: 1.3;
+  cursor: pointer;
+}
+.study-account-trigger:hover,
+.study-account .study-account-button:hover { background: #28646b; }
+.study-account :is(button, a):focus-visible { outline: 2px solid var(--account-accent); outline-offset: 3px; }
+.study-account .study-account-button:disabled { opacity: .55; cursor: wait; }
+
+.study-account-indicator,
+.study-account-error,
+.study-account-fallback {
+  max-width: 14rem;
+  margin: .25rem 0 0;
+  color: #ffe2b9;
+  font-size: .8rem;
+  line-height: 1.35;
+}
+.study-account-fallback { margin-inline-start: auto; }
+.study-account-menu {
+  position: fixed;
+  z-index: 20;
+  inset: var(--account-top, 4rem) var(--account-right, 12px) auto auto;
+  margin: 0;
+  width: min(21rem, calc(100% - 24px));
+  max-height: max(8rem, calc(100dvh - var(--account-top, 4rem) - 12px));
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: .8rem 1rem;
+  border: 1px solid #345366;
+  border-radius: .65rem;
+  background: #102334;
+  color: var(--account-text);
+  text-align: start;
+  box-shadow: 0 .6rem 2rem #050e18bb;
+}
+.study-account-menu-header { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.study-account h2 { color: var(--account-text); font-size: 1.05rem; line-height: 1.3; margin: 0; }
+.study-account .study-account-close { font-size: 1.45rem; padding: 0; border-color: transparent; background: transparent; }
+.study-account-menu p { font-size: .875rem; line-height: 1.4; margin: .3rem 0 0; }
+.study-account-description, .study-account-provider-unavailable { color: var(--account-muted); }
+.study-account-status { color: var(--account-accent); }
+.study-account-storage-warning, .study-account-conflict > p { color: var(--account-warning); }
+
+.study-account-actions { display: grid; gap: .45rem; margin-top: .65rem; }
+.study-account-actions .study-account-button, .study-account-provider-unavailable {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .65rem;
+}
+.study-account .study-account-google { background: #fff; color: #1f1f1f; border-color: #dadce0; }
+.study-account .study-account-google:hover { background: #edf1f8; }
+.study-account .study-account-apple,
+.study-account .study-account-secondary { background: transparent; border-color: #557687; }
+.study-account-provider-icon { flex: none; object-fit: contain; }
+.study-account-apple .study-account-provider-icon,
+.study-account-provider-unavailable .study-account-provider-icon { filter: invert(1); }
+.study-account-provider-unavailable { min-height: 44px; }
+.study-account-conflict { border-top: 1px solid #715c41; margin-top: .65rem; padding-top: .45rem; }
+.study-account-area-links { list-style: none; margin: .4rem 0 0; padding: 0; }
+.study-account-area-links a { display: flex; align-items: center; min-height: 44px; color: var(--account-accent); }
+
+@media (max-width: 720px) {
+  .header-inner:has(#study-account:not(:empty)) {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: .45rem .75rem;
+  }
+  .header-inner:has(#study-account:not(:empty)) > .site-nav { grid-column: 1 / -1; grid-row: 2; }
+  .header-inner > #study-account { grid-column: 2; grid-row: 1; }
+  header.top:has(#study-account:not(:empty)) { grid-template-columns: minmax(0, 1fr) auto; gap: .4rem .75rem; }
+  header.top > #study-account { grid-column: 2; grid-row: 1; }
+  header.top:has(#study-account:not(:empty)) > #status { grid-column: 1 / -1; justify-self: start; }
+}

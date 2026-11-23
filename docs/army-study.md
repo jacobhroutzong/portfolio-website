@@ -99,7 +99,7 @@ Study pages offer a **Report a correction** action using the existing portfolio 
 
 ## Curriculum and account milestones
 
-### Soldier Study
+### Soldier Study — planned, not implemented
 
 The curriculum at `public/study/soldier/data.json` reuses the study course reader, search, recall cards, and completion controls. Its guest snapshot uses `{ ratings, completed }` with stable lesson and question IDs, under `soldier-study.progress.v1`. The reserved account area is `soldier`.
 
@@ -151,16 +151,6 @@ All 15 original source records and their catalog or alternate links were checked
 
 The [Vault’s August 2003 STP](https://www.trex-arms.com/field-manual-vault/stp-21-1-smct-2003-08) and [July 2001 FM 3-25.26](https://www.trex-arms.com/field-manual-vault/fm-3-25-26-2001-07) are wrong-edition or wrong-designation candidates for these objectives. Neither was adopted. The signed-out [Deployed Medicine instructor route](https://www.deployedmedicine.com/instructors) presented the Allogy login, so the current Tier 1 package version and evaluation sheets remain unverified.
 
-### Optional accounts and saved progress
+### Optional accounts and saved progress — staging implementation
 
-The owner requested Google and Sign in with Apple through Supabase. Reuse verified existing resources after a separate, reviewed authentication plan; no provider configuration, database schema or signup policy has changed in this patch.
-
-- Keep guest study available. Offer an explicit import of existing browser progress into a signed-in account.
-- Preserve the separate PhaseUp `records/events/exams` and course `ratings/completed` formats with dedicated adapters. Preserve stable content IDs.
-- Scope signed-in caches and pending operations to user ID and study area. Use versioned server updates, idempotent history entries and explicit reset revisions so stale devices cannot silently overwrite or resurrect progress.
-- Use ownership-enforced row-level security for any progress tables, a publishable browser key, exact approved callbacks and user-initiated identity linking where provider addresses differ. Keep private credentials outside the browser and repository.
-- Shared Supabase Auth settings affect other applications. Confirm existing application authorization and obtain approval before changing shared providers, public signups or production settings. A new project, paid service or credential rotation requires a demonstrated need and approval.
-- Verify existing Google OAuth configuration and credentials. Apple provider prerequisites and the selected web flow must be established before presenting Apple login as available; OAuth client-secret expiry requires a maintenance procedure.
-- Bundle the client through the existing build. Preserve the public-file boundary; any versioned schema migration requires a narrowly reviewed repository allowance, not removal of the boundary checks.
-
-Acceptance requires two-user isolation, cross-device save/retrieve, safe guest import, offline retry and conflict handling, account switching/sign-out isolation, durable reset behavior, both configured provider flows, and regression checks for existing study progress and exams. Use GPT-6.2 Sol High for this coupled authentication/progress milestone; Medium is sufficient for isolated editorial or link corrections. Release approval follows a working, verified staging result.
+The account branch connects all four areas to optional staging sync, including Soldier Study through its existing browser key and reserved account area. Guest progress stays local until a learner explicitly imports it. Production and unrelated previews use the guest-only bundle. See [staging verification and production release gates](army-study-accounts-staging.md).

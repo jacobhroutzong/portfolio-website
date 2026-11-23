@@ -10,14 +10,21 @@ const totals = new Map();
 const credentialRules = [
   /-----BEGIN (?:RSA |EC |DSA |OPENSSH |ENCRYPTED )?PRIVATE KEY-----/,
   /\b(?:gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}|hf_[A-Za-z0-9]{28,}|(?:AKIA|ASIA)[A-Z0-9]{16}|AIza[A-Za-z0-9_-]{35}|sk-proj-[A-Za-z0-9_-]{28,}|(?:sk|rk)_live_[A-Za-z0-9]{16,}|xox[baprs]-[A-Za-z0-9-]{12,})\b/,
+  /\bsb_secret_[A-Za-z0-9_-]{20,}\b/,
   /(?:https?|postgres(?:ql)?|mysql|mongodb(?:\+srv)?|redis):\/\/[^/\s:@"]{1,80}:[^/\s@"]{5,120}@/,
 ];
 const mapDirective = /(?:\/\/[#@]|\/\*[#@])\s*sourceMappingURL\s*=/i;
 const privatePath = /(?:^|\/)(?:\.wrangler|migrations|downloads|node_modules)(?:\/|$)|(?:^|\/)\.env(?:\.|$)|^(?:equityscout|ascent|apps\/(?:equityscout|lintel|leverline|crucible))(?:\/|$)|\.(?:zip|tar|gz|sql|db|sqlite3?|pem|pfx|jsonl|map|parquet|xlsx?|docx?|bak)$/i;
+// These reviewed migrations may be versioned in GitHub, but never published as assets.
+const repositorySchemaExceptions = new Set([
+  'supabase/migrations/20261122184222_army_study_progress.sql',
+  'supabase/migrations/20261122200421_army_study_progress_api.sql',
+  'supabase/production-migrations/20261122224309_army_study_production_pilot.sql',
+]);
 const privateSource = /^(?:src\/lib\/(?:equityscout|ascent|decision-|tunera)|src\/pages\/(?:apps\/|ascent\/|projects\/decision-intelligence-engine\/workbench)|functions\/api\/(?:equityscout|tunera|crucible)|tests\/(?:scout|ascent|tunera|fixtures\/))|^public\/(?:equityscout|ascent|downloads|apps\/(?:equityscout|lintel|leverline|crucible))(?:\/|$)/i;
 const generated = /^media\/generated\/(.+)-([1-9]\d{0,3})\.webp$/;
 const astroBundle = /^_astro\/[\w./@()-]+\.(?:js|css|woff2?|ttf|svg|png|webp)$/;
-const textAsset = /\.(?:[cm]?js|tsx?|astro|css|html|jsonc?|svg|md|txt|ya?ml|toml|xml|ini|sh|py|example)$/i;
+const textAsset = /\.(?:[cm]?js|tsx?|astro|css|html|jsonc?|svg|md|txt|ya?ml|toml|xml|ini|sh|py|sql|example)$/i;
 
 function fail(kind) {
   totals.set(kind, (totals.get(kind) ?? 0) + 1);
@@ -63,7 +70,8 @@ async function repository() {
   const paths = execFileSync('git', ['ls-files', '-z', '--cached', '--others', '--exclude-standard'], {cwd:root,stdio:['ignore','pipe','ignore']})
     .toString('utf8').split('\0').filter(Boolean);
   for (const path of new Set(paths)) {
-    if (!approved.has(path) || privateSource.test(path) || (path !== '.env.example' && privatePath.test(path))) {
+    if (!approved.has(path) || privateSource.test(path) ||
+        (path !== '.env.example' && privatePath.test(path) && !repositorySchemaExceptions.has(path))) {
       fail('unapproved repository file');
       continue;
     }

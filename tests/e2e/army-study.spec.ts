@@ -250,3 +250,21 @@ test('contact lives on its own route and study corrections remain accessible', a
   await expect(page).toHaveURL(/\/connect\/\?topic=army-study/);
   await expect(page.getByRole('heading', { name: 'Report a study correction' })).toBeVisible();
 });
+
+test('PhaseUp treats an imported weak-point counter as data in guest mode', async ({ page }) => {
+  const { cards } = JSON.parse(readFileSync(new URL('../../public/study/17e/cards.json', import.meta.url), 'utf8'));
+  const card = cards[0];
+  await page.goto('/study/17e/');
+  await expect(page.locator('#status')).toContainText('cards ready');
+  await page.getByRole('button', { name: /Save \/ transfer/ }).click();
+  await page.locator('#paste').fill(JSON.stringify({
+    records: { [card.id]: { attempts: 1, correct: 0, misses: '<b>unexpected counter</b>', last: 'missed' } },
+    events: [],
+    exams: [],
+  }));
+  await page.getByRole('button', { name: 'Restore / merge', exact: true }).click();
+  await page.getByRole('button', { name: /Weak points/ }).click();
+  await expect(page.locator('#weakContent')).toContainText(card.q);
+  await expect(page.locator('#weakContent')).toContainText('0 misses');
+  await expect(page.locator('#weakContent b')).toHaveCount(0);
+});

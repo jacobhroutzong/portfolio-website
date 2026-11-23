@@ -2,6 +2,24 @@ const page = document.body.dataset.study;
 const byId = id => document.getElementById(id);
 const list = value => Array.isArray(value) ? value : [];
 const plural = (count, word) => count === 1 ? word : word + "s";
+let accountConnection;
+let accountConnectionStarted = false;
+
+async function optionalAccount(area, guestKey) {
+  if (accountConnectionStarted) return accountConnection;
+  accountConnectionStarted = true;
+  try {
+    const { connectStudyAccount } = await import("/study/account.js");
+    accountConnection = await connectStudyAccount({ area, guestKey });
+  } catch {
+    const notice = document.createElement("p");
+    notice.className = "study-account-fallback";
+    notice.setAttribute("role", "status");
+    notice.textContent = "Account sync unavailable";
+    byId("study-account")?.append(notice);
+  }
+  return accountConnection;
+}
 
 function element(tag, text, className) {
   const node = document.createElement(tag);
@@ -671,10 +689,44 @@ async function loadStudy() {
         || data.lessons.some(lesson => !ids.has(lesson.courseId))) throw new Error("Course content is incomplete");
     }
     const sources = new Map(list(data.sources).map(source => [source.id, source]));
-    const progress = createProgress(key);
+    const account = await optionalAccount(page, key);
+    let localChange = false;
+    function mutateAccount(change) {
+      localChange = true;
+      try { account.mutate(change); } finally { localChange = false; }
+    }
+    const progress = account ? {
+      rating: id => account.get().ratings[id],
+      completed: id => account.get().completed[id] === true,
+      rate: (id, rating) => mutateAccount(state => { state.ratings[id] = rating; }),
+      complete: (id, value) => mutateAccount(state => {
+        if (value) state.completed[id] = true;
+        else delete state.completed[id];
+      }),
+      reset() {
+        localChange = true;
+        try { account.reset(); } finally { localChange = false; }
+      },
+    } : createProgress(key);
     const refresh = acronyms ? initAcronyms(data, sources, progress) : initCourseStudy(data, sources, progress);
+    if (account) {
+      let previous = JSON.stringify(account.get());
+      account.subscribe(state => {
+        const current = JSON.stringify(state.data);
+        if (current !== previous && !localChange) refresh();
+        previous = current;
+        for (const id of ["complete-lesson", "review-again", "got-it", "reset-progress"]) {
+          const control = byId(id);
+          if (control) control.disabled = state.status === "loading";
+        }
+        byId("progress-location").textContent = state.userId
+          ? "This page uses your account progress. Check the sync status above before leaving."
+          : "Your study progress is saved in this browser.";
+      });
+    }
     byId("reset-progress").onclick = () => {
-      if (!window.confirm(`Reset your ${resetName} progress in this browser?`)) return;
+      const destination = account?.snapshot().userId ? "for this account across devices" : "in this browser";
+      if (!window.confirm(`Reset your ${resetName} progress ${destination}?`)) return;
       progress.reset();
       refresh();
     };
@@ -696,4 +748,6 @@ async function loadStudy() {
 if (page) {
   byId("retry").addEventListener("click", loadStudy);
   loadStudy();
+} else if (byId('study-account')) {
+  void optionalAccount();
 }
