@@ -193,6 +193,13 @@ test('Empirava is the single flagship listing and supports keyboard navigation',
     const projects = route === '/' ? page.locator('#projects') : page.getByRole('main');
     await expect(projects.locator('a[href="/projects/empirava/"]')).toHaveCount(1);
     const flagship = projects.getByRole('link', { name: /Explore Empirava/ });
+    // Older projects may move behind the group disclosure as new projects are added.
+    if (!await flagship.isVisible()) {
+      const group = projects.getByRole('region', { name: 'Research + Fun Projects' });
+      const more = group.getByRole('button', { name: /Show \d+ more projects?/ });
+      await more.press('Enter');
+      await expect(group.locator('.project-toggle')).toHaveAttribute('aria-expanded', 'true');
+    }
     await expect(flagship).toBeVisible();
     for (const slug of ['tunera', 'causarium', 'recursa', 'harness2-lab']) {
       await expect(projects.locator('a[href="/projects/' + slug + '/"]')).toHaveCount(0);
