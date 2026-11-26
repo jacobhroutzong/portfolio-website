@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' blob:; worker-src blob:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<title>Isolated code runner</title>
+</head>
+<body><script>
+'use strict';
+window.addEventListener('message', function receive(event) {
+  if (self.parent === self || self.origin !== 'null' || event.origin !== new URL(location.href).origin) return;
+  if (event.source !== parent || !event.ports[0] || !(event.data.worker instanceof ArrayBuffer)) return;
+  window.removeEventListener('message', receive);
+  const port = event.ports[0];
+  const { worker: source, ...request } = event.data;
+  const url = URL.createObjectURL(new Blob([source], {type:'text/javascript'}));
+  let worker;
+  try {
+    worker = new Worker(url);
+    worker.onerror = error => port.postMessage({type:'error', message:error.message || 'The isolated language worker failed to start.'});
+    const stream = new MessageChannel();
+    stream.port1.onmessage = ({ data }) => port.postMessage(data);
+    worker.postMessage(request, [stream.port2, ...Object.values(request.assets)]);
+    window.addEventListener('pagehide', () => { worker.terminate(); stream.port1.close(); URL.revokeObjectURL(url); }, {once:true});
+  } catch (error) {
+    port.postMessage({type:'error',message:String(error.message)});
+    URL.revokeObjectURL(url);
+  }
+});
+</script></body></html>
