@@ -23,7 +23,7 @@ test('commercial projects remain navigable as static case studies', async ({ pag
 });
 
 
-test('Apex and Decision are startups and all displayed project titles are one word', async ({ page }) => {
+test('Apex and Decision are startups and Interview Notebook keeps its full title', async ({ page }) => {
   for (const route of ['/', '/projects/']) {
     await page.goto(route);
     const root = route === '/' ? page.locator('#projects') : page.locator('main');
@@ -38,8 +38,10 @@ test('Apex and Decision are startups and all displayed project titles are one wo
       await expect(research.locator('a[href="/projects/' + slug + '/"]')).toHaveCount(0);
     }
     const titles = await root.locator('.selected-card h3, .selected-card h4, .project-card h3').allTextContents();
-    expect(titles.length).toBeGreaterThan(0);
-    for (const title of titles) expect(title.trim()).toMatch(/^\S+$/u);
+    expect(titles.filter(title => title.trim() === 'Interview Notebook')).toHaveLength(1);
+    for (const title of titles.map(title => title.trim()).filter(title => title !== 'Interview Notebook')) {
+      expect(title).toMatch(/^\S+$/u);
+    }
   }
 });
 

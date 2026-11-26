@@ -1,0 +1,21 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const description = 'Practice coding, system design, behavioral questions, and other interview formats across 41 companies.';
+---
+
+<Base title="Interview Notebook" description={description}>
+  <article class="container page-shell">
+    <a class="text-link" href="/projects/">← All projects</a>
+    <h1 class="page-title">Interview Notebook.</h1>
+    <p class="page-intro">{description}</p>
+    <a class="button primary" href="/projects/interview-notebook/lab/">Open Interview Notebook →</a>
+
+    <section class="section" aria-labelledby="practice-bank">
+      <h2 id="practice-bank">The practice bank</h2>
+      <p>Choose a company and a category in the tracker. Each of the 180 exercises includes follow-up questions and a scoring guide. The notebook links 16 original exercises to published employer examples and includes 164 independently generated scenarios.</p>
+      <p>Use Practice to search titles and switch between variants. Export a coverage snapshot or a Codex alert from the tracker. Titles you add are stored in this browser.</p>
+      <p>The original Airbnb preparation page cited by two exercises is currently unavailable.</p>
+    </section>
+  </article>
+</Base>

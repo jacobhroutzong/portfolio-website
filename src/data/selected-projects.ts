@@ -127,6 +127,14 @@ export const selectedProjects = [
     "description": "An owner-only workspace for versioning product strategy, planning campaigns, and connecting reported results to lessons.",
     "href": "/projects/marqyra/",
     "linkLabel": "Explore Marqyra →"
+  },
+  {
+    "title": "Interview Notebook",
+    "group": "business",
+    "eyebrow": "WEB APPLICATION / INTERVIEW PRACTICE",
+    "description": "Browse 180 interview exercises across 41 companies, with follow-up questions, scoring guides, and links to employer sources.",
+    "href": "/projects/interview-notebook/",
+    "linkLabel": "Explore Interview Notebook →"
   }
 ];
 

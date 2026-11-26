@@ -1,0 +1,1052 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src https://api.github.com; img-src data:; form-action 'none'; base-uri 'none'">
+<title>Interview Notebook · Company practice</title>
+<style>
+*{box-sizing:border-box}
+:root{--ink:#172c2b;--muted:#526461;--line:#d1d9d1;--paper:#f6f7f0;--white:#fffefa;--green:#175749;--soft:#e6efe4;--mono:"IBM Plex Mono",ui-monospace,monospace;--sans:"Inter","Segoe UI",Arial,sans-serif;--serif:"Source Serif 4",Georgia,serif}
+body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.55 var(--sans)}
+.shell{max-width:1270px;margin:auto;padding:0 clamp(16px,4vw,58px)}
+header{border-bottom:1px solid var(--line);background:var(--white)}
+header .shell{min-height:68px;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.brand{font-weight:720;letter-spacing:-.03em;font-size:19px;display:flex;gap:11px;align-items:center}
+.mark{display:inline-block;width:23px;height:23px;background:var(--green);border-radius:5px;position:relative}.mark:before,.mark:after{content:"";position:absolute;top:6px;bottom:6px;border-left:2px solid var(--paper);left:8px;transform:skewY(-10deg)}.mark:after{left:14px;top:9px}
+nav{display:flex;gap:6px}button,select,input{font:inherit;color:inherit}button{cursor:pointer}button:disabled{cursor:wait;opacity:.6}
+button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #bb801c;outline-offset:3px}
+nav button{background:transparent;border:0;border-radius:7px;padding:8px 12px;font-weight:650;color:var(--muted)}
+nav button[aria-current=page]{background:var(--soft);color:var(--green)}
+h1,h2,h3,p{margin:0}h1,h2{font-family:var(--serif);font-weight:500;line-height:1.12;letter-spacing:-.035em}
+h1{font-size:clamp(36px,5vw,57px)}h2{font-size:clamp(26px,3vw,39px)}h3{font-size:16px}
+.intro{padding:38px 0 28px}.intro p{color:var(--muted);margin-top:9px;max-width:70ch}
+.workspace{display:grid;grid-template-columns:minmax(245px,.85fr) minmax(0,2.2fr);gap:22px;align-items:start;margin-bottom:45px}
+aside,.sheet,.box{border:1px solid var(--line);background:var(--white);border-radius:12px}
+aside{overflow:hidden}.filters{padding:18px 18px 10px}.filters label,.form-grid label,.field-label{display:block;font-weight:650;font-size:13px}
+input,select{display:block;width:100%;border:1px solid #acbab1;border-radius:6px;background:white;padding:9px 10px;margin:5px 0 10px;min-height:42px}
+select{padding-right:26px}
+.small,.counter{font-size:13px;color:var(--muted)}.counter{padding:0 18px 10px}
+#titles{max-height:490px;overflow:auto;border-top:1px solid var(--line)}
+.title-item{display:block;text-align:left;border:0;border-bottom:1px solid var(--line);background:transparent;width:100%;padding:12px 18px;line-height:1.35}
+.title-item:last-child{border-bottom:0}.title-item:hover{background:#f0f4eb}.title-item[aria-pressed=true]{background:var(--soft);box-shadow:inset 4px 0 var(--green)}
+.title-item .org{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}.title-item .label{display:block;font-weight:650;overflow-wrap:anywhere}.empty{padding:18px;color:var(--muted)}
+.sheet{padding:clamp(21px,3vw,40px);border-top:4px solid var(--green)}
+.kicker{font:650 11px/1.5 var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--green);margin-bottom:8px}
+.source{margin:17px 0 26px;padding:10px 15px;border-left:2px solid #a7b8a5;line-height:1.45;background:#f4f7f0;overflow-wrap:anywhere}
+.under{font-size:13px;color:var(--muted)}
+.source a{display:inline-block}a{color:#195d50;text-underline-offset:3px}
+.prompt{font-size:clamp(17px,1.6vw,20px);line-height:1.65;max-width:70ch;white-space:pre-line}
+.section{margin-top:24px}.section ol,.section ul{margin:10px 0 0;padding-left:23px}.section li+li{margin-top:5px}
+details.section{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:13px 0}details summary{cursor:pointer;font-weight:650}details[open] ul{margin-bottom:5px}
+.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:20px}
+.btn{display:inline-flex;align-items:center;justify-content:center;background:var(--green);color:white;border:1px solid var(--green);border-radius:6px;font-weight:620;padding:9px 14px}
+.secondary{background:var(--white);color:var(--green);border-color:#a5b8ab}.btn:hover{filter:brightness(.95)}
+.meta{color:var(--muted);font-size:13px;margin-top:8px}#drill-topic{margin-left:7px}
+#source-meta{margin-top:5px}
+.find-grid{display:grid;grid-template-columns:1.25fr 1fr;align-items:start;gap:22px;margin-bottom:45px}.box{padding:clamp(20px,3vw,30px)}.box h2{font-size:29px;margin-bottom:10px}.box p{color:var(--muted)}
+.form-grid{margin-top:18px}.form-grid input,.form-grid select{margin-bottom:13px}.box .status{margin-top:12px;font-size:14px}.result{border-top:1px solid var(--line);padding:14px 0}.result a{overflow-wrap:anywhere}.result button{margin-top:8px}.result strong{font-weight:620}
+#live-results{margin-top:12px}footer{font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;padding-bottom:22px}
+[hidden]{display:none!important}#global-msg:empty{display:none}#global-msg{padding:9px 15px;background:#fff0d3;border:1px solid #dec88f;border-radius:6px;margin-top:12px}
+@media(max-width:760px){.workspace,.find-grid{grid-template-columns:1fr;gap:14px}.intro{padding:25px 0 18px}#titles{max-height:180px}.filters{display:grid;grid-template-columns:1fr 1.1fr;gap:10px}.find-grid{margin-bottom:20px}}
+@media(max-width:460px){header .shell{gap:6px;min-height:60px}.brand{font-size:16px;gap:5px}.mark{width:20px;height:21px}nav{gap:0}nav button{font-size:13px;padding:8px}.sheet{padding:19px}.filters{padding:12px 12px 4px}.intro h1{font-size:37px}}
+.track-aside{padding:0 18px 18px}.track-aside .btn{margin:8px 2px 0 0;font-size:13px}.track-aside p,.source-entry{margin-top:8px}.schema{font-size:11px;white-space:pre-wrap;overflow-wrap:anywhere}.source-entry{padding:8px 0;border-bottom:1px solid var(--line)}.source-entry p{margin-top:3px}.pick{margin:7px 5px 0 0;font-size:13px}.pick[aria-pressed=true]{background:var(--soft);border-color:var(--green)}#track-origin{font-size:14px}.track-aside summary{font-size:14px}@media(max-width:600px){header .shell{display:block;padding-top:8px;padding-bottom:6px}nav{margin-top:4px}nav button{min-height:36px}}
+</style>
+</head>
+<body>
+<header><div class="shell"><div class="brand"><span class="mark" aria-hidden="true"></span>Interview Notebook</div><nav aria-label="Sections"><button id="nav-tracker" aria-current="page">Tracker</button><button id="nav-study">Practice</button><button id="nav-find">Find titles</button></nav></div></header>
+<main class="shell">
+<div id="global-msg" role="status"></div>
+<section id="tracker" aria-labelledby="track-heading">
+<div class="intro"><h1 id="track-heading">Company tracker</h1><p id="coverage-caption"></p></div>
+<div class="workspace">
+<aside aria-label="Company tracker filters"><div class="filters" style="display:block">
+<label>Company<select id="track-company"></select></label>
+<label>Interview category<select id="track-category"><option>Coding</option><option>System design</option><option>Behavioral</option><option>Other</option></select></label>
+</div><div class="track-aside"><h3>Coverage this run</h3><p id="coverage-totals" class="small"></p>
+<button type="button" class="btn secondary" id="get-run">Export run data</button>
+<button type="button" class="btn secondary" id="get-handoff">Export Codex alert</button>
+<details class="section"><summary>Add authorized titles</summary><p class="small">Import a JSON array from a source you can use for practice. Each row needs company, category, title and sourceUrl. Accepted categories appear above. Your import stays in this browser.</p>
+<pre class="schema">[{"company":"Amazon",
+  "category":"Coding",
+  "title":"My example",
+  "sourceUrl":"https://…"}]</pre>
+<input id="title-upload" type="file" accept=".json,application/json" aria-label="Import authorized title inventory"><p class="small" id="import-status" role="status"></p></details></div></aside>
+<article class="sheet" id="tracker-sheet"><h2 id="track-name"></h2><p class="meta" id="track-evidence-summary"></p>
+<div class="section"><h3 id="track-cat-label"></h3><p class="small" id="track-limit"></p><div id="exercise-choices"></div></div>
+<div class="source" id="track-origin"></div>
+<p class="kicker">Original practice</p><h2 id="track-drill-name"></h2><p class="prompt" id="track-prompt" style="margin-top:12px"></p>
+<div class="section"><h3>Follow-up questions</h3><ol id="track-follow"></ol></div>
+<details class="section" id="track-scoring"><summary>Scoring guide</summary><ul id="track-rubric"></ul></details>
+<details class="section"><summary>Company sources and gaps</summary><div id="track-sources"></div></details>
+</article></div></section>
+
+<section id="study" hidden aria-labelledby="study-heading">
+<div class="intro"><h1 id="study-heading">Company practice</h1><p>Pick a source title. Work through an original interview question, then check your reasoning.</p></div>
+<div class="workspace">
+<aside aria-label="Title index">
+<div class="filters"><label>Company<select id="company"></select></label><label>Search titles<input type="search" id="search" placeholder="e.g. SQL"></label></div>
+<div class="counter" id="count" aria-live="polite"></div><div id="titles"></div></aside>
+<article class="sheet" id="drill"><div class="kicker">Original practice <span id="variant-label"></span></div>
+<h2 id="drill-name"></h2><div class="source"><div class="under" id="source-type"></div><div id="source-title"></div><div class="under" id="source-meta"></div></div>
+<p class="prompt" id="prompt"></p>
+<div class="section"><h3>Follow-up questions</h3><ol id="followups"></ol></div>
+<details class="section" id="evaluation"><summary>Show scoring guide</summary><ul id="rubric"></ul></details>
+<div class="actions"><button class="btn" id="another">Switch variant</button><button class="btn secondary" id="brief">Copy AI practice brief</button></div><p class="meta" id="basis"></p>
+<div id="copy-fallback" hidden><label class="field-label" for="brief-text">Select and copy this practice brief</label><textarea id="brief-text" rows="7" style="width:100%"></textarea></div><p class="small" id="copy-status" role="status"></p>
+</article>
+</div></section>
+<section id="find" hidden aria-labelledby="find-heading">
+<div class="intro"><h1 id="find-heading">Find titles</h1><p>Explore a company’s public hiring materials or practice from a title you have permission to use.</p></div>
+<div class="find-grid">
+<div class="box"><h2>Search an employer</h2><p>Fetch exercise titles from a supported employer catalog or look for more hiring repositories in an official GitHub organization.</p>
+<form class="form-grid" id="discover-form"><label>Company or official GitHub organization<input id="lookup" list="org-list" value="Bytebase" required maxlength="80" autocomplete="off"></label><datalist id="org-list"></datalist>
+<label>Look for<select id="method"><option value="catalog">Published exercise titles</option><option value="repos">Repositories by name</option></select></label><label id="keyword-label" hidden>Repository name contains<select id="keyword"><option value="interview">interview</option><option value="challenge">challenge</option><option value="recruitment">recruitment</option><option value="takehome">takehome</option><option value="take-home">take-home</option><option value="assessment">assessment</option><option value="hiring">hiring</option><option value="assignment">assignment</option><option value="coding">coding</option></select></label>
+<button class="btn" id="lookup-button">Search GitHub</button></form><p class="status" id="live-status" role="status"></p><div id="live-results"></div></div>
+<div class="box"><h2>Practice your own title</h2><p>Use an independently chosen topic or a title from a catalog you’re authorized to use. You can add a focus when the title is broad.</p>
+<form class="form-grid" id="manual"><label>Company or practice group<input id="manual-company" maxlength="80" required placeholder="e.g. Delta Air Lines" autocomplete="off"></label><label>Title or topic<input id="manual-title" maxlength="240" required placeholder="e.g. Detect gaps in a flight event stream"></label>
+<label>Practice focus (optional)<input id="manual-topic" maxlength="120" placeholder="e.g. SQL, caching, anomaly detection"></label>
+<label>Source link (optional)<input id="manual-url" type="url" maxlength="1500" placeholder="https://"></label><button class="btn secondary">Generate practice</button></form><p class="status" id="manual-status" role="status"></p></div>
+</div></section></main>
+<footer class="shell">Exercises and scoring guides are original practice. Sources and coverage are shown for each company. Added titles are saved in this browser when local storage is available.</footer>
+<script id="tracker-data" type="application/json">{"schemaVersion":1,"displayDate":"November 26, 2026","checkedAt":"2026-11-26T21:10:03Z","roster":["Airbnb","Amazon","Anduril","Anthropic","Apple","Bloomberg","ByteDance / TikTok","C3 AI","Capital One","Citadel / Citadel Securities","Databricks","Disney","DoorDash","Dropbox","Goldman Sachs","Google","Jane Street","JPMorgan Chase","Jump Trading","Karat","LinkedIn","Meta","Microsoft","Netflix","Nuro","OpenAI","Optiver","Oracle","Pinterest","Point72","Pure Storage","Reddit","Roblox","Salesforce","Snapchat","Snowflake","Square (Block)","Stripe","Uber","Waymo","Whatnot"],"rosterBasis":"Employer practice roster in alphabetical order.","sourceScanMethod":"Bounded search of first-party publications for each roster company. Published samples and explicit example prompts count once per company, category and source item. Interview guides, research challenges and independent exercises are outside the sample counts.","sources":[{"company":"Airbnb","status":"verified_guide","sourceUrl":"https://cviprep.withairbnb.com/","sourceLabel":"Preparing for your core values interviews","kind":"guide","category":"Behavioral","note":"The core-values interview asks for concrete examples of behavior at defining moments."},{"company":"Airbnb","status":"verified_sample","sourceUrl":"https://cviprep.withairbnb.com/","sourceLabel":"Making a difficult decision","kind":"named","category":"Behavioral","titleType":"descriptive label","note":"One of the explicitly offered sample questions in Airbnb's own core-values guide asks a candidate to discuss a particularly difficult decision."},{"company":"Airbnb","status":"verified_sample","sourceUrl":"https://cviprep.withairbnb.com/","sourceLabel":"Adapting after an important plan went wrong","kind":"named","category":"Behavioral","titleType":"descriptive label","note":"Another explicit sample in Airbnb's core-values guide asks candidates to explain their response to an important plan going awry."},{"company":"Amazon","status":"Verified sample","sourceUrl":"https://static.jobs.production.amazon-jobs.brightspot.cloud/71/7d/c821917c48fe87387c036151d9fb/transcript-how-to-break-down-the-coding-problem.docx","sourceLabel":"Autocomplete for customer-review search","kind":"named","category":"Coding","note":"Employer SDE II coding walkthrough at 0:32. The candidate reasons about keyword suggestions as a customer types.","titleType":"descriptive label"},{"company":"Amazon","status":"Verified sample","sourceUrl":"https://static.jobs.production.amazon-jobs.brightspot.cloud/6b/de/fe94b6d84b98a28ec604c5f8d1e7/transcript-system-design-interview-prep.docx","sourceLabel":"Design an online bookstore","kind":"named","category":"System design","note":"Employer SDE II design walkthrough at 1:11. The interviewer asks the candidate to clarify the product and scale before choosing a design.","titleType":"descriptive label"},{"company":"Amazon","status":"Verified sample","sourceUrl":"https://www.aboutamazon.com/news/workplace/amazon-interview-best-tips","sourceLabel":"Exceeding customer expectations","kind":"named","category":"Behavioral","note":"The recruiting manager supplies an explicit example, recommends a specific personal contribution, and asks for metrics where applicable.","titleType":"descriptive label"},{"company":"Anduril","status":"checked_no_verified_result","sourceUrl":"","sourceLabel":"","kind":"none","category":"Other","note":"Search of public recruitment and engineering materials did not verify a first-party sample or substantive candidate guide."},{"company":"Anthropic","status":"Verified sample","sourceUrl":"https://github.com/anthropics/original_performance_takehome","sourceLabel":"Anthropic's Original Performance Take-Home","kind":"named","category":"Coding","note":"Retired performance-engineering task released for practice. Anthropic confirms its history and publication. This is the same assessment already in the notebook.","titleType":"published title"},{"company":"Apple","status":"No verified source","sourceUrl":"https://www.apple.com/careers/us/index.html","sourceLabel":"Careers at Apple","kind":"none","category":"Other","note":"The bounded search located career and team pages, without a first-party interview question or relevant preparation guide."},{"company":"Bloomberg","status":"verified_guide","sourceUrl":"https://bloomberg.com/engineering","sourceLabel":"Engineering & CTO","kind":"guide","category":"Other","note":"First-party engineering careers page differentiates entry-level matching from role-specific interviews for experienced hires. Found no named example on that employer page."},{"company":"ByteDance / TikTok","status":"Guide only","sourceUrl":"https://lifeattiktok.com/earlycareers/faq/?language=en","sourceLabel":"Early Careers FAQ","kind":"guide","category":"Coding","note":"The TikTok early-career guidance describes a location-dependent online coding assessment and language choice."},{"company":"C3 AI","status":"verified_guide","sourceUrl":"https://www.c3.ai/resources/glossary/machine-learning/candidate-screening-and-interview-process","sourceLabel":"Candidate Screening and Interview Process","kind":"guide","category":"Coding","note":"The AI/ML recruitment assessment covers programming, fundamental math and familiarity with ML techniques."},{"company":"C3 AI","status":"verified_guide","sourceUrl":"https://www.c3.ai/resources/glossary/machine-learning/candidate-screening-and-interview-process","sourceLabel":"Candidate Screening and Interview Process","kind":"guide","category":"Other","note":"The AI/ML recruitment assessment covers programming, fundamental math and familiarity with ML techniques."},{"company":"Capital One","status":"Verified sample","sourceUrl":"https://www.capitalonecareers.com/strategy-interviewing","sourceLabel":"Practice Case: Sandwich Shop","kind":"named","category":"Other","note":"Public Strategy Consulting case featuring commercial judgment and break-even analysis. This is a practice case for a specific role.","titleType":"published title"},{"company":"Capital One","status":"Guide only","sourceUrl":"https://www.capitalonecareers.com/strategy-interviewing","sourceLabel":"Strategy interviewing","kind":"guide","category":"Behavioral","note":"The employer asks Strategy Consulting applicants to discuss their background, interest and contributions."},{"company":"Citadel / Citadel Securities","status":"verified_guide","sourceUrl":"https://www.citadelsecurities.com/careers/career-perspectives/our-engineering-interview-process/","sourceLabel":"Experienced Professionals: Engineering Interview Process - Citadel Securities","kind":"guide","category":"Coding","note":"Experienced engineering at Citadel Securities uses one evolving problem through design, implementation, review and discussion of working style."},{"company":"Citadel / Citadel Securities","status":"verified_guide","sourceUrl":"https://www.citadelsecurities.com/careers/career-perspectives/our-engineering-interview-process/","sourceLabel":"Experienced Professionals: Engineering Interview Process - Citadel Securities","kind":"guide","category":"System design","note":"Experienced engineering at Citadel Securities uses one evolving problem through design, implementation, review and discussion of working style."},{"company":"Citadel / Citadel Securities","status":"verified_guide","sourceUrl":"https://www.citadelsecurities.com/careers/career-perspectives/our-engineering-interview-process/","sourceLabel":"Experienced Professionals: Engineering Interview Process - Citadel Securities","kind":"guide","category":"Behavioral","note":"Experienced engineering at Citadel Securities uses one evolving problem through design, implementation, review and discussion of working style."},{"company":"Citadel / Citadel Securities","status":"verified_guide","sourceUrl":"https://www.citadel.com/careers/career-perspectives/our-engineering-interview-process/","sourceLabel":"Our Campus Engineering Interview Process - Citadel","kind":"guide","category":"Coding","note":"Citadel's campus guide separately describes a coding, data structures and algorithms screen with discussion of the candidate's approach."},{"company":"Databricks","status":"verified_guide","sourceUrl":"https://www.databricks.com/sites/default/files/2025-04/engineering-careers-site-interview-prep-april-2025-002.pdf","sourceLabel":"Engineering Careers Site Interview Prep April 2025","kind":"guide","category":"Coding","note":"The backend panel guide distinguishes production-quality implementation with tests, algorithms, system programming, and end-to-end architecture."},{"company":"Databricks","status":"verified_guide","sourceUrl":"https://www.databricks.com/sites/default/files/2025-04/engineering-careers-site-interview-prep-april-2025-002.pdf","sourceLabel":"Engineering Careers Site Interview Prep April 2025","kind":"guide","category":"System design","note":"The backend panel guide distinguishes production-quality implementation with tests, algorithms, system programming, and end-to-end architecture."},{"company":"Disney","status":"verified_guide","sourceUrl":"https://www.disneycareers.com/en/interview-prep","sourceLabel":"Behavioral Interview Questions - Disney Careers","kind":"guide","category":"Behavioral","note":"Disney Careers gives a STAR framework and recommends examples of conflict, collaboration, learning and influence."},{"company":"DoorDash","status":"Verified sample","sourceUrl":"https://careersatdoordash.com/blog/doordash-is-rebuilding-its-engineering-interviews-around-ai/","sourceLabel":"Order Management System","kind":"named","category":"Coding","note":"DoorDash describes this early interview pilot and explains that the original scope proved too large. It is a historical example.","titleType":"published title"},{"company":"DoorDash","status":"Verified sample","sourceUrl":"https://careersatdoordash.com/blog/how-to-prepare-for-a-technical-interview/","sourceLabel":"Design an Android image-loading library","kind":"named","category":"System design","note":"DoorDash cites a platform-specific Android design prompt. The date and the role matter.","titleType":"descriptive label"},{"company":"Dropbox","status":"verified_guide","sourceUrl":"https://www.dropbox.jobs/en/how-we-hire/","sourceLabel":"How we hire","kind":"guide","category":"Other","note":"Dropbox describes role-relevant skills assessments and interviews about collaboration, strengths and work style."},{"company":"Dropbox","status":"verified_guide","sourceUrl":"https://www.dropbox.jobs/en/how-we-hire/","sourceLabel":"How we hire","kind":"guide","category":"Behavioral","note":"Dropbox describes role-relevant skills assessments and interviews about collaboration, strengths and work style."},{"company":"Goldman Sachs","status":"verified_guide","sourceUrl":"https://www.goldmansachs.com/careers/students/prepare","sourceLabel":"Prepare","kind":"guide","category":"Coding","note":"Campus hiring describes an engineering technical assessment, plus discussion of teamwork, problem solving and prior experience."},{"company":"Goldman Sachs","status":"verified_guide","sourceUrl":"https://www.goldmansachs.com/careers/students/prepare","sourceLabel":"Prepare","kind":"guide","category":"Behavioral","note":"Campus hiring describes an engineering technical assessment, plus discussion of teamwork, problem solving and prior experience."},{"company":"Google","status":"Guide only","sourceUrl":"https://www.youtube.com/watch?v=Ti5vfu9arXQ","sourceLabel":"How to solve a Google coding interview question","kind":"guide","category":"Coding","note":"Life at Google publishes a mock coding interview featuring brute-force and dynamic-programming approaches. The source label is the video title. No underlying problem title verified from the employer page."},{"company":"Jane Street","status":"Verified sample","sourceUrl":"https://blog.janestreet.com/what-a-jane-street-dev-interview-is-like/","sourceLabel":"Memo","kind":"named","category":"Coding","note":"The employer gives the precise historical question name and states that it no longer asks it. The exercise tests memoization and reasoning about cache behavior.","titleType":"published title"},{"company":"Jane Street","status":"Guide only","sourceUrl":"https://www.janestreet.com/trading-interviews/","sourceLabel":"Trading Interviews","kind":"guide","category":"Other","note":"Trading candidate guide covers quantitative reasoning, probability, data analysis and a mock interview."},{"company":"JPMorgan Chase","status":"verified_guide","sourceUrl":"https://www.jpmorganchase.com/careers/how-we-hire","sourceLabel":"How we hire","kind":"guide","category":"Other","note":"JPMorganChase's public hiring guide describes the interview stage and tailoring by role. General process only."},{"company":"Jump Trading","status":"checked_no_verified_result","sourceUrl":"","sourceLabel":"","kind":"none","category":"Other","note":"Targeted searches for the firm's own interview guide and exercises returned third-party reports, which were excluded."},{"company":"Karat","status":"Provider content only","sourceUrl":"https://karat.com/candidate-experience","sourceLabel":"The Karat Interview Experience","kind":"none","category":"Other","note":"The page explains Karat assessments delivered for client companies. Its examples cannot establish questions used to hire Karat employees."},{"company":"LinkedIn","status":"verified_guide","sourceUrl":"https://careers.linkedin.com/Teams/Engineering","sourceLabel":"Engineering","kind":"guide","category":"Coding","note":"Engineering recruiting names coding, craftsmanship, design/architecture, communication and leadership as possible interview dimensions."},{"company":"LinkedIn","status":"verified_guide","sourceUrl":"https://careers.linkedin.com/Teams/Engineering","sourceLabel":"Engineering","kind":"guide","category":"System design","note":"Engineering recruiting names coding, craftsmanship, design/architecture, communication and leadership as possible interview dimensions."},{"company":"LinkedIn","status":"verified_guide","sourceUrl":"https://careers.linkedin.com/Teams/Engineering","sourceLabel":"Engineering","kind":"guide","category":"Behavioral","note":"Engineering recruiting names coding, craftsmanship, design/architecture, communication and leadership as possible interview dimensions."},{"company":"Meta","status":"Verified sample","sourceUrl":"https://engineering.fb.com/2012/07/20/uncategorized/get-that-job-at-facebook/","sourceLabel":"Worldwide video distribution","kind":"named","category":"System design","note":"A 2012 Facebook engineering recruiting article offers this as an illustrative architecture question. Historical sample only.","titleType":"descriptive label"},{"company":"Meta","status":"Verified sample","sourceUrl":"https://engineering.fb.com/2012/07/20/uncategorized/get-that-job-at-facebook/","sourceLabel":"Facebook chat architecture","kind":"named","category":"System design","note":"A 2012 Facebook engineering recruiting article offers this as an illustrative architecture question. Historical sample only.","titleType":"descriptive label"},{"company":"Microsoft","status":"Guide only","sourceUrl":"https://careers.microsoft.com/v2/global/en/hiring-tips/technical-interviewing","sourceLabel":"Technical interviews","kind":"guide","category":"Coding","note":"Role-dependent employer preparation topics. Choice of data structure, algorithmic complexity and edge-case testing."},{"company":"Microsoft","status":"Guide only","sourceUrl":"https://careers.microsoft.com/v2/global/en/hiring-tips/technical-interviewing","sourceLabel":"Technical interviews","kind":"guide","category":"System design","note":"Role-dependent employer preparation topics. Tradeoffs in resiliency, availability, scaling, replication and partitioning."},{"company":"Microsoft","status":"Guide only","sourceUrl":"https://careers.microsoft.com/v2/global/en/hiring-tips/technical-interviewing","sourceLabel":"Technical interviews","kind":"guide","category":"Other","note":"Role-dependent employer preparation topics. Data-science role preparation includes data manipulation, probabilistic reasoning and evaluation."},{"company":"Netflix","status":"verified_guide","sourceUrl":"https://jobs.netflix.com/careers/new-grads","sourceLabel":"Join our New Grads Team - Careers at Netflix","kind":"guide","category":"Coding","note":"New-graduate guidance covers software-engineering fundamentals and discussion of the company's culture memo."},{"company":"Netflix","status":"verified_guide","sourceUrl":"https://jobs.netflix.com/careers/new-grads","sourceLabel":"Join our New Grads Team - Careers at Netflix","kind":"guide","category":"Behavioral","note":"New-graduate guidance covers software-engineering fundamentals and discussion of the company's culture memo."},{"company":"Netflix","status":"verified_sample","sourceUrl":"https://jobs.netflix.com/careers/new-grads","sourceLabel":"Reflecting on Netflix's culture memo","kind":"named","category":"Behavioral","titleType":"descriptive label","note":"Netflix explicitly tells candidates they may be asked which aspects of its culture memo do or do not resonate."},{"company":"Nuro","status":"verified_guide","sourceUrl":"https://www.nuro.ai/blog/a-candid-guide-to-interviewing-at-nuro","sourceLabel":"A Candid Guide to Interviewing at Nuro","kind":"guide","category":"Other","note":"Nuro's co-founder publishes a guide to interviewing at Nuro. No sample question or specific category was verified from its rendered text."},{"company":"OpenAI","status":"Guide only","sourceUrl":"https://openai.com/interview-guide/","sourceLabel":"Interview guide","kind":"guide","category":"Coding","note":"The guide describes team-dependent pair coding, take-homes or tests and emphasizes engineering quality, performance and test coverage."},{"company":"OpenAI","status":"Guide only","sourceUrl":"https://openai.com/interview-guide/","sourceLabel":"Interview guide","kind":"guide","category":"Behavioral","note":"The introductory call covers experience, motivations and goals. Communication and collaboration are explicit evaluation criteria."},{"company":"Optiver","status":"verified_guide","sourceUrl":"https://www.optiver.com/join-us/stories/optiver-interview-tips-for-software-engineers/","sourceLabel":"Optiver interview tips for Software Engineers","kind":"guide","category":"Coding","note":"Software engineer prep emphasizes language fluency, computer architecture, networking, memory management and communicating design decisions."},{"company":"Optiver","status":"verified_guide","sourceUrl":"https://www.optiver.com/join-us/stories/optiver-interview-tips-for-software-engineers/","sourceLabel":"Optiver interview tips for Software Engineers","kind":"guide","category":"System design","note":"Software engineer prep emphasizes language fluency, computer architecture, networking, memory management and communicating design decisions."},{"company":"Oracle","status":"verified_guide","sourceUrl":"https://blogs.oracle.com/jobsatoracle/how-to-prepare-for-behavioral-interview-questions","sourceLabel":"How to prepare for behavioral interview questions","kind":"guide","category":"Behavioral","note":"Oracle recommends a STAR answer to a real setback, ambiguity or learning experience."},{"company":"Oracle","status":"verified_sample","sourceUrl":"https://blogs.oracle.com/jobsatoracle/how-to-prepare-for-behavioral-interview-questions","sourceLabel":"Learning after falling short","kind":"named","category":"Behavioral","titleType":"descriptive label","note":"Written preparation prompt asks candidates to consider an unsuccessful outcome, its causes and what they learned."},{"company":"Pinterest","status":"verified_guide","sourceUrl":"https://www.pinterestcareers.com/life-at-pinterest-blog/interviewing/interview-process-general-software-engineering-interns-and-new-grads/","sourceLabel":"Interview Process: General Software Engineering Interns and New Grads","kind":"guide","category":"Coding","note":"General software-engineering intern and graduate process. Pinterest describes the CodeSignal screen and a technical interview with an engineer. Scope varies by role."},{"company":"Point72","status":"verified_guide","sourceUrl":"https://point72.com/blog/tips-for-interviewing-with-cubist/","sourceLabel":"Tips for Interviewing with Cubist - Point72","kind":"guide","category":"Behavioral","note":"Cubist candidate guidance asks researchers to explain prior work and impact and discuss uncertainty in technical conversations. Limited to the named Point72 business."},{"company":"Point72","status":"verified_guide","sourceUrl":"https://point72.com/blog/tips-for-interviewing-with-cubist/","sourceLabel":"Tips for Interviewing with Cubist - Point72","kind":"guide","category":"Other","note":"Cubist candidate guidance asks researchers to explain prior work and impact and discuss uncertainty in technical conversations. Limited to the named Point72 business."},{"company":"Pure Storage","status":"checked_no_verified_result","sourceUrl":"","sourceLabel":"","kind":"none","category":"Other","note":"Checked recruitment material under Pure Storage and Everpure. No substantive first-party interview guide or sample was verified in this run."},{"company":"Reddit","status":"checked_no_verified_result","sourceUrl":"","sourceLabel":"","kind":"none","category":"Other","note":"First-party recruiting materials and employer job postings in this search did not verify a reusable named exercise or substantive prep guide. Candidate-authored Reddit posts excluded."},{"company":"Roblox","status":"verified_guide","sourceUrl":"https://careers.roblox.com/early-career","sourceLabel":"Early Careers at Roblox","kind":"guide","category":"Coding","note":"The early-career page distinguishes programming and algorithmic reasoning from immersive problem-solving assessments."},{"company":"Roblox","status":"verified_guide","sourceUrl":"https://careers.roblox.com/early-career","sourceLabel":"Early Careers at Roblox","kind":"guide","category":"Other","note":"The early-career page distinguishes programming and algorithmic reasoning from immersive problem-solving assessments."},{"company":"Roblox","status":"verified_sample","sourceUrl":"https://careers.roblox.com/early-career","sourceLabel":"Kaiju Cats","kind":"named","category":"Other","titleType":"published title","note":"Named, untimed official assessment-preparation game for problem solving. Its UI and tactics introduce the Robots and Factories assessments."},{"company":"Roblox","status":"verified_sample","sourceUrl":"https://careers.roblox.com/early-career","sourceLabel":"Coding Cookies","kind":"named","category":"Coding","titleType":"published title","note":"Named practice game for the block-coding interface used in Roblox's Outpost: Mars assessment. The employer labels it practice."},{"company":"Salesforce","status":"verified_guide","sourceUrl":"https://trailhead.salesforce.com/content/learn/modules/strategies-for-successful-software-engineer-interviews-26/ace-the-technical-assessments","sourceLabel":"Prepare and Succeed on HackerRank and Technical Loops","kind":"guide","category":"Coding","note":"Engineering prep describes coding and tests, scalable implementation and an architecture discussion where role-relevant. Specific underlying problem titles are not published."},{"company":"Salesforce","status":"verified_guide","sourceUrl":"https://trailhead.salesforce.com/content/learn/modules/strategies-for-successful-software-engineer-interviews-26/ace-the-technical-assessments","sourceLabel":"Prepare and Succeed on HackerRank and Technical Loops","kind":"guide","category":"System design","note":"Engineering prep describes coding and tests, scalable implementation and an architecture discussion where role-relevant. Specific underlying problem titles are not published."},{"company":"Snapchat","status":"verified_guide","sourceUrl":"https://careers.snap.com/swe-interview-prep","sourceLabel":"Software Engineering Interview Prep","kind":"guide","category":"Coding","note":"Snap's engineering guide covers general and AI-assisted coding and the design of scalable, maintainable services. Scope is track-specific."},{"company":"Snapchat","status":"verified_guide","sourceUrl":"https://careers.snap.com/swe-interview-prep","sourceLabel":"Software Engineering Interview Prep","kind":"guide","category":"System design","note":"Snap's engineering guide covers general and AI-assisted coding and the design of scalable, maintainable services. Scope is track-specific."},{"company":"Snowflake","status":"Guide only","sourceUrl":"https://careers.snowflake.com/us/en/gethired","sourceLabel":"Engineering hiring process","kind":"guide","category":"Coding","note":"The hiring page names coding and/or system design in the technical stages and describes team-dependent variation."},{"company":"Snowflake","status":"Guide only","sourceUrl":"https://careers.snowflake.com/us/en/gethired","sourceLabel":"Engineering hiring process","kind":"guide","category":"System design","note":"The hiring page names coding and/or system design in the technical stages and describes team-dependent variation."},{"company":"Square (Block)","status":"verified_guide","sourceUrl":"https://developer.squareup.com/blog/ace-the-square-pairing-interview/","sourceLabel":"Ace the Square pairing interview","kind":"guide","category":"Coding","note":"Square's historical pairing article describes a timed collaborative implementation, an executable solution and algorithmic focus. It documents Square rather than all Block teams."},{"company":"Stripe","status":"Guide only","sourceUrl":"https://stripe.com/guides/atlas/scaling-eng","sourceLabel":"Bug Squash","kind":"guide","category":"Coding","note":"Stripe documents a named interview format involving a historical open-source bug. It does not supply an individual exercise title here."},{"company":"Uber","status":"Guide only","sourceUrl":"https://jobs.uber.com/en/people-stories/interview-prep/landing-the-job-at-uber-backend-engineer/","sourceLabel":"Landing the job at Uber: Backend Engineer","kind":"guide","category":"Coding","note":"One engineer describes their hiring process. Algorithms, data structures and practice explaining a solution."},{"company":"Uber","status":"Guide only","sourceUrl":"https://jobs.uber.com/en/people-stories/interview-prep/landing-the-job-at-uber-backend-engineer/","sourceLabel":"Landing the job at Uber: Backend Engineer","kind":"guide","category":"System design","note":"One engineer describes their hiring process. Relating system-design concepts to prior engineering experience."},{"company":"Uber","status":"Guide only","sourceUrl":"https://jobs.uber.com/en/people-stories/interview-prep/landing-the-job-at-uber-backend-engineer/","sourceLabel":"Landing the job at Uber: Backend Engineer","kind":"guide","category":"Behavioral","note":"One engineer describes their hiring process. Preparation around team context, company values and individual career goals."},{"company":"Waymo","status":"verified_guide","sourceUrl":"https://waymo.com/open/challenges/","sourceLabel":"Challenges Overview – Waymo Open Dataset","kind":"guide","category":"Other","note":"Public research competitions such as Motion Prediction provide domain context only. No hiring-question claim or interview title."},{"company":"Whatnot","status":"verified_guide","sourceUrl":"https://www.whatnot.com/careers","sourceLabel":"Careers · Whatnot: Shop, Sell, Connect","kind":"guide","category":"Coding","note":"Whatnot's careers page says the role determines whether later interviews include technical, coding or case-based work."},{"company":"Whatnot","status":"verified_guide","sourceUrl":"https://www.whatnot.com/careers","sourceLabel":"Careers · Whatnot: Shop, Sell, Connect","kind":"guide","category":"Other","note":"Whatnot's careers page says the role determines whether later interviews include technical, coding or case-based work."}],"scenarios":[{"company":"Airbnb","coding":["Find consecutive available nights","Given listings and blocked date ranges, find available stays of k consecutive nights. Treat checkout dates consistently and test adjacent reservations across a month boundary."],"design":["Prevent overlapping reservations","Design a booking hold across listing, payment and confirmation services. Explain how two simultaneous requests resolve and when an expired hold can safely release inventory."],"behavioral":["Handle competing guest and host needs","Describe a situation in which two groups experienced the same policy differently. What did you learn from each, and which measurable outcome guided your decision?"],"other":["Measure a flexible-date feature","A search-calendar feature shifts demand to nearby dates. Design a test that measures additional completed stays while accounting for displacement."]},{"company":"Amazon","coding":["Parcel scan replay","A parcel scanner can send the same event twice and deliver a scan up to three minutes late. Given (parcel, event_id, time, station), return the latest station per parcel as of a cutoff and define how ties are resolved."],"design":["Reserve the last unit","Design stock reservation for a flash sale across two fulfillment regions. A cart hold expires in eight minutes. Show how checkout, retries, and hold expiration interact when only one unit remains."],"behavioral":["Correct a misleading delivery promise","Tell me about a time your team’s success metric looked healthy while customers had a poor experience. How did you find the discrepancy, get someone to act, and measure the result?"],"other":["Test a shorter delivery promise","A team wants to show a faster estimated arrival before its carrier data is complete. Specify a test population, a promise-accuracy metric and a guardrail for repeat orders."]},{"company":"Anduril","coding":["Reconcile spare-part stock transfers","Two civilian maintenance depots exchange serialized replacement parts. Given dispatches, receipts, returns, and duplicate scans, calculate stock on hand and stock in transit without counting the same part twice."],"design":["Support offline warehouse inventory","Design an offline inventory application for a civilian service warehouse. Two technicians may reserve the same last spare part while disconnected. Explain how reservations, conflicts, and corrections are communicated."],"behavioral":["Handle a warehouse migration discrepancy","A dry run of a civilian warehouse migration reveals mismatched serial numbers in one aisle. Explain how you would scope the mismatch, choose a reversible rollout, and tell the warehouse manager what can still ship."],"other":["Evaluate demand for replacement parts","A civilian maintenance team has lumpy demand and long supplier lead times. Propose a forecast evaluation that measures both stockouts and excess inventory, including parts with zero demand most weeks."]},{"company":"Anthropic","coding":["Pack a variable-length inference queue","A batch has a token budget and a maximum request count. Given arrival times and input lengths, construct batches that never violate either limit. Include a long request and state when it should stop waiting."],"design":["Version model evaluations","Design a service for comparing model versions on a fixed evaluation suite. Pin inputs, grading rules, and sampling settings, and show how a corrected label changes future reports while keeping older reports reproducible."],"behavioral":["Disagree about an evaluation result","A small evaluation suggests an important improvement, but a colleague finds a regression in a rare task family. Describe the experiment you would run next and what you would tell a release reviewer now."],"other":["Interpret a noisy preference result","Two model outputs are rated in pairs, and some examples receive three ratings while others receive one. Explain how you would estimate the win rate, account for ties and judge disagreement, and choose the unit for resampling."]},{"company":"Apple","coding":["Merge offline edits","Two devices edit a reading list while offline. Apply a sequence of uniquely identified insert and remove events in any delivery order. Specify which operation wins a tie and test convergence after a replay."],"design":["Sync a private photo index","Design cross-device search for photo metadata with intermittent connectivity. Explain what stays on the device, what crosses the network and how a deletion propagates."],"behavioral":["Push back on unnecessary telemetry","Describe a time when useful diagnostics conflicted with data minimization. What did you change in the design and what evidence showed that troubleshooting still worked?"],"other":["Measure energy per completed search","Two on-device ranking implementations have similar median latency. Design a benchmark that separates battery impact, thermal throttling and relevance regressions."]},{"company":"Bloomberg","coding":["Merge timestamped market headlines","Combine three timestamp-ordered news streams into one feed. The same story ID may arrive with an update after a correction. Preserve the user-visible revision history and define a stable ordering for ties."],"design":["Serve as-of reference data","Design a service that answers which company name, identifier, and exchange were valid on a chosen date. A correction can arrive years later. Explain how a report can reproduce the result it originally displayed."],"behavioral":["Explain a disputed number to a subscriber","A customer finds that a displayed metric disagrees with another terminal just before market open. Describe how you narrow the disagreement and communicate what is known before the cause is confirmed."],"other":["Define a corporate-action adjustment","A stock splits two-for-one between two observations. Explain how to present adjusted prices and volumes for comparison and how you would verify that the adjustment was applied exactly once."]},{"company":"ByteDance / TikTok","coding":["Deduplicate viewing sessions","Group timestamped plays by viewer into sessions separated by more than 30 minutes. A play event may arrive twice or after a later play. Show how a late event can join two sessions."],"design":["Apply feed preferences quickly","Design propagation of a viewer’s “show less” action into feed ranking across devices. Set a freshness target and describe the experience when a regional cache lags."],"behavioral":["Resolve an engagement tradeoff","Describe a time when a change increased engagement but another measurable outcome got worse. Who did you involve and what did you ship?"],"other":["Evaluate short-video recommendations","Compare two feed rankers when repeat views and session length are skewed. Choose an offline metric, a controlled online test and a long-term countermetric."]},{"company":"C3 AI","coding":["Align industrial readings","Align timestamped sensor values to a fixed sampling interval. Mark gaps rather than filling them silently, and test a reading arriving exactly at a bucket boundary."],"design":["Version asset features","Design an enterprise feature store for industrial assets whose identifiers change after maintenance. Preserve training-time reproducibility and prevent leakage from future repairs."],"behavioral":["Resolve a pilot mismatch","Describe a pilot where a customer and your modeling team defined success differently. How did you translate both definitions into an acceptance test?"],"other":["Validate alerts with sparse labels","A maintenance model flags rare failures, but most alerts receive no follow-up label. Design an evaluation that estimates missed failures and the cost of unnecessary inspections."]},{"company":"Capital One","coding":["Reconcile pending card events","Given authorizations, reversals and captures keyed by transaction ID, calculate the pending and posted balances at a cutoff. Show how duplicate captures and a partial reversal are handled."],"design":["Record and explain a decision","Design a service that can reproduce a previously issued eligibility decision using the exact rule and input versions used at the time. Include rule rollback and customer-facing explanations."],"behavioral":["Challenge an attractive metric","Describe a decision that increased a short-term business metric while increasing risk for customers. How did you quantify the tradeoff and persuade the team to act?"],"other":["Choose a service location","A small retailer is considering a second location with higher rent and uncertain demand. Derive a break-even volume, name your most sensitive assumption and propose a low-cost demand test."]},{"company":"Citadel / Citadel Securities","coding":["Reconstruct consolidated quotes","Two public feeds emit bid and ask updates with independent sequence numbers. Compute the best current bid and ask after each valid message, ignore exact duplicate messages, and flag sequence gaps instead of silently using stale state."],"design":["Replay a research dataset as it was known","Design a research-data store that supports replaying the records available at a previous time, including later corrections. State the difference between event time and availability time and how to reproduce a run after a vendor revision."],"behavioral":["Challenge a backtest before review","A colleague is preparing to present a striking backtest after testing hundreds of variants. Explain how you raise selection bias without dismissing their work and what evidence would change your recommendation."],"other":["Quantify uncertainty in a spread estimate","Twenty simulated trading days have very different volumes. Decide whether to report the average per trade or per day, show a case where the conclusions diverge, and propose an uncertainty estimate that respects day-level dependence."]},{"company":"Databricks","coding":["Apply change data exactly once on replay","Rows arrive with a key, event version, and operation. Apply inserts, updates, and deletes to a table even if a microbatch retries. Specify the rule for equal versions with conflicting payloads."],"design":["Publish a consistent table snapshot","Design snapshot reads while several writers append files and one writer compacts small files. Describe how a reader chooses a snapshot and how old files become eligible for cleanup."],"behavioral":["Resolve a correctness and cost disagreement","A proposed pipeline halves cost on average but silently drops heavily skewed keys in one tenant. Explain how you validate impact and sequence a fix that the platform and customer teams both accept."],"other":["Diagnose a skewed distributed join","Ninety percent of the records share one join key and one task runs much longer than the others. Explain which measurements distinguish skew from slow storage and propose a fix with a correctness check."]},{"company":"Disney","coding":["Map a saved position across ad breaks","A player stores a position in content seconds. Given four nonoverlapping ad breaks and their durations, return the playback timestamp for each bookmark. Define what happens when the bookmark falls exactly at a break."],"design":["Reserve a window for park entry","Sketch a service that offers 15-minute arrival windows across several attractions. Two families may claim the last place simultaneously, and some guests lose connectivity after confirmation. Define the booking guarantee and how a guest recovers a receipt."],"behavioral":["Choose between a launch date and an accessible experience","A release candidate for a streaming premiere passes playback tests but the caption track lags on one device. Explain whom you involve, what data you collect before the premiere, and how you decide between delaying or limiting the release."],"other":["Evaluate caption quality","A studio wants one dashboard to evaluate captions across languages. Define a sampling plan and two metrics that catch timing drift as well as missing speech, and explain who reviews ambiguous cases."]},{"company":"DoorDash","coding":["Track overlapping pickup windows","An order has a ready interval, a courier has an arrival interval, and the store has operating hours. Return every feasible pickup window of at least five minutes. Treat the intervals as half-open and handle adjacent windows."],"design":["Keep customer order status coherent","Design a delivery-status service receiving updates from a restaurant, courier, and customer app. Explain which state transitions are allowed after cancellation and how delayed events affect the displayed timeline."],"behavioral":["Balance three sides of a marketplace","A dispatch change cuts delivery time but increases restaurant waiting time and courier idle time. Describe how you align the teams on a decision, segment the evidence, and communicate the trade-off."],"other":["Estimate whether a delivery promotion worked","A promotion operates in neighborhoods that share restaurants and couriers. Design an experiment that accounts for spillovers, and identify a metric that can improve even when the marketplace is worse off."]},{"company":"Dropbox","coding":["Reconcile concurrent folder changes","A laptop renames a folder while a phone edits a file inside it offline. Given stable object IDs and versioned operations, produce the merged tree and flag irreconcilable changes. Include a delete followed by a stale edit."],"design":["Resume interrupted file uploads","Design a large-file upload protocol that survives disconnections, retries, and concurrent edits. Explain how clients verify chunks and when a new file version becomes visible to other devices."],"behavioral":["Respond to unexpected sync behavior","A small release makes some users see duplicate files after reconnecting. Describe how you protect their work, identify the affected clients, and choose a rollback or forward fix."],"other":["Measure the quality of file search","Design an offline evaluation of file search across accounts with very different folder sizes. Explain how you sample queries without exposing private file contents and how you detect permission mistakes."]},{"company":"Goldman Sachs","coding":["Match settlement records with partial fills","Given trade IDs, cash movements in integer cents, and several partial settlements per trade, produce unmatched balances. Include a duplicate settlement and identical amounts attached to different trades in your test cases."],"design":["Issue a restatable risk report","Design a daily exposure report that teams can reproduce after an input correction. Explain how original and corrected versions are linked and how an auditor identifies which figures a desk saw at the cutoff."],"behavioral":["Escalate a conflicting valuation","At the reporting deadline two validated feeds disagree on the value of a large position. Explain how you establish ownership, communicate uncertainty to a stakeholder, and document a decision under time pressure."],"other":["Attribute a change in portfolio value","Given start and end positions, prices, and FX rates for two currencies, explain how to distinguish trading activity from market moves. Identify a reconciliation check that catches a sign error."]},{"company":"Google","coding":["Resolve consecutive edits","Given overlapping document edits against a base string, emit a deterministic merged view under an explicit conflict rule. Show the result when two users insert at the same offset, then retry one edit."],"design":["Serve fresh suggestions","Design autocomplete that serves popular queries worldwide and incorporates newly trending terms within ten minutes. Explain how you would evaluate freshness, latency and stale cache behavior."],"behavioral":["Settle a disputed launch metric","Describe a launch where two teams disagreed about what success meant. Which user behavior did you measure, what alternative did you test, and what decision changed?"],"other":["Evaluate a ranking experiment","A new ranker improves clicks but increases immediate reformulations. Choose a unit of randomization, a relevance metric and a guardrail, and explain how to interpret a conflicting result."]},{"company":"Jane Street","coding":["Count equivalent trading-card hands","Cards come in four colors and repeated values. Given two hands, return whether one can be transformed into the other by a single consistent renaming of colors. Include duplicates and unused colors in your tests."],"design":["Build deterministic simulation replay","Design a simulator that two researchers can rerun and compare event by event. Specify the ordering of simultaneous events and how you isolate random streams when a participant is added."],"behavioral":["Think aloud after a counterexample","During a paired reasoning exercise your partner finds a counterexample to your proposed invariant. Explain how you would revise the claim together and describe which small cases you would test first."],"other":["Choose whether to redraw a token","An urn holds tokens worth 1, 3, 6, and 10. Draw one uniformly, then either keep it or pay 1 to redraw from the remaining three and keep the second token. Find the optimal decision for each first draw and explain the expected value."]},{"company":"JPMorgan Chase","coding":["Reconcile pending and posted transactions","A pending card authorization can settle once, settle in several parts, or expire. Given a stream of linked events, calculate the available balance after each event and show how duplicate settlement messages are handled."],"design":["Deliver account statements consistently","Design a statement generator for millions of accounts at month end. It must support corrections, legal retention, and retries after partial delivery. Define how a customer identifies the current statement version."],"behavioral":["Handle a conflict between speed and controls","An upcoming launch meets its performance target but an audit trail is incomplete for a small class of transactions. Explain how you escalate the evidence, propose an interim release boundary, and document sign-off."],"other":["Evaluate a financial alert model","A monitoring model produces too many false positives during a seasonal rise in transaction volume. Explain how you would evaluate calibration across segments and estimate the review workload before changing thresholds."]},{"company":"Jump Trading","coding":["Detect gaps in an exchange replay","A recorded stream supplies per-channel sequence numbers and periodic reset markers. Return missing sequence ranges without treating a legitimate reset as a loss. Handle duplicated packets and interleaved channels."],"design":["Bound latency in market-data replay","Design a replay system for archived market events that supports both real-time and accelerated playback. Explain how to preserve per-channel order, bound memory, and quantify timing error under load."],"behavioral":["Communicate a rare latency regression","The median latency improves after a refactor but a few high-percentile samples worsen. Explain how you would discuss the release with engineering and research and what result would settle the dispute."],"other":["Estimate the distribution tail","A timer rounds measurements to whole microseconds and reports many ties. Explain how you would estimate the 99.9th percentile, how many samples you need, and what the data cannot resolve."]},{"company":"Karat","coding":["Schedule uninterrupted interview slots","Match candidate availability to interviewer slots of equal length, with one interviewer per session. Return the largest possible set of bookings and show why a naive earliest-choice rule can fail."],"design":["Keep a live coding session usable","Design a shared editor for two people during an interview. Explain reconnection, event ordering and how to restore the active document after one participant goes offline."],"behavioral":["Calibrate inconsistent evaluation","Describe a time reviewers applied the same rubric differently. How did you change the process and check whether agreement improved without concealing substantive disagreements?"],"other":["Assess interviewer agreement","You receive paired ordinal scores for 400 practice sessions. Choose an agreement statistic and explain how you would investigate divergence by question and reviewer."]},{"company":"LinkedIn","coding":["Merge employment intervals","Compute total experience from overlapping employment intervals. Specify month boundaries and missing end dates and show how concurrent roles affect the result."],"design":["Refresh a professional search index","Design updates to a search index after members edit their profiles. Explain how freshness, deduplication and access restrictions interact when updates arrive out of order."],"behavioral":["Balance two marketplace users","Describe a product or engineering decision that affected both sides of a marketplace. What signals did you collect from each group and which tradeoff did you make?"],"other":["Evaluate job recommendations","A ranker increases applications but employers receive fewer qualified applicants. Design an experiment that checks both sides of the marketplace and accounts for delayed outcomes."]},{"company":"Meta","coding":["Compute mutual contacts","Given two sorted adjacency lists containing repeated IDs, return distinct mutual contacts in order. Extend the approach to highly unequal list sizes and show a test for self-references."],"design":["Distribute audience changes","Design propagation when a user narrows the audience of a post after distribution. Explain how feed reads, caches and notifications behave during the update."],"behavioral":["Navigate conflicting product goals","Tell me about a disagreement between a growth goal and a quality goal. What did you own, how was the decision made, and what happened after launch?"],"other":["Estimate the impact of notifications","A notification experiment may affect friends of treated users. Explain how interference changes the design and define a metric that discounts low-value reopens."]},{"company":"Microsoft","coding":["Reconcile document permissions","Given group memberships and folder-specific grants, compute effective read access for a user. Handle nested groups, cycles and an explicit deny according to a precedence rule you state."],"design":["Replicate tenant configuration","Design a multi-region configuration service for an enterprise product. A permission revocation must take effect quickly. Select a consistency policy and demonstrate behavior during a regional partition."],"behavioral":["Drive a cross-team decision","Describe how you resolved a technical dependency owned by another team with a different deadline. What tradeoff did you propose, and how did both teams know the change worked?"],"other":["Plan a compatible rollout","A new client relies on a field that older services ignore. Design a rollout and validation plan, including a measurable stop condition for the first tenant cohort."]},{"company":"Netflix","coding":["Rebuild a playback session from retries","Events carry session ID, sequence number, timestamp, and state. Deduplicate retries and compute rebuffering time per session when events arrive up to 30 seconds late. Specify how you treat a missing end event."],"design":["Deliver a new episode at release time","Design the release of a large episode at midnight in three regions. Separate video delivery from entitlement checks, and explain what happens if two regions have a hot cache but the third is cold."],"behavioral":["Revisit a promising experiment","An experiment improves starts but more viewers abandon episodes after five minutes. A partner wants an immediate rollout. Describe how you would present the trade-off, agree on a decision rule, and revisit the choice."],"other":["Measure discovery versus displacement","A new home-page row increases plays for the titles it shows. Design an experiment that can distinguish incremental viewing from plays displaced elsewhere on the page."]},{"company":"Nuro","coding":["Detect missed delivery scans","Each simulated delivery has an ordered list of required package scans. Given duplicated and out-of-order scan events, identify missing checkpoints for each package and distinguish a late scan from a confirmed omission."],"design":["Manage a delivery simulation dataset","Design an index for a library of synthetic delivery-route test cases. Engineers need reproducible versions, cheap search by road type, and visibility into which scenarios changed between two releases."],"behavioral":["Decide whether a simulation improvement generalizes","A team celebrates better results on a familiar simulated route, but a second route regresses. Explain how you would frame the decision, define additional tests, and communicate confidence."],"other":["Evaluate delivery-time predictions","Given predicted arrival intervals for 5,000 delivery stops, propose measures for accuracy and calibration. Explain how to compare rainy and dry days without giving high-volume routes all the weight."]},{"company":"OpenAI","coding":["Batch requests under a token cap","Partition waiting jobs into deterministic batches with a maximum token budget. Support a single job larger than the cap and show how you prevent long jobs from waiting indefinitely."],"design":["Serve cancellable streams","Design a service that streams model output to clients. A client disconnects after receiving part of a response and later resumes. Define replay, billing boundaries and how to reclaim compute."],"behavioral":["Hold a launch for an evaluation gap","Describe a time when a new capability looked promising but the evaluation missed a consequential failure. What evidence changed the launch decision?"],"other":["Distinguish real gains from judge drift","Two model versions differ by three points on a preference benchmark. Design a blinded comparison with uncertainty estimates and a check for changes in the evaluation process."]},{"company":"Optiver","coding":["Track the midpoint after quote updates","Each ordered event adds, changes, or removes a price level and size on one side of a simulated book. Return the best bid, best ask, and midpoint after each event, including cases with a missing side."],"design":["Design a bounded event pipeline","Design a simulator containing a quote parser, state updater, and metrics consumer. Explain where to apply backpressure, how to detect dropped events, and how to test behavior during short bursts."],"behavioral":["Correct a fast decision in public","In a timed team exercise you discover that an estimate you supplied used the wrong units. Explain what you would communicate immediately, how you would correct downstream reasoning, and what you would change in the workflow."],"other":["Price a simple redraw option","A fair six-sided die is rolled. You may keep the result or pay one point to roll again and keep the second outcome. Find the optimal rule and fair value, then explain what changes if the fee rises to two."]},{"company":"Oracle","coding":["Recover a commit prefix","Given an ordered transaction log containing begin, write, commit and abort records, rebuild the latest committed key values at a cutoff. Handle repeated event delivery and an incomplete final transaction."],"design":["Recover a database backup","Design regional backups with a recovery-point objective of five minutes. Show a restore after corruption and explain how the system verifies a consistent cutoff."],"behavioral":["Surface a migration risk early","Describe a time a migration plan threatened compatibility for an important client. How did you identify affected users, negotiate the change and verify the cutover?"],"other":["Diagnose a plan regression","A query slows down after a statistics refresh even though its input size barely changes. Design an experiment to distinguish plan choice, stale data and resource contention."]},{"company":"Pinterest","coding":["Merge ordered visual results","Merge ranked lists from several boards, deduplicate pins and preserve a deterministic tie order. Return the top k unique results when one source has many repeats."],"design":["Refresh a visual discovery feed","Design feed updates after a user saves or hides a pin. Explain how to balance immediate feedback with diverse recommendations from the longer-term profile."],"behavioral":["Use qualitative feedback in ranking","Describe a time users said results felt repetitive even though engagement rose. How did you turn that feedback into a testable change?"],"other":["Measure diversity without losing relevance","Two feeds produce the same save rate but show different creators. Define a diversity metric, a relevance guardrail and how you would detect changes by user cohort."]},{"company":"Point72","coding":["Join research signals without look-ahead","Each observation has an effective date, a publication timestamp, and a revision number. For each hypothetical decision time, select only the most recent signal that was actually available at that time."],"design":["Audit a research feature store","Design a feature store that lets a reviewer reproduce a historical research model after raw inputs have been revised. Explain how you record lineage, transformations, and availability times."],"behavioral":["Report a result that no longer holds","A useful investment-research result disappears after correcting a timestamp error. Explain how you inform the portfolio and data teams and determine which other conclusions might be affected."],"other":["Separate predictive signal from coincidence","A researcher tests 80 variants of a signal and shows you the strongest result. Propose a validation design that includes temporal holdouts and explain why a random split could be misleading."]},{"company":"Pure Storage","coding":["Compute the space retained by snapshots","Snapshots reference immutable blocks with different byte sizes. Given the block sets for three snapshots, return how many bytes deleting each individual snapshot could free and explain why the counts are not additive."],"design":["Recover a consistent storage snapshot","Design a snapshot service for a storage volume that accepts writes during snapshot creation. Define when a snapshot is visible, how to recover after a crash, and how you would test consistency under load."],"behavioral":["Explain the cost of a storage optimization","A new compression mode saves capacity but makes restores slower for one important workload. Explain how you present the trade-off and reach a release decision with support and engineering."],"other":["Benchmark storage fairly","A device looks twice as fast under one benchmark. Specify how to control block size, queue depth, cache state, and read/write mix, and identify which reported number best predicts a customer workload."]},{"company":"Reddit","coding":["Resolve a nested comment tree","Given comments with an ID, parent ID, timestamp, and deletion status, produce a stable threaded order. Children of deleted comments must stay reachable. Specify how to handle a missing parent or a cycle in the input."],"design":["Rank a community feed under changing votes","Design a community feed that combines votes and age while respecting moderation decisions. Explain how removed content disappears from cached pages and how you test ranking behavior for new communities."],"behavioral":["Balance moderator and reader feedback","A ranking change grows time on site while moderators report that useful niche posts are disappearing. Explain how you incorporate both perspectives and design a reversible decision."],"other":["Measure conversation quality","A change increases replies but may also increase low-quality back-and-forth. Design an evaluation that addresses selection bias across communities and includes a signal beyond raw reply count."]},{"company":"Roblox","coding":["Assign sessions to game instances","Place incoming players into instances with capacity and region constraints. Keep known parties together when possible. Specify behavior when no single instance fits a party."],"design":["Handle reconnects in shared worlds","Design a session directory that lets a player rejoin an active game after a disconnect. Define which state is authoritative and what happens if the original instance dies."],"behavioral":["Prioritize creator needs during an outage","Describe a time when creator or partner needs differed from end-user needs during a service problem. How did you choose what to restore first?"],"other":["Evaluate delay in a live experience","A change improves average latency while worsening the tail for one device class. Design a measurement plan that ties delays to a user-visible outcome."]},{"company":"Salesforce","coding":["Deduplicate CRM updates without losing field changes","Two devices edit different fields on the same contact while offline. Merge a stream containing revisions and duplicate deliveries, and return conflicts when the same field receives concurrent edits."],"design":["Schedule customer automations fairly","Design a workflow runner for many tenants. A single large customer may enqueue a million jobs while a small customer needs a confirmation email. Describe tenant isolation, retry semantics, and a fairness metric."],"behavioral":["Negotiate a tenant-specific exception","A large customer asks for a workflow exception that could make the shared service slower. Explain how you discover the real requirement, propose a measurable alternative, and involve the account team."],"other":["Evaluate lead-scoring drift","A sales team changes how it records won deals. Explain how you would tell model drift from a change in labels and what you would monitor before retraining."]},{"company":"Snapchat","coding":["Expire a story across time zones","A story expires exactly 24 hours after upload. Given server timestamps, delayed client reads, and device clock skew, decide which stories a user may view at each query time. Include the instant of expiry."],"design":["Distribute camera effects to mobile devices","Design a catalog that delivers compatible camera-effect assets over unreliable mobile connections. Explain versioning, limited storage on older devices, and how a partially downloaded update is recovered."],"behavioral":["Evaluate a social feature with privacy concerns","People engage more with a prototype, but a small test group misunderstands who can see their posts. Explain how you would use that finding to revise the design and define a launch criterion."],"other":["Measure a camera effect on older phones","Propose a test plan for an effect that looks good on a flagship phone but can reduce frame rate on older devices. Choose observable quality metrics and a fallback policy."]},{"company":"Snowflake","coding":["Prune a range scan","Given file-level minimum and maximum keys and a query range, return the files that might contain a match. Specify treatment of missing statistics and ranges that only touch at an endpoint."],"design":["Isolate warehouse workloads","Design a query service in which a large batch workload shares storage with interactive users. Separate admission control, resource isolation and cancellation. Show how one slow tenant affects the others."],"behavioral":["Explain a surprising compute bill","Tell me about a time you traced an unexpected cost to a design choice. How did you verify the cause and help the affected users choose a remedy?"],"other":["Benchmark a clustering change","Evaluate a new clustering policy on skewed tenant data. Measure bytes scanned, p95 latency and maintenance cost using a workload that includes both recent and historical reads."]},{"company":"Square (Block)","coding":["Merge offline receipts","Reconcile receipts from multiple offline terminals into a seller ledger. Preserve refunds and deterministic ordering after duplicate delivery and show a reconciliation total."],"design":["Keep a checkout operating offline","Design local transaction capture and later reconciliation for a merchant at a venue with intermittent internet. Specify what can be promised before the server confirms processing."],"behavioral":["Protect a small seller during rollout","Describe a change that was operationally cheap for your team but disruptive to a small customer. What did you learn from the customer and what did you revise?"],"other":["Detect duplicate inventory adjustments","A retailer sees negative stock after two cash registers reconnect. Construct the smallest event trace that distinguishes a duplicate replay from concurrent legitimate sales."]},{"company":"Stripe","coding":["Reconcile a partial settlement","Join payment attempts to settlement entries that may be split or repeated. Report net settled amount per transaction and a separate list of unmatched records. Use integer currency units."],"design":["Retry a payment safely","Design an API that lets a merchant retry after a timeout without collecting twice. Walk through a processor success followed by a database write failure, including how the merchant learns the eventual result."],"behavioral":["Resolve an integration ambiguity","Describe a time two customers relied on conflicting interpretations of an API. What did you change in the contract, and how did you verify compatibility?"],"other":["Trace a reconciliation mismatch","Daily deposits disagree with your ledger by a small amount for one currency. Design a diagnostic that separates rounding, settlement timing and duplicated fees."]},{"company":"Uber","coding":["Match a pickup window","Given driver availability intervals and pickup requests in one zone, maximize the number served assuming each trip uses a fixed time block. Define a tie rule and check a boundary case with back-to-back trips."],"design":["Advance a trip exactly once","Design the trip-state service when driver and rider devices can disconnect or retry a transition. Walk through two conflicting completion events and the information each device should show afterward."],"behavioral":["Resolve a two-sided tradeoff","Describe a decision that helped one user group while risking harm to another. Which competing metrics did you track, and what evidence led you to change direction?"],"other":["Measure pickup accuracy","Average ETA error dropped while riders report longer waits. Design slices that can distinguish selection bias, cancellations and poor predictions in low-supply zones."]},{"company":"Waymo","coding":["Align sensor frames by time","Given two sorted streams of timestamps, pair each observation from the first stream with its closest match in the second within a tolerance. Define reuse and tie behavior and analyze complexity."],"design":["Replay a simulation deterministically","Design storage and playback for recorded simulation inputs. Two engineers must be able to reproduce a discrepancy after a software change using the exact same inputs and configuration."],"behavioral":["Resolve an ambiguous test failure","Describe a time when a rare failure was difficult to reproduce. How did you decide whether to block a release and what did you do to improve reproducibility?"],"other":["Measure performance on rare scenes","A perception model improves overall accuracy but loses recall in rain. Design a slice-based evaluation and explain how confidence intervals influence the release decision."]},{"company":"Whatnot","coding":["Choose the valid winning bid","Bids include auction ID, server sequence, bidder, and integer-cent amount. Return the winner for each auction after filtering invalid increments and repeats. Define what happens when a bid reaches the server exactly at the close."],"design":["Run a live auction with delayed viewers","Design an auction where viewers may be several seconds behind the host video. Define the authoritative clock, bidder feedback, and what a reconnecting client sees after the item sells."],"behavioral":["Handle a disputed live-auction result","A seller says a bid should have counted after a stream froze. Explain how you investigate the timeline, communicate with buyer and seller, and recommend a product change if the rules were unclear."],"other":["Detect a change in auction participation","A new countdown increases bids per auction but may favor repeat bidders. Define a test that measures participation by distinct bidders and outcomes for both new and experienced buyers."]}],"matched":[{"company":"Airbnb","sourceLabel":"Making a difficult decision","category":"Behavioral","title":"Choose between two groups with legitimate needs","prompt":"Describe a real decision you owned where helping one group of users or partners imposed a meaningful cost on another. What facts did you seek from each group? Explain a credible option you rejected, your reason for the final choice, how you communicated it to the group that lost out, and what you learned from their response.","followups":["Which stakeholder had the least influence, and how did you account for their perspective?","What later evidence would justify revisiting the choice?"],"rubric":["Makes the competing interests concrete and names who owned the decision.","Shows how listening and evidence changed the alternatives or the decision.","Explains consequences, the communication to affected people, and a trigger for reconsideration."]},{"company":"Airbnb","sourceLabel":"Adapting after an important plan went wrong","category":"Behavioral","title":"Rebuild a launch plan after a dependency falls through","prompt":"Use a real example where a partner, vendor, or another team could no longer deliver a dependency you had counted on. Describe when you realized the original plan had failed, the minimum commitment you still owed users, and how you negotiated a revised plan with the people doing the work. Include what happened after that decision.","followups":["What did you tell affected users before you had a firm recovery date?","What signal distinguished a temporary workaround from a sustainable replacement plan?"],"rubric":["Identifies the failed assumption and separates facts from guesses at decision time.","Shows timely communication, negotiation and a concrete change of course.","Measures recovery against the user commitment and describes a lesson carried into the next launch."]},{"company":"Amazon","sourceLabel":"Autocomplete for customer-review search","category":"Coding","title":"Complete a replacement-part search","prompt":"A repair counter indexes up to 100,000 distinct lowercase part names, each with a nonnegative integer count of past requests. Implement suggest(prefix, k). Return at most k matching names ranked by request count, breaking ties alphabetically. Use k from 1 to 10. With bolt=9, brake=12, brush=12, and clip=15, suggest('b', 2) returns ['brake', 'brush']. Explain the time and memory cost if a customer adds one character at a time.","followups":["How would you handle a stock update that changes a name’s popularity while a search is in progress?","Which index would you change if the catalog grows to 10 million names but most prefixes are rare?"],"rubric":["Orders by count and then by name, including the case of fewer than k matches.","Separates index construction cost from query cost and accounts for prefix length.","Tests a tie at the cutoff, a missing prefix, and an exact name that is also a prefix."]},{"company":"Amazon","sourceLabel":"Design an online bookstore","category":"System design","title":"Reserve scarce tools across rental stores","prompt":"Design an online catalog for 500 rental stores. Customers search for a tool, place a ten-minute hold at one store, then pay to reserve it. A search result may be one minute stale, but the same unit cannot be promised twice for an overlapping rental period. Expect 8,000 searches and 300 hold attempts per second at peak. Sketch the APIs, the source of inventory truth, and the sequence from hold to confirmation.","followups":["Two customers want the last available drill. One receives a payment timeout. Which state transitions are safe?","What would keep search usable through an inventory outage, and what experience would the customer see?"],"rubric":["Distinguishes the search projection from the inventory record and defines the permitted staleness.","Makes allocation, expiration, payment retries, and releases consistent for overlapping reservations.","Uses the stated load and customer impact to justify partitioning, observability, and recovery."]},{"company":"Amazon","sourceLabel":"Exceeding customer expectations","category":"Behavioral","title":"Spot a customer problem outside your assignment","prompt":"Describe a real occasion when the work you were assigned would have satisfied the written request, but you discovered a more important problem for the customer. Explain how you verified it, what you personally chose to do beyond the original request, and how you established whether the customer benefited. If you could not measure the result directly, explain what evidence you did have.","followups":["What did you defer to make time, and who needed to agree?","What evidence might have convinced you the extra work was the wrong choice?"],"rubric":["Explains the gap between the request and the customer's actual experience with specific evidence.","Distinguishes individual decisions from the team's work and names a real tradeoff.","Connects the outcome to an observable customer measure or explicitly states the limits of the evidence."]},{"company":"Anthropic","sourceLabel":"Anthropic's Original Performance Take-Home","category":"Coding","title":"Accelerate a quantized embedding reduction","prompt":"A CPU baseline receives n rows of exactly 128 signed 8-bit integers and emits each row's squared L2 norm as an exact signed 32-bit integer. It loops over columns first and repeatedly updates an output array. The input is row-major and can exceed the last-level cache. Write a correct baseline or pseudocode, propose a faster implementation, and design a benchmark that can distinguish memory locality from arithmetic cost. Use [-128,127,0…] as a correctness check.","followups":["How would you use vector instructions without overflowing before widening?","End-to-end speed improves far less than the kernel microbenchmark. How would you locate the gap?"],"rubric":["Computes 32,513 for the check row and bounds a full row at 2,097,152, safely within int32.","Links loop order or blocking and arithmetic widening to the actual memory layout and numeric contract.","Checks equivalence on adversarial data, uses repeated representative measurements, and separates setup and steady-state time."]},{"company":"Capital One","sourceLabel":"Practice Case: Sandwich Shop","category":"Other","title":"Test a commuter bicycle subscription","prompt":"A bicycle shop is considering a prepaid maintenance pass at $60 per year. Variable service cost averages $14 per visit, and a subscriber is expected to visit twice per year. The campaign requires $8,000 of fixed launch costs. The shop expects 400 subscribers. For 25% of subscribers, joining also displaces $24 of existing annual contribution per customer. Calculate incremental first-year contribution, find the break-even subscriber count using the same mix, and advise whether to launch.","followups":["If subscribers visit three times instead of twice, what changes in your recommendation?","Which two measurements would let you test the riskiest assumptions in a pilot?"],"rubric":["Derives $26 incremental contribution per subscriber after displacement, $2,400 total first-year gain, and 308 subscribers to break even.","With three visits, obtains $12 per subscriber, a $3,200 first-year loss at 400 subscribers, and a higher break-even threshold.","Connects the recommendation to visit frequency, cannibalization, uncertainty, and a measurable pilot."]},{"company":"DoorDash","sourceLabel":"Order Management System","category":"Coding","title":"Reconcile curbside pickup events","prompt":"Implement reconcile(events) for a pickup queue. Each element contains order_id, seq, and action. An order's sequence starts at 1 and increases by one. Events can arrive out of order or be duplicated with identical payloads. Valid paths are CREATED→READY→COLLECTED and CREATED→CANCELLED. Apply only a contiguous sequence, then stop at the first invalid transition for that order and flag its sequence number. Return each order's current state, last applied sequence, and any invalid sequence. For [(A,2,READY),(A,1,CREATED),(A,2,READY),(A,3,CANCELLED)], return A=(READY,2,3).","followups":["How would you remember pending events efficiently if this became a streaming consumer?","How would you handle two different payloads that claim the same order and sequence number?"],"rubric":["Separates orders, reorders events per order, and makes exact duplicates harmless.","Preserves sequence gaps and rejects invalid transitions without discarding the last valid state.","Tests interleaved orders, duplicate delivery, a missing first event, and a terminal state."]},{"company":"DoorDash","sourceLabel":"Design an Android image-loading library","category":"System design","title":"Load fresh grocery thumbnails in a scrolling aisle","prompt":"Design an Android library for product thumbnails. A list recycles its views as users scroll and the same item can appear in several lists. Images are keyed by product, revision and display size. The library has a 24 MB memory budget and should show a disk-cached thumbnail offline. Specify the caller API and the path from a view request to a decoded image on screen.","followups":["How can two views share an in-flight fetch while allowing one recycled view to cancel safely?","A newer product photo is published while an old request is decoding. Which image may each view display?"],"rubric":["Keys cache entries by revision and display size and bounds memory using decoded size.","Separates I/O, decoding, and UI updates, ensuring a recycled view cannot display a stale completion.","Defines request sharing, cancellation, failures, and tests for offline use and rapid scrolling."]},{"company":"Jane Street","sourceLabel":"Memo","category":"Coding","title":"Coalesce repeated valuation requests","prompt":"A single-threaded event loop receives requests to evaluate an expensive deterministic function of an integer key. Implement request(key, callback) and complete(key, value) around a supplied start(key). Before completion, multiple requests for the same key must start just one evaluation and all waiting callbacks must receive the value in arrival order. After completion keep the most recent C completed keys in an LRU cache. Assume asynchronous completions and non-throwing callbacks. With C=1, trace requests A, A, B, completion of B, then completion of A.","followups":["How does the contract behave when C=0, and what data still needs to be retained?","How would you make it safe if a callback immediately calls request on the key it just received?"],"rubric":["Represents in-flight evaluations independently of the bounded store of completed entries.","Starts A once, fans out its result in order, and finishes the trace with A as the sole cached value.","Updates internal state before callbacks, explains eviction, and gives expected operation costs."]},{"company":"Meta","sourceLabel":"Worldwide video distribution","category":"System design","title":"Deliver replays just after a goal","prompt":"Design playback for 20-second sports replays during a global match. A goal can trigger 2 million play attempts in 30 seconds. Producers upload in one region, viewers use phones on variable connections, and a rights takedown must stop new playback worldwide within 60 seconds. Draw the publish and read paths, choose a startup-latency target, and estimate the capacity you need under an explicit bitrate assumption.","followups":["What happens in the first seconds after a goal, before edge caches are warm?","How would you detect and isolate a rise in playback stalls in one country without degrading other regions?"],"rubric":["Separates ingest, transcoding, publication, and playback with a reasoned latency budget.","Estimates bandwidth and explains cache keys, hot-object distribution, and bitrate adaptation.","Defines how takedowns propagate within the deadline, including cached material, and measures the user impact."]},{"company":"Meta","sourceLabel":"Facebook chat architecture","category":"System design","title":"Keep classroom conversations in sync","prompt":"Design private classroom chat for 3 million daily users. A room can have 200 members. Participants may use two devices, go offline for a day, and send a message just as a device disconnects. Require per-room message order and a single visible copy after retries. Define the send and reconnect APIs, how a room tracks progress, and what a sender sees before a message is committed.","followups":["A phone reconnects with an old cursor after its user was removed from a room. What should the server return?","Which change to message delivery would you make if a small number of rooms grew to 100,000 members?"],"rubric":["Defines the ordering scope and a durable identity for retries.","Handles missed messages, reconnect cursors, and authorized access across multiple devices.","Explains fan-out choices with costs for common rooms and unusually large rooms."]},{"company":"Netflix","sourceLabel":"Reflecting on Netflix's culture memo","category":"Behavioral","title":"Explain one place where a stated value gets difficult","prompt":"Choose one principle from Netflix's public culture memo. Put it in your own words and describe a real decision where acting on that principle would have been difficult. Explain what part you agree with, where your experience suggests a limitation, and how you would raise that concern with a colleague who interpreted the principle differently.","followups":["What in the colleague's argument would make you change your view?","How would you tell whether applying the principle helped the team or simply made a difficult decision easier to justify?"],"rubric":["Names and accurately interprets a specific principle from the memo.","Grounds agreement or disagreement in a concrete choice, including the real tradeoff.","Shows willingness to engage with a credible alternative and identifies an observable outcome."]},{"company":"Oracle","sourceLabel":"Learning after falling short","category":"Behavioral","title":"Change a working practice after a missed commitment","prompt":"Choose a real project where an estimate or quality check you personally endorsed turned out to be wrong. Walk through the evidence you had when you made the call, the first signal that challenged it, and what you told the affected people. Explain one change you subsequently made to your team's process and how you checked whether it helped.","followups":["Which part of the outcome was within your control, and which part was genuinely uncertain?","If the same signals appeared tomorrow, what specific action would you take sooner?"],"rubric":["Owns a specific decision without substituting general team responsibility.","Reconstructs the timeline using evidence available at the time and identifies a plausible cause.","Shows that a concrete corrective practice was tried and assessed, including any unintended costs."]},{"company":"Roblox","sourceLabel":"Kaiju Cats","category":"Other","title":"Route two stage robots through one narrow crossing","prompt":"On graph L–X–R with an extra siding S connected only to X, one stage robot starts at L and the other at R. They must swap places. Each second a robot can wait or move along one edge. They cannot end a second on the same vertex, or cross the same edge in opposite directions in one second. Find a minimum-time schedule, write down both positions after each second, and explain how you ruled out a faster solution.","followups":["How would you search for the shortest valid schedule on a larger connected stage?","If one robot loses a turn midway, how would you check whether the rest of the plan still works?"],"rubric":["Provides a legal four-second swap, e.g. (L,R)→(X,R)→(S,X)→(X,L)→(R,L).","Justifies optimality by showing a detour into and back from S is necessary to reverse order on the main path, so one robot travels at least four edges.","Tests collisions and opposite-edge crossings on joint moves and adapts using the observed positions."]},{"company":"Roblox","sourceLabel":"Coding Cookies","category":"Coding","title":"Program a reusable egg-packing routine","prompt":"A block editor provides PICK, DROP, RIGHT, LEFT and REPEAT(n, body). A robot starts at position 0 with a row of four input bins at positions 0 through 3. Each bin contains two markers. Its output tray is four positions to the right of its input bin, at positions 4 through 7. The robot holds at most one marker. Write a program with at most 14 block nodes that puts both markers from every bin into its matching tray. Count each REPEAT block once plus every block in its body. Fixed loop counts count as one block regardless of n. After delivering its last marker the robot may finish anywhere.","followups":["Explain why the same loop body works for all four input bins. What invariant holds before every pickup?","If each bin has an arbitrary number of markers and the editor adds WHILE_NOT_EMPTY, what must be true of the robot's position when the condition is tested?"],"rubric":["Moves every marker to the tray four positions away and restores the pickup position before advancing to the next bin.","Uses nested repetition or an equivalent compact program that meets the stated node and carrying limits.","Traces at least one full bin and the last bin and handles a generalized empty bin without picking from an empty location."]}],"legacyCatalogCheck":{"checkedAt":"2026-11-26T21:05:00.613Z","companyCount":7,"titleCount":27,"sourceCompleteness":true,"sources":[{"company":"Bytebase","status":"ok","count":8,"added":[],"renamed":[],"missing":[],"checkedAt":"2026-11-26T21:03:49.171Z"},{"company":"Just Eat","status":"ok","count":8,"added":[],"renamed":[],"missing":[],"checkedAt":"2026-11-26T21:03:49.174Z"},{"company":"JTL-Software","status":"ok","count":3,"added":[],"missing":[],"renamed":[],"checkedAt":"2026-11-26T21:04:52.834Z"},{"company":"GuardRails","status":"ok","count":1,"added":[],"renamed":[],"missing":[],"checkedAt":"2026-11-26T21:03:54.091Z"},{"company":"Sandvik CODE","status":"ok","count":1,"added":[],"renamed":[],"missing":[],"checkedAt":"2026-11-26T21:03:59.930Z"},{"company":"City of Cape Town","status":"ok","count":5,"added":[],"missing":[],"renamed":[],"checkedAt":"2026-11-26T21:05:00.613Z"},{"company":"Anthropic","status":"ok","count":1,"added":[],"missing":[],"renamed":[],"checkedAt":"2026-11-26T21:04:03.646Z"}]}}</script>
+<script id="seed-data" type="application/json">[{"company":"Bytebase","org":"bytebase","repo":"bytebase/interview","license":"MIT","licenseUrl":"https://github.com/bytebase/interview/blob/main/LICENSE","listing":"https://github.com/bytebase/interview","url":"https://github.com/bytebase/interview/blob/main/101_tiny_sql_editor/README.md","title":"Tiny SQL Editor","kind":"Employer sample","archived":false},{"company":"Bytebase","org":"bytebase","repo":"bytebase/interview","license":"MIT","licenseUrl":"https://github.com/bytebase/interview/blob/main/LICENSE","listing":"https://github.com/bytebase/interview","url":"https://github.com/bytebase/interview/blob/main/102_db_benchmark/README.md","title":"DB Benchmark","kind":"Employer sample","archived":false},{"company":"Bytebase","org":"bytebase","repo":"bytebase/interview","license":"MIT","licenseUrl":"https://github.com/bytebase/interview/blob/main/LICENSE","listing":"https://github.com/bytebase/interview","url":"https://github.com/bytebase/interview/blob/main/104_url_shortener/README.md","title":"URL shortener","kind":"Employer sample","archived":false},{"company":"Bytebase","org":"bytebase","repo":"bytebase/interview","license":"MIT","licenseUrl":"https://github.com/bytebase/interview/blob/main/LICENSE","listing":"https://github.com/bytebase/interview","url":"https://github.com/bytebase/interview/blob/main/105_tiny_text_editor_with_undo/README.md","title":"Tiny Text Editor with Undo","kind":"Employer sample","archived":false},{"company":"Just Eat","org":"justeat","repo":"justeat/JustEat.RecruitmentTest","license":"Apache-2.0","licenseUrl":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/LICENSE","listing":"https://github.com/justeat/JustEat.RecruitmentTest","url":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/Test.WebUI.Engineering.md","title":"Web UI Tech Test","kind":"Employer sample","archived":true},{"company":"Just Eat","org":"justeat","repo":"justeat/JustEat.RecruitmentTest","license":"Apache-2.0","licenseUrl":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/LICENSE","listing":"https://github.com/justeat/JustEat.RecruitmentTest","url":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/Test.DevOps.Engineer.md","title":"Just Eat Test DevOps Engineer Recruitment Test","kind":"Employer sample","archived":true},{"company":"JTL-Software","org":"jtl-software","repo":"jtl-software/take-home-tasks","license":"MIT","licenseUrl":"https://github.com/jtl-software/take-home-tasks/blob/main/LICENSE","listing":"https://github.com/jtl-software/take-home-tasks","url":"https://github.com/jtl-software/take-home-tasks/blob/main/senior-frontend-engineer/instructions.md","title":"Take-Home Task: Senior Software Engineer (Frontend)","kind":"Employer sample","archived":false},{"company":"JTL-Software","org":"jtl-software","repo":"jtl-software/take-home-tasks","license":"MIT","licenseUrl":"https://github.com/jtl-software/take-home-tasks/blob/main/LICENSE","listing":"https://github.com/jtl-software/take-home-tasks","url":"https://github.com/jtl-software/take-home-tasks/blob/main/senior-backend-engineer/instructions.md","title":"Take-Home Task: Senior Software Engineer (Backend)","kind":"Employer sample","archived":false},{"company":"GuardRails","org":"guardrailsio","repo":"guardrailsio/backend-engineer-challenge","license":"MIT","licenseUrl":"https://github.com/guardrailsio/backend-engineer-challenge/blob/master/LICENSE","listing":"https://github.com/guardrailsio/backend-engineer-challenge","url":"https://github.com/guardrailsio/backend-engineer-challenge/blob/master/README.md","title":"Backend Engineer Coding Challenge","kind":"Employer sample","archived":false},{"company":"Sandvik CODE","org":"sandvikcode","repo":"sandvikcode/data-science-take-home","license":"MIT","licenseUrl":"https://github.com/sandvikcode/data-science-take-home/blob/master/LICENSE","listing":"https://github.com/sandvikcode/data-science-take-home","url":"https://github.com/sandvikcode/data-science-take-home/blob/master/README.md","title":"Data Science Take Home Assignment","kind":"Employer sample","archived":true},{"company":"City of Cape Town","org":"cityofcapetown","repo":"cityofcapetown/ds_code_challenge","license":"MIT","licenseUrl":"https://github.com/cityofcapetown/ds_code_challenge/blob/main/LICENSE","listing":"https://github.com/cityofcapetown/ds_code_challenge","url":"https://github.com/cityofcapetown/ds_code_challenge/blob/main/README.md?plain=1#L137","title":"Time series challenge","kind":"Employer sample","archived":false},{"company":"City of Cape Town","org":"cityofcapetown","repo":"cityofcapetown/ds_code_challenge","license":"MIT","licenseUrl":"https://github.com/cityofcapetown/ds_code_challenge/blob/main/LICENSE","listing":"https://github.com/cityofcapetown/ds_code_challenge","url":"https://github.com/cityofcapetown/ds_code_challenge/blob/main/README.md?plain=1#L144","title":"Anomaly Detection challenge","kind":"Employer sample","archived":false},{"company":"Bytebase","org":"bytebase","repo":"bytebase/interview","license":"MIT","licenseUrl":"https://github.com/bytebase/interview/blob/main/LICENSE","listing":"https://github.com/bytebase/interview","url":"https://github.com/bytebase/interview/blob/main/103_employee_page/README.md","title":"Employee page","kind":"Employer sample","archived":false},{"company":"Bytebase","org":"bytebase","repo":"bytebase/interview","license":"MIT","licenseUrl":"https://github.com/bytebase/interview/blob/main/LICENSE","listing":"https://github.com/bytebase/interview","url":"https://github.com/bytebase/interview/blob/main/106_mini_online_paint/README.md","title":"Mini online paint","kind":"Employer sample","archived":false},{"company":"Bytebase","org":"bytebase","repo":"bytebase/interview","license":"MIT","licenseUrl":"https://github.com/bytebase/interview/blob/main/LICENSE","listing":"https://github.com/bytebase/interview","url":"https://github.com/bytebase/interview/blob/main/200_tech_writing_skill_assignment/README.md","title":"Technical writing skill assignment","kind":"Employer sample","archived":false},{"company":"Bytebase","org":"bytebase","repo":"bytebase/interview","license":"MIT","licenseUrl":"https://github.com/bytebase/interview/blob/main/LICENSE","listing":"https://github.com/bytebase/interview","url":"https://github.com/bytebase/interview/blob/main/201_devrel_assignment/README.md","title":"DevRel assignment","kind":"Employer sample","archived":false},{"company":"Just Eat","org":"justeat","repo":"justeat/JustEat.RecruitmentTest","license":"Apache-2.0","licenseUrl":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/LICENSE","listing":"https://github.com/justeat/JustEat.RecruitmentTest","url":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/Product-Research/Test.UI.Engineer.ProductResearch.md","title":"UI Engineer (Product Research) Tech Test","kind":"Employer sample","archived":true},{"company":"Just Eat","org":"justeat","repo":"justeat/JustEat.RecruitmentTest","license":"Apache-2.0","licenseUrl":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/LICENSE","listing":"https://github.com/justeat/JustEat.RecruitmentTest","url":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/README.md","title":"Just Eat Engineer Recruitment Test","kind":"Employer sample","archived":true},{"company":"Just Eat","org":"justeat","repo":"justeat/JustEat.RecruitmentTest","license":"Apache-2.0","licenseUrl":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/LICENSE","listing":"https://github.com/justeat/JustEat.RecruitmentTest","url":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/Tech.Associate.Engineer.md","title":"Just Eat Associate Engineer Recruitment Test","kind":"Employer sample","archived":true},{"company":"Just Eat","org":"justeat","repo":"justeat/JustEat.RecruitmentTest","license":"Apache-2.0","licenseUrl":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/LICENSE","listing":"https://github.com/justeat/JustEat.RecruitmentTest","url":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/Test.Automation.Engineer.md","title":"Just Eat Test Automation Engineer Recruitment Test","kind":"Employer sample","archived":true},{"company":"Just Eat","org":"justeat","repo":"justeat/JustEat.RecruitmentTest","license":"Apache-2.0","licenseUrl":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/LICENSE","listing":"https://github.com/justeat/JustEat.RecruitmentTest","url":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/Test.SOC.Engineer.md","title":"Just Eat Service Operations Engineer Recruitment Test","kind":"Employer sample","archived":true},{"company":"Just Eat","org":"justeat","repo":"justeat/JustEat.RecruitmentTest","license":"Apache-2.0","licenseUrl":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/LICENSE","listing":"https://github.com/justeat/JustEat.RecruitmentTest","url":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/data-and-ai/data-engineer/README.md","title":"Just Eat Data Engineer Recruitment Test","kind":"Employer sample","archived":true},{"company":"JTL-Software","org":"jtl-software","repo":"jtl-software/take-home-tasks","license":"MIT","licenseUrl":"https://github.com/jtl-software/take-home-tasks/blob/main/LICENSE","listing":"https://github.com/jtl-software/take-home-tasks","url":"https://github.com/jtl-software/take-home-tasks/blob/main/senior-devops-engineer/instructions.md","title":"Take-Home Task: Senior Software Engineer (Managed Services / DevOps)","kind":"Employer sample","archived":false},{"company":"City of Cape Town","org":"cityofcapetown","repo":"cityofcapetown/ds_code_challenge","license":"MIT","licenseUrl":"https://github.com/cityofcapetown/ds_code_challenge/blob/main/LICENSE","listing":"https://github.com/cityofcapetown/ds_code_challenge","url":"https://github.com/cityofcapetown/ds_code_challenge/blob/main/README.md?plain=1#L138","title":"Introspection challenge","kind":"Employer sample","archived":false},{"company":"City of Cape Town","org":"cityofcapetown","repo":"cityofcapetown/ds_code_challenge","license":"MIT","licenseUrl":"https://github.com/cityofcapetown/ds_code_challenge/blob/main/LICENSE","listing":"https://github.com/cityofcapetown/ds_code_challenge","url":"https://github.com/cityofcapetown/ds_code_challenge/blob/main/README.md?plain=1#L143","title":"Classification challenge","kind":"Employer sample","archived":false},{"company":"City of Cape Town","org":"cityofcapetown","repo":"cityofcapetown/ds_code_challenge","license":"MIT","licenseUrl":"https://github.com/cityofcapetown/ds_code_challenge/blob/main/LICENSE","listing":"https://github.com/cityofcapetown/ds_code_challenge","url":"https://github.com/cityofcapetown/ds_code_challenge/blob/main/README.md?plain=1#L148","title":"Computer Vision classification challenge","kind":"Employer sample","archived":false},{"company":"Anthropic","org":"anthropics","repo":"anthropics/original_performance_takehome","title":"Anthropic's Original Performance Take-Home","kind":"Published past assessment","url":"https://github.com/anthropics/original_performance_takehome","archived":false}]</script>
+<script>
+/* Original, offline interview practice. Public titles can suggest topics, never provenance. */
+(() => {
+  "use strict";
+
+  // Each pair holds two distinct exercises. Numbers vary deterministically by source title.
+  const topics = [
+    {
+      topic: "Directories and profiles",
+      cue: /employee page|directory page|profile page|员工页面/i,
+      exercises: [
+        ["Find someone in a directory", "Build an employee directory from 500 synthetic records containing a stable ID, display name, team, and optional office. Support text search, a team filter, and keyboard-accessible navigation to a profile. Two people may have the same name.",
+          ["How will the detail view preserve the user's filters on return?", "How would you display missing teams or offices?"],
+          ["Uses stable IDs for identity and navigation.", "Combines search and team filters consistently and provides an empty state.", "Demonstrates duplicate names, optional fields, and keyboard navigation."]],
+        ["Edit a public profile", "Create a profile card and editor for a synthetic staff directory. People can change a display name and short bio. Design save and cancel behavior, field validation, and recovery when the server rejects a save.",
+          ["What if a user starts typing again while a save is in flight?", "What alternative text is appropriate for a decorative avatar beside a labeled name?"],
+          ["Separates editable draft from committed values.", "Preserves input on errors and makes status and field messages accessible.", "Tests cancel, whitespace-only names, and repeated save actions."]]
+      ]
+    },
+    {
+      topic: "Drawing interfaces",
+      cue: /online paint|drawing app|drawing canvas|绘图应用/i,
+      exercises: [
+        ["Draw the same stroke twice", "Build a one-brush drawing surface that records a stroke as a sequence of logical coordinates. Replaying the stored strokes after a resize must preserve their relative placement. Support mouse or touch and show how the first and last points are handled.",
+          ["How would you handle a pointer leaving the surface during a stroke?", "What changes on high-density displays?"],
+          ["Maps pointer coordinates through the displayed rectangle into a logical coordinate system.", "Stores strokes separately from displayed pixels and redraws deterministically.", "Handles completion, pointer cancellation, and a tap with no movement."]],
+        ["Flood a pixel region", "Implement a four-neighbor paint bucket for a rectangular bitmap. Fill only pixels connected to the clicked pixel that share its original color. For rows AAB, ABB, BBA, filling (row 0,col 0) with Z produces ZZB, ZBB, BBA.",
+          ["How would you avoid recursion on a million-pixel region?", "What should happen if the new color equals the old color?"],
+          ["Limits traversal to the original connected color and stays within bounds.", "Marks pixels consistently to prevent repeated visits.", "Handles a same-color fill, single pixels, and diagonally separated regions."]]
+      ]
+    },
+    {
+      topic: "Technical communication",
+      cue: /technical writing|DevRel|developer relations|开发者关系|技术写作/i,
+      exercises: [
+        ["A quickstart someone can finish", "Draft a short quickstart for an imaginary command-line tool that validates a local JSON file. The command is 'check-config settings.json': success prints OK and exits zero; invalid JSON prints a line number and exits one. Supply example input, expected output, and a recovery step. Assume a first-time user.",
+          ["Which detail belongs in a reference page instead?", "How would you verify that a newcomer can complete the task without help?"],
+          ["Identifies prerequisites and provides a runnable, internally consistent example.", "Shows both observable success and one actionable failure case.", "Defines a concrete usability test and a measure of completion."]],
+        ["Explain a small breaking change", "A fictional API is replacing the page_number request parameter with an opaque next_cursor. Write a migration note with a before-and-after example and a short FAQ for maintainers. The new API returns no cursor on the final page.",
+          ["Which existing integration behavior might silently break?", "What evidence would tell you the migration note is working?"],
+          ["Explains initialization, cursor chaining, and termination.", "Uses coherent illustrative inputs and outputs and avoids promising random page access.", "Distinguishes actionable migration steps from background and names a support signal."]]
+      ]
+    },
+    {
+      topic: "Product research",
+      cue: /product research|user research|用户研究/i,
+      exercises: [
+        ["Observe a failed handoff", "A team suspects users abandon a form when asked to assign a reviewer. Design a 30-minute research session with one realistic task, a neutral prompt, observations to record, and a decision the team could make from the findings.",
+          ["How will you avoid prompting the participant with the suspected cause?", "Which participants would you recruit and why?"],
+          ["Connects the study to a decision and defines what counts as difficulty.", "Separates observable behavior from interpretation and uses neutral prompts.", "Addresses consent, sampling limitations, and a follow-up way to validate the finding."]],
+        ["Compare two navigation prototypes", "You have two clickable navigation prototypes and six participants. Design a comparison for finding an old invoice. Define task success, assignment order, and the observations that would justify revising a prototype.",
+          ["How would you reduce practice effects across two trials?", "What conclusion is reasonable with six participants?"],
+          ["Uses comparable tasks and counterbalances order or explains another design.", "Measures observable completion, path, and confusion with consistent facilitation.", "Separates qualitative patterns from population-level or statistical claims."]]
+      ]
+    },
+    {
+      topic: "Test automation",
+      cue: /test automation|automated test|automation test|自动化测试/i,
+      exercises: [
+        ["Test a retry boundary", "A report service may return pending twice before returning ready. The client must stop after three attempts and cancel immediately when the user leaves. Design deterministic automated tests with a controllable clock and a fake service.",
+          ["What distinguishes a cancellation from exhaustion of attempts?", "How would you keep a slow machine from making these tests flaky?"],
+          ["Covers immediate success, success on the third attempt, exhaustion, and cancellation.", "Controls time and fake responses without wall-clock sleeps.", "Asserts externally visible outcomes and that no new attempts occur after stopping."]],
+        ["A checkout that charges once", "A checkout form submits a request, shows an in-progress state, and then shows a receipt. Design a compact automated suite for double-clicks, a lost response, and a retry. Use a fake payment service and define what each test can prove.",
+          ["Which case belongs at API level as well as in the browser?", "How would you ensure isolation between parallel runs?"],
+          ["Checks a single visible receipt and a single committed charge for repeated submission.", "Separates UI state checks from server idempotency guarantees.", "Uses isolated fixtures and deterministic response scheduling."]]
+      ]
+    },
+    {
+      topic: "Service operations",
+      cue: /service operations|incident response|服务运维/i,
+      exercises: [
+        ["Triage a growing backlog", "A background queue is receiving 120 jobs per minute but finishing 90. The backlog is 900 jobs and alerts fire when it exceeds 1,500. Estimate time to the threshold under constant rates, then outline diagnostic checks and a reversible mitigation.",
+          ["How do retries change the interpretation of the rates?", "What throughput must be achieved to empty the current backlog within 30 minutes?"],
+          ["Computes 20 minutes to the threshold and 150 completions/minute to drain in 30 minutes if arrivals stay at 120.", "Separates upstream arrival spikes, dependency slowdowns, retries, and capacity loss.", "Chooses a bounded action and confirms recovery with completion and backlog trends."]],
+        ["Write the shift handover", "A service experienced elevated errors from 10:05 to 10:17. A rollback at 10:12 preceded recovery; the cause remains uncertain. Draft a handover with impact, evidence, open questions, and a next action with a clear owner.",
+          ["How would you estimate impact from incomplete request logs?", "When would you re-escalate the incident?"],
+          ["Records the observed timeline without converting correlation into a confirmed cause.", "States impact, evidence gaps, and the limits of any estimate.", "Defines monitoring, follow-up ownership, and escalation thresholds."]]
+      ]
+    },
+    {
+      topic: "Computer vision",
+      cue: /computer vision|image classificat|image recognition|计算机视觉/i,
+      exercises: [
+        ["Spot a packaging defect", "Classify images of sealed boxes as intact or damaged. Each physical box has several views and lighting varies by warehouse. Define the labeling unit, a leakage-resistant evaluation split, a baseline, and a review policy when predictions are uncertain.",
+          ["How would you test generalization to a new warehouse?", "What if damaged boxes are only 1% of examples?"],
+          ["Keeps views of the same physical box together and checks location or time shift.", "Evaluates class-specific errors with a metric aligned to defect-review capacity.", "Uses realistic augmentations and audits performance across lighting conditions."]],
+        ["A camera changed position", "A camera that classifies empty and occupied parking spaces was tilted during maintenance. You have labeled prechange crops and 100 postchange frames. Design a diagnosis and a limited evaluation before updating the classifier.",
+          ["How would you tell a crop alignment error from a model failure?", "Why can adjacent video frames exaggerate evaluation confidence?"],
+          ["Checks geometry and input preprocessing before retraining.", "Evaluates temporally or scene-separated examples with a documented label protocol.", "Quantifies errors by space and condition and defines a measurable recovery criterion."]]
+      ]
+    },
+    {
+      topic: "Classification",
+      cue: /classificat(?:ion|eur)|classifier|分类任务/i,
+      exercises: [
+        ["Route a request for review", "A classifier flagged 90 requests: 60 were confirmed urgent and 30 were routine. Another 20 urgent requests were missed. Compute precision and recall, explain what is still unknown for accuracy, and propose how to select a threshold if reviewers can handle 80 requests per day.",
+          ["Would increasing a threshold always improve observed precision on a finite dataset?", "What data would you need to predict tomorrow's review volume?"],
+          ["Computes precision 60/90 and recall 60/80 and identifies the missing true-negative count.", "Evaluates tradeoffs across candidate thresholds on held-out data.", "Connects capacity, the cost of missed requests, and input drift to threshold selection."]],
+        ["Classify repeat customers", "Predict whether an account will place another order within 30 days. Sample one prediction date per account per week. Describe labels, usable features, a simple baseline, and an evaluation that approximates deployment to future dates.",
+          ["How would you handle a prediction date 10 days before your dataset ends?", "How might multiple rows for one account distort uncertainty?"],
+          ["Builds labels from a complete forward window and restricts features to the prediction timestamp.", "Uses a temporal evaluation with a leakage check at split boundaries.", "Evaluates the baseline, calibration, and dependence across observations for an account."]]
+      ]
+    },
+    {
+      topic: "Performance engineering",
+      cue: /performance|profiling|优化性能|性能优化|性能测试/i,
+      exercises: [
+        ["Make a histogram fit the budget", "A batch job counts 50 million unsigned 16-bit readings into 65,536 buckets. It currently allocates a separate object per reading and misses its time budget. Design a streaming implementation and a fair benchmark. Verify correctness for inputs at the minimum and maximum values and for a single hot bucket.",
+          ["When might multiple worker-local histograms outperform a shared one?", "What does a 32-bit count limit imply for much larger batches?"],
+          ["Uses a fixed-size count array and avoids per-reading allocation.", "Ensures counts sum to the input size and checks the optimized version against a reference.", "Separates input and compute costs, repeats runs, and uses measurements to justify parallelization."]],
+        ["Investigate a slow transform", "A process reads 10 million fixed-width records, extracts four numeric fields, and emits one aggregate per region. Profiling reports 60% of time in parsing, 25% in aggregation, and 15% elsewhere. If parsing becomes three times faster, estimate the end-to-end speedup under fixed workload, then design an experiment to check it.",
+          ["Why could measured speedup be lower than the estimate?", "How would you detect a faster implementation that silently changes output?"],
+          ["Computes the new normalized runtime as 0.60 / 3 + 0.25 + 0.15 = 0.60, about 1.67× faster.", "Controls the input, environment, cache state, and measurement boundaries across runs.", "Checks output equivalence including edge cases and profiles again to find the new bottleneck."]]
+      ]
+    },
+    {
+      topic: "Anomaly detection",
+      cue: /anomal(?:y|ies) detection|outlier detection|异常检测/i,
+      exercises: [
+        ["Unusual delays by shift", "You receive hourly counts of packages observed and packages delayed at each depot. Normal delay rates differ by depot and shift. Design a daily detector with at most five alerts; specify a baseline, a score, and evaluation with only a few labeled incidents.",
+          ["Would 1 delay in 2 observations outrank 40 in 400?", "What happens on a holiday when volume is unusually low?"],
+          ["Models delayed counts relative to exposure and a comparable baseline.", "Accounts for sample size and seasonality when ranking alerts.", "Backtests chronologically and defines usefulness through alert burden, precision, and incident delay."]],
+        ["A sensor that stopped changing", "Every 15 minutes, a cold-storage sensor reports a temperature rounded to one decimal. Design a detector for stuck sensors across 200 rooms where normal temperature stability varies. Use timestamps, room identifiers, and readings only. Output the flagged interval and evidence.",
+          ["How would you distinguish identical readings from missing transmissions?", "How would you tune alerts where maintenance labels are sparse?"],
+          ["Separates constant-value runs from missing or duplicate timestamps.", "Calibrates duration against room-specific variation and measurement precision.", "Tests injected failures and healthy stable periods; reports false alarms and detection delay."]]
+      ]
+    },
+    {
+      topic: "Time series",
+      cue: /time[ -]?series|forecasting|时间序列|时序预测/i,
+      exercises: [
+        ["Forecast weekly demand", "Forecast next week's daily part requests using two years of daily history. Demand has a weekly pattern, holiday closures, and occasional missing counts. Define a simple baseline, validation splits, and an error measure aligned to stocking decisions.",
+          ["How will you distinguish a closed day from a missing observation?", "What regressors would be available at forecast issue time?"],
+          ["Uses a seasonal baseline and evaluates full seven-day horizons with rolling origins.", "Avoids future observations in imputation, feature engineering, and tuning.", "Chooses metrics with clear treatment of zero demand and asymmetric shortage costs."]],
+        ["A forecast that changed midyear", "A transit route changed its timetable three months ago. You have two years of daily boardings and need a four-week forecast. Compare a long-history seasonal forecast with a model emphasizing recent observations. Specify how you would decide which to deploy.",
+          ["Would a backtest dominated by prechange periods answer the deployment question?", "How would you communicate uncertainty if the new schedule changes again?"],
+          ["Evaluates realistic horizons with postchange forecast origins where possible.", "Separates calendar effects from the timetable change and states data limitations.", "Benchmarks against a simple recent baseline and reports interval coverage or scenario sensitivity."]]
+      ]
+    },
+    {
+      topic: "SQL editor",
+      cue: /SQL editor|SQL 编辑器/i,
+      exercises: [
+        ["A query playground with cancellation", "Build a two-pane editor against a fake query service. Run and Cancel operate on the selected statement; if a slow response from an earlier run arrives after a newer run, only the new result may appear. Model idle, running, success, and error states and show one test for a response race.",
+          ["How will the keyboard shortcut behave while the editor is composing text?", "What happens if the mock service cannot cancel a request?"],
+          ["Defines the selection and empty-input behavior.", "Scopes every response to the active run and preserves editable input on errors.", "Tests out-of-order resolution, cancellation, and a second run after an error."]],
+        ["Results too large to render", "An editor receives tabular results in pages of 100 rows with an opaque cursor. Build a result pane with Next, Back, column headers, and row counts for the current page. Starting a new query must reset navigation. Use a fake data source with 205 rows.",
+          ["What should Back do after visiting pages of 100, 100, and 5 rows?", "What if a delayed page belongs to the previous query?"],
+          ["Maintains history of cursors and prevents advancing past the last page.", "Keeps headers aligned with values and handles empty or NULL cells.", "Tests the short final page, query resets, and stale responses."]]
+      ]
+    },
+    {
+      topic: "Database benchmarking",
+      cue: /\bDB benchmark|database benchmark|数据库基准/i,
+      exercises: [
+        ["Measure an index decision", "Compare two schema variants for the same events table, one with an index on (tenant_id, event_time), one without. Design a repeatable benchmark for a mix of date-range reads and inserts. Use skewed tenant sizes, define a warm-up, and report latency plus write cost.",
+          ["What evidence would show that the optimizer used the intended path?", "How would you separate cold-cache behavior from steady-state behavior?"],
+          ["Keeps hardware, dataset, workload mix, and measurement window comparable.", "Reports latency distributions and throughput, with repeated runs.", "Accounts for index build time, storage, and insert overhead when interpreting results."]],
+        ["Find the saturation point", "Benchmark a transactional read-modify-write task at 1, 4, 16, and 64 concurrent clients. The final balance sum must remain constant. Design a harness that reports successful throughput, failures, and tail latency, and identify the first overloaded setting.",
+          ["What does a high retry rate do to apparent request latency?", "How would you avoid measuring the client machine's limit?"],
+          ["Uses a fixed starting state, repeatable workload, and a correctness check.", "Measures end-to-end latency and distinguishes retries from completed transactions.", "Separates queueing, database saturation, and client bottlenecks using observable evidence."]]
+      ]
+    },
+    {
+      topic: "Short-link services",
+      cue: /URL shorten|link shorten|short[ -]?link|短链接/i,
+      exercises: [
+        ["Claim an expiring alias", "Design POST /links to claim a caller-selected alias for an HTTPS destination and expiry. A live alias can have only one owner. Two different clients simultaneously claim the same alias; the winner retries after losing its response. Specify the responses, transaction, and retry semantics.",
+          ["What happens exactly at the expiry boundary?", "How would you avoid reusing a cached redirect after a new owner claims the alias?"],
+          ["Uses atomic uniqueness or conditional writes to select one winner.", "Recognizes retries using an idempotency identity bound to the request.", "Defines expiry and caching consistently across storage and the redirect response."]],
+        ["Count redirects by day", "A short-link service emits click_id, alias, and event_time for each completed redirect. Messages may be redelivered. Produce daily UTC counts per alias while keeping redirects fast. Define a freshness target and a policy for late events.",
+          ["What if analytics is down for an hour?", "How could an operator verify counts for one disputed day?"],
+          ["Decouples redirection from aggregation and states a delivery guarantee.", "Deduplicates on click identity rather than destination or time alone.", "Explains partitioning, late corrections, and replay from raw events."]]
+      ]
+    },
+    {
+      topic: "Undo and editing",
+      cue: /\bundo\b|text editor|文本编辑器|撤销/i,
+      exercises: [
+        ["Replace, undo, branch", "Implement replace(start,end,text), undo(), and redo() on a string with zero-based half-open indices. Starting at 'camp', replace [1,3) with 'oo', undo, replace [0,1) with 'l', then redo. Return the text after each action. A new edit clears redo history.",
+          ["What information must each reversible edit retain?", "How could you bound memory for large edits?"],
+          ["Produces 'coop', 'camp', 'lamp', 'lamp' with the final redo a no-op.", "Stores enough information to restore replaced text and position.", "Handles insertion, deletion, empty history, and invalid indices consistently."]],
+        ["One undo for a batch", "Design edits that can be grouped into a transaction. With initial text 'abc', apply insert(3,'d') then delete(0,1) as one group, producing 'bcd'. One undo must restore 'abc'; redo must return 'bcd'. Indices refer to the state at each step.",
+          ["What if the second operation is invalid?", "In what order do inverse edits run?"],
+          ["Applies inverse operations in reverse order and replays in original order.", "Makes partial failures atomic or defines a clear rollback mechanism.", "Tests nested or disallowed groups, empty groups, and an edit after undo."]]
+      ]
+    },
+    {
+      topic: "Frontend engineering",
+      cue: /front[ -]?end|web UI|user interface|前端/i,
+      exercises: [
+        ["An accessible searchable queue", "Build a filterable issue list backed by a fake async service. Typing a new term starts a search after a short delay. The user can select a result using only the keyboard. Display loading, zero results, and retryable errors; an old response must never replace a newer result.",
+          ["What should focus do when results change?", "How would you test rapid input and out-of-order responses?"],
+          ["Associates responses with the current search and cancels or ignores stale work.", "Uses labeled controls and predictable keyboard navigation.", "Demonstrates the empty, error, slow, and retry paths with deterministic fixtures."]],
+        ["Save settings while offline", "Build a settings form with three toggles and a Save action. Keep an unsaved local draft on connection failure. If the server detects a newer version from another device, show both versions and let the user choose before retrying.",
+          ["How will assistive technology announce save status?", "What if users edit a toggle while a save is in flight?"],
+          ["Separates draft state, last acknowledged values, and pending requests.", "Uses version-aware writes and preserves newer local edits.", "Handles conflict resolution and gives visible, accessible status feedback."]]
+      ]
+    },
+    {
+      topic: "Backend and APIs",
+      cue: /back[ -]?end|REST API|API design|后端|后臺/i,
+      exercises: [
+        ["Reserve a workshop seat", "Design a reservation API with a hard capacity of two seats. Clients may retry after a timeout. Three distinct users try to reserve the final seat concurrently and one request is sent twice. Specify response semantics, storage constraints, and the transaction boundary.",
+          ["How would you test the race deterministically?", "Can a user release a seat and later book again?"],
+          ["Prevents overselling under concurrent writes.", "Separates duplicate retries from distinct bookings and handles idempotency key reuse.", "Defines API responses for success, sold out, conflict, and replay."]],
+        ["Page through an audit feed", "Design GET /events for one account with a page size of 50. Events have immutable IDs and occurrence times; many share the same timestamp. Clients must page backward without duplicates across an otherwise fixed result set. Define the ordering, cursor, storage index, and error cases.",
+          ["What happens when a late event is inserted into a previously read page?", "How can two accounts use identical timestamps safely?"],
+          ["Establishes a strict ordering with a unique tie-breaker.", "Uses keyset pagination and an index aligned with the account scope and sort.", "States visibility under concurrent inserts and validates cursor scope."]]
+      ]
+    },
+    {
+      topic: "Infrastructure and DevOps",
+      cue: /devops|infrastructure|platform engineer|\bSRE\b|运维|基础设施/i,
+      exercises: [
+        ["Deploy under a small error budget", "A service currently handles 100 requests per second across four healthy replicas. A new release may fail only on one request type. Write a rollout plan with a canary, health signals, a rollback trigger, and a way to verify the affected request type actually reached the canary.",
+          ["Which signal would detect a quiet correctness regression?", "What if the prior release cannot read a newly written config value?"],
+          ["Defines the denominator and minimum observation window for each metric.", "Directs representative traffic to the canary and preserves enough baseline capacity.", "Describes a compatible rollback path and verifies restored service."]],
+        ["Recover a full disk", "An application worker stopped processing jobs after its disk filled. Job acknowledgments occur only after outputs are durable. Draft a recovery sequence for this worker and a prevention change, with an explicit point at which you would resume jobs.",
+          ["How would you identify safe-to-reclaim data?", "What if a job committed its result but failed before acknowledgment?"],
+          ["Protects durable state and verifies what consumed space before cleanup.", "Checks replay or idempotency and validates a small job before resuming normal throughput.", "Adds bounded retention, actionable capacity signals, and a recovery drill."]]
+      ]
+    },
+    {
+      topic: "Data science",
+      cue: /data scien(?:ce|tist)|数据科学/i,
+      exercises: [
+        ["Investigate a delayed funnel", "A product funnel has 10,000 signups on Monday and 8,000 on Tuesday. By noon Wednesday, 1,500 Monday users and 960 Tuesday users have completed onboarding. Decide whether these figures establish a drop in conversion, and design an analysis using timestamped events.",
+          ["What would you do if the signup mix changed by device type?", "How would repeated or missing completion events affect the result?"],
+          ["Computes the raw 15% and 12% rates but recognizes unequal observation time.", "Defines a common follow-up window or time-to-event analysis and compares mature cohorts.", "Audits instrumentation and segment composition before assigning a cause."]],
+        ["An estimate with uneven sampling", "A satisfaction survey sampled 100 of 1,000 users from segment A and 100 of 9,000 from B. Positive responses number 80 and 60 respectively. Estimate the population's positive-response share under random sampling within each segment; explain uncertainty and threats to validity.",
+          ["Why might reweighting still leave bias?", "How would you allocate a follow-up sample on a fixed budget?"],
+          ["Weights 80% and 60% by 10% and 90% population shares to obtain 62%.", "Distinguishes sampling error from selection or nonresponse bias.", "Discusses uncertainty within strata and sample allocation by size, variance, and cost."]]
+      ]
+    },
+    {
+      topic: "Caching",
+      cue: /\b(?:LRU|LFU|TTL|caching|cache)\b|缓存|快取/i,
+      exercises: [
+        ["Expiry at the boundary", "Implement a key-value cache with put(key, value, now, ttl) and get(key, now). Calls arrive in nondecreasing integer time. A put overwrites the key; an item expires at now + ttl. Trace put(A, 7, 10, 3), get(A, 12), get(A, 13), then implement lazy expiration.",
+          ["What should ttl = 0 do?", "How would you reclaim expired keys that clients never read?"],
+          ["Returns 7 at time 12 and a miss at 13.", "Stores each expiry with its value and handles overwrites.", "Explains why lazy deletion needs an additional policy to bound memory."]],
+        ["Recency under pressure", "Design an LRU cache of capacity 2 with expected O(1) get and put. For put(A,1), put(B,2), get(A), put(C,3), get(B), show the values returned and the key order after each step.",
+          ["What should happen when put updates an existing key?", "What invariant links the lookup table and the recency list?"],
+          ["Promotes A on its read, evicts B on insertion, and returns a miss on the final read.", "Uses a lookup table plus a structure that moves known entries in O(1).", "Covers capacity zero and updates without duplicate nodes."]]
+      ]
+    },
+    {
+      topic: "Rate limiting",
+      cue: /rate[ -]?limit(?:er|ing)?|token bucket|限流|令牌桶/i,
+      exercises: [
+        ["Budget per tenant", "Design an exact per-tenant rolling limit of 3 accepted requests in (t−10, t] seconds. Requests arrive in timestamp order. For a single tenant at times 0, 1, 2, 9, 10, return five decisions. A rejected request does not consume quota.",
+          ["How do simultaneous requests affect correctness?", "How would idle tenants release memory?"],
+          ["Produces accept, accept, accept, reject, accept.", "Expires timestamps at or before t−10 and records accepted requests only.", "Explains how to make the per-tenant check and update atomic."]],
+        ["A burst-aware gate", "Implement a token bucket with capacity 4 and continuous refill at one token every two seconds. The bucket starts full at time 0. Five requests arrive at time 0, then two at time 3. Each accepted request costs one whole token. Trace the decisions and remaining balance.",
+          ["When should the last refill timestamp advance?", "How would you test long idle periods and simultaneous arrivals?"],
+          ["Accepts four at time 0 and one at time 3, leaving 0.5 tokens.", "Caps the balance at four while preserving fractional refill.", "Describes monotonic time and atomic updates for a shared bucket."]]
+      ]
+    },
+    {
+      topic: "Intervals and scheduling",
+      cue: /\bintervals?\b|overlap|meeting room|scheduling|日程|区间|会议室|重叠/i,
+      exercises: [
+        ["Peak workshop occupancy", "Given up to {n} booking intervals [start, end), return the peak number of concurrent sessions and the earliest time it occurs. For [1,4), [2,5), [4,6), return (2, 2). All durations are positive. Specify an empty-input result.",
+          ["What happens if several sessions end exactly when others begin?", "How would you answer repeated occupancy queries on this schedule?"],
+          ["Uses half-open boundaries consistently, aggregating changes at each timestamp.", "Tracks the first time a new maximum is reached.", "Justifies O(n log n) sorting and the sweep invariant."]],
+        ["Gaps in a service window", "Given an operating window [0,12) and unsorted maintenance intervals [2,5), [4,7), [9,10), return positive-length availability gaps of at least two units. The result is [0,2), [7,9), [10,12). Intervals may extend outside the window.",
+          ["What happens to adjacent maintenance intervals?", "Can you stream the gaps if intervals arrive sorted?"],
+          ["Clips intervals to the window and skips empty intersections.", "Merges overlaps without losing a trailing available segment.", "Applies the minimum length inclusively and handles an empty schedule."]]
+      ]
+    },
+    {
+      topic: "Trees",
+      cue: /\b(?:tree|trees|BST|trie|tries|LCA)\b|二叉树|字典树|遍历树|祖先/i,
+      exercises: [
+        ["First shared manager", "Employees form a rooted tree with unique IDs and a parent pointer for each employee. Given two IDs, return their deepest common manager, treating each person as their own ancestor. In R→A, R→B, A→C, the answer for A and C is A. Support up to {n} nodes.",
+          ["How would you handle a missing ID?", "How would your approach change for a million queries on a fixed tree?"],
+          ["Handles identical IDs and ancestor–descendant inputs.", "Presents a correct ancestor-set or depth-alignment algorithm.", "Gives preprocessing, query time, and space tradeoffs for repeated queries."]],
+        ["Tree totals after an adjustment", "A catalog hierarchy is a rooted tree. Each node has its own signed balance. Compute every subtree sum. For root R=3 with children A=−1 and B=5, and A's child C=2, the sums are R=9, A=1, B=5, C=2.",
+          ["What traversal works if the tree is a chain of {n} nodes?", "How could you support point updates and repeated subtree queries?"],
+          ["Aggregates each child's total exactly once before finishing its parent.", "Handles negative values and a one-node tree.", "Explains an iterative traversal or a stack-depth bound; discusses indexed subtree ranges for updates."]]
+      ]
+    },
+    {
+      topic: "Graphs",
+      cue: /\b(?:graph|BFS|DFS|Dijkstra|topological|dependency|dependencies)\b|shortest path|course schedule|图论|最短路|拓扑|依赖关系|广度优先/i,
+      exercises: [
+        ["Release waves", "A deployment manifest lists services and prerequisite edges. Return the earliest parallel release wave for every service, or report a dependency cycle. For A→C, B→C, C→D, and isolated E, the waves are [A,B,E], [C], [D]; order within a wave is arbitrary.",
+          ["What if the same edge is listed twice?", "How can you explain an actual cycle to the operator?"],
+          ["Includes all services, even those without edges.", "Computes waves from the last prerequisite to finish and detects remaining cycles.", "Explains O(V+E) processing after a consistent policy for duplicate edges."]],
+        ["Fewest transfers", "Given an undirected, unweighted network and a set of open help desks, return each station's minimum hop count to any desk, or −1 if unreachable. With edges A–B, B–C, C–D, desks A and D, plus isolated E, the distances are 0,1,1,0,−1.",
+          ["How would you return one nearest desk as well?", "What changes when each edge has a different positive travel time?"],
+          ["Starts a single breadth-first search with every open desk at distance zero.", "Marks visited stations consistently and covers no desks or disconnected components.", "Justifies O(V+E) and identifies the weighted shortest-path alternative."]]
+      ]
+    },
+    {
+      topic: "Dynamic programming",
+      cue: /\b(?:dynamic programming|DP|knapsack|memoization)\b|动态规划|背包|子序列/i,
+      exercises: [
+        ["Rest-day payouts", "Select nonadjacent paid shifts to maximize total payout. Skipping every shift is allowed. For payouts [4, −2, 5, 3, 6], return 15 from indices 0, 2, 4. Support {n} shifts and explain the state transition.",
+          ["How would you recover the indices?", "What changes if selecting a shift forces two rest days?"],
+          ["Chooses between skipping the current shift and taking it plus an eligible prefix.", "Handles empty and all-negative inputs with a zero baseline.", "Computes the value in O(n) time and O(1) extra space; explains extra state for reconstruction."]],
+        ["Pack a review sprint", "Each independent task has an integer duration and a score and can be completed once. Maximize score in at most 6 hours. For tasks (2,3), (3,4), (4,8), return 11. Describe a method for up to 100 tasks and a 2,000-hour budget.",
+          ["Why does the order of an in-place capacity loop matter?", "How would you return one optimal task set?"],
+          ["Models a 0/1 decision for each task and each capacity.", "Updates capacities downward for a one-dimensional DP.", "Gives O(tasks × budget) time and handles unused capacity."]]
+      ]
+    },
+    {
+      topic: "Strings and windows",
+      cue: /\b(?:substring|string|palindrome|sliding window|anagram|pattern matching)\b|子串|字符串|滑动窗口|回文|异位词/i,
+      exercises: [
+        ["Longest two-label run", "Given a sequence of event labels, return the longest contiguous slice with at most two distinct labels. Break ties by earliest start. For A B A C C B, return [0,3) for A B A. Support up to {n} labels.",
+          ["What changes for at most k different labels?", "Can the length be reported while processing a stream?"],
+          ["Uses counts to track distinct labels in a sliding window.", "Shrinks the left boundary until the window is valid.", "Justifies linear time and tests empty input, ties, and all-identical labels."]],
+        ["First complete code window", "Return the earliest start index of a contiguous window whose multiset of symbols equals a required code; return −1 if absent. For the stream C A B A and code A A B, return 1. Symbols may repeat and the code is nonempty.",
+          ["How would you avoid comparing two full histograms for every window?", "What convention would you choose for an empty code?"],
+          ["Maintains a fixed-size window with correct incoming and outgoing updates.", "Tracks required multiplicities, including repeated symbols.", "Distinguishes a partial match from a full match and analyzes runtime."]]
+      ]
+    },
+    {
+      topic: "SQL",
+      cue: /\b(?:SQL|PostgreSQL|MySQL|CTE|joins?)\b|window function|写[个段]?查询|数据库查询|窗口函数/i,
+      exercises: [
+        ["First-week activation", "Write SQL over signups(user_id, ts) and events(user_id, event_id, kind, ts). One signup exists per user. For each UTC signup date, report signups and the fraction with at least one 'activate' event in [signup, signup + 7 days). Assume every cohort has had seven days to mature.",
+          ["How would duplicated events affect the result?", "How would you include recent cohorts in a dashboard?"],
+          ["Retains users with zero qualifying events.", "Counts distinct activated users or uses EXISTS before aggregation.", "Uses half-open timestamp boundaries, UTC dates, and noninteger division."]],
+        ["Last known status", "Write SQL to return every account and its last known status strictly before a cutoff. Use accounts(id) and status_events(account_id, ts, event_id, status). For equal timestamps the larger event_id wins; accounts without prior events return NULL.",
+          ["What index supports this query?", "What would change if you needed status for every daily cutoff in a month?"],
+          ["Filters to eligible events before selecting latest per account.", "Breaks ties with event_id and preserves accounts without a match.", "Explains why MAX(status) does not identify the status of the latest row."]]
+      ]
+    },
+    {
+      topic: "Experiment design",
+      cue: /\bexperiments?\b|A\s*\/\s*B|A-B test|causal inference|randomi[sz]ed|假设检验|实验设计|因果推断|分流实验/i,
+      exercises: [
+        ["A checkout experiment", "A team wants to test a shorter checkout. Baseline purchase rate is 8% per eligible visitor. Specify how to test for a lift of 0.4 percentage points. Define assignment, primary metric, guardrails, and the rollout decision. Separate calculations you can make from inputs you still need.",
+          ["What if assignment logs show a 53/47 split for a planned 50/50 test?", "How should operations handle repeated dashboard checks?"],
+          ["Uses a stable assignment unit and a denominator fixed by eligibility.", "Distinguishes absolute from relative lift and specifies alpha, power, and duration assumptions.", "Identifies sample-ratio diagnostics and a prespecified stopping rule."]],
+        ["Interference in a shared queue", "A proposed dispatch policy gives some customers faster matching, but treated and control customers share the same supply. Design an experiment to measure overall wait-time impact. Explain how you would handle weekday patterns and users who leave the queue.",
+          ["When would you choose market-level assignment versus time-block switchbacks?", "How would you detect carryover between treatment periods?"],
+          ["Identifies interference and motivates the randomization unit.", "Specifies the wait-time estimand and a policy for abandonment.", "Matches uncertainty estimates to the assignment unit and handles carryover."]]
+      ]
+    },
+    {
+      topic: "Data pipelines",
+      cue: /\b(?:ETL|CDC|Kafka|pipeline|stream processing|data engineer(?:ing)?)\b|数据管道|数据工程|数据流|实时数仓/i,
+      exercises: [
+        ["Daily totals with late events", "A pipeline receives payment events with immutable event_id, merchant_id, event_time, and amount_cents. Deliver daily UTC merchant totals. Events can repeat and normally arrive within 48 hours, with rare later corrections. Define a replayable design.",
+          ["What changes if corrections require reversing a prior event?", "How would a replay avoid publishing totals twice?"],
+          ["Deduplicates by stable event identity and aggregates by event time.", "Defines a correction policy beyond the normal lateness interval.", "Makes output writes idempotent and reconciles published totals against source events."]],
+        ["Rebuild one partition", "A transform bug affected yesterday's events. You have immutable raw input, an active stream, and daily outputs keyed by account and date. Plan a repair that preserves new arrivals and lets you verify results before switching readers.",
+          ["What if late input arrives between validation and cutover?", "Which counts or invariants would you compare?"],
+          ["Pins an input version or offset and records a deterministic transform.", "Builds separately, includes new arrivals, and switches outputs atomically or with versioning.", "Specifies reconciliation and a reversible cutover."]]
+      ]
+    },
+    {
+      topic: "Machine learning",
+      cue: /\b(?:ML|MLE|machine learning|ranking|modeling|prediction|deep learning|LLM|recommender|NLP)\b|机器学习|模型|推荐系统|大模型|深度学习/i,
+      exercises: [
+        ["Triage with delayed labels", "A support team can review 200 tickets per day. The target is whether a ticket escalates within seven days. Design a ranking baseline, historical evaluation, and a first online test. List the features available at decision time.",
+          ["What happens if some historical tickets were never reviewed?", "What if two tickets have identical predicted scores at the daily cutoff?"],
+          ["Uses a time-based split with mature labels and as-of feature construction.", "Chooses a capacity-aware measure such as precision@200 or expected utility.", "Discusses selective labels, a simple baseline, and online guardrails."]],
+        ["A quiet model regression", "A classifier's overall accuracy stayed flat while complaints doubled. Design an investigation using timestamped predictions, delayed outcomes, and service logs. Describe the order of checks and a decision rule for rollback.",
+          ["How would you isolate a threshold change from a change in ranking quality?", "What if the affected segment has very few labeled examples?"],
+          ["Checks data and serving versions before attributing harm to the model.", "Evaluates subgroup errors, calibration, drift, and operational metrics over time.", "Uses uncertainty and impact to choose rollback, traffic reduction, or continued observation."]]
+      ]
+    },
+    {
+      topic: "Probability and statistics",
+      cue: /\b(?:probability|statistics|Bayes|Bayesian|quant|expected value)\b|概率|统计|期望值|贝叶斯|量化/i,
+      exercises: [
+        ["Recalibrate an alert", "A detector flags 90% of true faults and 5% of healthy devices. Exactly 1% of devices have a fault. Given a flag, compute the probability of a fault and show expected counts in a population of 10,000.",
+          ["How would a doubling of prevalence change precision?", "Which additional assumption would you need to combine two detector alerts?"],
+          ["Finds 90 flagged faults and 495 flagged healthy devices.", "Computes 90 / 585, about 15.4%, and distinguishes sensitivity from precision.", "Discusses conditional dependence before multiplying likelihoods."]],
+        ["A stopped sampling process", "Draw independent samples from a device that fails with probability 0.2. Stop at the first failure or after three draws. Compute the probability of seeing a failure and the expected number of draws, showing your method.",
+          ["How would you generalize to k draws?", "Which step breaks if failures cluster over time?"],
+          ["Computes 1−0.8³ = 0.488 for at least one failure.", "Uses tail probabilities to obtain 1 + 0.8 + 0.8² = 2.44 expected draws.", "Identifies where independence enters and distinguishes the two expectations."]]
+      ]
+    },
+    {
+      topic: "System design",
+      cue: /system design|distributed system|architecture|design interview|系统设计|架构|分布式|系统面/i,
+      exercises: [
+        ["Resumable uploads", "Design uploads for files up to 5 GB over unreliable mobile connections. Clients may retry chunks, restart, or retry finalization. Specify the API, durable state, and consistency guarantees. Explain when a file becomes visible to readers.",
+          ["How would concurrent finalization requests behave?", "How would you reclaim abandoned chunks?"],
+          ["Defines stable upload, chunk, and integrity identifiers.", "Makes retries idempotent and publishes a complete manifest atomically.", "Covers expiration races, partial failure, and end-to-end validation."]],
+        ["Notifications across devices", "Design a per-account notification inbox. Clients page backward, mark items read, and reconnect after offline periods. The producer may retry deliveries. Specify the data model and API, and identify which operations require strict consistency.",
+          ["How will pagination behave when new items arrive?", "How would two devices marking overlapping ranges read converge?"],
+          ["Deduplicates producer retries using stable identifiers.", "Uses a deterministic cursor and defines read-state semantics across devices.", "Identifies storage growth, replay, and failure handling for missed updates."]]
+      ]
+    },
+    {
+      topic: "Behavioral",
+      cue: /\b(?:behavioral|behavioural|leadership|conflict|BQ)\b|行为面|领导力|跨团队|行为题/i,
+      exercises: [
+        ["Disagreeing over evidence", "Describe a real decision where you and a collaborator read the same evidence differently. Reconstruct the decision, your responsibilities, what you did, and what you learned. Use an outcome you can substantiate.",
+          ["What evidence would have changed your mind?", "What was the other person's strongest argument?"],
+          ["Separates personal actions from team actions.", "Explains a concrete disagreement and a fair decision process.", "States the observed outcome and acknowledges what remains uncertain."]],
+        ["A missed commitment", "Choose a commitment you could not meet. Walk through your earliest warning signal, the tradeoff you faced, how you communicated it, and what you changed afterward.",
+          ["Who absorbed the cost of the delay?", "Which change had a measurable effect on later work?"],
+          ["Names a specific commitment and its actual impact.", "Explains timing, ownership, communication, and realistic alternatives.", "Gives evidence for a subsequent improvement or identifies what still needs validation."]]
+      ]
+    },
+    {
+      topic: "Coding",
+      cue: /\b(?:SWE|SDE|coding|algorithm|leetcode|programming|software engineer(?:ing)?|OA)\b|软件工程|算法|编程|码题|力扣/i,
+      exercises: [
+        ["Coalesce repeated sightings", "Given up to {n} pairs (label, timestamp), emit one pair per label containing its earliest timestamp. Output in order of each label's first appearance in the input. For (B,8), (A,7), (B,3), return (B,3), (A,7).",
+          ["How would you support inputs too large to fit in memory?", "What would change if results must instead be ordered by earliest timestamp?"],
+          ["Tracks first-seen order independently of minimum timestamp.", "Handles duplicates, ties, empty inputs, and out-of-order times.", "Explains expected O(n) time and O(number of labels) space for the in-memory case."]],
+        ["Recover missing counters", "Given sorted distinct integer counters within [1, N], return the missing counters as maximal inclusive ranges. For N=12 and [1,4,5,9,12], return [2,3], [6,8], [10,11]. N may be a trillion; the input has at most {n} items.",
+          ["Can you emit results without storing all ranges?", "How would your solution change if readings contained duplicates?"],
+          ["Uses observed counters to find gaps without iterating through [1,N].", "Handles leading and trailing gaps and the empty input.", "Justifies linear time in readings and constant extra space beyond output for sorted input."]]
+      ]
+    },
+    {
+      topic: "Role-general practice",
+      cue: null,
+      exercises: [
+        ["Clarify the decision", "A team reports that a workflow is taking longer than expected. Run the first ten minutes of an interview case: identify the decision owner, define a measurable outcome, ask for two pieces of evidence, and propose a first reversible test.",
+          ["Which answer would most change your first test?", "What observation would make you stop the test early?"],
+          ["Defines the population, time window, and unit being measured.", "Separates assumptions from supplied facts and explains which questions matter.", "Picks a test with an observable outcome, owner, and decision rule."]],
+        ["Prioritize a small investigation", "Two teams report different completion rates for the same workflow. Outline a one-day investigation. Define the population and time window, explain how you would reproduce both numbers, and choose the first discrepancy to resolve.",
+          ["How could both figures be correct?", "What would you tell a decision-maker before the discrepancy is resolved?"],
+          ["Checks definitions, eligibility, time zones, and observation windows.", "Traces a small set of records through both calculations.", "Communicates the uncertainty and ties the next step to a specific decision."]]
+      ]
+    }
+  ];
+
+  // Prefer a concrete title cue over the role when a headline includes both.
+  const roleTopics = new Set(["Frontend engineering", "Backend and APIs", "Infrastructure and DevOps", "Data science", "Coding"]);
+  const titleMatchers = [
+    ...topics.filter((entry) => entry.cue && !roleTopics.has(entry.topic)),
+    ...topics.filter((entry) => roleTopics.has(entry.topic))
+  ];
+
+  function formatCount(company, title) {
+    const key = company + "\n" + title;
+    let hash = 0;
+    for (const char of key) hash = (Math.imul(hash, 31) + char.codePointAt(0)) >>> 0;
+    return ["20,000", "50,000", "100,000", "200,000"][hash % 4];
+  }
+
+  function makeDrill({ company = "", title = "", topic: selectedTopic = "", variant = 0 } = {}) {
+    const headline = String(title).normalize("NFKC");
+    const selected = String(selectedTopic).trim().normalize("NFKC");
+    const finalTopic = topics[topics.length - 1];
+    const titleTopic = titleMatchers.find(({cue}) => cue.test(headline));
+    const preferredTopic = selected && topics.find(({topic, cue}) =>
+      topic.toLowerCase() === selected.toLowerCase() || (cue && cue.test(selected)));
+    const entry = preferredTopic || titleTopic || finalTopic;
+    let basis;
+    if (preferredTopic) {
+      basis = "Uses the selected practice topic: " + entry.topic + ".";
+    } else if (titleTopic) {
+      const cue = headline.match(entry.cue)[0];
+      basis = entry.topic === "Coding"
+        ? "Broad coding cue (“" + cue + "”). The specific exercise is an original selection."
+        : "The title mentions “" + cue + "”, which suggests this practice topic.";
+    } else {
+      basis = "The title gives no recognized technical topic. This general exercise is an original selection.";
+    }
+    const position = Math.abs(Math.trunc(Number(variant) || 0)) % entry.exercises.length;
+    const [name, prompt, followups, rubric] = entry.exercises[position] || entry.exercises[0];
+    const expand = (text) => text.replaceAll("{n}", formatCount(String(company), headline));
+    return { name, prompt: expand(prompt), followups: followups.map(expand), rubric: rubric.map(expand), topic: entry.topic, basis };
+  }
+
+  globalThis.makeDrill = makeDrill;
+})();
+
+(() => {
+  "use strict";
+
+  const catalogs = new Map([
+    ["bytebase", ["Bytebase", "interview", "MIT", /^\d+_[^/]+\/README\.md$/i]],
+    ["jtl-software", ["JTL-Software", "take-home-tasks", "MIT", /^[^/]+\/instructions\.md$/i]],
+    ["justeat", ["Just Eat", "JustEat.RecruitmentTest", "Apache-2.0",
+      /^(?:README\.md|(?:Test|Tech)\.[^/]+\.md|Product-Research\/Test\.[^/]+\.md|data-and-ai\/[^/]+\/README\.md)$/i]],
+    ["guardrailsio", ["GuardRails", "backend-engineer-challenge", "MIT", /^README\.md$/i]],
+    ["sandvikcode", ["Sandvik CODE", "data-science-take-home", "MIT", /^README\.md$/i]],
+    ["cityofcapetown", ["City of Cape Town", "ds_code_challenge", "MIT", /^README\.md$/i]]
+  ]);
+
+  function readText(blob) {
+    if (blob.encoding !== "base64" || typeof blob.content !== "string") {
+      throw new Error("GitHub returned an unreadable exercise file.");
+    }
+    const bytes = Uint8Array.from(atob(blob.content), ch => ch.charCodeAt(0));
+    return new TextDecoder("utf-8", {fatal: true}).decode(bytes);
+  }
+
+  function getTitles(markdown, fromCity) {
+    const titles = [];
+    const lines = markdown.split(/\r?\n/);
+    for (const [i, line] of lines.entries()) {
+      if (fromCity) {
+        const m = line.match(/^\s*\d+\.\s+\*{1,2}([^*]+? challenge)\*{1,2}\s*:/i);
+        if (m) titles.push({title: m[1].trim(), suffix: "?plain=1#L" + (i + 1)});
+      } else {
+        const m = line.match(/^#\s+(.+?)\s*#*\s*$/);
+        const setext = line.trim() && /^\s*=+\s*$/.test(lines[i + 1] || "");
+        if (m || setext) return [{title: (m ? m[1] : line).trim(), suffix: ""}];
+      }
+    }
+    return titles;
+  }
+
+  globalThis.catalogSearch = async function catalogSearch(org, requestJSON) {
+    const key = String(org).trim().toLowerCase();
+    if (!catalogs.has(key)) throw new Error("No exercise catalog is configured for this organization.");
+    const [company, name, license, matchFile] = catalogs.get(key);
+    const repo = key + "/" + name;
+    const api = "/repos/" + repo;
+    const metadata = await requestJSON(api);
+    if (metadata.full_name?.toLowerCase() !== repo.toLowerCase() ||
+        metadata.owner?.login?.toLowerCase() !== key || metadata.private ||
+        metadata.fork || metadata.license?.spdx_id !== license || !metadata.default_branch) {
+      throw new Error("The repository owner, visibility, or license has changed. Review the source before adding titles.");
+    }
+    const branch = encodeURIComponent(metadata.default_branch);
+    const tree = await requestJSON(api + "/git/trees/" + branch + "?recursive=1");
+    const files = tree.tree.filter(entry => entry.type === "blob");
+    const licenseFile = files.find(entry => /^licen[sc]e(?:\.(?:md|txt))?$/i.test(entry.path));
+    if (!licenseFile) throw new Error("The repository license file could not be verified.");
+    const candidates = files.filter(entry => matchFile.test(entry.path));
+    const readable = candidates.filter(entry => entry.size <= 262144);
+    const selection = readable.slice(0, 12);
+    let partial = tree.truncated === true || !selection.length || selection.length < candidates.length;
+    const listing = "https://github.com/" + repo;
+    const blobUrl = path => listing + "/blob/" + branch + "/" + path.split("/").map(encodeURIComponent).join("/");
+    const rows = [];
+    let firstError;
+    for (let i = 0; i < selection.length; i += 3) {
+      const group = selection.slice(i, i + 3);
+      const requests = group.map(async file => {
+        const blob = await requestJSON(api + "/git/blobs/" + file.sha);
+        const matches = getTitles(readText(blob), key === "cityofcapetown");
+        return matches.filter(({title}) => title && title.length <= 240).map(({title, suffix}) => ({
+          company, org: key, repo, license, licenseUrl: blobUrl(licenseFile.path), listing,
+          url: blobUrl(file.path) + suffix, title, kind: "Employer sample", archived: !!metadata.archived
+        }));
+      });
+      for (const result of await Promise.allSettled(requests)) {
+        if (result.status === "fulfilled" && result.value.length) rows.push(...result.value);
+        else {
+          partial = true;
+          if (result.status === "rejected") firstError ??= result.reason;
+        }
+      }
+      if (firstError && /(?:rate limit|\b403\b|\b429\b)/i.test(String(firstError))) break;
+    }
+    if (!rows.length && firstError) throw firstError;
+    return {rows, partial};
+  };
+})();
+
+</script>
+<script>
+(() => {
+  "use strict";
+  const $ = id => document.getElementById(id);
+  const seeds = JSON.parse($("seed-data").textContent);
+  const companies = new Map(seeds.map(row => [row.org.toLowerCase(), row.company]));
+  const catalogOrgs = new Set(["bytebase","cityofcapetown","guardrailsio","jtl-software","justeat","sandvikcode"]);
+  const openLicenses = new Set(["MIT","Apache-2.0","BSD-2-Clause","BSD-3-Clause","ISC","0BSD","CC0-1.0","Unlicense"]);
+  const storeKey = "interview-notebook.titles.v1";
+  const cache = new Map();
+  let extra = [], active = null, variant = 0, sourceRequest = false;
+  const submitted = new Set(["Personal topic","User-supplied title","Repository name","Employer sample"]);
+  const clean = (val, max) => typeof val === "string" ? val.trim().slice(0,max) : "";
+  const safeURL = value => {
+    try {
+      const url = new URL(value);
+      return url.protocol === "https:" && !url.username && !url.password ? url.href : "";
+    } catch { return ""; }
+  };
+  const key = row => [row.company.trim().toLowerCase(), row.title.trim().toLowerCase(), row.url || "", row.topic || ""].join("\n");
+  const allRows = () => seeds.concat(extra);
+  function text(tag, value, cls) {
+    const node = document.createElement(tag);
+    node.textContent = value;
+    if (cls) node.className = cls;
+    return node;
+  }
+  function link(value, url) {
+    const a = text("a",value);
+    a.href = safeURL(url);
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    return a;
+  }
+  function loadRow(record) {
+    if (!record || !submitted.has(record.kind)) return null;
+    const row = {};
+    for (const [field,limit] of Object.entries({company:80,title:240,org:80,repo:200,license:50,topic:120,kind:40})) {
+      row[field] = clean(record[field],limit);
+    }
+    if (!row.company || !row.title) return null;
+    row.url = safeURL(record.url);
+    row.licenseUrl = safeURL(record.licenseUrl);
+    row.archived = record.archived === true;
+    return row;
+  }
+  try {
+    const stored = JSON.parse(localStorage.getItem(storeKey) || "[]");
+    if (!Array.isArray(stored)) throw Error();
+    extra = stored.map(loadRow).filter(Boolean);
+  } catch { $("global-msg").textContent = "Browser storage is unavailable or unreadable. This notebook is usable for the current session."; }
+  function save(row) {
+    const existing = allRows().find(item => key(item) === key(row));
+    if (!existing) {
+      extra.push(row);
+      try { localStorage.setItem(storeKey, JSON.stringify(extra)); }
+      catch { $("global-msg").textContent = "This title is available for this session. Browser storage could not save it."; }
+    }
+    fillCompanyFilters();
+    $("company").value = row.company;
+    $("search").value = "";
+    active = existing || row;
+    variant = 0;
+    switchView("study");
+    render();
+    $("drill-name").scrollIntoView({block:"nearest"});
+  }
+  function fillCompanyFilters() {
+    const former = $("company").value;
+    const names = [...new Set(allRows().map(row => row.company))].sort((a,b)=>a.localeCompare(b));
+    $("company").replaceChildren(new Option("All companies",""), ...names.map(name=>new Option(name,name)));
+    if (names.includes(former)) $("company").value = former;
+  }
+  function switchView(section) {
+    for (const name of ["tracker","study","find"]) {
+      $(name).hidden = name !== section;
+      if (name === section) $("nav-"+name).setAttribute("aria-current","page");
+      else $("nav-"+name).removeAttribute("aria-current");
+    }
+  }
+  function renderDrill() {
+    if (!active) return;
+    const drill = makeDrill({...active,variant});
+    $("variant-label").textContent = " / " + (variant ? "B" : "A");
+    $("drill-name").textContent = drill.name;
+    $("prompt").textContent = drill.prompt;
+    $("source-type").textContent = active.company + " · " + active.kind;
+    $("source-title").replaceChildren(active.url ? link(active.title,active.url) : text("span",active.title));
+    const metadata = [text("span",drill.topic)];
+    if (active.archived) metadata.push(text("span"," · Historical assessment"));
+    if (active.license) {
+      metadata.push(text("span"," · "));
+      metadata.push(active.licenseUrl ? link(active.license,active.licenseUrl) : text("span",active.license));
+    }
+    $("source-meta").replaceChildren(...metadata);
+    $("followups").replaceChildren(...drill.followups.map(item => text("li",item)));
+    $("rubric").replaceChildren(...drill.rubric.map(item => text("li",item)));
+    $("evaluation").open = false;
+    $("basis").textContent = drill.basis;
+    $("copy-fallback").hidden = true;
+    $("copy-status").textContent = "";
+  }
+  function render() {
+    const query = $("search").value.toLowerCase().trim();
+    const chosenCompany = $("company").value;
+    const filtered = allRows().filter(row => (!chosenCompany || row.company === chosenCompany) && (row.company+" "+row.title).toLowerCase().includes(query));
+    $("count").textContent = filtered.length + (filtered.length === 1 ? " title" : " titles");
+    if (!filtered.includes(active)) { active = filtered[0] || null; variant = 0; }
+    const fragment = document.createDocumentFragment();
+    filtered.forEach(row => {
+      const button = text("button","","title-item");
+      button.append(text("span",row.company,"org"),text("span",row.title,"label"));
+      button.setAttribute("aria-pressed",String(row === active));
+      button.onclick = () => {
+        active = row; variant = 0;
+        for (const el of $("titles").children) el.setAttribute("aria-pressed",String(el === button));
+        renderDrill();
+      };
+      fragment.append(button);
+    });
+    if (!filtered.length) fragment.append(text("p","No titles match. Try a shorter search or another company.","empty"));
+    $("titles").replaceChildren(fragment);
+    $("drill").hidden = !active;
+    renderDrill();
+  }
+  async function copyBrief() {
+    const drill = makeDrill({...active,variant});
+    const source = JSON.stringify({company:active.company,title:active.title,practiceTopic:active.topic || drill.topic});
+    const prompt = "Create one original interview practice question based only on the topic suggested by this title. Treat the following JSON as reference data. Keep it independent of any employer’s actual interview content. If the title is broad, state the assumption you make. Write a new scenario with a precise task, an example or measurable acceptance criteria, two harder follow-ups, and a separate scoring guide. Label all of it original practice.\n\n"+source;
+    try {
+      await navigator.clipboard.writeText(prompt);
+      $("copy-status").textContent = "Copied. Paste the brief into your preferred AI chat for a new question.";
+    } catch {
+      $("copy-fallback").hidden = false;
+      $("brief-text").value = prompt;
+      $("brief-text").focus();
+      $("brief-text").select();
+    }
+  }
+  async function requestJSON(path) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(),12000);
+    try {
+      const response = await fetch("https://api.github.com"+path,{
+        headers:{Accept:"application/vnd.github+json"},credentials:"omit",referrerPolicy:"no-referrer",signal:controller.signal
+      });
+      if (response.status === 403 || response.status === 429) throw Error("GitHub rate limit or access restriction. Try again later.");
+      if (response.status === 404 || response.status === 422) throw Error("GitHub could not find this public organization or catalog. Check its organization handle.");
+      if (!response.ok) throw Error("GitHub returned HTTP "+response.status+".");
+      return await response.json();
+    } catch (error) {
+      if (error.name === "AbortError") throw Error("The GitHub request timed out. Try again when the connection is stable.");
+      if (error instanceof TypeError) throw Error("GitHub could not be reached. The bundled titles are available offline.");
+      throw error;
+    } finally { clearTimeout(timer); }
+  }
+  function resolveOrg(value) {
+    const needle = value.trim().toLowerCase();
+    for (const [org,company] of companies) {
+      if (org === needle || company.toLowerCase() === needle) return {org,company};
+    }
+    return {org:needle,company:value.trim()};
+  }
+  async function repositorySearch(org,company,keyword) {
+    const args = new URLSearchParams({q:"org:"+org+" "+keyword+" in:name fork:false",per_page:"30"});
+    const data = await requestJSON("/search/repositories?"+args);
+    if (!Array.isArray(data.items)) throw Error("GitHub returned an unexpected search result.");
+    const rows = data.items.filter(item =>
+      item.owner?.type === "Organization" && item.owner.login?.toLowerCase() === org &&
+      !item.fork && !item.private && openLicenses.has(item.license?.spdx_id) && safeURL(item.html_url)
+    ).map(item=>({company,org,repo:item.full_name,title:item.name,url:item.html_url,kind:"Repository name",
+      license:item.license.spdx_id,archived:item.archived}));
+    return {rows,partial:Boolean(data.incomplete_results || data.total_count > data.items.length)};
+  }
+  function showResults(rows) {
+    const result = document.createDocumentFragment();
+    rows.forEach(row => {
+      const container = text("div","","result");
+      const heading = text("strong","");
+      heading.append(link(row.title,row.url));
+      const details = [row.company,row.kind,row.license,row.archived ? "Historical" : ""].filter(Boolean).join(" · ");
+      container.append(heading,text("div",details,"under"));
+      const action = text("button",allRows().some(item => key(item) === key(row)) ? "Practice this title" : "Add and practice","btn secondary");
+      action.onclick = () => save(row);
+      container.append(action);
+      result.append(container);
+    });
+    $("live-results").replaceChildren(result);
+  }
+  async function discover(event) {
+    event.preventDefault();
+    if (sourceRequest) return;
+    const {org,company} = resolveOrg($("lookup").value);
+    const mode = $("method").value, term = $("keyword").value;
+    $("live-results").replaceChildren();
+    if (!/^[a-z0-9](?:[a-z0-9-]{0,37}[a-z0-9])?$/.test(org)) {
+      $("live-status").textContent = "Choose a listed company or enter its official GitHub organization handle."; return;
+    }
+    if (mode === "catalog" && !catalogOrgs.has(org)) {
+      $("live-status").textContent = "This organization has no connected exercise catalog. Select “Repositories by name” to search it."; return;
+    }
+    const id = [org,mode,mode === "catalog" ? "" : term].join("/");
+    const cached = cache.get(id);
+    sourceRequest = true;
+    for (const el of $("discover-form").elements) el.disabled = true;
+    $("live-status").textContent = "Looking up "+company+"…";
+    try {
+      let data;
+      if (cached && Date.now() - cached.time < 300000) data = cached.data;
+      else {
+        data = mode === "catalog" ? await catalogSearch(org,requestJSON) : await repositorySearch(org,company,term);
+        if (!data.partial) cache.set(id,{data,time:Date.now()});
+      }
+      showResults(data.rows);
+      const count = data.rows.length;
+      const note = mode === "repos" ? " Matches are repository names. Open a source to check its relevance." : " Select a title to generate an original exercise.";
+      const none = mode === "repos" ? "No matching open-license repositories in the results checked. Try another term." : "No published titles found in the expected catalog layout.";
+      $("live-status").textContent = (count ? count+(count === 1 ? " result." : " results.")+note : none)+(data.partial ? " Coverage is partial." : "");
+    } catch (error) { $("live-status").textContent = error.message; }
+    finally {
+      sourceRequest = false;
+      for (const el of $("discover-form").elements) el.disabled = false;
+    }
+  }
+  $("manual").onsubmit = event => {
+    event.preventDefault();
+    const company = $("manual-company").value.trim(), title = $("manual-title").value.trim();
+    const inputURL = $("manual-url").value.trim(), url = safeURL(inputURL);
+    if (!company || !title || (inputURL && !url)) {
+      $("manual-status").textContent = "Enter a company and title, and use an https:// source link if provided."; return;
+    }
+    $("manual-status").textContent = "";
+    save({company,title,url,kind:url ? "User-supplied title" : "Personal topic",topic:$("manual-topic").value.trim()});
+    $("manual").reset();
+  };
+  $("discover-form").onsubmit = discover;
+  $("method").onchange = () => { $("keyword-label").hidden = $("method").value === "catalog"; $("live-results").replaceChildren(); $("live-status").textContent = ""; };
+  $("lookup").onchange = () => { const {org} = resolveOrg($("lookup").value); $("method").value = catalogOrgs.has(org) ? "catalog" : "repos"; $("method").onchange(); };
+  $("keyword").onchange = () => { $("live-results").replaceChildren(); $("live-status").textContent = ""; };
+  $("nav-tracker").onclick = () => switchView("tracker");
+  $("nav-study").onclick = () => switchView("study"); $("nav-find").onclick = () => switchView("find");
+  $("company").onchange = render; $("search").oninput = render;
+  $("another").onclick = () => { variant = 1-variant; renderDrill(); };
+  $("brief").onclick = copyBrief;
+  $("evaluation").ontoggle = () => { $("evaluation").querySelector("summary").textContent = $("evaluation").open ? "Hide scoring guide" : "Show scoring guide"; };
+  for (const [org,company] of companies) {
+    const opt = document.createElement("option"); opt.value = company; opt.label = org; $("org-list").append(opt);
+  }
+  fillCompanyFilters();
+  active = seeds.find(row => row.title === "Tiny SQL Editor") || seeds[0];
+  render();
+})();
+
+(() => {
+  "use strict";
+  const get = id => document.getElementById(id);
+  const snapshot = JSON.parse(get("tracker-data").textContent);
+  const categories = {"Coding":"coding","System design":"design","Behavioral":"behavioral","Other":"other"};
+  const storageKey = "interview-notebook.authorized.v1";
+  const subjects = new Map(snapshot.scenarios.map(s=>[s.company,s]));
+  const named = snapshot.sources.filter(s=>s.kind === "named");
+  const signature = s=>JSON.stringify([s.company,s.category,s.sourceLabel.trim().toLowerCase(),s.sourceUrl]);
+  const recordKey = s => s.company+"\n"+s.sourceLabel;
+  const matched = new Map(snapshot.matched.map(row=>[recordKey(row),row]));
+  const make = (tag,label,cls) => {const el=document.createElement(tag);el.textContent=label;if(cls)el.className=cls;return el;};
+  const https = raw => {try{const url=new URL(raw);return url.protocol==="https:" && !url.username && !url.password ? url.href:"";}catch{return "";}};
+  function sourceLink(label,url) {
+    const valid=https(url);if(!valid)return make("span",label);
+    const el=make("a",label);el.href=valid;el.target="_blank";el.rel="noreferrer noopener";return el;
+  }
+  const skills={
+    "Coding":[["Trace your algorithm on the smallest input that breaks a naive implementation.","How do runtime and memory change as the largest input grows tenfold?"],["Defines input, output and boundary rules.","Demonstrates the algorithm on a counterexample and covers a failure case.","Justifies the complexity of the chosen implementation."]],
+    "System design":[["Which invariant must still hold when a dependency is unavailable?","Walk through a failure halfway through a write and show what a retry does."],["States a user-visible requirement and capacity assumption.","Defines data ownership, API boundaries and the recovery path.","Chooses a metric that would reveal the stated failure mode."]],
+    "Behavioral":[["What did you do personally when another stakeholder disagreed?","What evidence changed your view, and what would you do differently today?"],["Names the decision, the competing interests and the individual's contribution.","Explains the alternatives considered and the evidence available at the time.","Reports an observable outcome and a concrete lesson."]],
+    "Other":[["Which assumption most changes your answer?","What evidence would make you revise your recommendation?"],["Selects a method suited to the decision and states assumptions.","Works through a measurable example and identifies a potential bias.","Ties the decision to a next test or explicit threshold."]]
+  };
+  let selected=null, imports=[];
+  function validateImports(input) {
+    if(!Array.isArray(input)||input.length>20000)throw Error("Use an array of at most 20,000 titles.");
+    return input.map((r,i)=>{
+      if(!r || !subjects.has(r.company) || !Object.hasOwn(categories,r.category) || typeof r.title!=="string" || !r.title.trim() || r.title.length>350 || !https(r.sourceUrl)){
+        throw Error("Row "+(i+1)+" needs a roster company, a listed category, a title of up to 350 characters and an HTTPS sourceUrl.");
+      }
+      return {company:r.company,category:r.category,title:r.title.trim(),sourceLabel:r.title.trim(),sourceUrl:https(r.sourceUrl),kind:"supplied",titleType:"user-supplied title"};
+    });
+  }
+  try{imports=validateImports(JSON.parse(localStorage.getItem(storageKey)||"[]"));}catch{get("import-status").textContent="Previous title imports could not be loaded.";}
+  function render() {
+    const company=get("track-company").value, category=get("track-category").value;
+    const companySources=snapshot.sources.filter(x=>x.company===company);
+    const titles=named.filter(x=>x.company===company && x.category===category);
+    const supplied=imports.filter(x=>x.company===company && x.category===category);
+    const options=[...titles,...supplied];
+    if(selected===null || !options.some(x=>signature(x)===selected) && selected!=="original")selected=options.length?signature(options[0]):"original";
+    const selectedSource=options.find(x=>signature(x)===selected);
+    const [follow,rubric]=skills[category];
+    const [title,prompt]=subjects.get(company)[categories[category]];
+    let exercise={title,prompt,followups:follow,rubric}, basis;
+    if(selectedSource && selectedSource.kind==="named"){
+      exercise=matched.get(recordKey(selectedSource));basis="Based on the employer’s published sample · "+selectedSource.titleType;
+    }else if(selectedSource){
+      const applicable=makeDrill({company,title:selectedSource.sourceLabel});
+      const course=category==="Coding"&& !["Role-general practice","Behavioral","System design"].includes(applicable.topic);
+      if(course){exercise={title:applicable.name,prompt:applicable.prompt,followups:applicable.followups,rubric:applicable.rubric};basis="User-supplied title · topic match: "+applicable.topic;}
+      else{
+        const label=selectedSource.sourceLabel;
+        const framing={
+          "Coding":"Use “"+label+"” as the task brief. Define one operation with exact inputs and outputs, implement a reference solution, then improve its complexity. Show a counterexample for a tempting shortcut.",
+          "System design":"Use “"+label+"” as the product requirement. Identify the primary user and one observable service guarantee. Draw the request and data paths, estimate peak load, then trace a dependency failure.",
+          "Behavioral":"Choose one incident from your experience that illustrates “"+label+"”. Explain what you personally decided, the alternative you ruled out and what changed as a result.",
+          "Other":"Use “"+label+"” to frame a practical decision. Define an outcome, work through a small numerical or observable example, and explain what evidence would change the decision."
+        };
+        exercise={title:label+" — practice",prompt:framing[category],followups:follow,rubric};basis="User-supplied title · interview format inferred from its supplied category";
+      }
+    }else{basis="Independent company-themed scenario. The scenario and constraints were chosen for practice.";}
+    get("track-name").textContent=company;
+    const total=companySources.filter(s=>s.kind==="named").length;
+    get("track-evidence-summary").textContent=total+" verified employer sample"+(total===1?"":"s")+" in this run.";
+    get("track-cat-label").textContent=category;
+    get("track-limit").textContent=titles.length+" verified employer sample"+(titles.length===1?"":"s")+" in this category · "+supplied.length+" supplied titles.";
+    const choices=get("exercise-choices");choices.replaceChildren();
+    function choose(id,label){const button=make("button",label,"btn secondary pick");button.setAttribute("aria-pressed",String(id===selected));button.onclick=()=>{selected=id;render();};choices.append(button);}
+    options.forEach(row=>choose(signature(row),row.sourceLabel));choose("original","Independent scenario");
+    get("track-origin").replaceChildren(make("div",basis));
+    if(selectedSource)get("track-origin").append(sourceLink(selectedSource.sourceLabel,selectedSource.sourceUrl));
+    get("track-drill-name").textContent=exercise.title;get("track-prompt").textContent=exercise.prompt;
+    get("track-follow").replaceChildren(...exercise.followups.map(s=>make("li",s)));get("track-rubric").replaceChildren(...exercise.rubric.map(s=>make("li",s)));get("track-scoring").open=false;
+    const sources=get("track-sources");sources.replaceChildren();
+    companySources.forEach(row=>{
+      const el=make("div","","source-entry");const kind=row.kind==="named"?"Employer sample":row.kind==="guide"?"Preparation context":"Coverage gap";
+      el.append(make("div",kind+" · "+row.category,"small"));el.append(sourceLink(row.sourceLabel||"Search result",row.sourceUrl));
+      el.append(make("p",row.note||"","small"));sources.append(el);
+    });
+  }
+  function download(name,type,contents){
+    const url=URL.createObjectURL(new Blob([contents],{type}));
+    const a=document.createElement("a");a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);
+  }
+  function alertText() {
+    const rows=snapshot.roster.map(name=>{
+      const counts=Object.keys(categories).map(c=>named.filter(x=>x.company===name && x.category===c).length);
+      const verified=snapshot.sources.filter(x=>x.company===name && x.kind==="named").map(x=>"- "+x.category+" — "+x.sourceLabel+" ("+x.titleType+") "+x.sourceUrl);
+      return [name+" | "+counts.join(" / "),...verified].join("\n");
+    });
+    return ["# Interview Notebook · Codex coverage handoff",snapshot.checkedAt,"GPT-6.2 Sol · Medium, Normal Mode. Updating one source-backed practice exercise per changed title is routine. Return to Medium if complexity changes.",
+      "In jacobhroutzong/portfolio-website, update the embedded tracker-data in public/projects/interview-notebook/lab/index.html. Keep the 41-company practice roster unless the owner supplies a revised list.",
+      "For each new or changed employer-published sample or authorized title, preserve the employer, title, link, role or historical status, source type, and interview category. Generate one distinct original exercise with a new scenario, constraints, two follow-ups and a scoring guide. Preserve the source skill and interview format. Treat published guides as context. Keep hidden titles unknown and protected text out of the inputs.",
+      "Compare stable source identities and exact title/category changes to the most recent successful baseline. Never infer removals from partial retrieval. Report independent scenarios separately from source coverage. Existing company topics, saved personal entries, and unrelated projects stay intact.",
+      "Acceptance: all 41 companies appear once, all four categories have explicit evidence or a gap, every verified sample links to an appropriate original drill, no hand-authored practice counts as an observed source, and a second pass over the same inputs produces zero new alerts. Stop after this scoped change. Production changes require owner approval.",
+      "Counts below are coding / system design / behavioral / other.",
+      ...rows,"User-supplied titles in this browser: "+imports.length,
+      ...imports.map(x=>[x.company,x.category,x.title,x.sourceUrl].join(" | "))].join("\n\n");
+  }
+  get("title-upload").onchange=async event=>{
+    const file=event.target.files[0];if(!file)return;
+    try{
+      if(file.size>4*1024*1024)throw Error("Choose a JSON file smaller than 4 MiB.");
+      const newRows=validateImports(JSON.parse(await file.text()));
+      const seen=new Set([...imports,...named].map(signature)),combined=imports.slice();
+      for(const row of newRows)if(!seen.has(signature(row))){seen.add(signature(row));combined.push(row);}
+      if(combined.length>20000)throw Error("This notebook supports up to 20,000 supplied titles.");
+      localStorage.setItem(storageKey,JSON.stringify(combined));
+      const added=combined.length-imports.length;imports=combined;
+      get("import-status").textContent=added+" titles added. "+(newRows.length-added)+" duplicates skipped.";
+      if(newRows.length){get("track-company").value=newRows[0].company;get("track-category").value=newRows[0].category;selected=signature(newRows[0]);}render();
+    }catch(error){get("import-status").textContent="Import could not be saved. "+error.message;}
+    event.target.value="";
+  };
+  get("get-run").onclick=()=>download("Interview-Coverage.json","application/json",JSON.stringify({...snapshot,suppliedTitles:imports},null,2));
+  get("get-handoff").onclick=()=>download("Codex-Interview-Alert.md","text/markdown",alertText());
+  get("track-company").replaceChildren(...snapshot.roster.map(c=>new Option(c,c)));
+  get("track-company").value="Amazon";
+  get("track-company").onchange=get("track-category").onchange=()=>{selected=null;render();};
+  get("coverage-caption").textContent="Explore coding, system design, behavioral and other practice across "+snapshot.roster.length+" companies.";
+  const byCompany=new Set(named.map(x=>x.company));
+  get("coverage-totals").textContent=named.length+" verified public samples across "+byCompany.size+" companies. "+(snapshot.roster.length*4)+" independent scenarios.";
+  render();
+})();
+
+</script></body></html>
