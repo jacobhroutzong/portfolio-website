@@ -14,13 +14,16 @@
     "verify": "npm run lint && npm run check && npm test && npm run build",
     "test:e2e": "playwright test",
     "images": "node scripts/optimize-images.mjs",
-    "predev": "npm run images",
-    "sync:activity": "node scripts/sync-activity.mjs"
+    "predev": "node scripts/prepare-notebook-runtime.mjs && npm run images",
+    "sync:activity": "node scripts/sync-activity.mjs",
+    "prebuild": "node scripts/prepare-notebook-runtime.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.0",
     "astro": "7.3.8",
     "katex": "^0.19.1",
+    "pyodide": "314.0.8",
+    "sql.js": "1.17.0",
     "tailwindcss": "^4.1.0",
     "three": "0.187.0",
     "zod": "^4.0.0"

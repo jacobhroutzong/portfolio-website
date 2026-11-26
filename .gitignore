@@ -37,3 +37,5 @@ service-account*.json
 .dev.vars.*
 
 /public/.wasm-tmp/
+
+/public/projects/interview-notebook/lab/runtime/

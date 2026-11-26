@@ -4,8 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src https://api.github.com; img-src data:; form-action 'none'; base-uri 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; frame-src 'self'; connect-src 'self' https://api.github.com; img-src data:; form-action 'none'; base-uri 'none'">
 <title>Interview Notebook · Company practice</title>
+<link rel="stylesheet" href="./workspace.css">
 <style>
 *{box-sizing:border-box}
 :root{--ink:#172c2b;--muted:#526461;--line:#d1d9d1;--paper:#f6f7f0;--white:#fffefa;--green:#175749;--soft:#e6efe4;--mono:"IBM Plex Mono",ui-monospace,monospace;--sans:"Inter","Segoe UI",Arial,sans-serif;--serif:"Source Serif 4",Georgia,serif}
@@ -15,7 +16,7 @@ header{border-bottom:1px solid var(--line);background:var(--white)}
 header .shell{min-height:68px;display:flex;justify-content:space-between;align-items:center;gap:20px}
 .brand{font-weight:720;letter-spacing:-.03em;font-size:19px;display:flex;gap:11px;align-items:center}
 .mark{display:inline-block;width:23px;height:23px;background:var(--green);border-radius:5px;position:relative}.mark:before,.mark:after{content:"";position:absolute;top:6px;bottom:6px;border-left:2px solid var(--paper);left:8px;transform:skewY(-10deg)}.mark:after{left:14px;top:9px}
-nav{display:flex;gap:6px}button,select,input{font:inherit;color:inherit}button{cursor:pointer}button:disabled{cursor:wait;opacity:.6}
+nav{display:flex;gap:6px;flex-wrap:wrap}button,select,input{font:inherit;color:inherit}button{cursor:pointer}button:disabled{cursor:wait;opacity:.6}
 button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #bb801c;outline-offset:3px}
 nav button{background:transparent;border:0;border-radius:7px;padding:8px 12px;font-weight:650;color:var(--muted)}
 nav button[aria-current=page]{background:var(--soft);color:var(--green)}
@@ -62,7 +63,7 @@ details.section{border-top:1px solid var(--line);border-bottom:1px solid var(--l
 </style>
 </head>
 <body>
-<header><div class="shell"><div class="brand"><span class="mark" aria-hidden="true"></span>Interview Notebook</div><nav aria-label="Sections"><button id="nav-tracker" aria-current="page">Tracker</button><button id="nav-study">Practice</button><button id="nav-find">Find titles</button></nav></div></header>
+<header><div class="shell"><div class="brand"><span class="mark" aria-hidden="true"></span>Interview Notebook</div><nav aria-label="Sections"><button id="nav-tracker" aria-current="page">Tracker</button><button id="nav-workspace" hidden>Code workspace</button><button id="nav-study">Practice</button><button id="nav-find">Find titles</button></nav></div></header>
 <main class="shell">
 <div id="global-msg" role="status"></div>
 <section id="tracker" aria-labelledby="track-heading">
@@ -86,6 +87,7 @@ details.section{border-top:1px solid var(--line);border-bottom:1px solid var(--l
 <div class="section"><h3 id="track-cat-label"></h3><p class="small" id="track-limit"></p><div id="exercise-choices"></div></div>
 <div class="source" id="track-origin"></div>
 <p class="kicker">Original practice</p><h2 id="track-drill-name"></h2><p class="prompt" id="track-prompt" style="margin-top:12px"></p>
+<button type="button" class="btn" id="track-solve" hidden>Solve in workspace</button>
 <div class="section"><h3>Follow-up questions</h3><ol id="track-follow"></ol></div>
 <details class="section" id="track-scoring"><summary>Scoring guide</summary><ul id="track-rubric"></ul></details>
 <section class="section" id="community-practice" aria-labelledby="community-heading"><h3 id="community-heading">Community coding lists</h3>
@@ -95,6 +97,7 @@ details.section{border-top:1px solid var(--line);border-bottom:1px solid var(--l
 <details class="section"><summary>Company sources and gaps</summary><div id="track-sources"></div></details>
 </article></div></section>
 
+<section id="workspace" hidden aria-label="Code workspace"></section>
 <section id="study" hidden aria-labelledby="study-heading">
 <div class="intro"><h1 id="study-heading">Company practice</h1><p>Pick a source title. Work through an original interview question, then check your reasoning.</p></div>
 <div class="workspace">
@@ -546,6 +549,9 @@ details.section{border-top:1px solid var(--line);border-bottom:1px solid var(--l
 }}
 }</script>
 <script id="seed-data" type="application/json">[{"company":"Bytebase","org":"bytebase","repo":"bytebase/interview","license":"MIT","licenseUrl":"https://github.com/bytebase/interview/blob/main/LICENSE","listing":"https://github.com/bytebase/interview","url":"https://github.com/bytebase/interview/blob/main/101_tiny_sql_editor/README.md","title":"Tiny SQL Editor","kind":"Employer sample","archived":false},{"company":"Bytebase","org":"bytebase","repo":"bytebase/interview","license":"MIT","licenseUrl":"https://github.com/bytebase/interview/blob/main/LICENSE","listing":"https://github.com/bytebase/interview","url":"https://github.com/bytebase/interview/blob/main/102_db_benchmark/README.md","title":"DB Benchmark","kind":"Employer sample","archived":false},{"company":"Bytebase","org":"bytebase","repo":"bytebase/interview","license":"MIT","licenseUrl":"https://github.com/bytebase/interview/blob/main/LICENSE","listing":"https://github.com/bytebase/interview","url":"https://github.com/bytebase/interview/blob/main/104_url_shortener/README.md","title":"URL shortener","kind":"Employer sample","archived":false},{"company":"Bytebase","org":"bytebase","repo":"bytebase/interview","license":"MIT","licenseUrl":"https://github.com/bytebase/interview/blob/main/LICENSE","listing":"https://github.com/bytebase/interview","url":"https://github.com/bytebase/interview/blob/main/105_tiny_text_editor_with_undo/README.md","title":"Tiny Text Editor with Undo","kind":"Employer sample","archived":false},{"company":"Just Eat","org":"justeat","repo":"justeat/JustEat.RecruitmentTest","license":"Apache-2.0","licenseUrl":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/LICENSE","listing":"https://github.com/justeat/JustEat.RecruitmentTest","url":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/Test.WebUI.Engineering.md","title":"Web UI Tech Test","kind":"Employer sample","archived":true},{"company":"Just Eat","org":"justeat","repo":"justeat/JustEat.RecruitmentTest","license":"Apache-2.0","licenseUrl":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/LICENSE","listing":"https://github.com/justeat/JustEat.RecruitmentTest","url":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/Test.DevOps.Engineer.md","title":"Just Eat Test DevOps Engineer Recruitment Test","kind":"Employer sample","archived":true},{"company":"JTL-Software","org":"jtl-software","repo":"jtl-software/take-home-tasks","license":"MIT","licenseUrl":"https://github.com/jtl-software/take-home-tasks/blob/main/LICENSE","listing":"https://github.com/jtl-software/take-home-tasks","url":"https://github.com/jtl-software/take-home-tasks/blob/main/senior-frontend-engineer/instructions.md","title":"Take-Home Task: Senior Software Engineer (Frontend)","kind":"Employer sample","archived":false},{"company":"JTL-Software","org":"jtl-software","repo":"jtl-software/take-home-tasks","license":"MIT","licenseUrl":"https://github.com/jtl-software/take-home-tasks/blob/main/LICENSE","listing":"https://github.com/jtl-software/take-home-tasks","url":"https://github.com/jtl-software/take-home-tasks/blob/main/senior-backend-engineer/instructions.md","title":"Take-Home Task: Senior Software Engineer (Backend)","kind":"Employer sample","archived":false},{"company":"GuardRails","org":"guardrailsio","repo":"guardrailsio/backend-engineer-challenge","license":"MIT","licenseUrl":"https://github.com/guardrailsio/backend-engineer-challenge/blob/master/LICENSE","listing":"https://github.com/guardrailsio/backend-engineer-challenge","url":"https://github.com/guardrailsio/backend-engineer-challenge/blob/master/README.md","title":"Backend Engineer Coding Challenge","kind":"Employer sample","archived":false},{"company":"Sandvik CODE","org":"sandvikcode","repo":"sandvikcode/data-science-take-home","license":"MIT","licenseUrl":"https://github.com/sandvikcode/data-science-take-home/blob/master/LICENSE","listing":"https://github.com/sandvikcode/data-science-take-home","url":"https://github.com/sandvikcode/data-science-take-home/blob/master/README.md","title":"Data Science Take Home Assignment","kind":"Employer sample","archived":true},{"company":"City of Cape Town","org":"cityofcapetown","repo":"cityofcapetown/ds_code_challenge","license":"MIT","licenseUrl":"https://github.com/cityofcapetown/ds_code_challenge/blob/main/LICENSE","listing":"https://github.com/cityofcapetown/ds_code_challenge","url":"https://github.com/cityofcapetown/ds_code_challenge/blob/main/README.md?plain=1#L137","title":"Time series challenge","kind":"Employer sample","archived":false},{"company":"City of Cape Town","org":"cityofcapetown","repo":"cityofcapetown/ds_code_challenge","license":"MIT","licenseUrl":"https://github.com/cityofcapetown/ds_code_challenge/blob/main/LICENSE","listing":"https://github.com/cityofcapetown/ds_code_challenge","url":"https://github.com/cityofcapetown/ds_code_challenge/blob/main/README.md?plain=1#L144","title":"Anomaly Detection challenge","kind":"Employer sample","archived":false},{"company":"Bytebase","org":"bytebase","repo":"bytebase/interview","license":"MIT","licenseUrl":"https://github.com/bytebase/interview/blob/main/LICENSE","listing":"https://github.com/bytebase/interview","url":"https://github.com/bytebase/interview/blob/main/103_employee_page/README.md","title":"Employee page","kind":"Employer sample","archived":false},{"company":"Bytebase","org":"bytebase","repo":"bytebase/interview","license":"MIT","licenseUrl":"https://github.com/bytebase/interview/blob/main/LICENSE","listing":"https://github.com/bytebase/interview","url":"https://github.com/bytebase/interview/blob/main/106_mini_online_paint/README.md","title":"Mini online paint","kind":"Employer sample","archived":false},{"company":"Bytebase","org":"bytebase","repo":"bytebase/interview","license":"MIT","licenseUrl":"https://github.com/bytebase/interview/blob/main/LICENSE","listing":"https://github.com/bytebase/interview","url":"https://github.com/bytebase/interview/blob/main/200_tech_writing_skill_assignment/README.md","title":"Technical writing skill assignment","kind":"Employer sample","archived":false},{"company":"Bytebase","org":"bytebase","repo":"bytebase/interview","license":"MIT","licenseUrl":"https://github.com/bytebase/interview/blob/main/LICENSE","listing":"https://github.com/bytebase/interview","url":"https://github.com/bytebase/interview/blob/main/201_devrel_assignment/README.md","title":"DevRel assignment","kind":"Employer sample","archived":false},{"company":"Just Eat","org":"justeat","repo":"justeat/JustEat.RecruitmentTest","license":"Apache-2.0","licenseUrl":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/LICENSE","listing":"https://github.com/justeat/JustEat.RecruitmentTest","url":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/Product-Research/Test.UI.Engineer.ProductResearch.md","title":"UI Engineer (Product Research) Tech Test","kind":"Employer sample","archived":true},{"company":"Just Eat","org":"justeat","repo":"justeat/JustEat.RecruitmentTest","license":"Apache-2.0","licenseUrl":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/LICENSE","listing":"https://github.com/justeat/JustEat.RecruitmentTest","url":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/README.md","title":"Just Eat Engineer Recruitment Test","kind":"Employer sample","archived":true},{"company":"Just Eat","org":"justeat","repo":"justeat/JustEat.RecruitmentTest","license":"Apache-2.0","licenseUrl":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/LICENSE","listing":"https://github.com/justeat/JustEat.RecruitmentTest","url":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/Tech.Associate.Engineer.md","title":"Just Eat Associate Engineer Recruitment Test","kind":"Employer sample","archived":true},{"company":"Just Eat","org":"justeat","repo":"justeat/JustEat.RecruitmentTest","license":"Apache-2.0","licenseUrl":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/LICENSE","listing":"https://github.com/justeat/JustEat.RecruitmentTest","url":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/Test.Automation.Engineer.md","title":"Just Eat Test Automation Engineer Recruitment Test","kind":"Employer sample","archived":true},{"company":"Just Eat","org":"justeat","repo":"justeat/JustEat.RecruitmentTest","license":"Apache-2.0","licenseUrl":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/LICENSE","listing":"https://github.com/justeat/JustEat.RecruitmentTest","url":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/Test.SOC.Engineer.md","title":"Just Eat Service Operations Engineer Recruitment Test","kind":"Employer sample","archived":true},{"company":"Just Eat","org":"justeat","repo":"justeat/JustEat.RecruitmentTest","license":"Apache-2.0","licenseUrl":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/LICENSE","listing":"https://github.com/justeat/JustEat.RecruitmentTest","url":"https://github.com/justeat/JustEat.RecruitmentTest/blob/main/data-and-ai/data-engineer/README.md","title":"Just Eat Data Engineer Recruitment Test","kind":"Employer sample","archived":true},{"company":"JTL-Software","org":"jtl-software","repo":"jtl-software/take-home-tasks","license":"MIT","licenseUrl":"https://github.com/jtl-software/take-home-tasks/blob/main/LICENSE","listing":"https://github.com/jtl-software/take-home-tasks","url":"https://github.com/jtl-software/take-home-tasks/blob/main/senior-devops-engineer/instructions.md","title":"Take-Home Task: Senior Software Engineer (Managed Services / DevOps)","kind":"Employer sample","archived":false},{"company":"City of Cape Town","org":"cityofcapetown","repo":"cityofcapetown/ds_code_challenge","license":"MIT","licenseUrl":"https://github.com/cityofcapetown/ds_code_challenge/blob/main/LICENSE","listing":"https://github.com/cityofcapetown/ds_code_challenge","url":"https://github.com/cityofcapetown/ds_code_challenge/blob/main/README.md?plain=1#L138","title":"Introspection challenge","kind":"Employer sample","archived":false},{"company":"City of Cape Town","org":"cityofcapetown","repo":"cityofcapetown/ds_code_challenge","license":"MIT","licenseUrl":"https://github.com/cityofcapetown/ds_code_challenge/blob/main/LICENSE","listing":"https://github.com/cityofcapetown/ds_code_challenge","url":"https://github.com/cityofcapetown/ds_code_challenge/blob/main/README.md?plain=1#L143","title":"Classification challenge","kind":"Employer sample","archived":false},{"company":"City of Cape Town","org":"cityofcapetown","repo":"cityofcapetown/ds_code_challenge","license":"MIT","licenseUrl":"https://github.com/cityofcapetown/ds_code_challenge/blob/main/LICENSE","listing":"https://github.com/cityofcapetown/ds_code_challenge","url":"https://github.com/cityofcapetown/ds_code_challenge/blob/main/README.md?plain=1#L148","title":"Computer Vision classification challenge","kind":"Employer sample","archived":false},{"company":"Anthropic","org":"anthropics","repo":"anthropics/original_performance_takehome","title":"Anthropic's Original Performance Take-Home","kind":"Published past assessment","url":"https://github.com/anthropics/original_performance_takehome","archived":false}]</script>
+<script src="./coding-problems.js"></script>
+<script src="./runner.js"></script>
+<script src="./workspace.js"></script>
 <script>
 /* Original, offline interview practice. Public titles can suggest topics, never provenance. */
 (() => {
@@ -1167,6 +1173,7 @@ details.section{border-top:1px solid var(--line);border-bottom:1px solid var(--l
     $("search").value = "";
     active = existing || row;
     variant = 0;
+    if (location.hash !== "#study") location.hash = "study";
     switchView("study");
     render();
     $("drill-name").scrollIntoView({block:"nearest"});
@@ -1178,7 +1185,8 @@ details.section{border-top:1px solid var(--line);border-bottom:1px solid var(--l
     if (names.includes(former)) $("company").value = former;
   }
   function switchView(section) {
-    for (const name of ["tracker","study","find"]) {
+    if (section !== "workspace" && !$("workspace").hidden) window.NotebookWorkspace?.leave();
+    for (const name of ["tracker","study","find","workspace"]) {
       $(name).hidden = name !== section;
       if (name === section) $("nav-"+name).setAttribute("aria-current","page");
       else $("nav-"+name).removeAttribute("aria-current");
@@ -1343,8 +1351,23 @@ details.section{border-top:1px solid var(--line);border-bottom:1px solid var(--l
   $("method").onchange = () => { $("keyword-label").hidden = $("method").value === "catalog"; $("live-results").replaceChildren(); $("live-status").textContent = ""; };
   $("lookup").onchange = () => { const {org} = resolveOrg($("lookup").value); $("method").value = catalogOrgs.has(org) ? "catalog" : "repos"; $("method").onchange(); };
   $("keyword").onchange = () => { $("live-results").replaceChildren(); $("live-status").textContent = ""; };
-  $("nav-tracker").onclick = () => switchView("tracker");
-  $("nav-study").onclick = () => switchView("study"); $("nav-find").onclick = () => switchView("find");
+  const tabs = ["tracker", "study", "find"];
+  if (window.NotebookWorkspace) {
+    tabs.push("workspace");
+    $("nav-workspace").hidden = false;
+  }
+  function showHashView() {
+    const requested = location.hash.slice(1);
+    switchView(tabs.includes(requested) ? requested : "tracker");
+  }
+  tabs.forEach(section => {
+    $("nav-" + section).onclick = () => {
+      if (location.hash !== "#" + section) location.hash = section;
+      switchView(section);
+    };
+  });
+  window.addEventListener("hashchange", showHashView);
+  showHashView();
   $("company").onchange = render; $("search").oninput = render;
   $("another").onclick = () => { variant = 1-variant; renderDrill(); };
   $("brief").onclick = copyBrief;
@@ -1563,6 +1586,10 @@ details.section{border-top:1px solid var(--line);border-bottom:1px solid var(--l
     get("prachub-category").href = categoryLink.url;
     get("track-origin").replaceChildren(make("div",basis));
     if(selectedSource)get("track-origin").append(sourceLink(selectedSource.sourceLabel,selectedSource.sourceUrl));
+    const solve = get("track-solve");
+    const runnable = window.NotebookProblems?.find(problem => problem.company === company && problem.title === exercise.title);
+    solve.hidden = !runnable || !window.NotebookWorkspace;
+    solve.onclick = runnable ? () => window.NotebookWorkspace.open(company, exercise.title) : null;
     get("track-drill-name").textContent=exercise.title;get("track-prompt").textContent=exercise.prompt;
     get("track-follow").replaceChildren(...exercise.followups.map(s=>make("li",s)));get("track-rubric").replaceChildren(...exercise.rubric.map(s=>make("li",s)));get("track-scoring").open=false;
     const sources=get("track-sources");sources.replaceChildren();
