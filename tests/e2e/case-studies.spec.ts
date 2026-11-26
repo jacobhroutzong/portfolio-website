@@ -21,7 +21,7 @@ test('Interview Notebook filters saved companies and opens distinct practice exe
   const categoryLink = page.locator('#prachub-category');
 
   await expect(scope).toHaveValue('all');
-  await expect(company.locator('option')).toHaveCount(41);
+  await expect(company.locator('option')).toHaveCount(51);
   await expect(company).toHaveValue('Amazon');
   await expect(category).toHaveValue('Coding');
   await expect(companyLinks).toHaveAttribute('href', 'https://prachub.com/companies/amazon');
@@ -60,7 +60,48 @@ test('Interview Notebook filters saved companies and opens distinct practice exe
   await expect(company.locator('option')).toHaveText(['Stripe']);
   await stripeTarget.uncheck();
   await expect(scope).toHaveValue('all');
-  await expect(company.locator('option')).toHaveCount(41);
+  await expect(company.locator('option')).toHaveCount(51);
+});
+
+test('Interview Notebook links company coding practice and searches its directory', async ({ page }) => {
+  await page.goto('/projects/interview-notebook/lab/');
+  const company = page.locator('#track-company');
+  const category = page.locator('#track-category');
+  const exercises = page.locator('#exercise-choices button');
+
+  await company.selectOption('Delta Air Lines');
+  for (const interviewCategory of ['Coding', 'System design', 'Other']) {
+    await category.selectOption(interviewCategory);
+    await expect(exercises).toHaveCount(2);
+  }
+  await category.selectOption('Behavioral');
+  await expect(exercises).toHaveCount(3);
+  await exercises.filter({ hasText: /why delta/i }).click();
+  await expect(page.locator('#track-origin a')).toHaveAttribute('href', 'https://www.delta.com/us/en/careers/corporate-careers');
+
+  await company.selectOption('NVIDIA');
+  await expect(page.locator('#community-practice')).toBeHidden();
+  await category.selectOption('Coding');
+  const resources = page.locator('#community-company');
+  await expect(resources.locator('a[href*="github.com/liquidslr/leetcode-company-wise-problems/"]')).toBeVisible();
+  await expect(resources.locator('a[href*="github.com/ombharatiya/FAANG-Coding-Interview-Questions"]')).toBeVisible();
+  await expect(resources.locator('a[href="https://leetcodewizard.io/problem-database"]')).toBeVisible();
+  await expect(page.locator('#community-picks a[href^="https://leetcode.com/problems/"]').first()).toBeVisible();
+
+  await page.locator('#nav-find').click();
+  const search = page.locator('#directory-search');
+  const results = page.locator('#directory-results');
+  const initiallyVisible = await results.locator('a').count();
+  expect(initiallyVisible).toBeGreaterThan(0);
+  await page.locator('#directory-more').click();
+  expect(await results.locator('a').count()).toBeGreaterThan(initiallyVisible);
+  for (const query of ['Adobe', 'aDoB']) {
+    await search.fill(query);
+    await expect(results.locator('a[href*="github.com/liquidslr/leetcode-company-wise-problems/"][href*="Adobe"]')).toBeVisible();
+  }
+  await search.fill('zz-no-company-matches');
+  await expect(results.locator('a')).toHaveCount(0);
+  await expect(page.locator('#directory-count')).toContainText(/no matching/i);
 });
 
 test('commercial projects remain navigable as static case studies', async ({ page }) => {
