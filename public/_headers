@@ -16,5 +16,5 @@
 /maintenance/ascent-worker-retirement.js
   Cache-Control: no-store
 
-/projects/interview-notebook/lab/runner-frame.html
+/projects/interview-notebook/lab/runner-frame*
   Content-Security-Policy: sandbox allow-scripts; frame-ancestors 'self'
