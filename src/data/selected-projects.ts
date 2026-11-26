@@ -132,7 +132,7 @@ export const selectedProjects = [
     "title": "Interview Notebook",
     "group": "business",
     "eyebrow": "WEB APPLICATION / INTERVIEW PRACTICE",
-    "description": "Browse 180 interview exercises across 41 companies, with follow-up questions, scoring guides, and links to employer sources.",
+    "description": "Choose your target companies and practice with 344 interview exercises across 41 employers, with follow-up questions and scoring guides.",
     "href": "/projects/interview-notebook/",
     "linkLabel": "Explore Interview Notebook →"
   }

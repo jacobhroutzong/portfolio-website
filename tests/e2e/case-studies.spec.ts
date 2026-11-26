@@ -9,6 +9,60 @@ const studies = [
   ['convergence', 'Convergence'],
 ] as const;
 
+test('Interview Notebook filters saved companies and opens distinct practice exercises', async ({ page }) => {
+  await page.goto('/projects/interview-notebook/lab/');
+  const company = page.locator('#track-company');
+  const category = page.locator('#track-category');
+  const scope = page.locator('#track-scope');
+  const picker = page.locator('#target-companies');
+  const stripeTarget = picker.getByRole('checkbox', { name: 'Stripe', exact: true });
+  const exercises = page.locator('#exercise-choices button');
+  const companyLinks = page.locator('#prachub-links a');
+  const categoryLink = page.locator('#prachub-category');
+
+  await expect(scope).toHaveValue('all');
+  await expect(company.locator('option')).toHaveCount(41);
+  await expect(company).toHaveValue('Amazon');
+  await expect(category).toHaveValue('Coding');
+  await expect(companyLinks).toHaveAttribute('href', 'https://prachub.com/companies/amazon');
+  await expect(categoryLink).toHaveAttribute('href', 'https://prachub.com/categories/coding-and-algorithms');
+  await expect(exercises).toHaveCount(3); // Two originals plus Amazon's published coding sample.
+
+  if (!await stripeTarget.isVisible()) await picker.locator('summary').click();
+  await stripeTarget.check();
+  await scope.selectOption('targets');
+  await expect(company.locator('option')).toHaveText(['Stripe']);
+  await expect(companyLinks).toHaveAttribute('href', 'https://prachub.com/interview-guide/stripe-software-engineer-interview-guide');
+  await category.selectOption('System design');
+  await expect(categoryLink).toHaveAttribute('href', 'https://prachub.com/categories/system-design');
+  await expect(exercises).toHaveCount(2);
+  const prompts: string[] = [];
+  for (const button of await exercises.all()) {
+    await button.click();
+    const title = await page.locator('#track-drill-name').innerText();
+    expect(title.trim()).not.toBe('');
+    await expect(button).toContainText(title);
+    const prompt = await page.locator('#track-prompt').innerText();
+    expect(prompt.trim()).not.toBe('');
+    prompts.push(prompt);
+    await expect(page.locator('#track-follow li').first()).toBeVisible();
+    await page.locator('#track-scoring summary').click();
+    await expect(page.locator('#track-rubric li').first()).toBeVisible();
+  }
+  expect(new Set(prompts).size).toBe(2);
+
+  await page.reload();
+  await expect(scope).toHaveValue('targets');
+  await expect(company).toHaveValue('Stripe');
+  await expect(category).toHaveValue('System design');
+  if (!await stripeTarget.isVisible()) await picker.locator('summary').click();
+  await expect(stripeTarget).toBeChecked();
+  await expect(company.locator('option')).toHaveText(['Stripe']);
+  await stripeTarget.uncheck();
+  await expect(scope).toHaveValue('all');
+  await expect(company.locator('option')).toHaveCount(41);
+});
+
 test('commercial projects remain navigable as static case studies', async ({ page }) => {
   await page.goto('/projects/');
   for (const [slug, title] of studies) {
