@@ -122,7 +122,7 @@ test('commercial projects remain navigable as static case studies', async ({ pag
 });
 
 
-test('Apex and Decision are startups and Interview Notebook keeps its full title', async ({ page }) => {
+test('Apex is a startup, Decision is archived research, and Interview Notebook keeps its full title', async ({ page }) => {
   for (const route of ['/', '/projects/']) {
     await page.goto(route);
     const root = route === '/' ? page.locator('#projects') : page.locator('main');
@@ -132,10 +132,12 @@ test('Apex and Decision are startups and Interview Notebook keeps its full title
     const research = root.locator('section.project-group').filter({
       has: page.getByRole('heading', { name: 'Research + Fun Projects' }),
     });
-    for (const slug of ['career-intelligence-aviation', 'decision-intelligence-engine']) {
-      await expect(startups.locator('a[href="/projects/' + slug + '/"]')).toHaveCount(1);
-      await expect(research.locator('a[href="/projects/' + slug + '/"]')).toHaveCount(0);
-    }
+    const apex = 'a[href="/projects/career-intelligence-aviation/"]';
+    const decision = 'a[href="/projects/decision-intelligence-engine/"]';
+    await expect(startups.locator(apex)).toHaveCount(1);
+    await expect(research.locator(apex)).toHaveCount(0);
+    await expect(startups.locator(decision)).toHaveCount(0);
+    await expect(research.locator(decision)).toHaveCount(1);
     const titles = await root.locator('.selected-card h3, .selected-card h4, .project-card h3').allTextContents();
     expect(titles.filter(title => title.trim() === 'Interview Notebook')).toHaveLength(1);
     for (const title of titles.map(title => title.trim()).filter(title => title !== 'Interview Notebook')) {
