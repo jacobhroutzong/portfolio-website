@@ -2,9 +2,9 @@
 export const selectedProjects = [
   {
     "title": "Decision",
-    "group": "business",
-    "eyebrow": "AI / MACHINE LEARNING / CASE STUDY",
-    "description": "An engineering workbench for inspecting how a system turns telemetry into a decision.",
+    "group": "research",
+    "eyebrow": "AI / MACHINE LEARNING / RESEARCH ARCHIVE",
+    "description": "An archived engineering workbench for inspecting how structured model evaluations turn telemetry into decisions.",
     "href": "/projects/decision-intelligence-engine/",
     "linkLabel": "Explore Decision →"
   },
