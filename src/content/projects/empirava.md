@@ -29,7 +29,7 @@ Activation swaps in Pythia-70M and Qwen3.5-2B test how model internals affect pr
 
 ### Harness² optimization
 
-Harness² studies changes to the prompts, rules, memory, and tools around a frozen model. The lab shows how candidate changes are proposed, probed, and composed using execution traces. Its default simulator illustrates that process. Model-backed performance requires separate measurements. [Harness² Lab](/projects/harness2-lab/) · [Harness² source](https://github.com/jacobhroutzong/harness2-lab)
+Harness² studies changes to the prompts, rules, memory, and tools around a frozen model. The local lab shows how candidate changes are proposed, probed, and composed using execution traces. Its simulator illustrates that process. Model-backed performance requires separate measurements. [Harness² research archive](/projects/harness2-lab/) · [Harness² source](https://github.com/jacobhroutzong/harness2-lab)
 
 ### Recursa application building
 

@@ -20,7 +20,7 @@ videos: []
 
 <nav class="button-row" aria-label="Recursa Studio research areas">
   <a class="button secondary" href="/projects/recursa/studio/">Open Application Synthesis replay</a>
-  <a class="button secondary" href="/projects/harness2-lab/">Open Agent Optimization lab</a>
+  <a class="button secondary" href="/projects/harness2-lab/">Open Agent Optimization archive</a>
 </nav>
 
 ## Application Synthesis
@@ -64,21 +64,21 @@ The underlying inference method comes from Alex L. Zhang, Tim Kraska, and Omar K
 
 Harness² Lab studies how an agent can improve the harness around a frozen model. In Propose → Probe → Compose, it proposes changes to prompts, rules, memory, tools, and skills, probes candidate behavior, and uses the execution evidence to compose and select a harness. Reflection records reusable lessons in a per-domain library.
 
-### Explore the interactive lab
+### Explore the research archive
 
-Choose **Run the offline demo** to process three finance tasks and inspect candidates and execution traces. **Library** shows retained lessons and adopted harnesses. The Observatory follows edit lineage, and **Budget Lab** compares fixed and adaptive recursion in the simulator.
+The hosted Harness² runtime is retired. The pinned local lab can process three finance tasks and show candidate edits, execution traces, retained lessons, and edit lineage. Its Budget Lab compares fixed and adaptive recursion in the simulator.
 
-[Harness² Lab source](https://github.com/jacobhroutzong/harness2-lab) · [Hugging Face lab](https://huggingface.co/spaces/jacobroutzong/harness2-lab) · [Harness² license](/harness2-lab/LICENSE) · [Harness² notice](/harness2-lab/NOTICE)
+[Harness² research archive](/projects/harness2-lab/) · [Harness² Lab source](https://github.com/jacobhroutzong/harness2-lab) · [Hugging Face Space archive](https://huggingface.co/spaces/jacobroutzong/harness2-lab) · [Harness² license](/harness2-lab/LICENSE) · [Harness² notice](/harness2-lab/NOTICE)
 
 ### How it works
 
-The lab implements parallel and sequential recursion, blind selection, eight editable harness components, and nine tasks across finance, operations, and analytics. Task graders are held out of the improvement loop. The first-party frontend streams run events through the existing Cloudflare Pages proxy to the FastAPI service on Hugging Face Spaces. [Published frontend revision](https://github.com/jacobhroutzong/harness2-lab/tree/99e357702747695c5b9a5047109e07acd8c3b312/app/static)
+The lab implements parallel and sequential recursion, blind selection, eight editable harness components, and nine tasks across finance, operations, and analytics. Task graders are held out of the improvement loop. The local frontend receives streamed run events from FastAPI. [Published frontend revision](https://github.com/jacobhroutzong/harness2-lab/tree/99e357702747695c5b9a5047109e07acd8c3b312/app/static)
 
 ### What the simulator measures
 
 The default backend is a scripted, stochastic simulator that runs without an account or API key. Its scores and adaptive compute charts describe the simulated tasks. Model-backed gains and reproduction of the paper's results require separate measurements. Published lab validation includes 43 offline tests and a three-task browser demonstration.
 
-The optional model backends were tested with fake clients, and live paid execution remains unverified. Choosing a model backend sends the supplied key to the hosted lab for that run. The estimated cost threshold is checked between tasks, and dollar costs for OpenAI-compatible backends are unavailable. The subprocess runner limits resources and scrubs its environment. It does not provide operating-system isolation.
+The optional model backends were tested with fake clients, and live paid execution remains unverified. Local model-backed runs use the selected provider and require its credentials. The estimated cost threshold is checked between tasks, and dollar costs for OpenAI-compatible backends are unavailable. The subprocess runner limits resources and scrubs its environment. It does not provide operating-system isolation.
 
 ### Research attribution
 

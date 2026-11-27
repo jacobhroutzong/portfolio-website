@@ -99,8 +99,6 @@ async function output() {
   await walk();
   for (const expected of Object.keys(pins)) if (!seen.has(expected)) fail('missing research asset');
   for (const expected of routes) if (mode === 'build' && !seen.has(expected)) fail('missing rendered route');
-  const config = await json('public/_routes.json');
-  if (JSON.stringify(config) !== JSON.stringify({version:1, include:['/api/harness2-lab/*'], exclude:[]})) fail('unexpected Function routes');
   return seen.size;
 }
 
