@@ -1574,14 +1574,17 @@ details.section{border-top:1px solid var(--line);border-bottom:1px solid var(--l
     const total=companySources.filter(s=>s.kind==="named").length;
     const companyExercises = Object.keys(categories).reduce((count, label) =>
       count + originalExercises(company, label).length, total);
-    const workspaceCount = (window.NotebookProblems || []).filter(problem => problem.company === company).length;
+    const companyProblems = (window.NotebookProblems || []).filter(problem => problem.company === company);
+    const workspaceCategories = [...new Set(companyProblems.map(problem => problem.category))];
+    const runnableTitles = new Set(companyProblems.filter(problem => problem.category === category).map(problem => problem.title));
     get("track-evidence-summary").textContent = companyExercises + " built-in exercises across 4 categories · " +
-      total + " based on employer samples · " + workspaceCount + " runnable in the code workspace.";
+      total + " based on employer samples · " + companyProblems.length + " runnable" +
+      (workspaceCategories.length ? " in " + workspaceCategories.join(" and ") : "") + ".";
     get("track-cat-label").textContent=category;
     get("track-limit").textContent=originals.length+" independent exercises · "+titles.length+" verified employer sample"+(titles.length===1?"":"s")+" in this category · "+supplied.length+" supplied titles.";
     const choices=get("exercise-choices");choices.replaceChildren();
-    function choose(id, label) {
-      const button = make("button", label, "btn secondary pick");
+    function choose(id, label, exerciseTitle) {
+      const button = make("button", runnableTitles.has(exerciseTitle) ? label + " · Runnable" : label, "btn secondary pick");
       button.setAttribute("aria-pressed", String(id === selected));
       button.onclick = () => {
         selected = id;
@@ -1590,8 +1593,8 @@ details.section{border-top:1px solid var(--line);border-bottom:1px solid var(--l
       };
       choices.append(button);
     }
-    options.forEach(row => choose(signature(row), row.sourceLabel));
-    choicesById.forEach((drill, id) => choose(id, drill.title));
+    options.forEach(row => choose(signature(row), row.sourceLabel, row.kind === "named" ? matched.get(recordKey(row))?.title : undefined));
+    choicesById.forEach((drill, id) => choose(id, drill.title, drill.title));
     renderCommunity(company, category);
     get("prachub-links").replaceChildren(...snapshot.practiceDirectory.companies[company].map(link => sourceLink(link.label, link.url)));
     const categoryLink = snapshot.practiceDirectory.categories[categoryKey];
@@ -1604,9 +1607,9 @@ details.section{border-top:1px solid var(--line);border-bottom:1px solid var(--l
       get("track-origin").append("Practice reference · ", sourceLink(exercise.context.label, exercise.context.url));
     }
     const solve = get("track-solve");
-    const runnable = window.NotebookProblems?.find(problem => problem.company === company && problem.title === exercise.title);
-    solve.hidden = !runnable || !window.NotebookWorkspace;
-    solve.onclick = runnable ? () => window.NotebookWorkspace.open(company, exercise.title) : null;
+    const canRun = (!selectedSource || selectedSource.kind === "named") && runnableTitles.has(exercise.title) && window.NotebookWorkspace;
+    solve.hidden = !canRun;
+    solve.onclick = canRun ? () => window.NotebookWorkspace.open(company, exercise.title) : null;
     get("track-drill-name").textContent=exercise.title;get("track-prompt").textContent=exercise.prompt;
     get("track-follow").replaceChildren(...exercise.followups.map(s=>make("li",s)));get("track-rubric").replaceChildren(...exercise.rubric.map(s=>make("li",s)));get("track-scoring").open=false;
     const sources=get("track-sources");sources.replaceChildren();

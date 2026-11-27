@@ -12,7 +12,7 @@ const bank = context.window.NotebookProblems;
 const fields = {Coding: 'coding', 'System design': 'design', Behavioral: 'behavioral', Other: 'other'};
 
 test('each runnable contract links to a tracker exercise and includes distinct test inputs', () => {
-  assert.ok(bank.length > 0);
+  assert.deepEqual([...new Set(bank.map(p => p.company))].sort(), [...tracker.roster].sort());
   assert.equal(new Set(bank.map(p => p.id)).size, bank.length);
   for (const p of bank) {
     const key = fields[p.category];
