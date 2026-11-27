@@ -9,6 +9,7 @@ const amazonAnswer = `function solve({parts, prefix, k}) {
 
 test('grade JavaScript from the tracker, keep drafts, and recover from a stopped run', async ({ page }) => {
   await page.goto(lab);
+  await expect(page.locator('#exercise-choices button[aria-pressed="true"]')).toHaveText(/ · Runnable$/);
   await page.locator('#track-solve').click();
   await expect(page.locator('#ws-problem')).toHaveValue('amazon-part-search');
   const language = page.locator('#ws-language');
@@ -48,7 +49,11 @@ test('execute Python against the row-norm cases and SQLite against fresh fixture
   await editor.fill('def solve(rows):\n    return [sum(x * x for x in row) for row in rows]');
   await page.locator('#ws-submit').click();
   await expect(page.locator('#ws-progress')).toContainText(/solved/i, { timeout: 45000 });
-  await problem.selectOption('intuit-unbalanced-ledger');
+  await page.locator('#nav-tracker').click();
+  await page.locator('#track-company').selectOption('Intuit');
+  await page.locator('#exercise-choices').getByRole('button', { name: 'Find unbalanced journal entries · Runnable', exact: true }).click();
+  await page.locator('#track-solve').click();
+  await expect(problem).toHaveValue('intuit-unbalanced-ledger');
   await expect(page.locator('#ws-language')).toHaveValue('sql');
   await editor.fill("SELECT entry_id, SUM(CASE WHEN side = 'debit' THEN cents ELSE -cents END) AS net FROM postings GROUP BY entry_id HAVING net <> 0 ORDER BY entry_id");
   await page.locator('#ws-submit').click();

@@ -26,7 +26,7 @@ test('Interview Notebook filters saved companies and opens distinct practice exe
   await expect(category).toHaveValue('Coding');
   await expect(companyLinks).toHaveAttribute('href', 'https://prachub.com/companies/amazon');
   await expect(categoryLink).toHaveAttribute('href', 'https://prachub.com/categories/coding-and-algorithms');
-  await expect(exercises).toHaveCount(3); // Two originals plus Amazon's published coding sample.
+  await expect(exercises).toHaveCount(4); // Three originals plus Amazon's published coding sample.
 
   if (!await stripeTarget.isVisible()) await picker.locator('summary').click();
   await stripeTarget.check();
@@ -35,7 +35,7 @@ test('Interview Notebook filters saved companies and opens distinct practice exe
   await expect(companyLinks).toHaveAttribute('href', 'https://prachub.com/interview-guide/stripe-software-engineer-interview-guide');
   await category.selectOption('System design');
   await expect(categoryLink).toHaveAttribute('href', 'https://prachub.com/categories/system-design');
-  await expect(exercises).toHaveCount(2);
+  await expect(exercises).toHaveCount(3);
   const prompts: string[] = [];
   for (const button of await exercises.all()) {
     await button.click();
@@ -49,7 +49,8 @@ test('Interview Notebook filters saved companies and opens distinct practice exe
     await page.locator('#track-scoring summary').click();
     await expect(page.locator('#track-rubric li').first()).toBeVisible();
   }
-  expect(new Set(prompts).size).toBe(2);
+  expect(new Set(prompts).size).toBe(prompts.length);
+  await expect(page.locator('#track-origin a')).toHaveAttribute('href', /^https:/);
 
   await page.reload();
   await expect(scope).toHaveValue('targets');
@@ -70,12 +71,13 @@ test('Interview Notebook links company coding practice and searches its director
   const exercises = page.locator('#exercise-choices button');
 
   await company.selectOption('Delta Air Lines');
+  await expect(page.locator('#track-evidence-summary')).toContainText('13 built-in exercises across 4 categories');
   for (const interviewCategory of ['Coding', 'System design', 'Other']) {
     await category.selectOption(interviewCategory);
-    await expect(exercises).toHaveCount(2);
+    await expect(exercises).toHaveCount(3);
   }
   await category.selectOption('Behavioral');
-  await expect(exercises).toHaveCount(3);
+  await expect(exercises).toHaveCount(4);
   await exercises.filter({ hasText: /why delta/i }).click();
   await expect(page.locator('#track-origin a')).toHaveAttribute('href', 'https://www.delta.com/us/en/careers/corporate-careers');
 
@@ -87,6 +89,8 @@ test('Interview Notebook links company coding practice and searches its director
   await expect(resources.locator('a[href*="github.com/ombharatiya/FAANG-Coding-Interview-Questions"]')).toBeVisible();
   await expect(resources.locator('a[href="https://leetcodewizard.io/problem-database"]')).toBeVisible();
   await expect(page.locator('#community-picks a[href^="https://leetcode.com/problems/"]').first()).toBeVisible();
+
+  await expect(page.locator('#community-picks a[href*="github.com"]').first()).toBeVisible();
 
   await page.locator('#nav-find').click();
   const search = page.locator('#directory-search');
