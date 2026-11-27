@@ -321,6 +321,7 @@
   "tests/e2e/scientific-engines.spec.ts",
   "tests/e2e/scientific-systems.spec.ts",
   "tests/fieldsense-replay.test.mjs",
+  "tests/harness2-runtime-binding.test.mjs",
   "tests/interview-workspace.test.mjs",
   "tests/repositories.test.mjs",
   "tests/scientific-engine-release.test.mjs",
