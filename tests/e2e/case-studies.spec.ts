@@ -241,19 +241,20 @@ test('historical Recursa Studio retains its two navigable research areas', async
   await expect(page.locator('#series-results')).toBeVisible();
 
   await page.goto('/projects/recursa/');
-  // Metadata is served by the Cloudflare proxy in production. Keep CI offline.
-  await page.route('**/api/harness2-lab/meta', route => route.fulfill({
-    json: { components: [], tasks: [] },
-  }));
-  await areas.getByRole('link', { name: 'Open Agent Optimization lab' }).press('Enter');
+  const runtimeRequests: string[] = [];
+  page.on('request', request => {
+    if (/\/api\/harness2-lab\/|harness2-lab\.hf\.space/.test(request.url())) {
+      runtimeRequests.push(request.url());
+    }
+  });
+  await areas.getByRole('link', { name: 'Open Agent Optimization archive' }).press('Enter');
   await expect(page).toHaveURL(/\/projects\/harness2-lab\/$/);
-  await expect(page).toHaveTitle('Agent Optimization · Recursa Studio');
-  await expect(page.getByRole('link', { name: /Run the offline demo/ })).toBeVisible();
-  await page.getByRole('link', { name: 'Library', exact: true }).press('Enter');
-  await expect(page).toHaveURL(/\/projects\/harness2-lab\/#\/library$/);
-  await expect(page.getByRole('heading', { name: 'The improvement library R', level: 2 })).toBeVisible();
-  await page.getByRole('link', { name: 'Recursa Studio' }).press('Enter');
-  await expect(page).toHaveURL(/\/projects\/recursa\/$/);
+  await expect(page.getByRole('heading', { name: 'Harness² Lab research archive', level: 1 })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Setup instructions and source' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Recorded simulator data' })).toBeVisible();
+  expect(runtimeRequests).toEqual([]);
+  await page.getByRole('link', { name: /Recursa Studio/ }).press('Enter');
+  await expect(page).toHaveURL(/\/projects\/recursa\/#agent-optimization$/);
 });
 
 test('Axiom Studio is listed and Q-SPECTRA remains an independent case study', async ({ page }) => {
