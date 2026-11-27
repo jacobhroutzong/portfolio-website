@@ -345,6 +345,136 @@ window.NotebookProblems = [
     ],
     tables: [{"name":"job_log","columns":[{"name":"job","type":"TEXT"},{"name":"attempt","type":"INTEGER"},{"name":"state","type":"TEXT"}]}],
     fixture: "job_log(job TEXT, attempt INTEGER, state TEXT)"
+  },
+  {
+    id: "google-log-spans",
+    company: "Google",
+    title: "Count balanced spans within log segments",
+    category: "Coding",
+    languages: ["python","javascript"],
+    contract: "Read {segments, target}. Each segment is an array of signed integers. Return the count of nonempty contiguous spans wholly inside one segment whose sum equals target. Segments may be empty. All sums and counts fit in a JavaScript safe integer.",
+    explanation: "Begin each segment with one empty prefix of sum zero. At each event add the number of earlier prefixes equal to the new prefix minus the target, then record the new prefix. This uses expected linear time in the input size and space bounded by the longest segment.",
+    cases: [
+      {"name":"Restarts and zero readings","input":{"segments":[[2,-2,2],[0,0],[]],"target":0},"expected":5},
+      {"name":"No cross-restart span","input":{"segments":[[2],[3]],"target":5},"expected":0},
+      {"name":"Negative target","input":{"segments":[[-2,1,-1]],"target":-2},"expected":2},
+      {"name":"No segments","input":{"segments":[],"target":0},"expected":0},
+      {"name":"Repeated nonzero target","input":{"segments":[[1,0,1],[1]],"target":1},"expected":5}
+    ]
+  },
+  {
+    id: "meta-notification-holdout",
+    company: "Meta",
+    title: "Measure a notification holdout by assigned account",
+    category: "Other",
+    languages: ["sql"],
+    contract: "Use SQLite to return [arm, assigned_count, contacted_count] for each observed arm in ascending arm order. Each account has one assignment. An account qualifies if it has one or more contact events. Ignore events for unassigned accounts. Count accounts with no events in assigned_count.",
+    explanation: "Reduce contacts to distinct account IDs, left-join those IDs to assignments and group by arm. Counting distinct qualifying accounts also works. Starting from assignments preserves zero-contact arms.",
+    cases: [
+      {"name":"Multiple contacts and unexposed accounts","input":{"assignment":[["a","T"],["b","T"],["c","T"],["d","C"],["e","C"],["f","C"],["g","C"]],"contact":[["a"],["a"],["b"],["e"]]},"expected":[["C",4,1],["T",3,2]]},
+      {"name":"Unassigned contact","input":{"assignment":[["a","T"]],"contact":[["x"]]},"expected":[["T",1,0]]},
+      {"name":"No events","input":{"assignment":[["a","T"],["b","C"]],"contact":[]},"expected":[["C",1,0],["T",1,0]]},
+      {"name":"Empty roster","input":{"assignment":[],"contact":[["x"]]},"expected":[]},
+      {"name":"One active arm","input":{"assignment":[["a","Z"],["b","Z"]],"contact":[["a"],["b"],["b"]]},"expected":[["Z",2,2]]}
+    ],
+    tables: [{"name":"assignment","columns":[{"name":"account","type":"TEXT"},{"name":"arm","type":"TEXT"}]},{"name":"contact","columns":[{"name":"account","type":"TEXT"}]}],
+    fixture: "assignment(account TEXT, arm TEXT); contact(account TEXT)"
+  },
+  {
+    id: "stripe-tiered-usage",
+    company: "Stripe",
+    title: "Price metered usage across allowance tiers",
+    category: "Coding",
+    languages: ["python","javascript"],
+    contract: "Read an array of [merchant, units] batches for one month. Merchant IDs are uppercase ASCII letters. Units are nonnegative integers. For each merchant, the first 10 units are free, the next 10 cost 3 cents each, and later units cost 2 cents each. Return [merchant, cents] pairs sorted by merchant. Totals fit in a safe integer.",
+    explanation: "Sum units per merchant, then price each nonoverlapping usage tier once. Sort merchant IDs for deterministic output. With b batches and m merchants the cost is O(b + m log m) time and O(m) auxiliary space.",
+    cases: [
+      {"name":"Batches cross tiers","input":[["A",9],["B",10],["A",7],["A",8]],"expected":[["A",38],["B",0]]},
+      {"name":"Exact tier ends","input":[["B",20],["A",10]],"expected":[["A",0],["B",30]]},
+      {"name":"First paid unit","input":[["C",11]],"expected":[["C",3]]},
+      {"name":"Zero and upper tier","input":[["Z",0],["A",21]],"expected":[["A",32],["Z",0]]},
+      {"name":"No merchants","input":[],"expected":[]}
+    ]
+  },
+  {
+    id: "uber-zone-revisions",
+    company: "Uber",
+    title: "Rank zones after late pickup corrections",
+    category: "Coding",
+    languages: ["python","javascript"],
+    contract: "Read {snapshots, k}. Each snapshot is [uppercase ASCII zone ID, positive integer revision, nonnegative pickup count]. Equal revisions for a zone have identical counts. Rank zones by the count at their highest revision, descending, then by ID ascending. Return up to k IDs, where k is nonnegative.",
+    explanation: "Retain the newest revision and its count for every zone. Sort by descending count then ascending ID and take the requested prefix. For n snapshots and z zones this costs O(n + z log z) time.",
+    cases: [
+      {"name":"Late correction and tied leaders","input":{"snapshots":[["A",2,1],["B",1,4],["A",1,9],["C",3,4]],"k":2},"expected":["B","C"]},
+      {"name":"Higher revision lowers a count","input":{"snapshots":[["X",1,100],["Y",3,6],["X",2,0]],"k":4},"expected":["Y","X"]},
+      {"name":"Identical replay","input":{"snapshots":[["A",1,5],["A",1,5]],"k":2},"expected":["A"]},
+      {"name":"No selections","input":{"snapshots":[["Z",5,5]],"k":0},"expected":[]},
+      {"name":"No zones","input":{"snapshots":[],"k":3},"expected":[]}
+    ]
+  },
+  {
+    id: "c3-sustained-modes",
+    company: "C3 AI",
+    title: "Detect sustained operating modes",
+    category: "Coding",
+    languages: ["python","javascript"],
+    contract: "Read {samples, end, minimum}. Samples are [minute, state] pairs in strictly increasing minute order. Each state holds until the next timestamp or end. Return [state, start, stop] for maximal contiguous runs lasting at least minimum minutes, in time order. minimum is positive and end is later than the last sample.",
+    explanation: "Extend a run while the state matches. When the state changes or the data ends, measure the whole run once and keep it if the duration reaches the threshold. The scan takes O(n) time.",
+    cases: [
+      {"name":"Repeated states extend one run","input":{"samples":[[0,"A"],[2,"A"],[6,"B"],[9,"A"]],"end":12,"minimum":5},"expected":[["A",0,6]]},
+      {"name":"Exact threshold","input":{"samples":[[4,"B"]],"end":9,"minimum":5},"expected":[["B",4,9]]},
+      {"name":"State returns later","input":{"samples":[[0,"A"],[3,"B"],[4,"A"]],"end":8,"minimum":3},"expected":[["A",0,3],["A",4,8]]},
+      {"name":"Empty log","input":{"samples":[],"end":10,"minimum":1},"expected":[]},
+      {"name":"None long enough","input":{"samples":[[1,"X"],[2,"Y"]],"end":3,"minimum":2},"expected":[]}
+    ]
+  },
+  {
+    id: "jump-weighted-selection",
+    company: "Jump Trading",
+    title: "Track a weighted sampling window",
+    category: "Coding",
+    languages: ["python","javascript"],
+    contract: "Read {weights, operations}. An update is [\"set\", index, value] with a valid zero-based index and nonnegative integer value. A query is [\"pick\", k] with a nonnegative integer k. Return the first index whose inclusive prefix sum exceeds k, or null if it does not exist. Return a list of query results only. Integers and prefix sums are safe.",
+    explanation: "A linear scan after each query is a reference implementation. For interleaved updates and queries use a Fenwick tree and cumulative-frequency search, with O(log n) time per operation after construction.",
+    cases: [
+      {"name":"Skip zero weight after an update","input":{"weights":[2,0,3],"operations":[["pick",2],["set",0,0],["pick",0],["pick",3]]},"expected":[2,2,null]},
+      {"name":"Strict upper boundary","input":{"weights":[1,2],"operations":[["pick",0],["pick",1],["pick",2],["pick",3]]},"expected":[0,1,1,null]},
+      {"name":"Empty population","input":{"weights":[],"operations":[["pick",0]]},"expected":[null]},
+      {"name":"Updates alone","input":{"weights":[0],"operations":[["set",0,4]]},"expected":[]},
+      {"name":"Revive a zero population","input":{"weights":[0,0],"operations":[["pick",0],["set",1,1],["pick",0]]},"expected":[null,1]}
+    ]
+  },
+  {
+    id: "waymo-trace-turns",
+    company: "Waymo",
+    title: "Simplify a recorded route polyline",
+    category: "Coding",
+    languages: ["python","javascript"],
+    contract: "Read integer [x,y] vertices in trace order. First drop consecutive duplicate points. Drop an interior point when the incoming and outgoing steps are collinear and point in the same direction. Retain both endpoints of every nonempty deduplicated trace (a singleton appears once). Return retained coordinates in order. Absolute coordinates are at most 10,000.",
+    explanation: "Compare successive step directions using an integer cross product and dot product. A zero cross product with positive dot product permits dropping a straight-through point. A negative dot product is a reversal. Each point is examined a constant number of times.",
+    cases: [
+      {"name":"Turn after straight travel","input":[[0,0],[1,0],[2,0],[2,1]],"expected":[[0,0],[2,0],[2,1]]},
+      {"name":"Preserve reversal","input":[[0,0],[1,1],[2,2],[0,0]],"expected":[[0,0],[2,2],[0,0]]},
+      {"name":"Repeated singleton","input":[[3,-1],[3,-1]],"expected":[[3,-1]]},
+      {"name":"Empty trace","input":[],"expected":[]},
+      {"name":"Duplicates around a turn","input":[[-2,0],[-2,0],[-1,1],[0,2],[0,2],[1,1]],"expected":[[-2,0],[0,2],[1,1]]}
+    ]
+  },
+  {
+    id: "karat-branching-score",
+    company: "Karat",
+    title: "Score a branching practice session",
+    category: "Coding",
+    languages: ["python","javascript"],
+    contract: "Read a nonempty tree as an array of [parent, points, possible] nodes. Node 0 has parent -1. Each other parent index is smaller than its node index. Scores are integers with 0 ≤ points ≤ possible, possible > 0. Return the root-to-leaf node-index path with the highest sum(points)/sum(possible). Ties go to the smaller leaf index. Cross products fit in safe integers.",
+    explanation: "Accumulate the earned and possible totals from each parent. Mark nodes with children and compare fractions only at leaves using cross multiplication. Follow parents from the winning leaf and reverse. Time and space are O(n).",
+    cases: [
+      {"name":"Deeper path with a better fraction","input":[[-1,0,2],[0,3,6],[0,1,1],[2,2,2]],"expected":[0,2,3]},
+      {"name":"Leaf tie by index","input":[[-1,1,1],[0,0,1],[0,1,3]],"expected":[0,1]},
+      {"name":"Root is the sole leaf","input":[[-1,0,5]],"expected":[0]},
+      {"name":"High internal score is ineligible","input":[[-1,3,3],[0,0,8],[1,0,5]],"expected":[0,1,2]},
+      {"name":"Total points alone misleads","input":[[-1,0,1],[0,10,20],[0,2,2]],"expected":[0,2]}
+    ]
   }
 ];
 

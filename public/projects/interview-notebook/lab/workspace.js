@@ -92,13 +92,24 @@
   let storageAvailable = true;
 
   const tracker = document.getElementById('tracker-data');
-  const employerExamples = new Map();
+  const exerciseSources = new Map();
   if (tracker) {
-    const {sources, matched} = JSON.parse(tracker.textContent);
+    const {sources, matched, practiceSets} = JSON.parse(tracker.textContent);
+    for (const [company, categories] of Object.entries(practiceSets)) {
+      for (const exercises of Object.values(categories)) {
+        for (const exercise of exercises) {
+          if (exercise.context) exerciseSources.set(company + '/' + exercise.title, {
+            label: exercise.context.label, url: exercise.context.url, prefix: 'Original practice · ',
+          });
+        }
+      }
+    }
     for (const example of matched) {
       const source = sources.find(item => item.kind === 'named' && item.company === example.company &&
         item.sourceLabel === example.sourceLabel && item.category === example.category);
-      if (source) employerExamples.set(example.company + '/' + example.title, source);
+      if (source) exerciseSources.set(example.company + '/' + example.title, {
+        label: source.sourceLabel, url: source.sourceUrl, prefix: 'Adapted from an employer example · ',
+      });
     }
   }
 
@@ -220,14 +231,14 @@
     el('title').textContent = challenge.title;
     el('contract').textContent = challenge.contract;
     const origin = el('origin');
-    const source = employerExamples.get(challenge.company + '/' + challenge.title);
-    origin.textContent = source ? 'Adapted from an employer example · ' : 'Original company-themed practice';
-    if (source && /^https:\/\//.test(source.sourceUrl)) {
+    const source = exerciseSources.get(challenge.company + '/' + challenge.title);
+    origin.textContent = source?.prefix || 'Original company-themed practice';
+    if (source && /^https:\/\//.test(source.url)) {
       const link = document.createElement('a');
-      link.href = source.sourceUrl;
+      link.href = source.url;
       link.target = '_blank';
       link.rel = 'noopener noreferrer';
-      link.textContent = source.sourceLabel;
+      link.textContent = source.label;
       origin.append(link);
     }
     el('fixture').textContent = challenge.fixture || '';
