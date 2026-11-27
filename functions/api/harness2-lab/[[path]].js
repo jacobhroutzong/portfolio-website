@@ -11,7 +11,7 @@ function unavailable() {
   );
 }
 
-export async function onRequest({ request, params }) {
+export async function onRequest({ request, params, env }) {
   const path = params.path?.join('/') ?? '';
   const method = request.method;
   if (!Object.hasOwn(ROUTES, method) || !ROUTES[method].test(path)) {
@@ -34,7 +34,12 @@ export async function onRequest({ request, params }) {
 
   let upstream;
   try {
-    upstream = await fetch(`${SPACE}/api/${path}`, { method, headers, body, redirect: 'manual' });
+    const options = { method, headers, body, redirect: 'manual' };
+    // The service binding is private and selected only by the Pages environment.
+    const runtime = env?.HARNESS2_RUNTIME;
+    upstream = runtime
+      ? await runtime.fetch(`https://harness2-runtime.internal/api/${path}`, options)
+      : await fetch(`${SPACE}/api/${path}`, options);
   } catch {
     return unavailable();
   }
