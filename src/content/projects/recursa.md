@@ -31,7 +31,7 @@ Recursa asks what changes when a model can inspect an external specification pro
 
 Open **Generated artifacts** to inspect Task Management, Operations Analytics, or Aviation Operations. Each showcase has source, a screenshot, and four recorded Chromium workflows. Open **Benchmarks** to compare the three methods, then select a trial to see its recorded calls, durations, and verification outcomes. The public Studio serves saved evidence without an API key or live generation.
 
-[Recursa source](https://github.com/jacobhroutzong/recursa) · [Hugging Face replay](https://jacobroutzong-recursa.hf.space/) · [Recursa license](/projects/recursa/studio/LICENSE.txt) · [Recursa notice](/projects/recursa/studio/NOTICE.txt)
+[Recursa source](https://github.com/jacobhroutzong/recursa) · [Recursa replay Space archive](https://huggingface.co/spaces/jacobroutzong/recursa) · [Recursa license](/projects/recursa/studio/LICENSE.txt) · [Recursa notice](/projects/recursa/studio/NOTICE.txt)
 
 ### How it works
 
