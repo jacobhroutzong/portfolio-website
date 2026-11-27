@@ -1,6 +1,6 @@
 {
-  "fetchedAt": "2026-11-23T07:53:36.817Z",
-  "githubFetchedAt": "2026-11-23T07:53:36.817Z",
+  "fetchedAt": "2026-11-27T08:48:56.238Z",
+  "githubFetchedAt": "2026-11-27T08:48:56.238Z",
   "items": [
     {
       "name": "portfolio-website",
@@ -8,8 +8,18 @@
       "description": "",
       "platform": "GitHub",
       "kind": "Repository",
-      "language": "JavaScript",
-      "updated": "2026-11-22T22:38:52Z",
+      "language": "HTML",
+      "updated": "2026-11-27T02:12:47Z",
+      "archived": false
+    },
+    {
+      "name": "harness2-lab",
+      "url": "https://github.com/jacobhroutzong/harness2-lab",
+      "description": "An independent implementation of recursive agent harnessing with an interactive web lab",
+      "platform": "GitHub",
+      "kind": "Repository",
+      "language": "Python",
+      "updated": "2026-11-27T02:05:07Z",
       "archived": false
     },
     {
@@ -60,16 +70,6 @@
       "kind": "Space",
       "language": "",
       "updated": "2026-10-26T16:19:09.000Z",
-      "archived": false
-    },
-    {
-      "name": "harness2-lab",
-      "url": "https://github.com/jacobhroutzong/harness2-lab",
-      "description": "An independent implementation of recursive agent harnessing with an interactive web lab",
-      "platform": "GitHub",
-      "kind": "Repository",
-      "language": "Python",
-      "updated": "2026-10-26T16:17:29Z",
       "archived": false
     }
   ]
